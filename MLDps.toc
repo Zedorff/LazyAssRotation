@@ -6,7 +6,7 @@
 ## OptionalDeps: none
 ## SavedVariables: ShouldUseRend
 Helpers.lua
-Common.lua
+Logging.lua
 ClassRotation.lua
 Warrior.lua
 MLDps.xml

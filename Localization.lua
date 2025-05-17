@@ -7,6 +7,7 @@ CHAT_DODGE_OVERPOWER2      = "Your (.+) was dodged by (.+)."
 CHAT_OVERPOWER1            = "Your Overpower crits (.+) for (%d+)."
 CHAT_OVERPOWER2            = "Your Overpower hits (.+) for (%d+)."
 CHAT_OVERPOWER3            = "Your Overpower missed (.+)."
+CHAT_HEROIC_STRIKE         = "Heroic Strike"
 
 -- Warrior
 ABILITY_BATTLE_SHOUT       = "Battle Shout";
@@ -19,6 +20,8 @@ ABILITY_MORTAL_STRIKE      = "Mortal Strike";
 ABILITY_HEROIC_STRIKE      = "Heroic Strike";
 ABILITY_REND               = "Rend";
 ABILITY_OVERPOWER          = "Overpower";
+ABILITY_SUNDER_AMROR       = "Sunder Armor";
+ABILITY_WHIRLWIND          = "Whirlwind";
 
 -- Regex
 RAGE_DESCRIPTION_REGEX     = "(%d+)%s*Rage";

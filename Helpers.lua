@@ -18,7 +18,7 @@ function Helpers:SpellId(spellname)
 end
 
 function Helpers:SpellReady(spellname)
-    local id = SpellId(spellname);
+    local id = Helpers:SpellId(spellname);
     if (id) then
         local start, duration = GetSpellCooldown(id, 0);
         if (start == 0 and duration == 0) then
@@ -63,21 +63,21 @@ function Helpers:ActiveStance()
     return nil;
 end
 
-function ParseIntViaTooltip(spellName, intRegex)
-    ThreatTooltip:SetOwner(UIParent, "ANCHOR_NONE");
+function Helpers:ParseIntViaTooltip(spellName, intRegex)
+    MLDpsTooltip:SetOwner(UIParent, "ANCHOR_NONE");
 
-    local spellID = SpellId(spellName);
+    local spellID = Helpers:SpellId(spellName);
     if not spellID then
-        Common:Debug("Can't find " .. spellName .. " in book");
+        Logging:LogDebug("Can't find " .. spellName .. " in book");
         return 0;
     end
 
-    ThreatTooltip:SetSpell(spellID, BOOKTYPE_SPELL);
+    MLDpsTooltip:SetSpell(spellID, BOOKTYPE_SPELL);
 
-    local lineCount = ThreatTooltip:NumLines();
+    local lineCount = MLDpsTooltip:NumLines();
 
     for i = 1, lineCount do
-        local leftText = getglobal("ThreatTooltipTextLeft" .. i);
+        local leftText = getglobal("MLDpsTooltipTextLeft" .. i);
 
         if leftText:GetText() then
             local _, _, int = string.find(leftText:GetText(), intRegex);
@@ -91,9 +91,9 @@ function ParseIntViaTooltip(spellName, intRegex)
 end
 
 function Helpers:CastTime(spellName)
-    return ParseIntViaTooltip(spellName, COOLDOWN_DESCRIPTION_REGEX)
+    return Helpers:ParseIntViaTooltip(spellName, COOLDOWN_DESCRIPTION_REGEX)
 end
 
 function Helpers:RageCost(spellName)
-    return ParseIntViaTooltip(spellName, RAGE_DESCRIPTION_REGEX)
+    return Helpers:ParseIntViaTooltip(spellName, RAGE_DESCRIPTION_REGEX)
 end

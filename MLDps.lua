@@ -3,18 +3,9 @@
 DpsRotation = nil
 
 function MLDps_Configuration_Init()
-    if (not MLDps_Configuration) then
-        MLDps_Configuration = {};
-    end
-
-    if (Common["Debug"] == nil) then
-        Common["Debug"] = false;
-    end
-
     if not DpsRotation then
         local class = UnitClass("player")
         if (class == CLASS_WARRIOR_DPS) then
-            Common:Debug("Created Warrior")
             DpsRotation = Warrior:new()
         end
     end
@@ -38,12 +29,7 @@ function MLDps_SlashCommand(msg)
     if (command == nil or command == "") then
         DPS();
     elseif (command == "debug") then
-        Common:Print("Debug")
-        if (Common["Debug"]) then
-            Common["Debug"] = false;
-        else
-            Common["Debug"] = true;
-        end
+        Logging:toggleDebug()
     end
 end
 
