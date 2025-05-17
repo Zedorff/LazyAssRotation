@@ -8,7 +8,7 @@ function MLDps_Configuration_Init()
     end
 
     if (Common["Debug"] == nil) then
-        Common["Debug"] = true;
+        Common["Debug"] = false;
     end
 
     if not DpsRotation then

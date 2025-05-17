@@ -11,7 +11,6 @@ function Warrior:new()
 end
 
 function Warrior:execute()
-    Common:Debug("Execute")
     local rage = UnitMana("player");
     local mainSpeed, offSpeed = UnitAttackSpeed("player")
     local slamCastTime = Helpers:CastTime(ABILITY_SLAM)
