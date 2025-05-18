@@ -9,7 +9,7 @@ end
 
 function Logging:Log(msg)
     if DEFAULT_CHAT_FRAME then
-        DEFAULT_CHAT_FRAME:AddMessage("|cffffff00[MLDps] " .. msg .. "|r")
+        DEFAULT_CHAT_FRAME:AddMessage("|cffffff00 " .. msg .. "|r")
     end
 end
 

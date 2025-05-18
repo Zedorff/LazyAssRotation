@@ -1,12 +1,12 @@
-## Interface: 12000
+## Interface: 11200
 ## Title: MLDps
 ## Notes: To make DPSing easier.
 ## Author: Zedorff
 ## DefaultState: enabled
 ## OptionalDeps: none
 ## SavedVariables: ShouldUseRend
-Helpers.lua
 Logging.lua
+Helpers.lua
 ClassRotation.lua
 Warrior.lua
 MLDps.xml
