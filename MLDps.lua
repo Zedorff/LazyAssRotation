@@ -1,22 +1,30 @@
 -- Init
 
 DpsRotation = nil
+local trackers = {}
 
 function MLDps_Configuration_Init()
     if not DpsRotation then
         local class = UnitClass("player")
         if (class == CLASS_WARRIOR_DPS) then
-            DpsRotation = Warrior:new()
+            local aaTracker = AutoAttackTracker:new()
+            local opTracker = OverpowerTracker:new()
+            DpsRotation = Warrior:new({
+                autoAttackTracker = aaTracker,
+                overpowerTracker = opTracker
+            })
+            table.insert(trackers, aaTracker)
+            table.insert(trackers, opTracker)
         end
     end
 end
 
 -- Main Code
 
-function DPS()
-   if DpsRotation then
-    DpsRotation:execute()
-   end
+function PerformDps()
+    if DpsRotation then
+        DpsRotation:execute()
+    end
 end
 
 -- Chat Handlers
@@ -27,7 +35,7 @@ function MLDps_SlashCommand(msg)
         command = string.lower(command);
     end
     if (command == nil or command == "") then
-        DPS();
+        PerformDps();
     elseif (command == "debug") then
         Logging:toggleDebug()
     end
@@ -55,11 +63,14 @@ function MLDps_OnLoad()
 end
 
 function MLDps_OnEvent(event)
-    if DpsRotation then
-        DpsRotation:onEvent(event)
-    end
-
     if (event == "VARIABLES_LOADED") then
         MLDps_Configuration_Init()
+    end
+    for _, tracker in ipairs(trackers) do
+        if type(tracker.onEvent) == "function" then
+            tracker:onEvent(event)
+        else
+            error("Tracker does not implement :onEvent()")
+        end
     end
 end

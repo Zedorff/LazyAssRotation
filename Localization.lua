@@ -11,16 +11,11 @@ CHAT_HEROIC_STRIKE         = "Heroic Strike"
 
 -- Warrior
 ABILITY_BATTLE_SHOUT       = "Battle Shout";
-ABILITY_BATTLE_STANCE      = "Battle Stance";
-ABILITY_BERSERKER_RAGE     = "Berserker Rage";
-ABILITY_BERSERKER_STANCE   = "Berserker Stance";
-ABILITY_BLOODRAGE          = "Bloodrage";
 ABILITY_SLAM               = "Slam";
 ABILITY_MORTAL_STRIKE      = "Mortal Strike";
 ABILITY_HEROIC_STRIKE      = "Heroic Strike";
 ABILITY_REND               = "Rend";
 ABILITY_OVERPOWER          = "Overpower";
-ABILITY_SUNDER_AMROR       = "Sunder Armor";
 ABILITY_WHIRLWIND          = "Whirlwind";
 ABILITY_EXECUTE            = "Execute"
 

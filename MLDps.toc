@@ -5,8 +5,16 @@
 ## DefaultState: enabled
 ## OptionalDeps: none
 ## SavedVariables: ShouldUseRend
+
+Localization.lua
 Logging.lua
 Helpers.lua
-ClassRotation.lua
-Warrior.lua
+
+Tracker\CooldownTracker.lua
+Tracker\AutoAttackTracker.lua
+Tracker\OverpowerTracker.lua
+
+Rotation\ClassRotation.lua
+Rotation\Warrior.lua
+
 MLDps.xml
