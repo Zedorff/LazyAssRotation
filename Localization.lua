@@ -22,6 +22,7 @@ ABILITY_REND               = "Rend";
 ABILITY_OVERPOWER          = "Overpower";
 ABILITY_SUNDER_AMROR       = "Sunder Armor";
 ABILITY_WHIRLWIND          = "Whirlwind";
+ABILITY_EXECUTE            = "Execute"
 
 -- Regex
 RAGE_DESCRIPTION_REGEX     = "(%d+)%s*Rage";

@@ -15,6 +15,12 @@ function Warrior:execute()
     local slamCastTime = Helpers:CastTime(ABILITY_SLAM)
     local timeToNextAttack = TimeToNextSwing(mainSpeed)
     local slamCost = Helpers:RageCost(ABILITY_SLAM);
+    if ShouldUseExecute() then
+        Logging:Debug("Casting Execute")
+        CastSpellByName(ABILITY_EXECUTE)
+        return
+    end
+
     if (timeToNextAttack > slamCastTime) and rage >= slamCost then
         CastSpellByName(ABILITY_SLAM)
     else
@@ -63,6 +69,18 @@ function OverpowerAvailable()
     else
         return nil;
     end
+end
+
+function ShouldUseExecute()
+    local targetHealth = UnitHealth("target")
+    local targetHealthMax = UnitHealthMax("target")
+
+    -- Check health threshold
+    if targetHealthMax == 0 then return false end
+    local healthPercent = (targetHealth / targetHealthMax) * 100
+    if healthPercent >= 20 then return false end
+
+    return true
 end
 
 function NoSlamWarriorRotation(rage)
