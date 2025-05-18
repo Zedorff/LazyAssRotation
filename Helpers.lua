@@ -63,7 +63,7 @@ function Helpers:HasDebuff(unit, texturename)
     return false
 end
 
---- @return number
+--- @return number | nil
 function Helpers:ActiveStance()
     for i = 1, 3 do
         local _, _, active = GetShapeshiftFormInfo(i);

@@ -1,8 +1,11 @@
 --- @class ArmsWarrior : ClassRotation
+--- @field autoAttackTracker AutoAttackTracker
+--- @field overpowerTracker OverpowerTracker
 --- @diagnostic disable: duplicate-set-field
 ArmsWarrior = setmetatable({}, { __index = ClassRotation })
 ArmsWarrior.__index = ArmsWarrior
 
+--- @param deps table
 --- @return ArmsWarrior
 function ArmsWarrior:new(deps)
     Logging:Log("Using Arms Warrior rotation")
@@ -18,6 +21,16 @@ function ArmsWarrior:execute()
     local slamCastTime = Helpers:CastTime(ABILITY_SLAM)
     local timeToNextAttack = self.autoAttackTracker:GetWhenAvailable()
     local slamCost = Helpers:RageCost(ABILITY_SLAM);
+    local shoutCost = Helpers:RageCost(ABILITY_BATTLE_SHOUT)
+    
+    if not CheckInteractDistance("target", 3) then
+        if not Helpers:HasBuff("player", "Ability_Warrior_BattleShout") and rage >= shoutCost then
+            Logging:Debug("Casting Battle Shout")
+            CastSpellByName(ABILITY_BATTLE_SHOUT)
+        end
+        return
+    end
+
     if Helpers:ShouldUseExecute() then
         Logging:Debug("Casting Execute")
         CastSpellByName(ABILITY_EXECUTE)
@@ -27,7 +40,7 @@ function ArmsWarrior:execute()
     if (timeToNextAttack > slamCastTime) and rage >= slamCost then
         CastSpellByName(ABILITY_SLAM)
     else
-        ArmsWarrior:NoSlamWarriorRotation(rage)
+        self:NoSlamWarriorRotation(rage)
     end
 end
 
@@ -39,7 +52,9 @@ function ArmsWarrior:NoSlamWarriorRotation(rage)
     if not Helpers:HasBuff("player", "Ability_Warrior_BattleShout") and rage >= 20 then
         Logging:Debug("Casting Battle Shout")
         CastSpellByName(ABILITY_BATTLE_SHOUT)
-    elseif activeStance == 1 and self.overpowerTracker:IsAvailable() and Helpers:SpellReady(ABILITY_OVERPOWER) and rage >= 5 then
+    end
+    
+    if activeStance == 1 and self.overpowerTracker:isAvailable() and Helpers:SpellReady(ABILITY_OVERPOWER) and rage >= 5 then
         Logging:Debug("Casting overpower")
         CastSpellByName(ABILITY_OVERPOWER)
     elseif Helpers:SpellReady(ABILITY_MORTAL_STRIKE) and rage >= msCost then

@@ -1,22 +1,20 @@
 --- @class Warrior : ClassRotation
----@diagnostic disable: duplicate-set-field
+--- @field proxyRotation ClassRotation | nil
+--- @diagnostic disable: duplicate-set-field
 Warrior = setmetatable({}, { __index = ClassRotation })
 Warrior.__index = Warrior
-
---- @type ClassRotation | nil
-local proxyRotation = nil
 
 --- @param deps any
 --- @return Warrior
 function Warrior:new(deps)
-    proxyRotation = Warrior:GetRotationBySpec(deps)
-    return setmetatable({}, self)
+    local table = {
+        proxyRotation = Warrior:GetRotationBySpec(deps)
+    }
+    return setmetatable(table, self)
 end
 
 function Warrior:execute()
-    if proxyRotation then
-        proxyRotation:execute()
-    end
+    self.proxyRotation:execute()
 end
 
 --- @param deps any
