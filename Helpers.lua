@@ -1,5 +1,3 @@
--- Helpers
-
 Helpers = {}
 
 --- @param spellname string
