@@ -1,3 +1,4 @@
+--- @class ClassRotation
 ClassRotation = {}
 ClassRotation.__index = ClassRotation
 

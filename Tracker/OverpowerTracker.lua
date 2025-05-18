@@ -1,14 +1,17 @@
----@diagnostic disable: duplicate-set-field
+--- @class OverpowerTracker : CooldownTracker
+--- @diagnostic disable: duplicate-set-field
 OverpowerTracker = setmetatable({}, { __index = CooldownTracker })
 OverpowerTracker.__index = OverpowerTracker
 
 -- Variables
 local OverpowerReadyUntil = 0;
 
+--- @return OverpowerTracker
 function OverpowerTracker:new()
     return setmetatable({}, self)
 end
 
+--- @param event string
 function OverpowerTracker:onEvent(event)
     if (event == "CHAT_MSG_COMBAT_SELF_MISSES"
             or event == "CHAT_MSG_SPELL_SELF_DAMAGE"
@@ -25,14 +28,16 @@ function OverpowerTracker:onEvent(event)
     end
 end
 
+--- @return boolean
 function OverpowerTracker:isAvailable()
     if GetTime() < OverpowerReadyUntil then
-        return true;
+        return true and Helpers:SpellReady(ABILITY_OVERPOWER);
     else
-        return nil;
+        return false;
     end
 end
 
+--- @return number
 function OverpowerTracker:GetWhenAvailable()
     return OverpowerReadyUntil;
 end

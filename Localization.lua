@@ -18,6 +18,8 @@ ABILITY_REND               = "Rend";
 ABILITY_OVERPOWER          = "Overpower";
 ABILITY_WHIRLWIND          = "Whirlwind";
 ABILITY_EXECUTE            = "Execute"
+ABILITY_BLOODTHIRST        = "Bloodthirst"
+ABILITY_HAMSTRING          = "Hamstring"
 
 -- Regex
 RAGE_DESCRIPTION_REGEX     = "(%d+)%s*Rage";

@@ -2,6 +2,8 @@
 
 Helpers = {}
 
+--- @param spellname string
+--- @return number
 function Helpers:SpellId(spellname)
   local id = 1;
   for i = 1, GetNumSpellTabs() do
@@ -17,6 +19,8 @@ function Helpers:SpellId(spellname)
   return nil;
 end
 
+--- @param spellname string
+--- @return boolean
 function Helpers:SpellReady(spellname)
     local id = Helpers:SpellId(spellname);
     if (id) then
@@ -28,6 +32,9 @@ function Helpers:SpellReady(spellname)
     return nil;
 end
 
+--- @param unit string
+--- @param texturename string
+--- @return boolean
 function Helpers:HasBuff(unit, texturename)
     local id = 1;
     while (UnitBuff(unit, id)) do
@@ -40,6 +47,9 @@ function Helpers:HasBuff(unit, texturename)
     return nil;
 end
 
+--- @param unit string
+--- @param texturename string
+--- @return boolean
 function Helpers:HasDebuff(unit, texturename)
     local id = 1
     local debuffTexture = UnitDebuff(unit, id)
@@ -53,6 +63,7 @@ function Helpers:HasDebuff(unit, texturename)
     return false
 end
 
+--- @return number
 function Helpers:ActiveStance()
     for i = 1, 3 do
         local _, _, active = GetShapeshiftFormInfo(i);
@@ -63,12 +74,15 @@ function Helpers:ActiveStance()
     return nil;
 end
 
+--- @param spellName string
+--- @param intRegex string
+--- @return number
 function Helpers:ParseIntViaTooltip(spellName, intRegex)
     MLDpsTooltip:SetOwner(UIParent, "ANCHOR_NONE");
 
     local spellID = Helpers:SpellId(spellName);
     if not spellID then
-        Logging:LogDebug("Can't find " .. spellName .. " in book");
+        Logging:Debug("Can't find " .. spellName .. " in book");
         return 0;
     end
 
@@ -90,10 +104,26 @@ function Helpers:ParseIntViaTooltip(spellName, intRegex)
     return 0;
 end
 
+--- @param spellName string
+--- @return number
 function Helpers:CastTime(spellName)
     return Helpers:ParseIntViaTooltip(spellName, COOLDOWN_DESCRIPTION_REGEX)
 end
 
+--- @param spellName string
+--- @return number
 function Helpers:RageCost(spellName)
     return Helpers:ParseIntViaTooltip(spellName, RAGE_DESCRIPTION_REGEX)
+end
+
+--- @return boolean
+function Helpers:ShouldUseExecute()
+    local targetHealth = UnitHealth("target")
+    local targetHealthMax = UnitHealthMax("target")
+
+    if targetHealthMax == 0 then return false end
+    local healthPercent = (targetHealth / targetHealthMax) * 100
+    if healthPercent >= 20 then return false end
+
+    return true
 end
