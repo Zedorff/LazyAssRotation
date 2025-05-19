@@ -35,6 +35,7 @@ function ArmsWarrior:execute()
             Logging:Debug("Casting Battle Shout")
             CastSpellByName(ABILITY_BATTLE_SHOUT)
         end
+        Logging:Debug("Too far away!")
         return
     end
 
@@ -45,6 +46,7 @@ function ArmsWarrior:execute()
     end
 
     if (timeToNextAttack > slamCastTime) and rage >= slamCost then
+        Logging:Debug("Casting Slam")
         CastSpellByName(ABILITY_SLAM)
     else
         self:NoSlamWarriorRotation(rage)

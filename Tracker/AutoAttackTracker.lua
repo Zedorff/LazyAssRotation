@@ -21,6 +21,7 @@ function AutoAttackTracker:onEvent(event, ...)
     local arg1 = unpack(arg)
     if ((event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_SPELL_SELF_MISSES") and string.find(arg1, CHAT_HEROIC_STRIKE))
         or (event == "CHAT_MSG_COMBAT_SELF_MISSES" or event == "CHAT_MSG_COMBAT_SELF_HITS") then
+        Logging:Debug("Autoattack")
         self.lastAutoAttack = GetTime();
     end
 end

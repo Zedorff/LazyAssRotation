@@ -40,9 +40,6 @@ function RendTracker:onEvent(event, ...)
 
     elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" then
         self:HandleSelfDamage(arg1, now)
-
-    elseif event == "CHAT_MSG_COMBAT_SELF_HITS" then
-        self:HandleMeleeCrit(arg1, now)
     end
 end
 
