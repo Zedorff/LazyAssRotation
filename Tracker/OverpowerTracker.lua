@@ -13,7 +13,9 @@ function OverpowerTracker:new()
 end
 
 --- @param event string
-function OverpowerTracker:onEvent(event)
+--- @vararg any
+function OverpowerTracker:onEvent(event, ...)
+    local arg1 = unpack(arg)
     if (event == "CHAT_MSG_COMBAT_SELF_MISSES"
             or event == "CHAT_MSG_SPELL_SELF_DAMAGE"
             or event == "CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF")

@@ -6,13 +6,21 @@
 ## OptionalDeps: none
 ## SavedVariables: ShouldUseRend
 
+## Load Ace2 libraries first
+libs\AceLibrary\AceLibrary.lua
+libs\AceOO-2.0\AceOO-2.0.lua
+libs\AceHook\AceHook-2.0.lua
+
 Localization.lua
 Logging.lua
 Helpers.lua
+EventBus.lua
+SpellCastInterceptor.lua
 
 Tracker\CooldownTracker.lua
 Tracker\AutoAttackTracker.lua
 Tracker\OverpowerTracker.lua
+Tracker\RendTracker.lua
 
 Rotation\ClassRotation.lua
 Rotation\ArmsWarrior.lua

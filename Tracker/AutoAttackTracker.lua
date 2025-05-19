@@ -1,3 +1,6 @@
+MLDps = MLDps or {}
+local instance = MLDps
+
 --- @class AutoAttackTracker : CooldownTracker
 --- @field lastAutoAttack number
 --- @diagnostic disable: duplicate-set-field
@@ -12,8 +15,10 @@ function AutoAttackTracker:new()
     return setmetatable(obj, self)
 end
 
----@param event string
-function AutoAttackTracker:onEvent(event)
+--- @param event string
+--- @vararg any
+function AutoAttackTracker:onEvent(event, ...)
+    local arg1 = unpack(arg)
     if ((event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_SPELL_SELF_MISSES") and string.find(arg1, CHAT_HEROIC_STRIKE))
         or (event == "CHAT_MSG_COMBAT_SELF_MISSES" or event == "CHAT_MSG_COMBAT_SELF_HITS") then
         self.lastAutoAttack = GetTime();

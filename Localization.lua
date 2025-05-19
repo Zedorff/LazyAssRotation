@@ -8,6 +8,8 @@ CHAT_OVERPOWER1            = "Your Overpower crits (.+) for (%d+)."
 CHAT_OVERPOWER2            = "Your Overpower hits (.+) for (%d+)."
 CHAT_OVERPOWER3            = "Your Overpower missed (.+)."
 CHAT_HEROIC_STRIKE         = "Heroic Strike"
+CHAT_CRIT_PATTERN1         = "You crit (.+) for"
+CHAT_CRIT_PATTERN2         = "Your (.+) crits (.+) for"
 
 -- Warrior
 ABILITY_BATTLE_SHOUT       = "Battle Shout";

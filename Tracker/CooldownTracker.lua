@@ -3,7 +3,8 @@ CooldownTracker = {}
 CooldownTracker.__index = CooldownTracker
 
 --- @param event string
-function CooldownTracker:onEvent(event)
+--- @vararg any
+function CooldownTracker:onEvent(event, ...)
     error("execute() not implemented")
 end
 

@@ -1,27 +1,20 @@
--- Init
+MLDps = MLDps or {}
+local global = MLDps
 
-DpsRotation = nil
-local trackers = {}
+--- @class MLDps
+--- @field trackers table
+--- @field eventBus EventBus
 
-function MLDps_Configuration_Init()
+local DpsRotation = nil
+
+function init()
     
 end
 
 function CreateDpsRotation()
-    if trackers then
-        trackers = {}
-    end
     local class = UnitClass("player")
     if (class == CLASS_WARRIOR_DPS) then
-        local aaTracker = AutoAttackTracker:new()
-        local opTracker = OverpowerTracker:new()
-        local rotation = Warrior:new({
-            autoAttackTracker = aaTracker,
-            overpowerTracker = opTracker
-        })
-        table.insert(trackers, aaTracker)
-        table.insert(trackers, opTracker)
-        return rotation;
+        return Warrior:new();
     end
 end
 
@@ -31,7 +24,7 @@ function PerformDps()
     if not DpsRotation then
         DpsRotation = CreateDpsRotation()
     end
-    DpsRotation:execute() 
+    DpsRotation:execute()
 end
 
 -- Chat Handlers
@@ -50,40 +43,41 @@ function MLDps_SlashCommand(msg)
     end
 end
 
+function ResetRotation()
+    global.trackers = {}
+    DpsRotation = nil
+    MLDps:StoptHookingSpellCasts()
+end
+
 -- Event Handlers
 
 function MLDps_OnLoad()
-    this:RegisterEvent("VARIABLES_LOADED");
-    this:RegisterEvent("PLAYER_ENTER_COMBAT");
-    this:RegisterEvent("PLAYER_LEAVE_COMBAT");
-    this:RegisterEvent("CHAT_MSG_COMBAT_SELF_MISSES");
-    this:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE");
-    this:RegisterEvent("CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF");
-    this:RegisterEvent("CHAT_MSG_COMBAT_CREATURE_VS_SELF_MISSES");
-    this:RegisterEvent("PLAYER_TARGET_CHANGED");
-    this:RegisterEvent("CHAT_MSG_COMBAT_CREATURE_VS_SELF_HITS");
-    this:RegisterEvent("CHAT_MSG_COMBAT_SELF_HITS");
-    this:RegisterEvent("CHAT_MSG_SPELL_SELF_BUFF");
-    this:RegisterEvent("CHAT_MSG_SPELL_SELF_MISSES");
-    this:RegisterEvent("CHARACTER_POINTS_CHANGED");
-    this:RegisterEvent("LEARNED_SPELL_IN_TAB");
+    InitComponents(this)
+    InitSubscribers()
 
     MLDpsLastSpellCast = GetTime();
     SlashCmdList["MLDPS"] = MLDps_SlashCommand;
     SLASH_MLDPS1 = "/mldps";
 end
 
-function MLDps_OnEvent(event)
-    if (event == "VARIABLES_LOADED") then
-        MLDps_Configuration_Init()
-    elseif (event == "CHARACTER_POINTS_CHANGED" or event == "LEARNED_SPELL_IN_TAB") then
-        DpsRotation = nil
-    end
-    for _, tracker in ipairs(trackers) do
-        if type(tracker.onEvent) == "function" then
-            tracker:onEvent(event)
-        else
-            error("Tracker does not implement :onEvent()")
+function InitComponents(frame)
+    global.trackers = {}
+    global.eventBus = EventBus:new(frame)
+end
+
+function InitSubscribers()
+    global.eventBus:subscribe(function (event, arg1)
+        if (event == "VARIABLES_LOADED") then
+            init()
+        elseif (event == "CHARACTER_POINTS_CHANGED" or event == "LEARNED_SPELL_IN_TAB") then
+            DpsRotation = nil
         end
-    end
+        for _, tracker in ipairs(global.trackers) do
+            if type(tracker.onEvent) == "function" then
+                tracker:onEvent(event, arg1)
+            else
+                error("Tracker does not implement :onEvent()")
+            end
+        end
+    end)
 end
