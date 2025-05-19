@@ -29,7 +29,6 @@ function EventBus:new(frame)
     frame:RegisterEvent("CHAT_MSG_SPELL_SELF_MISSES");
     frame:RegisterEvent("CHARACTER_POINTS_CHANGED");
     frame:RegisterEvent("LEARNED_SPELL_IN_TAB");
-    frame:RegisterEvent("PLAYER_EQUIPMENT_CHANGED");
     frame:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE");
 
     frame:SetScript( "OnEvent", function()
