@@ -12,6 +12,7 @@ libs\AceOO-2.0\AceOO-2.0.lua
 libs\AceHook\AceHook-2.0.lua
 
 Localization.lua
+DebugFrame.lua
 Logging.lua
 Helpers.lua
 EventBus.lua
