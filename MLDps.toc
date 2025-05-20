@@ -17,6 +17,7 @@ Helpers.lua
 EventBus.lua
 SpellCastInterceptor.lua
 
+Tracker\BattleShoutTracker.lua
 Tracker\CooldownTracker.lua
 Tracker\AutoAttackTracker.lua
 Tracker\OverpowerTracker.lua

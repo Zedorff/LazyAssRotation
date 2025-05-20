@@ -1,4 +1,5 @@
 MLDps = MLDps or {}
+local global = MLDps
 
 --- Tracks Rend uptime.
 --- @class RendTracker : CooldownTracker
@@ -19,14 +20,19 @@ function RendTracker:new()
         pendingRendApplyTime = nil,
     }
     MLDps:StartHookingSpellCasts()
-    return setmetatable(obj, self)
+    local instance = setmetatable(obj, RendTracker)
+    
+    global.eventBus:subscribe(function(event, arg1)
+        instance:onEvent(event, arg1)
+    end)
+
+    return instance
 end
 
 --- Handles all subscribed events.
 --- @param event string
---- @vararg any
-function RendTracker:onEvent(event, ...)
-    local arg1 = unpack(arg)
+--- @param arg1 string
+function RendTracker:onEvent(event, arg1)
     local now = GetTime()
 
     if event == "PLAYER_TARGET_CHANGED" then

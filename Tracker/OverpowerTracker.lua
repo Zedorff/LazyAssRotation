@@ -1,3 +1,6 @@
+MLDps = MLDps or {}
+local global = MLDps
+
 --- @class OverpowerTracker : CooldownTracker
 --- @field overpowerReadyUntil number
 --- @diagnostic disable: duplicate-set-field
@@ -9,13 +12,18 @@ function OverpowerTracker:new()
     local obj = {
         overpowerReadyUntil = 0
     }
-    return setmetatable(obj, self)
+    local instance = setmetatable(obj, OverpowerTracker)
+    
+    global.eventBus:subscribe(function(event, arg1)
+        instance:onEvent(event, arg1)
+    end)
+
+    return instance
 end
 
 --- @param event string
---- @vararg any
-function OverpowerTracker:onEvent(event, ...)
-    local arg1 = unpack(arg)
+--- @param arg1 string
+function OverpowerTracker:onEvent(event, arg1)
     if (event == "CHAT_MSG_COMBAT_SELF_MISSES"
             or event == "CHAT_MSG_SPELL_SELF_DAMAGE"
             or event == "CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF")

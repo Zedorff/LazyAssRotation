@@ -13,7 +13,6 @@ function EventBus:new(frame)
 
     local instance = setmetatable(obj, EventBus)
 
-    frame:RegisterEvent("VARIABLES_LOADED")
     frame:RegisterEvent("VARIABLES_LOADED");
     frame:RegisterEvent("PLAYER_ENTERING_WORLD");
     frame:RegisterEvent("PLAYER_ENTER_COMBAT");
@@ -30,6 +29,8 @@ function EventBus:new(frame)
     frame:RegisterEvent("CHARACTER_POINTS_CHANGED");
     frame:RegisterEvent("LEARNED_SPELL_IN_TAB");
     frame:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE");
+    frame:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF");
+    frame:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS")
 
     frame:SetScript( "OnEvent", function()
         instance:notify(event, arg1, arg2, arg3, arg4, arg5)

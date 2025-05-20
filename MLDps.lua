@@ -2,7 +2,6 @@ MLDps = MLDps or {}
 local global = MLDps
 
 --- @class MLDps
---- @field trackers table
 --- @field eventBus EventBus
 
 local DpsRotation = nil
@@ -44,7 +43,6 @@ function MLDps_SlashCommand(msg)
 end
 
 function ResetRotation()
-    global.trackers = {}
     DpsRotation = nil
     MLDps:StoptHookingSpellCasts()
 end
@@ -61,7 +59,6 @@ function MLDps_OnLoad()
 end
 
 function InitComponents(frame)
-    global.trackers = {}
     global.eventBus = EventBus:new(frame)
 end
 
@@ -71,13 +68,6 @@ function InitSubscribers()
             init()
         elseif (event == "CHARACTER_POINTS_CHANGED" or event == "LEARNED_SPELL_IN_TAB") then
             DpsRotation = nil
-        end
-        for _, tracker in ipairs(global.trackers) do
-            if type(tracker.onEvent) == "function" then
-                tracker:onEvent(event, arg1)
-            else
-                error("Tracker does not implement :onEvent()")
-            end
         end
     end)
 end

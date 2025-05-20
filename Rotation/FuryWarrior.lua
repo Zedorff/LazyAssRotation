@@ -1,4 +1,8 @@
+MLDps = MLDps or {}
+local global = MLDps
+
 --- @class FuryWarrior : ClassRotation
+--- @field battleShoutTracker BattleShoutTracker
 --- @diagnostic disable: duplicate-set-field
 FuryWarrior = setmetatable({}, { __index = ClassRotation })
 FuryWarrior.__index = FuryWarrior
@@ -6,7 +10,10 @@ FuryWarrior.__index = FuryWarrior
 --- @return FuryWarrior
 function FuryWarrior:new()
     Logging:Log("Using Fury Warrior rotation")
-    return setmetatable({}, self)
+    local trackers = {
+        battleShoutTracker = BattleShoutTracker:new(),
+    }
+    return setmetatable(trackers, self)
 end
 
 function FuryWarrior:execute()
@@ -18,7 +25,7 @@ function FuryWarrior:execute()
     local shoutCost = Helpers:RageCost(ABILITY_BATTLE_SHOUT)
 
     if not CheckInteractDistance("target", 3) then
-        if not Helpers:HasBuff("player", "Ability_Warrior_BattleShout") and rage >= shoutCost then
+        if self.battleShoutTracker:isAvailable() and rage >= shoutCost then
             Logging:Debug("Casting Battle Shout")
             CastSpellByName(ABILITY_BATTLE_SHOUT)
         end
@@ -32,7 +39,7 @@ function FuryWarrior:execute()
         end
         Logging:Debug("Casting Execute")
         CastSpellByName(ABILITY_EXECUTE)
-    elseif not Helpers:HasBuff("player", "Ability_Warrior_BattleShout") and rage >= shoutCost then
+    elseif self.battleShoutTracker:isAvailable() and rage >= shoutCost then
         Logging:Debug("Casting Battle Shout")
         CastSpellByName(ABILITY_BATTLE_SHOUT)
     elseif Helpers:SpellReady(ABILITY_BLOODTHIRST) and rage >= bsCost then

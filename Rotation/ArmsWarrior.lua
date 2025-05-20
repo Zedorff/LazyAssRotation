@@ -5,6 +5,7 @@ local global = MLDps
 --- @field autoAttackTracker AutoAttackTracker
 --- @field overpowerTracker OverpowerTracker
 --- @field rendTracker RendTracker
+--- @field battleShoutTracker BattleShoutTracker
 --- @diagnostic disable: duplicate-set-field
 ArmsWarrior = setmetatable({}, { __index = ClassRotation })
 ArmsWarrior.__index = ArmsWarrior
@@ -16,10 +17,8 @@ function ArmsWarrior:new()
         autoAttackTracker = AutoAttackTracker:new(),
         overpowerTracker = OverpowerTracker:new(),
         rendTracker = RendTracker:new(),
+        battleShoutTracker = BattleShoutTracker:new(),
     }
-    table.insert(global.trackers, trackers.autoAttackTracker)
-    table.insert(global.trackers, trackers.overpowerTracker)
-    table.insert(global.trackers, trackers.rendTracker)
     return setmetatable(trackers, self)
 end
 
@@ -31,7 +30,7 @@ function ArmsWarrior:execute()
     local shoutCost = Helpers:RageCost(ABILITY_BATTLE_SHOUT)
     
     if not CheckInteractDistance("target", 3) then
-        if not Helpers:HasBuff("player", "Ability_Warrior_BattleShout") and rage >= shoutCost then
+        if self.battleShoutTracker:isAvailable() and rage >= shoutCost then
             Logging:Debug("Casting Battle Shout")
             CastSpellByName(ABILITY_BATTLE_SHOUT)
         end
@@ -59,7 +58,7 @@ function ArmsWarrior:NoSlamWarriorRotation(rage)
     local activeStance = Helpers:ActiveStance()
     local wwCost = Helpers:RageCost(ABILITY_WHIRLWIND)
     local rendCost = Helpers:RageCost(ABILITY_REND)
-    if not Helpers:HasBuff("player", "Ability_Warrior_BattleShout") and rage >= 20 then
+    if self.battleShoutTracker:isAvailable() and rage >= 20 then
         Logging:Debug("Casting Battle Shout")
         CastSpellByName(ABILITY_BATTLE_SHOUT)
     end
