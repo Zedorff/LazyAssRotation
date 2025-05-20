@@ -2,7 +2,7 @@ MLDps = MLDps or {}
 local global = MLDps
 
 local debugMessages = {}
-local maxMessages = 100
+local maxMessages = 200
 local filterText = ""
 local lineHeight = 14
 
