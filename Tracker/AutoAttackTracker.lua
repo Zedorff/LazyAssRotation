@@ -8,17 +8,11 @@ AutoAttackTracker = setmetatable({}, { __index = CooldownTracker })
 AutoAttackTracker.__index = AutoAttackTracker
 
 --- @return AutoAttackTracker
-function AutoAttackTracker:new()
+function AutoAttackTracker.new()
     local obj = {
         lastAutoAttack = 0
     }
-    local instance = setmetatable(obj, AutoAttackTracker)
-    
-    global.eventBus:subscribe(function(event, arg1)
-        instance:onEvent(event, arg1)
-    end)
-
-    return instance
+    return setmetatable(obj, AutoAttackTracker)
 end
 
 --- @param event string

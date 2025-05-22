@@ -7,18 +7,17 @@ local global = MLDps
 BattleShoutTracker = setmetatable({}, { __index = CooldownTracker })
 BattleShoutTracker.__index = BattleShoutTracker
 
-function BattleShoutTracker:new()
+function BattleShoutTracker.new()
     local obj = {
         battleShoutIsUp = Helpers:HasBuff("player", "Ability_Warrior_BattleShout")
     }
 
-    local instance = setmetatable(obj, BattleShoutTracker)
+    return setmetatable(obj, BattleShoutTracker)
+end
 
-    global.eventBus:subscribe(function(event, arg1)
-        instance:onEvent(event, arg1)
-    end)
-
-    return instance
+function BattleShoutTracker:subscribe()
+    CooldownTracker.subscribe(self)
+    self.battleShoutIsUp = Helpers:HasBuff("player", "Ability_Warrior_BattleShout")
 end
 
 --- @param event string

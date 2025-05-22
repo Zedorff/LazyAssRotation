@@ -19,14 +19,8 @@ function RendTracker:new()
         pendingRendTarget = nil,
         pendingRendApplyTime = nil,
     }
-    MLDps:StartHookingSpellCasts()
-    local instance = setmetatable(obj, RendTracker)
-    
-    global.eventBus:subscribe(function(event, arg1)
-        instance:onEvent(event, arg1)
-    end)
 
-    return instance
+    return setmetatable(obj, RendTracker)
 end
 
 --- Handles all subscribed events.
@@ -47,6 +41,16 @@ function RendTracker:onEvent(event, arg1)
     elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" then
         self:HandleSelfDamage(arg1, now)
     end
+end
+
+function RendTracker:subscribe()
+    MLDps:StartHookingSpellCasts()
+    CooldownTracker.subscribe(self)
+end
+
+function RendTracker:unsubscribe()
+    MLDps:StoptHookingSpellCasts()
+    CooldownTracker.unsubscribe(self)
 end
 
 --- Resets all Rend tracking information when the target changes.
