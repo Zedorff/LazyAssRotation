@@ -1,17 +1,23 @@
+MLDps = MLDps or {}
+local global = MLDps
+
 --- @class ArmsWarrior : ClassRotation
 --- @field autoAttackTracker AutoAttackTracker
 --- @field overpowerTracker OverpowerTracker
+--- @field rendTracker RendTracker
+--- @field battleShoutTracker BattleShoutTracker
 --- @diagnostic disable: duplicate-set-field
 ArmsWarrior = setmetatable({}, { __index = ClassRotation })
 ArmsWarrior.__index = ArmsWarrior
 
---- @param deps table
 --- @return ArmsWarrior
-function ArmsWarrior:new(deps)
+function ArmsWarrior:new()
     Logging:Log("Using Arms Warrior rotation")
     local trackers = {
-        autoAttackTracker = deps.autoAttackTracker,
-        overpowerTracker = deps.overpowerTracker,
+        autoAttackTracker = AutoAttackTracker:new(),
+        overpowerTracker = OverpowerTracker:new(),
+        rendTracker = RendTracker:new(),
+        battleShoutTracker = BattleShoutTracker:new(),
     }
     return setmetatable(trackers, self)
 end
@@ -24,10 +30,11 @@ function ArmsWarrior:execute()
     local shoutCost = Helpers:RageCost(ABILITY_BATTLE_SHOUT)
     
     if not CheckInteractDistance("target", 3) then
-        if not Helpers:HasBuff("player", "Ability_Warrior_BattleShout") and rage >= shoutCost then
+        if self.battleShoutTracker:isAvailable() and rage >= shoutCost then
             Logging:Debug("Casting Battle Shout")
             CastSpellByName(ABILITY_BATTLE_SHOUT)
         end
+        Logging:Debug("Too far away!")
         return
     end
 
@@ -38,6 +45,7 @@ function ArmsWarrior:execute()
     end
 
     if (timeToNextAttack > slamCastTime) and rage >= slamCost then
+        Logging:Debug("Casting Slam")
         CastSpellByName(ABILITY_SLAM)
     else
         self:NoSlamWarriorRotation(rage)
@@ -49,7 +57,8 @@ function ArmsWarrior:NoSlamWarriorRotation(rage)
     local msCost = Helpers:RageCost(ABILITY_MORTAL_STRIKE);
     local activeStance = Helpers:ActiveStance()
     local wwCost = Helpers:RageCost(ABILITY_WHIRLWIND)
-    if not Helpers:HasBuff("player", "Ability_Warrior_BattleShout") and rage >= 20 then
+    local rendCost = Helpers:RageCost(ABILITY_REND)
+    if self.battleShoutTracker:isAvailable() and rage >= 20 then
         Logging:Debug("Casting Battle Shout")
         CastSpellByName(ABILITY_BATTLE_SHOUT)
     end
@@ -60,9 +69,12 @@ function ArmsWarrior:NoSlamWarriorRotation(rage)
     elseif Helpers:SpellReady(ABILITY_MORTAL_STRIKE) and rage >= msCost then
         Logging:Debug("Casting Mortal Strike")
         CastSpellByName(ABILITY_MORTAL_STRIKE)
-    elseif activeStance == 3 and Helpers:SpellReady(ABILITY_WHIRLWIND) and rage >= wwCost then
+    elseif activeStance == 3 and Helpers:SpellReady(ABILITY_WHIRLWIND) and not Helpers:SpellReady(ABILITY_MORTAL_STRIKE) and rage >= wwCost then
         Logging:Debug("Casting whirlwind")
         CastSpellByName(ABILITY_WHIRLWIND)
+    elseif activeStance == 1 and self.rendTracker:isAvailable() and not Helpers:SpellReady(ABILITY_MORTAL_STRIKE) and rage>= rendCost then
+        Logging:Debug("Casting rend")
+        CastSpellByName(ABILITY_REND)
     end
 
     if rage >= 80 then

@@ -1,9 +1,20 @@
+MLDps = MLDps or {}
+local global = MLDps
+
 Logging = {
     debugEnabled = false
 }
 
 function Logging:ToggleDebug()
     self.debugEnabled = not self.debugEnabled
+
+    if self.debugEnabled then
+        DebugFrame_Create()
+        global.debugFrame:Show()
+    elseif global.debugFrame then
+        global.debugFrame:Hide()
+    end
+
     self:Log("Debug mode: " .. tostring(self.debugEnabled))
 end
 
@@ -16,7 +27,8 @@ end
 
 --- @param msg string
 function Logging:Debug(msg)
-    if self.debugEnabled then
-        self:Log("[DEBUG] " .. msg)
+    if self.debugEnabled and global.debugFrame then
+        local timestamp = date("%H:%M:%S")  -- current time in 24h format
+        DebugFrame_AddMessage("[" .. timestamp .. "] " .. msg)
     end
 end

@@ -1,3 +1,6 @@
+MLDps = MLDps or {}
+local global = MLDps
+
 --- @class AutoAttackTracker : CooldownTracker
 --- @field lastAutoAttack number
 --- @diagnostic disable: duplicate-set-field
@@ -9,17 +12,24 @@ function AutoAttackTracker:new()
     local obj = {
         lastAutoAttack = 0
     }
-    return setmetatable(obj, self)
+    local instance = setmetatable(obj, AutoAttackTracker)
+    
+    global.eventBus:subscribe(function(event, arg1)
+        instance:onEvent(event, arg1)
+    end)
+
+    return instance
 end
 
----@param event string
-function AutoAttackTracker:onEvent(event)
+--- @param event string
+--- @param arg1 string
+function AutoAttackTracker:onEvent(event, arg1)
     if ((event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_SPELL_SELF_MISSES") and string.find(arg1, CHAT_HEROIC_STRIKE))
         or (event == "CHAT_MSG_COMBAT_SELF_MISSES" or event == "CHAT_MSG_COMBAT_SELF_HITS") then
+        Logging:Debug("Autoattack")
         self.lastAutoAttack = GetTime();
     end
 end
-
 
 --- @return boolean
 function AutoAttackTracker:isAvailable()

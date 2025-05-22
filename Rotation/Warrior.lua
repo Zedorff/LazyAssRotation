@@ -6,9 +6,9 @@ Warrior.__index = Warrior
 
 --- @param deps any
 --- @return Warrior
-function Warrior:new(deps)
+function Warrior:new()
     local table = {
-        proxyRotation = Warrior:GetRotationBySpec(deps)
+        proxyRotation = Warrior:GetRotationBySpec()
     }
     return setmetatable(table, self)
 end
@@ -19,16 +19,13 @@ end
 
 --- @param deps any
 --- @return ClassRotation | nil
-function Warrior:GetRotationBySpec(deps)
+function Warrior:GetRotationBySpec()
     local _, _, arms = GetTalentTabInfo(1)
     local _, _, fury = GetTalentTabInfo(2)
     local _, _, prot = GetTalentTabInfo(3)
 
     if arms >= fury and arms >= prot then
-        return ArmsWarrior:new({
-            autoAttackTracker = deps.autoAttackTracker,
-            overpowerTracker = deps.overpowerTracker,
-        })
+        return ArmsWarrior:new()
     elseif fury >= arms and fury >= prot then
         return FuryWarrior:new()
     else
