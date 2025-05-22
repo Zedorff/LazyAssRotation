@@ -34,7 +34,7 @@ function WhirlwindModule:GetArmsWhirlwindPriority(rage)
     if Helpers:SpellReady(ABILITY_WHIRLWIND) and not Helpers:SpellReady(ABILITY_MORTAL_STRIKE) and rage >= wwCost then
         return 70
     else
-        return 0;
+        return -1;
     end
 end
 
@@ -43,6 +43,6 @@ function WhirlwindModule:GetFuryWhirlwindPriority(rage)
     if Helpers:SpellReady(ABILITY_WHIRLWIND) and not Helpers:SpellReady(ABILITY_BLOODTHIRST) and rage >= wwCost then
         return 70
     else
-        return 0;
+        return -1;
     end
 end

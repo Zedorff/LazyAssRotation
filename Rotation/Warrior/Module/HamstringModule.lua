@@ -4,7 +4,7 @@ HamstringModule = setmetatable({}, { __index = Module })
 HamstringModule.__index = HamstringModule
 
 function HamstringModule.new()
-    return setmetatable(Module.new(ABILITY_WHIRLWIND), HamstringModule)
+    return setmetatable(Module.new(ABILITY_HAMSTRING), HamstringModule)
 end
 
 function HamstringModule:run()
@@ -33,6 +33,6 @@ function HamstringModule:GetFuryHamstringPriority(rage)
    if Helpers:SpellReady(ABILITY_HAMSTRING) and rage >= 80 then
         return 10
     else
-        return 0;
+        return -1;
     end
 end

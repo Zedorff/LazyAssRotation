@@ -21,6 +21,6 @@ function ExecuteModule:getPriority()
             return -1;
         end
     else
-        return 1;
+        return -1;
     end
 end
