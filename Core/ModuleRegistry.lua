@@ -36,3 +36,7 @@ function ModuleRegistry:GetEnabledModules()
     end
     return active
 end
+
+function ModuleRegistry:ClearRegistry()
+    self.modules = {}
+end

@@ -3,7 +3,6 @@
 BloodthirstModule = setmetatable({}, { __index = Module })
 BloodthirstModule.__index = BloodthirstModule
 
-
 function BloodthirstModule.new()
     return setmetatable(Module.new(ABILITY_BLOODTHIRST), BloodthirstModule)
 end

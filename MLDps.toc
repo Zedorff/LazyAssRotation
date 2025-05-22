@@ -44,9 +44,8 @@ Rotation\Warrior\Module\MortalStrikeModule.lua
 Rotation\Warrior\Module\SlamModule.lua
 Rotation\Warrior\Module\WhirlwindModule.lua
 Rotation\Warrior\Module\RendModule.lua
+Rotation\Warrior\Module\OverpowerModule.lua
 
-Rotation\Warrior\ArmsWarrior.lua
-Rotation\Warrior\FuryWarrior.lua
 Rotation\Warrior\Warrior.lua
 
 UI\DebugFrame.lua

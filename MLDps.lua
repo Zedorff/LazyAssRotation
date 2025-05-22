@@ -7,25 +7,13 @@ local global = MLDps
 local DpsRotation = nil
 
 function init()
-    local class = UnitClass("player")
-    if (class == CLASS_WARRIOR_DPS) then
-        ModuleRegistry:RegisterModule(AutoAttackModule.new())
-        ModuleRegistry:RegisterModule(BattleShoutModule.new())
-        -- ModuleRegistry:RegisterModule(BloodthirstModule.new())
-        ModuleRegistry:RegisterModule(ExecuteModule.new())
-        -- ModuleRegistry:RegisterModule(HamstringModule.new())
-        ModuleRegistry:RegisterModule(HeroicStrikeModule.new())
-        ModuleRegistry:RegisterModule(MortalStrikeModule.new())
-        ModuleRegistry:RegisterModule(SlamModule.new())
-        ModuleRegistry:RegisterModule(WhirlwindModule.new())
-        ModuleRegistry:RegisterModule(RendModule.new())
-    end
+    
 end
 
 function CreateDpsRotation()
     local class = UnitClass("player")
     if (class == CLASS_WARRIOR_DPS) then
-        return Warrior:new();
+        return Warrior.new();
     end
 end
 
@@ -88,6 +76,7 @@ function InitSubscribers()
             if (event == "VARIABLES_LOADED") then
                 init()
             elseif (event == "CHARACTER_POINTS_CHANGED" or event == "LEARNED_SPELL_IN_TAB") then
+                ModuleRegistry:ClearRegistry()
                 DpsRotation = nil
             end
     end})

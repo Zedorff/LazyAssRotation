@@ -18,7 +18,7 @@ function HamstringModule:getPriority()
         local rage = UnitMana("player");
         local spec = Helpers:GetWarriorSpec()
         if spec == WarriorSpec.ARMS then
-            return 1;
+            return -1;
         elseif spec == WarriorSpec.FURY then
             return self:GetFuryHamstringPriority(rage)
         else
