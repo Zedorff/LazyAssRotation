@@ -11,7 +11,7 @@ function Warrior.new()
     local instance = ClassRotation.new(RageCostCache.new())
     setmetatable(instance, Warrior)
 
-    instance.spec = Helpers:GetWarriorSpec()
+    instance.spec = GetWarriorSpec()
 
     ModuleRegistry:RegisterModule(AutoAttackModule.new())
     ModuleRegistry:RegisterModule(BattleShoutModule.new())
@@ -20,6 +20,7 @@ function Warrior.new()
     ModuleRegistry:RegisterModule(WhirlwindModule.new())
     ModuleRegistry:RegisterModule(OverpowerModule.new())
     instance:RegisterSpecDependantModules()
+    WarriorModuleRunContext.PreheatCache(instance.cache)
     return instance
 end
 

@@ -35,7 +35,8 @@ function EventBus:new(frame)
     frame:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE");
     frame:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF");
     frame:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS")
-
+    frame:RegisterEvent("UNIT_INVENTORY_CHANGED");
+    
     frame:SetScript( "OnEvent", function()
         instance:notify(event, arg1, arg2, arg3, arg4, arg5)
     end )

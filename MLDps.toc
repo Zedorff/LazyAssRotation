@@ -22,22 +22,27 @@ Common\Helpers.lua
 
 Core\EventBus.lua
 Core\SpellCastInterceptor.lua
-Core\ModuleRunCache.lua
 Core\ModuleRunContext.lua
 Core\Module.lua
 Core\ModuleRegistry.lua
+Core\CooldownTracker.lua
+Core\ModuleRunCache.lua
+Core\ManaCostCache.lua
 
-Tracker\CooldownTracker.lua
-Tracker\BattleShoutTracker.lua
-Tracker\AutoAttackTracker.lua
-Tracker\OverpowerTracker.lua
-Tracker\RendTracker.lua
+Core\SharedTracker\ClearcastingTracker.lua
 
 Rotation\ClassRotation.lua
 Rotation\ClassRotationPerformer.lua
 
+Rotation\Warrior\Tracker\BattleShoutTracker.lua
+Rotation\Warrior\Tracker\AutoAttackTracker.lua
+Rotation\Warrior\Tracker\OverpowerTracker.lua
+Rotation\Warrior\Tracker\RendTracker.lua
+
 Rotation\Warrior\RageCostCache.lua
+
 Rotation\Warrior\WarriorModuleRunContext.lua
+
 Rotation\Warrior\Module\AutoAttackModule.lua
 Rotation\Warrior\Module\BattleShoutModule.lua
 Rotation\Warrior\Module\BloodthirstModule.lua
@@ -51,6 +56,24 @@ Rotation\Warrior\Module\RendModule.lua
 Rotation\Warrior\Module\OverpowerModule.lua
 
 Rotation\Warrior\Warrior.lua
+
+Rotation\Shaman\ShamanModuleRunContext.lua
+
+Rotation\Shaman\Tracker\WaterShieldTracker.lua
+Rotation\Shaman\Tracker\LightningShieldTracker.lua
+Rotation\Shaman\Tracker\StormStrikeTracker.lua
+Rotation\Shaman\Tracker\WindfuryTracker.lua
+Rotation\Shaman\Tracker\RockbiterTracker.lua
+
+Rotation\Shaman\Module\WaterShieldModule.lua
+Rotation\Shaman\Module\LightningShieldModule.lua
+Rotation\Shaman\Module\StormStrikeModule.lua
+Rotation\Shaman\Module\LightningStrikeModule.lua
+Rotation\Shaman\Module\ShockModule.lua
+Rotation\Shaman\Module\RockbiterModule.lua
+Rotation\Shaman\Module\WindfuryModule.lua
+
+Rotation\Shaman\Shaman.lua
 
 UI\DebugFrame.lua
 

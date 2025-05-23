@@ -31,3 +31,15 @@ function WarriorModuleRunContext.new(cache, spec)
     }
     return setmetatable(context, WarriorModuleRunContext)
 end
+
+--- @param cache RageCostCache
+function WarriorModuleRunContext.PreheatCache(cache)
+    cache:Get(ABILITY_MORTAL_STRIKE)
+    cache:Get(ABILITY_BLOODTHIRST)
+    cache:Get(ABILITY_WHIRLWIND)
+    cache:Get(ABILITY_BATTLE_SHOUT)
+    cache:Get(ABILITY_HEROIC_STRIKE)
+    cache:Get(ABILITY_HAMSTRING)
+    cache:Get(ABILITY_SLAM)
+    cache:Get(ABILITY_REND)
+end

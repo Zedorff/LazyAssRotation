@@ -47,21 +47,6 @@ function MLDps:ShowModuleToggleMenu()
         })
     end
 
-    local function OnClick()
-        local id = this:GetID() - 2
-
-        local opt = optionList[id]
-        if opt then
-            if opt.enabled then
-                ModuleRegistry:DisableModule(opt.name)
-            else
-                ModuleRegistry:EnableModule(opt.name)
-            end
-            -- Toggle local state for checkbox reflect
-            opt.enabled = not opt.enabled
-        end
-    end
-
     local function Initialize()
         -- Add the title line at the top
         UIDropDownMenu_AddButton({
@@ -82,7 +67,19 @@ function MLDps:ShowModuleToggleMenu()
         for i, v in ipairs(optionList) do
             info = {}
             info.text = v.name
-            info.func = OnClick
+            info.arg1 = i
+            info.func = function (arg1)
+                local opt = optionList[arg1]
+                if opt then
+                    if opt.enabled then
+                        ModuleRegistry:DisableModule(opt.name)
+                    else
+                        ModuleRegistry:EnableModule(opt.name)
+                    end
+                    opt.enabled = not opt.enabled
+                end
+                CloseDropDownMenus()
+            end
             info.checked = v.enabled
             info.keepShownOnClick = true
             info.notCheckable = false
