@@ -4,7 +4,7 @@
 ## Author: Zedorff
 ## DefaultState: enabled
 ## OptionalDeps: none
-## SavedVariables: ShouldUseRend
+## SavedVariables: MLDpsModuleSettings
 
 ## Load Ace2 libraries first
 libs\AceLibrary\AceLibrary.lua
@@ -12,21 +12,46 @@ libs\AceOO-2.0\AceOO-2.0.lua
 libs\AceHook\AceHook-2.0.lua
 
 Localization.lua
-DebugFrame.lua
 Logging.lua
 Helpers.lua
 EventBus.lua
 SpellCastInterceptor.lua
 
-Tracker\BattleShoutTracker.lua
+Common\Logging.lua
+Common\Helpers.lua
+
+Core\EventBus.lua
+Core\SpellCastInterceptor.lua
+Core\ModuleRunCache.lua
+Core\ModuleRunContext.lua
+Core\Module.lua
+Core\ModuleRegistry.lua
+
 Tracker\CooldownTracker.lua
+Tracker\BattleShoutTracker.lua
 Tracker\AutoAttackTracker.lua
 Tracker\OverpowerTracker.lua
 Tracker\RendTracker.lua
 
 Rotation\ClassRotation.lua
-Rotation\ArmsWarrior.lua
-Rotation\FuryWarrior.lua
-Rotation\Warrior.lua
+Rotation\ClassRotationPerformer.lua
+
+Rotation\Warrior\RageCostCache.lua
+Rotation\Warrior\WarriorModuleRunContext.lua
+Rotation\Warrior\Module\AutoAttackModule.lua
+Rotation\Warrior\Module\BattleShoutModule.lua
+Rotation\Warrior\Module\BloodthirstModule.lua
+Rotation\Warrior\Module\ExecuteModule.lua
+Rotation\Warrior\Module\HamstringModule.lua
+Rotation\Warrior\Module\HeroicStrikeModule.lua
+Rotation\Warrior\Module\MortalStrikeModule.lua
+Rotation\Warrior\Module\SlamModule.lua
+Rotation\Warrior\Module\WhirlwindModule.lua
+Rotation\Warrior\Module\RendModule.lua
+Rotation\Warrior\Module\OverpowerModule.lua
+
+Rotation\Warrior\Warrior.lua
+
+UI\DebugFrame.lua
 
 MLDps.xml

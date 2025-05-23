@@ -1,0 +1,28 @@
+--- @class MortalStrikeModule : Module
+--- @diagnostic disable: duplicate-set-field
+MortalStrikeModule = setmetatable({}, { __index = Module })
+MortalStrikeModule.__index = MortalStrikeModule
+
+
+function MortalStrikeModule.new()
+    return setmetatable(Module.new(ABILITY_MORTAL_STRIKE), MortalStrikeModule)
+end
+
+function MortalStrikeModule:run()
+    Logging:Debug("Casting Mortal Strike")
+    CastSpellByName(ABILITY_MORTAL_STRIKE)
+end
+
+
+--- @param context WarriorModuleRunContext
+function MortalStrikeModule:getPriority(context)
+    if self.enabled then
+        if Helpers:SpellReady(ABILITY_MORTAL_STRIKE) and context.rage >= context.msCost then
+            return 90;
+        else
+            return -1;
+        end
+    else
+        return -1;
+    end
+end

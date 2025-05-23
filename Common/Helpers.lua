@@ -1,7 +1,15 @@
 Helpers = {}
 
+--- @alias WarriorSpec 1 | 2 | 3
+--- @enum WarriorSpecNames
+WarriorSpec = {
+    ARMS = 1,
+    FURY = 2,
+    PROT = 3
+}
+
 --- @param spellname string
---- @return number
+--- @return number | nil
 function Helpers:SpellId(spellname)
   local id = 1;
   for i = 1, GetNumSpellTabs() do
@@ -18,7 +26,7 @@ function Helpers:SpellId(spellname)
 end
 
 --- @param spellname string
---- @return boolean
+--- @return boolean | nil
 function Helpers:SpellReady(spellname)
     local id = Helpers:SpellId(spellname);
     if (id) then
@@ -32,7 +40,7 @@ end
 
 --- @param unit string
 --- @param texturename string
---- @return boolean
+--- @return boolean | nil
 function Helpers:HasBuff(unit, texturename)
     local id = 1;
     while (UnitBuff(unit, id)) do
@@ -124,4 +132,30 @@ function Helpers:ShouldUseExecute()
     if healthPercent >= 20 then return false end
 
     return true
+end
+
+--- @return integer
+function Helpers:GetWarriorSpec()
+    local _, _, arms = GetTalentTabInfo(1)
+    local _, _, fury = GetTalentTabInfo(2)
+    local _, _, prot = GetTalentTabInfo(3)
+
+    if arms >= fury and arms >= prot then
+        return WarriorSpec.ARMS
+    elseif fury >= arms and fury >= prot then
+        return WarriorSpec.FURY
+    else
+        return WarriorSpec.PROT
+    end
+end
+
+--- @param obj any
+--- @param class any
+function Helpers:isInstanceOf(obj, class)
+    local mt = getmetatable(obj)
+    while mt do
+        if mt == class then return true end
+        mt = getmetatable(mt)
+    end
+    return false
 end

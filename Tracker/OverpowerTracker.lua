@@ -8,17 +8,12 @@ OverpowerTracker = setmetatable({}, { __index = CooldownTracker })
 OverpowerTracker.__index = OverpowerTracker
 
 --- @return OverpowerTracker
-function OverpowerTracker:new()
+function OverpowerTracker.new()
     local obj = {
         overpowerReadyUntil = 0
     }
-    local instance = setmetatable(obj, OverpowerTracker)
-    
-    global.eventBus:subscribe(function(event, arg1)
-        instance:onEvent(event, arg1)
-    end)
 
-    return instance
+    return setmetatable(obj, OverpowerTracker)
 end
 
 --- @param event string

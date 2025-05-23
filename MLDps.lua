@@ -4,6 +4,7 @@ local global = MLDps
 --- @class MLDps
 --- @field eventBus EventBus
 
+--- @type ClassRotation | nil
 local DpsRotation = nil
 
 function init()
@@ -13,7 +14,7 @@ end
 function CreateDpsRotation()
     local class = UnitClass("player")
     if (class == CLASS_WARRIOR_DPS) then
-        return Warrior:new();
+        return Warrior.new();
     end
 end
 
@@ -43,6 +44,9 @@ function MLDps_SlashCommand(msg)
 end
 
 function ResetRotation()
+    if DpsRotation then
+        DpsRotation:clear()
+    end
     DpsRotation = nil
     MLDps:StoptHookingSpellCasts()
 end
@@ -50,6 +54,14 @@ end
 -- Event Handlers
 
 function MLDps_OnLoad()
+    if not MLDpsModuleSettings then
+        MLDpsModuleSettings = {}
+    end
+
+    if not MLDpsModuleSettings.modulesEnabled then
+        MLDpsModuleSettings.modulesEnabled = {}
+    end
+
     InitComponents(this)
     InitSubscribers()
 
@@ -63,11 +75,13 @@ function InitComponents(frame)
 end
 
 function InitSubscribers()
-    global.eventBus:subscribe(function (event, arg1)
-        if (event == "VARIABLES_LOADED") then
-            init()
-        elseif (event == "CHARACTER_POINTS_CHANGED" or event == "LEARNED_SPELL_IN_TAB") then
-            DpsRotation = nil
-        end
-    end)
+    global.eventBus:subscribe({
+        onEvent = function (_, event, arg1)
+            if (event == "VARIABLES_LOADED") then
+                init()
+            elseif (event == "CHARACTER_POINTS_CHANGED" or event == "LEARNED_SPELL_IN_TAB") then
+                ModuleRegistry:ClearRegistry()
+                ResetRotation()
+            end
+    end})
 end
