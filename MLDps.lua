@@ -4,6 +4,7 @@ local global = MLDps
 --- @class MLDps
 --- @field eventBus EventBus
 
+--- @type ClassRotation | nil
 local DpsRotation = nil
 
 function init()
@@ -43,6 +44,9 @@ function MLDps_SlashCommand(msg)
 end
 
 function ResetRotation()
+    if DpsRotation then
+        DpsRotation:clear()
+    end
     DpsRotation = nil
     MLDps:StoptHookingSpellCasts()
 end
@@ -77,7 +81,7 @@ function InitSubscribers()
                 init()
             elseif (event == "CHARACTER_POINTS_CHANGED" or event == "LEARNED_SPELL_IN_TAB") then
                 ModuleRegistry:ClearRegistry()
-                DpsRotation = nil
+                ResetRotation()
             end
     end})
 end

@@ -3,7 +3,6 @@
 SlamModule = setmetatable({}, { __index = Module })
 SlamModule.__index = SlamModule
 
-
 function SlamModule.new()
     local instance = Module.new(ABILITY_SLAM)
     setmetatable(instance, SlamModule)
@@ -30,14 +29,13 @@ function SlamModule:run()
     CastSpellByName(ABILITY_SLAM)
 end
 
-function SlamModule:getPriority()
+--- @param context WarriorModuleRunContext
+function SlamModule:getPriority(context)
     if self.enabled then
         if ModuleRegistry:IsModuleEnabled("AutoAttack") then
-            local rage = UnitMana("player");
             local slamCastTime = Helpers:CastTime(ABILITY_SLAM)
-            local slamCost = Helpers:RageCost(ABILITY_SLAM);
             local nextSwing = ModuleRegistry.modules["AutoAttack"]:GetNextSwingTime()
-            if (nextSwing > slamCastTime) and Helpers:SpellReady(ABILITY_SLAM) and rage >= slamCost then
+            if (nextSwing > slamCastTime) and Helpers:SpellReady(ABILITY_SLAM) and context.rage >= context.slamCost then
                 return 100;
             else
                 return -1;

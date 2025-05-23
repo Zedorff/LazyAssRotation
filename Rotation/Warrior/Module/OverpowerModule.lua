@@ -22,12 +22,10 @@ function OverpowerModule:run()
     CastSpellByName(ABILITY_OVERPOWER)
 end
 
-function OverpowerModule:getPriority()
-    local activeStance = Helpers:ActiveStance()
-    if self.enabled and activeStance == 1 then
-        local rage = UnitMana("player");
-
-        if self.tracker:isAvailable() and Helpers:SpellReady(ABILITY_OVERPOWER) and rage >= 5 then
+--- @param context WarriorModuleRunContext
+function OverpowerModule:getPriority(context)
+    if self.enabled and context.stance == 1 then
+        if self.tracker:isAvailable() and Helpers:SpellReady(ABILITY_OVERPOWER) and context.rage >= 5 then
             return 80
         else
             return -1;

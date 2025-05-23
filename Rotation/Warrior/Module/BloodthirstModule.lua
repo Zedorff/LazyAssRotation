@@ -12,11 +12,10 @@ function BloodthirstModule:run()
     CastSpellByName(ABILITY_BLOODTHIRST)
 end
 
-function BloodthirstModule:getPriority()
+--- @param context WarriorModuleRunContext
+function BloodthirstModule:getPriority(context)
     if self.enabled then
-        local rage = UnitMana("player");
-        local bsCost = Helpers:RageCost(ABILITY_BLOODTHIRST)
-        if Helpers:SpellReady(ABILITY_BLOODTHIRST) and rage >= bsCost then
+        if Helpers:SpellReady(ABILITY_BLOODTHIRST) and context.rage >= context.bsCost then
             return 90;
         else
             return -1;

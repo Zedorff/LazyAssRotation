@@ -4,7 +4,6 @@
 BattleShoutModule = setmetatable({}, { __index = Module })
 BattleShoutModule.__index = BattleShoutModule
 
-
 function BattleShoutModule.new()
     local instance = Module.new(ABILITY_BATTLE_SHOUT)
     setmetatable(instance, BattleShoutModule)
@@ -33,11 +32,10 @@ function BattleShoutModule:run()
     CastSpellByName(ABILITY_BATTLE_SHOUT)
 end
 
-function BattleShoutModule:getPriority()
+--- @param context WarriorModuleRunContext
+function BattleShoutModule:getPriority(context)
     if self.enabled then
-        local rage = UnitMana("player");
-        local shoutCost = Helpers:RageCost(ABILITY_BATTLE_SHOUT)
-        if self.tracker:isAvailable() and rage >= shoutCost then
+        if self.tracker:isAvailable() and context.rage >= context.shoutCost then
             return 95; --- always cast when no buff on yourself
         end
     else

@@ -30,7 +30,8 @@ function Module:run()
     error("run() not implemented")
 end
 
+--- @param context ModuleRunContext
 --- @return integer
-function Module:getPriority()
+function Module:getPriority(context)
     error("getPriority() not implementd")
 end

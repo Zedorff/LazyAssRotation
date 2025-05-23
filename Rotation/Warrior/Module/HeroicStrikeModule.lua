@@ -13,14 +13,13 @@ function HeroicStrikeModule:run()
     CastSpellByName(ABILITY_HEROIC_STRIKE)
 end
 
-function HeroicStrikeModule:getPriority()
+--- @param context WarriorModuleRunContext
+function HeroicStrikeModule:getPriority(context)
     if self.enabled then
-        local rage = UnitMana("player");
-        local spec = Helpers:GetWarriorSpec()
-        if spec == WarriorSpec.ARMS then
-            return self:GetArmsHeroicPriority(rage)
-        elseif spec == WarriorSpec.FURY then
-            return self:GetFuryHeroicPriority(rage)
+        if context.spec == WarriorSpec.ARMS then
+            return self:GetArmsHeroicPriority(context.rage)
+        elseif context.spec == WarriorSpec.FURY then
+            return self:GetFuryHeroicPriority(context.rage)
         else
             return -1;
         end

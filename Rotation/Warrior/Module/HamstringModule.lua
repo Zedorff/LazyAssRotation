@@ -12,15 +12,13 @@ function HamstringModule:run()
     CastSpellByName(ABILITY_HAMSTRING)
 end
 
-function HamstringModule:getPriority()
-    local activeStance = Helpers:ActiveStance()
-    if self.enabled and activeStance == 3 then
-        local rage = UnitMana("player");
-        local spec = Helpers:GetWarriorSpec()
-        if spec == WarriorSpec.ARMS then
+--- @param context WarriorModuleRunContext
+function HamstringModule:getPriority(context)
+    if self.enabled and context.stance == 3 then
+        if context.spec == WarriorSpec.ARMS then
             return -1;
-        elseif spec == WarriorSpec.FURY then
-            return self:GetFuryHamstringPriority(rage)
+        elseif context.spec == WarriorSpec.FURY then
+            return self:GetFuryHamstringPriority(context.rage)
         else
             return -1;
         end

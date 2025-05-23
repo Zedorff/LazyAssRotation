@@ -12,15 +12,13 @@ function WhirlwindModule:run()
     CastSpellByName(ABILITY_WHIRLWIND)
 end
 
-function WhirlwindModule:getPriority()
-    local activeStance = Helpers:ActiveStance()
-    if self.enabled and activeStance == 3 then
-        local rage = UnitMana("player");
-        local spec = Helpers:GetWarriorSpec()
-        if spec == WarriorSpec.ARMS then
-            return self:GetArmsWhirlwindPriority(rage)
-        elseif spec == WarriorSpec.FURY then
-            return self:GetFuryWhirlwindPriority(rage)
+--- @param context WarriorModuleRunContext
+function WhirlwindModule:getPriority(context)
+    if self.enabled and context.stance == 3 then
+        if context.spec == WarriorSpec.ARMS then
+            return self:GetArmsWhirlwindPriority(context.rage)
+        elseif context.spec == WarriorSpec.FURY then
+            return self:GetFuryWhirlwindPriority(context.rage)
         else
             return -1;
         end

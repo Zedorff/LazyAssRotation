@@ -34,6 +34,6 @@ end
 
 function AutoAttackModule:run() end
 
-function AutoAttackModule:getPriority()
+function AutoAttackModule:getPriority(context)
     return -1;
 end

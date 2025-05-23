@@ -13,11 +13,11 @@ function MortalStrikeModule:run()
     CastSpellByName(ABILITY_MORTAL_STRIKE)
 end
 
-function MortalStrikeModule:getPriority()
+
+--- @param context WarriorModuleRunContext
+function MortalStrikeModule:getPriority(context)
     if self.enabled then
-        local rage = UnitMana("player");
-        local msCost = Helpers:RageCost(ABILITY_MORTAL_STRIKE)
-        if Helpers:SpellReady(ABILITY_MORTAL_STRIKE) and rage >= msCost then
+        if Helpers:SpellReady(ABILITY_MORTAL_STRIKE) and context.rage >= context.msCost then
             return 90;
         else
             return -1;

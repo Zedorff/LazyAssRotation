@@ -1,6 +1,7 @@
 Helpers = {}
 
---- @class WarriorSpec
+--- @alias WarriorSpec 1 | 2 | 3
+--- @enum WarriorSpecNames
 WarriorSpec = {
     ARMS = 1,
     FURY = 2,
@@ -8,7 +9,7 @@ WarriorSpec = {
 }
 
 --- @param spellname string
---- @return number
+--- @return number | nil
 function Helpers:SpellId(spellname)
   local id = 1;
   for i = 1, GetNumSpellTabs() do
@@ -25,7 +26,7 @@ function Helpers:SpellId(spellname)
 end
 
 --- @param spellname string
---- @return boolean
+--- @return boolean | nil
 function Helpers:SpellReady(spellname)
     local id = Helpers:SpellId(spellname);
     if (id) then
@@ -39,7 +40,7 @@ end
 
 --- @param unit string
 --- @param texturename string
---- @return boolean
+--- @return boolean | nil
 function Helpers:HasBuff(unit, texturename)
     local id = 1;
     while (UnitBuff(unit, id)) do
@@ -146,4 +147,15 @@ function Helpers:GetWarriorSpec()
     else
         return WarriorSpec.PROT
     end
+end
+
+--- @param obj any
+--- @param class any
+function Helpers:isInstanceOf(obj, class)
+    local mt = getmetatable(obj)
+    while mt do
+        if mt == class then return true end
+        mt = getmetatable(mt)
+    end
+    return false
 end

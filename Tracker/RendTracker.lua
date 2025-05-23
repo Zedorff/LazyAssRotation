@@ -12,7 +12,7 @@ RendTracker.__index = RendTracker
 
 --- Constructs a new RendTracker and starts spell hook.
 --- @return RendTracker
-function RendTracker:new()
+function RendTracker.new()
     local obj = {
         rendActiveUntil = 0,
         currentTargetName = nil,
