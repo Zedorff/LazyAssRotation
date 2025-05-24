@@ -2,6 +2,7 @@
 ModuleRunContext = {}
 ModuleRunContext.__index = ModuleRunContext
 
-function ModuleRunContext:PreheatCache()
+--- @param cache ModuleRunCache
+function ModuleRunContext.PreheatCache(cache)
     error("(PreheatCache) is not implemented")
 end

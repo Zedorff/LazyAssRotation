@@ -6,12 +6,12 @@ MLDps = MLDps or {}
 LightningShieldTracker = setmetatable({}, { __index = CooldownTracker })
 LightningShieldTracker.__index = LightningShieldTracker
 
+--- @return LightningShieldTracker
 function LightningShieldTracker.new()
-    local obj = {
-        shieldIsUp = Helpers:HasBuff("player", "Spell_Nature_LightningShield")
-    }
-
-    return setmetatable(obj, LightningShieldTracker)
+    --- @class LightningShieldTracker
+    local self = setmetatable(CooldownTracker.new(), LightningShieldTracker)
+    self.shieldIsUp = Helpers:HasBuff("player", "Spell_Nature_LightningShield")
+    return self
 end
 
 function LightningShieldTracker:subscribe()

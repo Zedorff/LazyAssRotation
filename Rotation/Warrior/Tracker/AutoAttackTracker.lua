@@ -1,6 +1,3 @@
-MLDps = MLDps or {}
-local global = MLDps
-
 --- @class AutoAttackTracker : CooldownTracker
 --- @field lastAutoAttack number
 --- @diagnostic disable: duplicate-set-field
@@ -9,10 +6,11 @@ AutoAttackTracker.__index = AutoAttackTracker
 
 --- @return AutoAttackTracker
 function AutoAttackTracker.new()
-    local obj = {
-        lastAutoAttack = 0
-    }
-    return setmetatable(obj, AutoAttackTracker)
+    --- @class AutoAttackTracker
+    local self = CooldownTracker.new()
+    setmetatable(self, AutoAttackTracker)
+    self.lastAutoAttack = 0
+    return self
 end
 
 --- @param event string

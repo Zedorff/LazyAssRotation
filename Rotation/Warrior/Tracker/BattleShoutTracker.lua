@@ -1,18 +1,16 @@
-MLDps = MLDps or {}
-local global = MLDps
-
 --- @class BattleShoutTracker : CooldownTracker
 --- @field battleShoutIsUp boolean
 --- @diagnostic disable: duplicate-set-field
 BattleShoutTracker = setmetatable({}, { __index = CooldownTracker })
 BattleShoutTracker.__index = BattleShoutTracker
 
+--- @return BattleShoutTracker
 function BattleShoutTracker.new()
-    local obj = {
-        battleShoutIsUp = Helpers:HasBuff("player", "Ability_Warrior_BattleShout")
-    }
-
-    return setmetatable(obj, BattleShoutTracker)
+    --- @class BattleShoutTracker
+    local self = CooldownTracker.new()
+    setmetatable(self, BattleShoutTracker)
+    self.battleShoutIsUp = Helpers:HasBuff("player", "Ability_Warrior_BattleShout")
+    return self
 end
 
 function BattleShoutTracker:subscribe()

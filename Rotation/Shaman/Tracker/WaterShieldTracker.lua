@@ -6,12 +6,13 @@ MLDps = MLDps or {}
 WaterShieldTracker = setmetatable({}, { __index = CooldownTracker })
 WaterShieldTracker.__index = WaterShieldTracker
 
+--- @return WaterShieldTracker
 function WaterShieldTracker.new()
-    local obj = {
-        shieldIsUp = Helpers:HasBuff("player", "Ability_Shaman_WaterShield")
-    }
-
-    return setmetatable(obj, WaterShieldTracker)
+    --- @class WaterShieldTracker
+    local self = CooldownTracker.new()
+    setmetatable(self, WaterShieldTracker)
+    self.shieldIsUp = Helpers:HasBuff("player", "Ability_Shaman_WaterShield")
+    return self
 end
 
 function WaterShieldTracker:subscribe()

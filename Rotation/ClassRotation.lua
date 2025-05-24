@@ -17,5 +17,5 @@ function ClassRotation:execute()
 end
 
 function ClassRotation:clear()
-    error("clear() not implemented")
+    self.cache:Clear()
 end

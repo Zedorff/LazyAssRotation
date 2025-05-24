@@ -1,6 +1,3 @@
-MLDps = MLDps or {}
-local global = MLDps
-
 --- @class OverpowerTracker : CooldownTracker
 --- @field overpowerReadyUntil number
 --- @diagnostic disable: duplicate-set-field
@@ -9,11 +6,11 @@ OverpowerTracker.__index = OverpowerTracker
 
 --- @return OverpowerTracker
 function OverpowerTracker.new()
-    local obj = {
-        overpowerReadyUntil = 0
-    }
-
-    return setmetatable(obj, OverpowerTracker)
+    --- @class OverpowerTracker
+    local self = CooldownTracker.new()
+    setmetatable(self, OverpowerTracker)
+    self.overpowerReadyUntil = 0
+    return self
 end
 
 --- @param event string

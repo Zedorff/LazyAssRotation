@@ -5,6 +5,11 @@ local global = MLDps
 CooldownTracker = {}
 CooldownTracker.__index = CooldownTracker
 
+--- @return CooldownTracker
+function CooldownTracker.new()
+    return setmetatable({}, CooldownTracker)
+end
+
 --- @return boolean
 function CooldownTracker:isAvailable()
     error("isAvailable() not implemented")

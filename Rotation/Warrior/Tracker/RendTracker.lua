@@ -1,7 +1,3 @@
-MLDps = MLDps or {}
-local global = MLDps
-
---- Tracks Rend uptime.
 --- @class RendTracker : CooldownTracker
 --- @field rendActiveUntil number
 --- @field currentTargetName string | nil
@@ -10,20 +6,18 @@ local global = MLDps
 RendTracker = setmetatable({}, { __index = CooldownTracker })
 RendTracker.__index = RendTracker
 
---- Constructs a new RendTracker and starts spell hook.
 --- @return RendTracker
 function RendTracker.new()
-    local obj = {
-        rendActiveUntil = 0,
-        currentTargetName = nil,
-        pendingRendTarget = nil,
-        pendingRendApplyTime = nil,
-    }
-
-    return setmetatable(obj, RendTracker)
+    --- @class RendTracker
+    local self = CooldownTracker.new()
+    setmetatable(self, RendTracker)
+    self.rendActiveUntil = 0
+    self.currentTargetName = nil
+    self.pendingRendTarget = nil
+    self.pendingRendApplyTime = nil
+    return self
 end
 
---- Handles all subscribed events.
 --- @param event string
 --- @param arg1 string
 function RendTracker:onEvent(event, arg1)
@@ -53,7 +47,6 @@ function RendTracker:unsubscribe()
     CooldownTracker.unsubscribe(self)
 end
 
---- Resets all Rend tracking information when the target changes.
 function RendTracker:ResetTracking()
     self.currentTargetName = UnitName("target") or nil
     self.rendActiveUntil = 0
@@ -62,14 +55,12 @@ function RendTracker:ResetTracking()
     Logging:Debug("Target changed or lost. Reset rend tracking.")
 end
 
---- Starts tracking pending Rend application after cast.
 function RendTracker:StartPendingRend()
     self.pendingRendTarget = UnitName("target") or nil
     self.pendingRendApplyTime = GetTime()
     Logging:Debug("Rend cast initiated on " .. (self.pendingRendTarget or "unknown target"))
 end
 
---- Confirms Rend applied successfully via first tick message.
 --- @param arg1 string
 --- @param now number
 function RendTracker:CheckRendTick(arg1, now)
@@ -87,7 +78,6 @@ function RendTracker:CheckRendTick(arg1, now)
     end
 end
 
---- Handles spell failure (dodge/parry)
 --- @param arg1 string
 --- @param now number
 function RendTracker:HandleSelfDamage(arg1, now)
@@ -99,19 +89,16 @@ function RendTracker:HandleSelfDamage(arg1, now)
     end
 end
 
---- Whether Rend is currently available for cast.
 --- @return boolean
 function RendTracker:isAvailable()
     return GetTime() > self.rendActiveUntil and Helpers:SpellReady(ABILITY_REND)
 end
 
---- When Rend will be available again (either now or after current duration).
 --- @return number
 function RendTracker:GetWhenAvailable()
     return self.rendActiveUntil
 end
 
---- Utility to check if a message indicates a crit.
 --- @param msg string
 --- @return boolean
 function IsCritMessage(msg)

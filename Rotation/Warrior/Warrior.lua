@@ -28,10 +28,6 @@ function Warrior:execute()
     ClassRotationPerformer:PerformRotation(WarriorModuleRunContext.new(self.cache, self.spec))
 end
 
-function Warrior:clear()
-    self.cache:Clear()
-end
-
 --- @return ClassRotation | nil
 function Warrior:RegisterSpecDependantModules()
     if self.spec == WarriorSpec.ARMS then

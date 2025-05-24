@@ -38,6 +38,7 @@ function EventBus:new(frame)
     frame:RegisterEvent("UNIT_INVENTORY_CHANGED");
     
     frame:SetScript( "OnEvent", function()
+        --- @diagnostic disable-next-line: undefined-global
         instance:notify(event, arg1, arg2, arg3, arg4, arg5)
     end )
 
