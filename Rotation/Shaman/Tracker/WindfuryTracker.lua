@@ -48,11 +48,6 @@ function WindfuryTracker:CheckEnchant()
 end
 
 --- @return boolean
-function WindfuryTracker:isAvailable()
+function WindfuryTracker:ShouldCast()
     return GetTime() > self.activeUntil
-end
-
---- @return number
-function WindfuryTracker:GetWhenAvailable()
-    return self.activeUntil;
 end

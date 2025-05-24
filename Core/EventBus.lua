@@ -36,6 +36,7 @@ function EventBus:new(frame)
     frame:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF");
     frame:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS")
     frame:RegisterEvent("UNIT_INVENTORY_CHANGED");
+    frame:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER");
     
     frame:SetScript( "OnEvent", function()
         --- @diagnostic disable-next-line: undefined-global

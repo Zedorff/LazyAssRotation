@@ -46,6 +46,73 @@ function Helpers:HasBuff(unit, texturename)
 end
 
 --- @param unit string
+--- @param buffName string
+--- @return boolean
+function Helpers:HasBuffName(unit, buffName)
+    if not buffName or not unit then
+        return false
+    end
+
+    local tooltip = MLDpsTooltip
+    local text = getglobal(tooltip:GetName().."TextLeft1")
+    local targetName = string.gsub(buffName, "_", " ") -- only once, before loop
+
+    for i = 1, 32 do
+        tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        tooltip:SetUnitBuff(unit, i)
+        local name = text:GetText()
+        tooltip:Hide()
+
+        if name and string.find(name, targetName, 1, true) then -- true = plain text match
+            return true
+        end
+    end
+
+    return false
+end
+
+--- @param unit string
+--- @param debuffName string
+--- @return boolean
+function Helpers:HasDebuffName(unit, debuffName)
+    if not buffName or not unit then
+        return false
+    end
+
+    local tooltip = MLDpsTooltip
+    local text = getglobal(tooltip:GetName().."TextLeft1")
+    local targetName = string.gsub(debuffName, "_", " ") -- only once, before loop
+
+    for i = 1, 32 do
+        tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        tooltip:SetUnitDebuff(unit, i)
+        local name = text:GetText()
+        tooltip:Hide()
+
+        if name and string.find(name, targetName, 1, true) then -- true = plain text match
+            return true
+        end
+    end
+
+    return false
+end
+
+--- @param unit string
+--- @param textureSubstring string
+--- @return integer
+function Helpers:GetBuffStackCount(unit, textureSubstring)
+  for i = 1, 32 do
+    local texture, stacks = UnitBuff(unit, i)
+    if not texture then break end
+    
+    if string.find(texture, textureSubstring) then
+      return tonumber(stacks or 1)
+    end
+  end
+  return 0
+end
+
+--- @param unit string
 --- @param texturename string
 --- @return boolean
 function Helpers:HasDebuff(unit, texturename)
@@ -61,7 +128,7 @@ function Helpers:HasDebuff(unit, texturename)
     return false
 end
 
---- @return number | nil
+--- @return number
 function Helpers:ActiveStance()
     for i = 1, 3 do
         local _, _, active = GetShapeshiftFormInfo(i);
@@ -69,7 +136,7 @@ function Helpers:ActiveStance()
             return i;
         end
     end
-    return nil;
+    return 1; --- falback to battle
 end
 
 --- @param spellName string
@@ -154,4 +221,35 @@ function Helpers:isInstanceOf(obj, class)
         mt = getmetatable(mt)
     end
     return false
+end
+
+--- @param spellName string
+--- @param line string
+--- @return boolean hit
+--- @return boolean crit
+--- @return boolean parry
+--- @return boolean miss
+function Helpers:ParseCombatEvent(spellName, line)
+  local escaped = string.gsub(spellName, "(%p)", "%%%1")
+
+  local critHitPattern = string.format("Your %s (crits|hits) (.+) for (%%d+).", escaped)
+  local missPattern    = string.format("Your %s missed (.+).", escaped)
+  local parryPattern   = string.format("Your %s was parried by (.+).", escaped)
+
+  local _, _, hitType = strfind(line, critHitPattern)
+  if hitType == "crits" then
+    return true, true, false, false
+  elseif hitType == "hits" then
+    return true, false, false, false
+  end
+
+  if strfind(line, missPattern) then
+    return false, false, false, true
+  end
+
+  if strfind(line, parryPattern) then
+    return false, false, true, false
+  end
+
+  return false, false, false, false
 end

@@ -48,11 +48,6 @@ function RockbiterTracker:CheckEnchant()
 end
 
 --- @return boolean
-function RockbiterTracker:isAvailable()
+function RockbiterTracker:ShouldCast()
     return GetTime() > self.activeUntil
-end
-
---- @return number
-function RockbiterTracker:GetWhenAvailable()
-    return self.activeUntil;
 end

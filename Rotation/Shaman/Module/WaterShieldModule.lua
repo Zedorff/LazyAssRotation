@@ -37,7 +37,7 @@ end
 --- @param context ShamanModuleRunContext
 function WaterShieldModule:getPriority(context)
     if self.enabled then
-        if self.tracker:isAvailable() and context.remainingManaPercents <= 40 then
+        if self.tracker:ShouldCast() and context.remainingManaPercents <= 40 then
             return 95; --- always cast when no buff on yourself
         end
     end

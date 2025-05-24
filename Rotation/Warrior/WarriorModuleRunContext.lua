@@ -15,21 +15,25 @@ WarriorModuleRunContext.__index = WarriorModuleRunContext
 
 --- @param cache RageCostCache
 --- @param spec WarriorSpec
+--- @return WarriorModuleRunContext
 function WarriorModuleRunContext.new(cache, spec)
-    local context = {
-        rage = UnitMana("player"),
-        msCost = cache:Get(ABILITY_MORTAL_STRIKE),
-        bsCost = cache:Get(ABILITY_BLOODTHIRST),
-        wwCost = cache:Get(ABILITY_WHIRLWIND),
-        shoutCost = cache:Get(ABILITY_BATTLE_SHOUT),
-        hsCost = cache:Get(ABILITY_HEROIC_STRIKE),
-        hamstringCost = cache:Get(ABILITY_HAMSTRING),
-        slamCost = cache:Get(ABILITY_SLAM),
-        rendCost = cache:Get(ABILITY_REND),
-        stance = Helpers:ActiveStance(),
-        spec = spec
-    }
-    return setmetatable(context, WarriorModuleRunContext)
+    --- @class WarriorModuleRunContext
+    local self = ModuleRunContext.new()
+    setmetatable(self, WarriorModuleRunContext)
+
+    self.rage = UnitMana("player")
+    self.msCost = cache:Get(ABILITY_MORTAL_STRIKE)
+    self.bsCost = cache:Get(ABILITY_BLOODTHIRST)
+    self.wwCost = cache:Get(ABILITY_WHIRLWIND)
+    self.shoutCost = cache:Get(ABILITY_BATTLE_SHOUT)
+    self.hsCost = cache:Get(ABILITY_HEROIC_STRIKE)
+    self.hamstringCost = cache:Get(ABILITY_HAMSTRING)
+    self.slamCost = cache:Get(ABILITY_SLAM)
+    self.rendCost = cache:Get(ABILITY_REND)
+    self.stance = Helpers:ActiveStance()
+    self.spec = spec
+
+    return self
 end
 
 --- @param cache RageCostCache

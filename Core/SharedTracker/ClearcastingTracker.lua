@@ -31,7 +31,7 @@ function ClearcastingTracker:onEvent(event, arg1)
 end
 
 --- @return boolean
-function ClearcastingTracker:isAvailable()
+function ClearcastingTracker:ShouldCast()
     return self.buffIsUp
 end
 

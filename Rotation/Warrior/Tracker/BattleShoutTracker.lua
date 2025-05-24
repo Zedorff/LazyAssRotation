@@ -31,11 +31,6 @@ function BattleShoutTracker:onEvent(event, arg1)
 end
 
 --- @return boolean
-function BattleShoutTracker:isAvailable()
+function BattleShoutTracker:ShouldCast()
     return not self.battleShoutIsUp
-end
-
---- @return number
-function BattleShoutTracker:GetWhenAvailable()
-    return 0;
 end

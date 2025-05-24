@@ -7,7 +7,7 @@ local global = MLDps
 --- @type ClassRotation | nil
 local DpsRotation = nil
 
-function init()
+function Init()
     if not DpsRotation then
         DpsRotation = CreateDpsRotation()
     end
@@ -19,6 +19,8 @@ function CreateDpsRotation()
         return Warrior.new();
     elseif (class == CLASS_SHAMAN_DPS) then
         return Shaman.new();
+    elseif (class == CLASS_PALADIN_DPS) then
+        return Paladin.new()
     end
 end
 
@@ -80,11 +82,11 @@ end
 function InitSubscribers()
     global.eventBus:subscribe({
         onEvent = function (_, event, arg1)
-            if (event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" or event == "CHAT_MSG_SPELL_AURA_GONE_SELF" or event == "UNIT_INVENTORY_CHANGED" or event == "UNIT_INVENTORY_CHANGED") then
+            if (event == "CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE" or event == "CHAT_MSG_SPELL_AURA_GONE_OTHER") then
                 -- Logging:Log("Event: "..event..", arg1: "..tostring(arg1))
             end
             if (event == "VARIABLES_LOADED") then
-                init()
+                Init()
             elseif (event == "CHARACTER_POINTS_CHANGED" or event == "LEARNED_SPELL_IN_TAB") then
                 ModuleRegistry:ClearRegistry()
                 ResetRotation()

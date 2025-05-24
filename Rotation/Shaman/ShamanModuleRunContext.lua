@@ -10,19 +10,24 @@ ShamanModuleRunContext = setmetatable({}, { __index = ModuleRunContext })
 ShamanModuleRunContext.__index = ShamanModuleRunContext
 
 --- @param cache ManaCostCache
+--- @return ShamanModuleRunContext
 function ShamanModuleRunContext.new(cache)
+    --- @class ShamanModuleRunContext
+    local self = ModuleRunContext.new()
+    setmetatable(self, ShamanModuleRunContext)
+
     local mana = UnitMana("player")
     local maxMana = UnitManaMax("player")
-    local context = {
-        mana = mana,
-        remainingManaPercents = (mana / maxMana) * 100,
-        ssCost = cache:Get(ABILITY_STORMSTRIKE),
-        lsCost = cache:Get(ABILITY_LIGHTNING_STRIKE),
-        earthCost = cache:Get(ABILITY_EARTH_SHOCK),
-        frostCost = cache:Get(ABILITY_FROST_SHOCK),
-        flameCost = cache:Get(ABILITY_FLAME_SHOCK)
-    }
-    return setmetatable(context, ShamanModuleRunContext)
+
+    self.mana = mana
+    self.remainingManaPercents = (mana / maxMana) * 100
+    self.ssCost = cache:Get(ABILITY_STORMSTRIKE)
+    self.lsCost = cache:Get(ABILITY_LIGHTNING_STRIKE)
+    self.earthCost = cache:Get(ABILITY_EARTH_SHOCK)
+    self.frostCost = cache:Get(ABILITY_FROST_SHOCK)
+    self.flameCost = cache:Get(ABILITY_FLAME_SHOCK)
+
+    return self
 end
 
 --- @param cache ManaCostCache
@@ -37,7 +42,7 @@ function ShamanModuleRunContext.PreheatCache(cache)
             end
         end
     end
-    
+
     cache:Get(ABILITY_LIGHTNING_STRIKE)
     cache:Get(ABILITY_STORMSTRIKE)
     cache:Get(ABILITY_EARTH_SHOCK)

@@ -32,11 +32,6 @@ function OverpowerTracker:onEvent(event, arg1)
 end
 
 --- @return boolean
-function OverpowerTracker:isAvailable()
+function OverpowerTracker:ShouldCast()
     return GetTime() < self.overpowerReadyUntil and Helpers:SpellReady(ABILITY_OVERPOWER)
-end
-
---- @return number
-function OverpowerTracker:GetWhenAvailable()
-    return self.overpowerReadyUntil;
 end

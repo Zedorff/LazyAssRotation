@@ -33,11 +33,6 @@ function WaterShieldTracker:onEvent(event, arg1)
 end
 
 --- @return boolean
-function WaterShieldTracker:isAvailable()
+function WaterShieldTracker:ShouldCast()
     return not self.shieldIsUp
-end
-
---- @return number
-function WaterShieldTracker:GetWhenAvailable()
-    return 0;
 end

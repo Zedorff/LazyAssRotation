@@ -90,13 +90,8 @@ function RendTracker:HandleSelfDamage(arg1, now)
 end
 
 --- @return boolean
-function RendTracker:isAvailable()
+function RendTracker:ShouldCast()
     return GetTime() > self.rendActiveUntil and Helpers:SpellReady(ABILITY_REND)
-end
-
---- @return number
-function RendTracker:GetWhenAvailable()
-    return self.rendActiveUntil
 end
 
 --- @param msg string

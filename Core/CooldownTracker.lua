@@ -11,8 +11,8 @@ function CooldownTracker.new()
 end
 
 --- @return boolean
-function CooldownTracker:isAvailable()
-    error("isAvailable() not implemented")
+function CooldownTracker:ShouldCast()
+    error("ShouldCast() not implemented")
 end
 
 function CooldownTracker:subscribe()
@@ -27,9 +27,4 @@ end
 --- @param arg1 string
 function CooldownTracker:onEvent(event, arg1)
     error("onEvent() not implemented")
-end
-
---- @return number
-function CooldownTracker:GetWhenAvailable()
-    error("GetWhenAvailable() not implemented")
 end

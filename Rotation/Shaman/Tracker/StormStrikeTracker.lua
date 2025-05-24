@@ -33,11 +33,6 @@ function StormStrikeTracker:onEvent(event, arg1)
 end
 
 --- @return boolean
-function StormStrikeTracker:isAvailable()
+function StormStrikeTracker:ShouldCast()
     return not self.buffIsUp
-end
-
---- @return number
-function StormStrikeTracker:GetWhenAvailable()
-    return 0;
 end

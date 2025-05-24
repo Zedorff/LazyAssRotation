@@ -39,7 +39,7 @@ end
 --- @param context ShamanModuleRunContext
 function RockbiterModule:getPriority(context)
     if self.enabled then
-        if self.tracker:isAvailable() then
+        if self.tracker:ShouldCast() then
             return 100;
         end
     end

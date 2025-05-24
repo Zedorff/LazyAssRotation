@@ -37,7 +37,7 @@ end
 --- @param context ShamanModuleRunContext
 function LightningStrikeModule:getPriority(context)
     if self.enabled and Helpers:SpellReady(ABILITY_LIGHTNING_STRIKE) then
-        local cost = self.clearcastingTracker:isAvailable() and math.floor(context.lsCost * 0.33) or context.lsCost
+        local cost = self.clearcastingTracker:ShouldCast() and math.floor(context.lsCost * 0.33) or context.lsCost
         if context.remainingManaPercents < 10 then
             return 95;
         elseif context.mana > cost then

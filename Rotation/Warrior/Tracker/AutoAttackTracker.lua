@@ -24,12 +24,12 @@ function AutoAttackTracker:onEvent(event, arg1)
 end
 
 --- @return boolean
-function AutoAttackTracker:isAvailable()
+function AutoAttackTracker:ShouldCast()
     return true;
 end
 
 --- @return number
-function AutoAttackTracker:GetWhenAvailable()
+function AutoAttackTracker:GetNextSwingTime()
     local attackSpeed, _ = UnitAttackSpeed("player")
     local now = GetTime()
     local timeElapsed = now - self.lastAutoAttack

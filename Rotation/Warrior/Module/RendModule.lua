@@ -37,7 +37,7 @@ end
 --- @param context WarriorModuleRunContext
 function RendModule:getPriority(context)
     if self.enabled and context.stance == 1 then
-        if self.tracker:isAvailable() and context.rage >= context.rendCost then
+        if self.tracker:ShouldCast() and context.rage >= context.rendCost then
             return 55; --- prio higher than heroic
         end
     else

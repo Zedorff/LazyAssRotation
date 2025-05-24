@@ -37,7 +37,7 @@ end
 --- @param context WarriorModuleRunContext
 function BattleShoutModule:getPriority(context)
     if self.enabled then
-        if self.tracker:isAvailable() and context.rage >= context.shoutCost then
+        if self.tracker:ShouldCast() and context.rage >= context.shoutCost then
             return 95; --- always cast when no buff on yourself
         end
     else

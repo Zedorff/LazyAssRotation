@@ -42,10 +42,10 @@ end
 --- @param context ShamanModuleRunContext
 function LightningShieldModule:getPriority(context)
     if self.enabled then
-        if not self.waterTracker:isAvailable() and context.remainingManaPercents < 60 then
+        if not self.waterTracker:ShouldCast() and context.remainingManaPercents < 60 then
             return -1;
         end
-        if self.lightningTracker:isAvailable() and context.remainingManaPercents > 40 then
+        if self.lightningTracker:ShouldCast() and context.remainingManaPercents > 40 then
             return 95; --- always cast when no buff on yourself
         end
     end

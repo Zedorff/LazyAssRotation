@@ -37,7 +37,7 @@ end
 --- @param context ShamanModuleRunContext
 function StormStrikeModule:getPriority(context)
     if self.enabled and Helpers:SpellReady(ABILITY_STORMSTRIKE) then
-        local cost = self.clearcastingTracker:isAvailable() and math.floor(context.ssCost * 0.33) or context.ssCost
+        local cost = self.clearcastingTracker:ShouldCast() and math.floor(context.ssCost * 0.33) or context.ssCost
         if context.mana > cost then
             return 80;
         end

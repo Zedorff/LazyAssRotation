@@ -32,11 +32,6 @@ function LightningShieldTracker:onEvent(event, arg1)
 end
 
 --- @return boolean
-function LightningShieldTracker:isAvailable()
+function LightningShieldTracker:ShouldCast()
     return not self.shieldIsUp
-end
-
---- @return number
-function LightningShieldTracker:GetWhenAvailable()
-    return 0;
 end

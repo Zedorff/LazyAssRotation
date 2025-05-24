@@ -27,7 +27,7 @@ end
 --- @param context WarriorModuleRunContext
 function OverpowerModule:getPriority(context)
     if self.enabled and context.stance == 1 then
-        if self.tracker:isAvailable() and Helpers:SpellReady(ABILITY_OVERPOWER) and context.rage >= 5 then
+        if self.tracker:ShouldCast() and Helpers:SpellReady(ABILITY_OVERPOWER) and context.rage >= 5 then
             return 80
         else
             return -1;

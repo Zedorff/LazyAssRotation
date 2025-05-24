@@ -30,7 +30,7 @@ function AutoAttackModule:disable()
 end
 
 function AutoAttackModule:GetNextSwingTime()
-    return self.tracker:GetWhenAvailable()
+    return self.tracker:GetNextSwingTime()
 end
 
 function AutoAttackModule:run() end

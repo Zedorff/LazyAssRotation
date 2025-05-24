@@ -64,9 +64,9 @@ function ShockModule:getPriority(context)
             cost = context.flameCost
         end
 
-        if self.clearcastingTracker:isAvailable() and context.mana >= math.floor(cost * 0.33) then
+        if self.clearcastingTracker:ShouldCast() and context.mana >= math.floor(cost * 0.33) then
             return 90;
-        elseif self.stormStrikeTracker:isAvailable() and context.mana >= cost then
+        elseif self.stormStrikeTracker:ShouldCast() and context.mana >= cost then
             return 90;
         elseif context.mana >= cost then
             return 75;

@@ -55,6 +55,7 @@ Rotation\Warrior\Module\WhirlwindModule.lua
 Rotation\Warrior\Module\RendModule.lua
 Rotation\Warrior\Module\OverpowerModule.lua
 
+Rotation\Warrior\WarriorSpec.lua
 Rotation\Warrior\Warrior.lua
 
 Rotation\Shaman\ShamanModuleRunContext.lua
@@ -74,6 +75,28 @@ Rotation\Shaman\Module\RockbiterModule.lua
 Rotation\Shaman\Module\WindfuryModule.lua
 
 Rotation\Shaman\Shaman.lua
+
+Rotation\Paladin\PaladinModuleRunContext.lua
+
+Rotation\Paladin\Tracker\CrusaderStrikeTracker.lua
+Rotation\Paladin\Tracker\JudgementTracker.lua
+Rotation\Paladin\Tracker\SealOfCommandTracker.lua
+Rotation\Paladin\Tracker\SealOfCrusaderTargetTracker.lua
+Rotation\Paladin\Tracker\SealOfRighteousnessTracker.lua
+Rotation\Paladin\Tracker\SealOfWisdomTargetTracker.lua
+
+Rotation\Paladin\Module\ConsecrationModule.lua
+Rotation\Paladin\Module\CrusaderStrikeModule.lua
+Rotation\Paladin\Module\ExcorcismModule.lua
+Rotation\Paladin\Module\HolyStrikeModule.lua
+Rotation\Paladin\Module\JudjementModule.lua
+Rotation\Paladin\Module\RepentanceModule.lua
+Rotation\Paladin\Module\SealOfCommandModule.lua
+Rotation\Paladin\Module\SealOfCrusaderTargetModule.lua
+Rotation\Paladin\Module\SealOfRighteousnessModule.lua
+Rotation\Paladin\Module\SealOfWisdomTargetModule.lua
+
+Rotation\Paladin\Paladin.lua
 
 UI\DebugFrame.lua
 
