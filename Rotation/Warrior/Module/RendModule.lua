@@ -4,7 +4,7 @@
 RendModule = setmetatable({}, { __index = Module })
 RendModule.__index = RendModule
 
-
+--- @return RendModule
 function RendModule.new()
     --- @class RendModule
     local instance = Module.new(ABILITY_REND)

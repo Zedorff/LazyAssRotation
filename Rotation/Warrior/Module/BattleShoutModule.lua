@@ -4,7 +4,9 @@
 BattleShoutModule = setmetatable({}, { __index = Module })
 BattleShoutModule.__index = BattleShoutModule
 
+--- @return BattleShoutModule
 function BattleShoutModule.new()
+    --- @class BattleShoutModule
     local instance = Module.new(ABILITY_BATTLE_SHOUT)
     setmetatable(instance, BattleShoutModule)
 

@@ -4,6 +4,7 @@
 StormStrikeModule = setmetatable({}, { __index = Module })
 StormStrikeModule.__index = StormStrikeModule
 
+--- @return StormStrikeModule
 function StormStrikeModule.new()
     --- @class StormStrikeModule
     local instance = Module.new(ABILITY_STORMSTRIKE)

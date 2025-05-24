@@ -3,7 +3,9 @@
 WhirlwindModule = setmetatable({}, { __index = Module })
 WhirlwindModule.__index = WhirlwindModule
 
+--- @return WhirlwindModule 
 function WhirlwindModule.new()
+    --- @class WhirlwindModule
     return setmetatable(Module.new(ABILITY_WHIRLWIND), WhirlwindModule)
 end
 

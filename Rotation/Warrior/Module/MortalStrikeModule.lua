@@ -3,8 +3,9 @@
 MortalStrikeModule = setmetatable({}, { __index = Module })
 MortalStrikeModule.__index = MortalStrikeModule
 
-
+--- @return MortalStrikeModule 
 function MortalStrikeModule.new()
+    --- @class MortalStrikeModule
     return setmetatable(Module.new(ABILITY_MORTAL_STRIKE), MortalStrikeModule)
 end
 

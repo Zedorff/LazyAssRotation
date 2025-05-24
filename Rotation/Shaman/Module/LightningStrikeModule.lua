@@ -4,6 +4,7 @@
 LightningStrikeModule = setmetatable({}, { __index = Module })
 LightningStrikeModule.__index = LightningStrikeModule
 
+--- @return LightningStrikeModule
 function LightningStrikeModule.new()
     --- @class LightningStrikeModule
     local instance = Module.new(ABILITY_LIGHTNING_STRIKE)

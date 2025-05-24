@@ -4,8 +4,9 @@
 AutoAttackModule = setmetatable({}, { __index = Module })
 AutoAttackModule.__index = AutoAttackModule
 
-
+--- @return AutoAttackModule
 function AutoAttackModule.new()
+    --- @class AutoAttackModule
     local instance = Module.new("AutoAttack")
     setmetatable(instance, AutoAttackModule)
 

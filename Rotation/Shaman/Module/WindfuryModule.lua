@@ -4,6 +4,7 @@
 WindfuryModule = setmetatable({}, { __index = Module })
 WindfuryModule.__index = WindfuryModule
 
+--- @return WindfuryModule
 function WindfuryModule.new()
     --- @class WindfuryModule
     local instance = Module.new(ABILITY_WINDFURY)

@@ -3,8 +3,9 @@
 ExecuteModule = setmetatable({}, { __index = Module })
 ExecuteModule.__index = ExecuteModule
 
-
+--- @return ExecuteModule
 function ExecuteModule.new()
+    --- @class ExecuteModule
     return setmetatable(Module.new(ABILITY_EXECUTE), ExecuteModule);
 end
 

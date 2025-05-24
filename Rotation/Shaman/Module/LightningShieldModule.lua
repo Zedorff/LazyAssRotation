@@ -5,6 +5,7 @@
 LightningShieldModule = setmetatable({}, { __index = Module })
 LightningShieldModule.__index = LightningShieldModule
 
+--- @return LightningShieldModule
 function LightningShieldModule.new()
     --- @class LightningShieldModule
     local instance = Module.new(ABILITY_LIGHTNING_SHIELD)

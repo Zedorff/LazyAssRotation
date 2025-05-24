@@ -3,7 +3,9 @@
 HamstringModule = setmetatable({}, { __index = Module })
 HamstringModule.__index = HamstringModule
 
+--- @class HamstringModule
 function HamstringModule.new()
+    --- @class HamstringModule
     return setmetatable(Module.new(ABILITY_HAMSTRING), HamstringModule)
 end
 

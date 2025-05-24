@@ -3,7 +3,9 @@
 SlamModule = setmetatable({}, { __index = Module })
 SlamModule.__index = SlamModule
 
+--- @return SlamModule 
 function SlamModule.new()
+    --- @class SlamModule
     local instance = Module.new(ABILITY_SLAM)
     setmetatable(instance, SlamModule)
 

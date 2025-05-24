@@ -4,7 +4,9 @@
 OverpowerModule = setmetatable({}, { __index = Module })
 OverpowerModule.__index = OverpowerModule
 
+--- @return OverpowerModule
 function OverpowerModule.new()
+    --- @class OverpowerModule
     local instance = Module.new(ABILITY_OVERPOWER)
     setmetatable(instance, OverpowerModule)
 

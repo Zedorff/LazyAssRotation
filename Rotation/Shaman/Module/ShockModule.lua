@@ -15,6 +15,7 @@ ShockModule.__index = ShockModule
 
 --- @param shockType ShockType
 --- @param enabledByDefault boolean | nil
+--- @return ShockModule
 function ShockModule.new(shockType, enabledByDefault)
     --- @class ShockModule
     local instance = Module.new(shockType, enabledByDefault)

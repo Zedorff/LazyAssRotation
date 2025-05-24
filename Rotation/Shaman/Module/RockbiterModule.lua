@@ -4,6 +4,7 @@
 RockbiterModule = setmetatable({}, { __index = Module })
 RockbiterModule.__index = RockbiterModule
 
+--- @return RockbiterModule
 function RockbiterModule.new()
     --- @class RockbiterModule
     local instance = Module.new(ABILITY_ROCKBITER, false)

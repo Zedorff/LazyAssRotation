@@ -3,8 +3,9 @@
 HeroicStrikeModule = setmetatable({}, { __index = Module })
 HeroicStrikeModule.__index = HeroicStrikeModule
 
-
+--- @return HeroicStrikeModule 
 function HeroicStrikeModule.new()
+    --- @class HeroicStrikeModule
     return setmetatable(Module.new(ABILITY_HEROIC_STRIKE), HeroicStrikeModule);
 end
 

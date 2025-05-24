@@ -4,6 +4,7 @@
 WaterShieldModule = setmetatable({}, { __index = Module })
 WaterShieldModule.__index = WaterShieldModule
 
+--- @return WaterShieldModule 
 function WaterShieldModule.new()
     --- @class WaterShieldModule
     local instance = Module.new(ABILITY_WATER_SHIELD)
