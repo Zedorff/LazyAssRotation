@@ -25,7 +25,3 @@ end
 function Shaman:execute()
     ClassRotationPerformer:PerformRotation(ShamanModuleRunContext.new(self.cache))
 end
-
-function Shaman:clear()
-    self.cache:Clear()
-end

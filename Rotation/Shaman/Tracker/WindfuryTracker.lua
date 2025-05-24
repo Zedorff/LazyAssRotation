@@ -4,15 +4,14 @@
 WindfuryTracker = setmetatable({}, { __index = CooldownTracker })
 WindfuryTracker.__index = WindfuryTracker
 
+--- @class WindfuryTracker
 function WindfuryTracker.new()
-    local instance = {
-        activeUntil = 0
-    }
-
-    setmetatable(instance, WindfuryTracker)
-
-    instance:CheckEnchant()
-    return instance
+    --- @class WindfuryTracker
+    local self = CooldownTracker.new()
+    setmetatable(self, WindfuryTracker)
+    self.activeUntil = 0
+    self:CheckEnchant()
+    return self
 end
 
 function WindfuryTracker:subscribe()

@@ -6,12 +6,13 @@ MLDps = MLDps or {}
 StormStrikeTracker = setmetatable({}, { __index = CooldownTracker })
 StormStrikeTracker.__index = StormStrikeTracker
 
+--- @return StormStrikeTracker
 function StormStrikeTracker.new()
-    local obj = {
-        buffIsUp = Helpers:HasBuff("player", "Ability_Warrior_ThunderClap")
-    }
-
-    return setmetatable(obj, StormStrikeTracker)
+    --- @class StormStrikeTracker
+    local self = CooldownTracker.new()
+    setmetatable(self, StormStrikeTracker)
+    self.buffIsUp = Helpers:HasBuff("player", "Ability_Warrior_ThunderClap") 
+    return self
 end
 
 function StormStrikeTracker:subscribe()

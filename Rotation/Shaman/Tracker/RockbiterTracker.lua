@@ -4,15 +4,14 @@
 RockbiterTracker = setmetatable({}, { __index = CooldownTracker })
 RockbiterTracker.__index = RockbiterTracker
 
+--- @return RockbiterTracker 
 function RockbiterTracker.new()
-    local instance = {
-        activeUntil = 0
-    }
-
-    setmetatable(instance, RockbiterTracker)
-
-    instance:CheckEnchant()
-    return instance
+    --- @class RockbiterTracker
+    local self = CooldownTracker.new()
+    setmetatable(self, RockbiterTracker)
+    self.activeUntil = 0
+    self:CheckEnchant()
+    return self
 end
 
 function RockbiterTracker:subscribe()

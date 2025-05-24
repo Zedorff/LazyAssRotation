@@ -1,4 +1,5 @@
 MLDps = MLDps or {}
+--- @diagnostic disable-next-line: undefined-global
 AceLibrary("AceHook-2.1"):embed(MLDps)
 local global = MLDps
 

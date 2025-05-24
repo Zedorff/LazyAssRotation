@@ -1,17 +1,16 @@
-MLDps = MLDps or {}
-
 --- @class ClearcastingTracker : CooldownTracker
 --- @field buffIsUp boolean
 --- @diagnostic disable: duplicate-set-field
 ClearcastingTracker = setmetatable({}, { __index = CooldownTracker })
 ClearcastingTracker.__index = ClearcastingTracker
 
+--- @return ClearcastingTracker
 function ClearcastingTracker.new()
-    local obj = {
-        buffIsUp = Helpers:HasBuff("player", "Spell_Nature_Lightning")
-    }
-
-    return setmetatable(obj, ClearcastingTracker)
+    --- @class ClearcastingTracker
+    local self = CooldownTracker.new()
+    setmetatable(self, ClearcastingTracker)
+    self.buffIsUp = Helpers:HasBuff("player", "Spell_Nature_Lightning")
+    return self
 end
 
 function ClearcastingTracker:subscribe()
