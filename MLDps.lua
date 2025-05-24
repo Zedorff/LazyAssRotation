@@ -8,23 +8,26 @@ local global = MLDps
 local DpsRotation = nil
 
 function init()
-    
+    if not DpsRotation then
+        DpsRotation = CreateDpsRotation()
+    end
 end
 
 function CreateDpsRotation()
     local class = UnitClass("player")
     if (class == CLASS_WARRIOR_DPS) then
         return Warrior.new();
+    elseif (class == CLASS_SHAMAN_DPS) then
+        return Shaman.new();
     end
 end
 
 -- Main Code
 
 function PerformDps()
-    if not DpsRotation then
-        DpsRotation = CreateDpsRotation()
+    if DpsRotation then
+        DpsRotation:execute()
     end
-    DpsRotation:execute()
 end
 
 -- Chat Handlers
@@ -77,6 +80,9 @@ end
 function InitSubscribers()
     global.eventBus:subscribe({
         onEvent = function (_, event, arg1)
+            if (event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" or event == "CHAT_MSG_SPELL_AURA_GONE_SELF" or event == "UNIT_INVENTORY_CHANGED" or event == "UNIT_INVENTORY_CHANGED") then
+                -- Logging:Log("Event: "..event..", arg1: "..tostring(arg1))
+            end
             if (event == "VARIABLES_LOADED") then
                 init()
             elseif (event == "CHARACTER_POINTS_CHANGED" or event == "LEARNED_SPELL_IN_TAB") then

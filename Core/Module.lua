@@ -4,9 +4,11 @@
 Module = {}
 Module.__index = Module
 
-function Module.new(name)
+--- @param name string
+--- @param enabledByDefault boolean | nil
+function Module.new(name, enabledByDefault)
     if MLDpsModuleSettings.modulesEnabled[name] == nil then
-        MLDpsModuleSettings.modulesEnabled[name] = true
+        MLDpsModuleSettings.modulesEnabled[name] = enabledByDefault or true
     end
     local instance = {
         name = name,

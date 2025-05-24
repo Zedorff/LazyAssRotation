@@ -3,6 +3,7 @@ ClassRotationPerformer = {}
 --- @param context ModuleRunContext
 function ClassRotationPerformer:PerformRotation(context)
     local highestPrio = -1
+    --- @class Module
     local bestModule = nil
 
     local modules = ModuleRegistry:GetEnabledModules()
