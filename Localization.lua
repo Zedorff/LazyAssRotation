@@ -4,11 +4,7 @@ CLASS_SHAMAN_DPS              = "Shaman"
 CLASS_PALADIN_DPS             = "Paladin"
 
 -- Chat
-CHAT_DODGE_OVERPOWER          = "You attack.(.+) dodges."
-CHAT_DODGE_OVERPOWER2         = "Your (.+) was dodged by (.+)."
-CHAT_OVERPOWER1               = "Your Overpower crits (.+) for (%d+)."
-CHAT_OVERPOWER2               = "Your Overpower hits (.+) for (%d+)."
-CHAT_OVERPOWER3               = "Your Overpower missed (.+)."
+CHAT_AUTOATTACK_DODGE          = "You attack.(.+) dodges."
 CHAT_HEROIC_STRIKE            = "Heroic Strike"
 
 -- Shared

@@ -9,23 +9,23 @@ function BattleShoutTracker.new()
     --- @class BattleShoutTracker
     local self = CooldownTracker.new()
     setmetatable(self, BattleShoutTracker)
-    self.battleShoutIsUp = Helpers:HasBuff("player", "Ability_Warrior_BattleShout")
+    self.battleShoutIsUp = Helpers:HasBuffName("player", ABILITY_BATTLE_SHOUT)
     return self
 end
 
 function BattleShoutTracker:subscribe()
     CooldownTracker.subscribe(self)
-    self.battleShoutIsUp = Helpers:HasBuff("player", "Ability_Warrior_BattleShout")
+    self.battleShoutIsUp = Helpers:HasBuffName("player", ABILITY_BATTLE_SHOUT)
 end
 
 --- @param event string
 --- @param arg1 string
 function BattleShoutTracker:onEvent(event, arg1)
-    if event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" and string.find(arg1, "Battle Shout") then
-        Logging:Debug("Battle Shout is up")
+    if event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" and string.find(arg1, ABILITY_BATTLE_SHOUT) then
+        Logging:Debug(ABILITY_BATTLE_SHOUT.." is up")
         self.battleShoutIsUp = true
-    elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" and string.find(arg1, "Battle Shout") then
-        Logging:Debug("Battle Shout is down")
+    elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" and string.find(arg1, ABILITY_BATTLE_SHOUT) then
+        Logging:Debug(ABILITY_BATTLE_SHOUT.." is down")
         self.battleShoutIsUp = false
     end 
 end

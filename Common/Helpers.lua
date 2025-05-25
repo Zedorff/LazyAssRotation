@@ -31,21 +31,6 @@ function Helpers:SpellReady(spellname)
 end
 
 --- @param unit string
---- @param texturename string
---- @return boolean
-function Helpers:HasBuff(unit, texturename)
-    local id = 1;
-    while (UnitBuff(unit, id)) do
-        local buffTexture = UnitBuff(unit, id);
-        if (string.find(buffTexture, texturename)) then
-            return true;
-        end
-        id = id + 1;
-    end
-    return false;
-end
-
---- @param unit string
 --- @param buffName string
 --- @return boolean
 function Helpers:HasBuffName(unit, buffName)
@@ -110,22 +95,6 @@ function Helpers:GetBuffStackCount(unit, textureSubstring)
     end
   end
   return 0
-end
-
---- @param unit string
---- @param texturename string
---- @return boolean
-function Helpers:HasDebuff(unit, texturename)
-    local id = 1
-    local debuffTexture = UnitDebuff(unit, id)
-    while debuffTexture do
-        if string.find(debuffTexture, texturename) then
-            return true
-        end
-        id = id + 1
-        debuffTexture = UnitDebuff(unit, id)
-    end
-    return false
 end
 
 --- @return number
@@ -229,27 +198,66 @@ end
 --- @return boolean crit
 --- @return boolean parry
 --- @return boolean miss
+--- @return boolean dodge
 function Helpers:ParseCombatEvent(spellName, line)
   local escaped = string.gsub(spellName, "(%p)", "%%%1")
 
   local critHitPattern = string.format("Your %s (crits|hits) (.+) for (%%d+).", escaped)
   local missPattern    = string.format("Your %s missed (.+).", escaped)
   local parryPattern   = string.format("Your %s was parried by (.+).", escaped)
+  local dodgePattern   = string.format("Your %s was dodged by (.+).", escaped)
 
   local _, _, hitType = strfind(line, critHitPattern)
   if hitType == "crits" then
-    return true, true, false, false
+    return true, true, false, false, false
   elseif hitType == "hits" then
-    return true, false, false, false
+    return true, false, false, false, false
   end
 
   if strfind(line, missPattern) then
-    return false, false, false, true
+    return false, false, false, true, false
   end
 
   if strfind(line, parryPattern) then
-    return false, false, true, false
+    return false, false, true, false, false
   end
 
-  return false, false, false, false
+  if strfind(line, dodgePattern) then
+    return false, false, false, false, true
+  end
+
+  return false, false, false, false, false
+end
+
+--- @deprecated Use `HasBuffName` instead
+--- @param unit string
+--- @param texturename string
+--- @return boolean
+function Helpers:HasBuff(unit, texturename)
+    local id = 1;
+    while (UnitBuff(unit, id)) do
+        local buffTexture = UnitBuff(unit, id);
+        if (string.find(buffTexture, texturename)) then
+            return true;
+        end
+        id = id + 1;
+    end
+    return false;
+end
+
+--- @deprecated Use `HasDebuffName` instead
+--- @param unit string
+--- @param texturename string
+--- @return boolean
+function Helpers:HasDebuff(unit, texturename)
+    local id = 1
+    local debuffTexture = UnitDebuff(unit, id)
+    while debuffTexture do
+        if string.find(debuffTexture, texturename) then
+            return true
+        end
+        id = id + 1
+        debuffTexture = UnitDebuff(unit, id)
+    end
+    return false
 end

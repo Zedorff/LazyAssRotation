@@ -39,7 +39,7 @@ function RockbiterTracker:CheckEnchant()
 
     if Helpers:HasMainWeaponEnchantTooltip("Rockbiter") then
         if GetTime() > self.activeUntil then
-            Logging:Debug("Windfury is up")
+            Logging:Debug("Rockbiter is up")
             self.activeUntil = GetTime() + enchantTimeLeft
         end
     else

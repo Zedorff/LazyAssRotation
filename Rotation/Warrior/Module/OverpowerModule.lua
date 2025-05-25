@@ -28,7 +28,7 @@ end
 function OverpowerModule:getPriority(context)
     if self.enabled and context.stance == 1 then
         if self.tracker:ShouldCast() and Helpers:SpellReady(ABILITY_OVERPOWER) and context.rage >= 5 then
-            return 80
+            return 90
         else
             return -1;
         end

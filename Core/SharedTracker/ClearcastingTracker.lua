@@ -9,23 +9,23 @@ function ClearcastingTracker.new()
     --- @class ClearcastingTracker
     local self = CooldownTracker.new()
     setmetatable(self, ClearcastingTracker)
-    self.buffIsUp = Helpers:HasBuff("player", "Spell_Nature_Lightning")
+    self.buffIsUp = Helpers:HasBuffName("player", PASSIVE_CLEARCASTING)
     return self
 end
 
 function ClearcastingTracker:subscribe()
     CooldownTracker.subscribe(self)
-    self.buffIsUp = Helpers:HasBuff("player", "Spell_Nature_Lightning")
+    self.buffIsUp = Helpers:HasBuffName("player", PASSIVE_CLEARCASTING)
 end
 
 --- @param event string
 --- @param arg1 string
 function ClearcastingTracker:onEvent(event, arg1)
     if event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" and string.find(arg1, PASSIVE_CLEARCASTING) then
-        Logging:Debug("Clearcasting is up")
+        Logging:Debug(PASSIVE_CLEARCASTING.." is up")
         self.buffIsUp = true
     elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" and string.find(arg1, PASSIVE_CLEARCASTING) then
-        Logging:Debug("Clearcasting is down")
+        Logging:Debug(PASSIVE_CLEARCASTING.." is down")
         self.buffIsUp = false
     end 
 end

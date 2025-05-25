@@ -19,7 +19,7 @@ end
 function MortalStrikeModule:getPriority(context)
     if self.enabled then
         if Helpers:SpellReady(ABILITY_MORTAL_STRIKE) and context.rage >= context.msCost then
-            return 90;
+            return 80;
         else
             return -1;
         end

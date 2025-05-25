@@ -9,13 +9,19 @@ function JudgementTracker.new()
     --- @class JudgementTracker
     local self = CooldownTracker.new()
     setmetatable(self, JudgementTracker)
-    self.hasSeal = Helpers:HasBuff("player", "Spell_Holy_RighteousnessAura")
+    self.hasSeal = Helpers:HasBuffName("player", ABILITY_SEAL_OF_COMMAND)
+                    or Helpers:HasBuffName("player", ABILITY_SEAL_OF_CRUSADER)
+                    or Helpers:HasBuffName("player", ABILITY_SEAL_OF_RIGHTEOUSNESS)
+                    or Helpers:HasBuffName("player", ABILITY_SEAL_OF_WISDOM)
     return self
 end
 
 function JudgementTracker:subscribe()
     CooldownTracker.subscribe(self)
-    self.hasSeal = Helpers:HasBuff("target", "Spell_Holy_RighteousnessAura")
+    self.hasSeal = Helpers:HasBuffName("player", ABILITY_SEAL_OF_COMMAND)
+                    or Helpers:HasBuffName("player", ABILITY_SEAL_OF_CRUSADER)
+                    or Helpers:HasBuffName("player", ABILITY_SEAL_OF_RIGHTEOUSNESS)
+                    or Helpers:HasBuffName("player", ABILITY_SEAL_OF_WISDOM)
 end
 
 --- @param event string
@@ -27,7 +33,7 @@ function JudgementTracker:onEvent(event, arg1)
     elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" and string.find(arg1, "Seal") then
         Logging:Debug("Seal spell is down")
         self.hasSeal = false
-    end 
+    end
 end
 
 --- @return boolean

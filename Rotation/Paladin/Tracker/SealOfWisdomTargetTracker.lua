@@ -9,13 +9,13 @@ function SealOfWisdomTracker.new()
     --- @class SealOfWisdomTracker
     local self = CooldownTracker.new()
     setmetatable(self, SealOfWisdomTracker)
-    self.appliedOnTarget = Helpers:HasDebuff("target", "Spell_Holy_RighteousnessAura")
+    self.appliedOnTarget = Helpers:HasDebuffName("target", "Judgement of Wisdom")
     return self
 end
 
 function SealOfWisdomTracker:subscribe()
     CooldownTracker.subscribe(self)
-    self.appliedOnTarget = Helpers:HasDebuff("target", "Spell_Holy_RighteousnessAura")
+    self.appliedOnTarget = Helpers:HasDebuffName("target", "Judgement of Wisdom")
 end
 
 --- @param event string
@@ -31,7 +31,7 @@ function SealOfWisdomTracker:onEvent(event, arg1)
             self.appliedOnTarget = false
         end
     elseif event == "PLAYER_TARGET_CHANGED" then
-        self.appliedOnTarget = Helpers:HasDebuff("target", "Spell_Holy_RighteousnessAura")
+        self.appliedOnTarget = Helpers:HasDebuffName("target", "Judgement of Wisdom")
     end 
 end
 
