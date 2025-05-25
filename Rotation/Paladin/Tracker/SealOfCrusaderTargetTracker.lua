@@ -22,12 +22,12 @@ end
 --- @param arg1 string
 function SealOfCrusaderTargetTracker:onEvent(event, arg1)
     if event == "CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE" and string.find(arg1, "Judgement of the Crusader") then
-        Logging:Debug(ABILITY_SEAL_OF_CRUSADER.." is up")
+        Logging:Debug(ABILITY_SEAL_CRUSADER.." is up")
         self.socrIsUp = true
     elseif event == "CHAT_MSG_SPELL_AURA_GONE_OTHER" and string.find(arg1, "Judgement of the Crusader") then
         local target = UnitName("target")
         if target and string.find(arg1, target) then
-            Logging:Debug(ABILITY_SEAL_OF_CRUSADER.." is down")
+            Logging:Debug(ABILITY_SEAL_CRUSADER.." is down")
             self.socrIsUp = false
         end
     elseif event == "PLAYER_TARGET_CHANGED" then

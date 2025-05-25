@@ -17,7 +17,7 @@ function CrusaderStrikeTracker.new()
     return self
 end
 
-function BattleShoutTracker:subscribe()
+function CrusaderStrikeTracker:subscribe()
     CooldownTracker.subscribe(self)
     self.zealStacks = Helpers:GetBuffStackCount("player", "Spell_Holy_CrusaderStrike")
     self.lastZealApply = GetTime() + 6
@@ -35,6 +35,7 @@ function CrusaderStrikeTracker:onEvent(event, arg1)
     elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" and string.find(arg1, "Zeal") then
         Logging:Debug("Zeal is down")
         self.zealStacks = 0
+        self.lastZealApply = 0
     elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" and string.find(arg1, ABILITY_CRUSADER_STRIKE) then
         self.lastZealApply = GetTime() + 30
     end

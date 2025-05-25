@@ -1,26 +1,26 @@
---- @class SealOfWisdomTracker : CooldownTracker
+--- @class SealOfWisdomTargetTracker : CooldownTracker
 --- @field appliedOnTarget boolean
 --- @diagnostic disable: duplicate-set-field
-SealOfWisdomTracker = setmetatable({}, { __index = CooldownTracker })
-SealOfWisdomTracker.__index = SealOfWisdomTracker
+SealOfWisdomTargetTracker = setmetatable({}, { __index = CooldownTracker })
+SealOfWisdomTargetTracker.__index = SealOfWisdomTargetTracker
 
---- @return SealOfWisdomTracker
-function SealOfWisdomTracker.new()
-    --- @class SealOfWisdomTracker
+--- @return SealOfWisdomTargetTracker
+function SealOfWisdomTargetTracker.new()
+    --- @class SealOfWisdomTargetTracker
     local self = CooldownTracker.new()
-    setmetatable(self, SealOfWisdomTracker)
+    setmetatable(self, SealOfWisdomTargetTracker)
     self.appliedOnTarget = Helpers:HasDebuffName("target", "Judgement of Wisdom")
     return self
 end
 
-function SealOfWisdomTracker:subscribe()
+function SealOfWisdomTargetTracker:subscribe()
     CooldownTracker.subscribe(self)
     self.appliedOnTarget = Helpers:HasDebuffName("target", "Judgement of Wisdom")
 end
 
 --- @param event string
 --- @param arg1 string
-function SealOfWisdomTracker:onEvent(event, arg1)
+function SealOfWisdomTargetTracker:onEvent(event, arg1)
     if event == "CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE" and string.find(arg1, "Judgement of Wisdom") then
         Logging:Debug("Seal Of Wisdom is up")
         self.appliedOnTarget = true
@@ -36,6 +36,6 @@ function SealOfWisdomTracker:onEvent(event, arg1)
 end
 
 --- @return boolean
-function SealOfWisdomTracker:ShouldCast()
+function SealOfWisdomTargetTracker:ShouldCast()
     return not self.appliedOnTarget
 end

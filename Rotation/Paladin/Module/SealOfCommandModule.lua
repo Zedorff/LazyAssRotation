@@ -1,4 +1,4 @@
---- @alias SealOfCommandTrackers { socTracker: SealOfCommandTracker }
+--- @alias SealOfCommandTrackers { socTracker: SealOfCommandTracker, sowTargetTracker: SealOfWisdomTargetTracker, socrTargetTracker: SealOfCrusaderTargetTracker }
 --- @class SealOfCommandModule : Module
 --- @field trackers SealOfCommandTrackers
 --- @diagnostic disable: duplicate-set-field
@@ -9,25 +9,32 @@ SealOfCommandModule.__index = SealOfCommandModule
 function SealOfCommandModule.new()
     --- @type SealOfCommandTrackers
     local trackers = {
-        socTracker = SealOfCommandTracker.new()
+        socTracker = SealOfCommandTracker.new(),
+        sowTargetTracker = SealOfWisdomTargetTracker.new(),
+        socrTargetTracker = SealOfCrusaderTargetTracker.new()
     }
     --- @class SealOfCommandModule 
-    return setmetatable(Module.new(ABILITY_SEAL_OF_COMMAND, trackers), SealOfCommandModule)
+    return setmetatable(Module.new(ABILITY_SEAL_COMMAND, trackers), SealOfCommandModule)
 end
 
 function SealOfCommandModule:enable()
     Module.enable(self)
-    ModuleRegistry:DisableModule(ABILITY_SEAL_OF_RIGHTEOUSNESS)
+    ModuleRegistry:DisableModule(ABILITY_SEAL_RIGHTEOUSNESS)
 end
 
 function SealOfCommandModule:run()
-    Logging:Debug("Casting "..ABILITY_SEAL_OF_COMMAND)
-    CastSpellByName(ABILITY_SEAL_OF_COMMAND)
+    Logging:Debug("Casting "..ABILITY_SEAL_COMMAND)
+    CastSpellByName(ABILITY_SEAL_COMMAND)
 end
 
 --- @param context PaladinModuleRunContext
 function SealOfCommandModule:getPriority(context)
-    if self.enabled and context.mana > context.socCost and self.trackers.socTracker:ShouldCast() then
+    local sowEnabled = ModuleRegistry:IsModuleEnabled(ABILITY_SEAL_WISDOM)
+    local socrEnabled = ModuleRegistry:IsModuleEnabled(ABILITY_SEAL_CRUSADER)
+    if self.enabled
+        and context.mana > context.sorCost 
+        and self.trackers.socTracker:ShouldCast()
+        and ((sowEnabled and not self.trackers.sowTargetTracker:ShouldCast()) or (socrEnabled and not self.trackers.socrTargetTracker:ShouldCast())) then
         return 80;
     end
     return -1;

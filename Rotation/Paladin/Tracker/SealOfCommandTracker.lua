@@ -9,23 +9,23 @@ function SealOfCommandTracker.new()
     --- @class SealOfCommandTracker
     local self = CooldownTracker.new()
     setmetatable(self, SealOfCommandTracker)
-    self.socIsUp = Helpers:HasBuffName("player", ABILITY_SEAL_OF_COMMAND)
+    self.socIsUp = Helpers:HasBuffName("player", ABILITY_SEAL_COMMAND)
     return self
 end
 
-function BattleShoutTracker:subscribe()
+function SealOfCommandTracker:subscribe()
     CooldownTracker.subscribe(self)
-    self.socIsUp = Helpers:HasBuffName("player", ABILITY_SEAL_OF_COMMAND)
+    self.socIsUp = Helpers:HasBuffName("player", ABILITY_SEAL_COMMAND)
 end
 
 --- @param event string
 --- @param arg1 string
 function SealOfCommandTracker:onEvent(event, arg1)
-    if event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" and string.find(arg1, ABILITY_SEAL_OF_COMMAND) then
-        Logging:Debug(ABILITY_SEAL_OF_COMMAND.." is up")
+    if event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" and string.find(arg1, ABILITY_SEAL_COMMAND) then
+        Logging:Debug(ABILITY_SEAL_COMMAND.." is up")
         self.socIsUp = true
-    elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" and string.find(arg1, ABILITY_SEAL_OF_COMMAND) then
-        Logging:Debug(ABILITY_SEAL_OF_COMMAND.." is down")
+    elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" and string.find(arg1, ABILITY_SEAL_COMMAND) then
+        Logging:Debug(ABILITY_SEAL_COMMAND.." is down")
         self.socIsUp = false
     end
 end

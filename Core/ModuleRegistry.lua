@@ -1,3 +1,5 @@
+--- @class ModuleRegistry
+--- @field modules table<string, Module>
 ModuleRegistry = {}
 ModuleRegistry.modules = {}
 

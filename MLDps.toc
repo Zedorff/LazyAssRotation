@@ -81,8 +81,11 @@ Rotation\Paladin\Tracker\CrusaderStrikeTracker.lua
 Rotation\Paladin\Tracker\JudgementTracker.lua
 Rotation\Paladin\Tracker\SealOfCommandTracker.lua
 Rotation\Paladin\Tracker\SealOfCrusaderTargetTracker.lua
+Rotation\Paladin\Tracker\SealOfCrusaderSelfTracker.lua
 Rotation\Paladin\Tracker\SealOfRighteousnessTracker.lua
 Rotation\Paladin\Tracker\SealOfWisdomTargetTracker.lua
+Rotation\Paladin\Tracker\SealOfWisdomSelfTracker.lua
+Rotation\Paladin\Tracker\HolyStrikeTracker.lua
 
 Rotation\Paladin\Module\ConsecrationModule.lua
 Rotation\Paladin\Module\CrusaderStrikeModule.lua
