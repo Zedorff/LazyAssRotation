@@ -1,32 +1,18 @@
+--- @alias BattleShoutTrackers { battleShoutTracker: BattleShoutTracker }
 --- @class BattleShoutModule : Module
---- @field tracker BattleShoutTracker
+--- @field trackers BattleShoutTrackers
 --- @diagnostic disable: duplicate-set-field
 BattleShoutModule = setmetatable({}, { __index = Module })
 BattleShoutModule.__index = BattleShoutModule
 
 --- @return BattleShoutModule
 function BattleShoutModule.new()
+    --- @type BattleShoutTrackers
+    local trackers = {
+        battleShoutTracker = BattleShoutTracker.new()
+    }
     --- @class BattleShoutModule
-    local instance = Module.new(ABILITY_BATTLE_SHOUT)
-    setmetatable(instance, BattleShoutModule)
-
-    instance.tracker = BattleShoutTracker.new()
-
-    if instance.enabled then
-        instance.tracker:subscribe()
-    end
-
-    return instance
-end
-
-function BattleShoutModule:enable()
-    Module.enable(self)
-    self.tracker:subscribe()
-end
-
-function BattleShoutModule:disable()
-    Module.disable(self)
-    self.tracker:unsubscribe()
+    return setmetatable(Module.new(ABILITY_BATTLE_SHOUT, trackers), BattleShoutModule)
 end
 
 function BattleShoutModule:run()
@@ -37,7 +23,7 @@ end
 --- @param context WarriorModuleRunContext
 function BattleShoutModule:getPriority(context)
     if self.enabled then
-        if self.tracker:ShouldCast() and context.rage >= context.shoutCost then
+        if self.trackers.battleShoutTracker:ShouldCast() and context.rage >= context.shoutCost then
             return 95; --- always cast when no buff on yourself
         end
     else

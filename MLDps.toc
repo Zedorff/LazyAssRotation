@@ -43,7 +43,6 @@ Rotation\Warrior\RageCostCache.lua
 
 Rotation\Warrior\WarriorModuleRunContext.lua
 
-Rotation\Warrior\Module\AutoAttackModule.lua
 Rotation\Warrior\Module\BattleShoutModule.lua
 Rotation\Warrior\Module\BloodthirstModule.lua
 Rotation\Warrior\Module\ExecuteModule.lua

@@ -1,18 +1,21 @@
+--- @alias SealOfWisdomTargeTrackers { sowTracker: SealOfWisdomTracker }
 --- @class SealOfWisdomTargetModule : Module
---- @field sowTracker SealOfWisdomTracker
+--- @field trackers SealOfWisdomTargeTrackers
 --- @diagnostic disable: duplicate-set-field
 SealOfWisdomTargetModule = setmetatable({}, { __index = Module })
 SealOfWisdomTargetModule.__index = SealOfWisdomTargetModule
 
 --- @return SealOfWisdomTargetModule
 function SealOfWisdomTargetModule.new()
+    --- @type SealOfWisdomTargeTrackers
+    local trackers = {
+        sowTracker = SealOfWisdomTracker.new()
+    }
     --- @class SealOfWisdomTargetModule
-    local self = Module.new(ABILITY_SEAL_OF_WISDOM)
+    local self = Module.new(ABILITY_SEAL_OF_WISDOM, trackers)
     setmetatable(self, SealOfWisdomTargetModule)
-    self.sowTracker = SealOfWisdomTracker.new()
 
     if self.enabled then
-        self.sowTracker:subscribe()
         ModuleRegistry:DisableModule(ABILITY_SEAL_OF_CRUSADER)
     end
 
@@ -21,13 +24,7 @@ end
 
 function SealOfWisdomTargetModule:enable()
     Module.enable(self)
-    self.sowTracker:subscribe()
     ModuleRegistry:DisableModule(ABILITY_SEAL_OF_CRUSADER)
-end
-
-function SealOfWisdomTargetModule:disable()
-    Module.disable(self)
-    self.sowTracker:unsubscribe()
 end
 
 function SealOfWisdomTargetModule:run()
@@ -37,7 +34,7 @@ end
 
 --- @param context PaladinModuleRunContext
 function SealOfWisdomTargetModule:getPriority(context)
-    if self.enabled and context.mana > context.sowCost and self.sowTracker:ShouldCast() then
+    if self.enabled and context.mana > context.sowCost and self.trackers.sowTracker:ShouldCast() then
         return 85;
     end
     return -1;

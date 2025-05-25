@@ -1,32 +1,18 @@
+--- @alias WaterShieldTrackers { waterShieldTracker: WaterShieldTracker }
 --- @class WaterShieldModule : Module
---- @field tracker WaterShieldTracker
+--- @field trackers WaterShieldTrackers
 --- @diagnostic disable: duplicate-set-field
 WaterShieldModule = setmetatable({}, { __index = Module })
 WaterShieldModule.__index = WaterShieldModule
 
 --- @return WaterShieldModule 
 function WaterShieldModule.new()
+    --- @type WaterShieldTrackers
+    local trackers = {
+        waterShieldTracker = WaterShieldTracker.new()
+    }
     --- @class WaterShieldModule
-    local instance = Module.new(ABILITY_WATER_SHIELD)
-    setmetatable(instance, WaterShieldModule)
-
-    instance.tracker = WaterShieldTracker.new()
-
-    if instance.enabled then
-        instance.tracker:subscribe()
-    end
-
-    return instance
-end
-
-function WaterShieldModule:enable()
-    Module.enable(self)
-    self.tracker:subscribe()
-end
-
-function WaterShieldModule:disable()
-    Module.disable(self)
-    self.tracker:unsubscribe()
+    return setmetatable(Module.new(ABILITY_WATER_SHIELD, trackers), WaterShieldModule)
 end
 
 function WaterShieldModule:run()
@@ -37,7 +23,7 @@ end
 --- @param context ShamanModuleRunContext
 function WaterShieldModule:getPriority(context)
     if self.enabled then
-        if self.tracker:ShouldCast() and context.remainingManaPercents <= 40 then
+        if self.trackers.waterShieldTracker:ShouldCast() and context.remainingManaPercents <= 40 then
             return 95; --- always cast when no buff on yourself
         end
     end

@@ -1,3 +1,5 @@
+--- @alias ShockTrackers { stormStrikeTracker: StormStrikeTracker, clearcastingTracker: ClearcastingTracker }
+
 --- @enum ShockType
 ShockType = {
     EARTH = ABILITY_EARTH_SHOCK,
@@ -6,8 +8,7 @@ ShockType = {
 }
 
 --- @class ShockModule : Module
---- @field stormStrikeTracker StormStrikeTracker
---- @field clearcastingTracker ClearcastingTracker
+--- @field trackers ShockTrackers
 --- @field spellName string
 --- @diagnostic disable: duplicate-set-field
 ShockModule = setmetatable({}, { __index = Module })
@@ -17,34 +18,26 @@ ShockModule.__index = ShockModule
 --- @param enabledByDefault boolean | nil
 --- @return ShockModule
 function ShockModule.new(shockType, enabledByDefault)
+    --- @type ShockTrackers
+    local trackers = {
+        stormStrikeTracker = StormStrikeTracker.new(),
+        clearcastingTracker = ClearcastingTracker.new()
+    }
     --- @class ShockModule
-    local instance = Module.new(shockType, enabledByDefault)
-    setmetatable(instance, ShockModule)
+    local self = setmetatable(Module.new(shockType, trackers, enabledByDefault), ShockModule)
 
-    instance.stormStrikeTracker = StormStrikeTracker.new()
-    instance.clearcastingTracker = ClearcastingTracker.new()
-    instance.spellName = shockType
+    self.spellName = shockType
 
-    if instance.enabled then
-        instance.stormStrikeTracker:subscribe()
-        instance.clearcastingTracker:subscribe()
-        instance:DisableRestShockModules()
+    if insselftance.enabled then
+        self:DisableRestShockModules()
     end
 
-    return instance
+    return self
 end
 
 function ShockModule:enable()
     Module.enable(self)
-    self.stormStrikeTracker:subscribe()
-    self.clearcastingTracker:subscribe()
     self:DisableRestShockModules()
-end
-
-function ShockModule:disable()
-    Module.disable(self)
-    self.stormStrikeTracker:unsubscribe()
-    self.clearcastingTracker:unsubscribe()
 end
 
 function ShockModule:run()
@@ -64,9 +57,9 @@ function ShockModule:getPriority(context)
             cost = context.flameCost
         end
 
-        if self.clearcastingTracker:ShouldCast() and context.mana >= math.floor(cost * 0.33) then
+        if self.trackers.clearcastingTracker:ShouldCast() and context.mana >= math.floor(cost * 0.33) then
             return 90;
-        elseif self.stormStrikeTracker:ShouldCast() and context.mana >= cost then
+        elseif self.trackers.stormStrikeTracker:ShouldCast() and context.mana >= cost then
             return 90;
         elseif context.mana >= cost then
             return 75;

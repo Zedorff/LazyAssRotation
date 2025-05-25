@@ -13,7 +13,6 @@ function Warrior.new()
 
     instance.spec = GetWarriorSpec()
 
-    ModuleRegistry:RegisterModule(AutoAttackModule.new())
     ModuleRegistry:RegisterModule(BattleShoutModule.new())
     ModuleRegistry:RegisterModule(ExecuteModule.new())
     ModuleRegistry:RegisterModule(HeroicStrikeModule.new())

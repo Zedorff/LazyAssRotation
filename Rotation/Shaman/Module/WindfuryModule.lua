@@ -1,34 +1,29 @@
+--- @alias WindfuryTrackers { wfTracker: WindfuryTracker }
 --- @class WindfuryModule : Module
---- @field tracker WindfuryTracker
+--- @field trackers WindfuryTrackers
 --- @diagnostic disable: duplicate-set-field
 WindfuryModule = setmetatable({}, { __index = Module })
 WindfuryModule.__index = WindfuryModule
 
 --- @return WindfuryModule
 function WindfuryModule.new()
+    --- @type WindfuryTrackers
+    local trackers = {
+        wfTracker = WindfuryTracker.new()
+    }
     --- @class WindfuryModule
-    local instance = Module.new(ABILITY_WINDFURY)
-    setmetatable(instance, WindfuryModule)
+    local self = setmetatable(Module.new(ABILITY_WINDFURY, trackers), WindfuryModule)
 
-    instance.tracker = WindfuryTracker.new()
-
-    if instance.enabled then
+    if self.enabled then
         ModuleRegistry:DisableModule(ABILITY_ROCKBITER)
-        instance.tracker:subscribe()
     end
 
-    return instance
+    return self
 end
 
 function WindfuryModule:enable()
-    ModuleRegistry:DisableModule(ABILITY_ROCKBITER)
     Module.enable(self)
-    self.tracker:subscribe()
-end
-
-function WindfuryModule:disable()
-    Module.disable(self)
-    self.tracker:unsubscribe()
+    ModuleRegistry:DisableModule(ABILITY_ROCKBITER)
 end
 
 function WindfuryModule:run()
@@ -39,7 +34,7 @@ end
 --- @param context ShamanModuleRunContext
 function WindfuryModule:getPriority(context)
     if self.enabled then
-        if self.tracker:ShouldCast() then
+        if self.trackers.wfTracker:ShouldCast() then
             return 100;
         end
     end
