@@ -36,7 +36,7 @@ end
 
 --- @param context PaladinModuleRunContext
 function JudjementModule:getPriority(context)
-    if self.enabled and context.mana > context.judjementCost and Helpers:SpellReady(ABILITY_JUDGEMENT) and self.judgTracker:ShouldCast() then
+    if self.enabled and context.remainingManaPercents > 15 and Helpers:SpellReady(ABILITY_JUDGEMENT) and self.judgTracker:ShouldCast() then
         return 90;
     end
     return -1;

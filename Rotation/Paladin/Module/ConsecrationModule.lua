@@ -16,7 +16,7 @@ end
 
 --- @param context PaladinModuleRunContext
 function ConsecrationModule:getPriority(context)
-    if self.enabled and context.remainingManaPercents > 40 and Helpers:SpellReady(ABILITY_CONSECRATION) then
+    if self.enabled and context.remainingManaPercents > 50 and Helpers:SpellReady(ABILITY_CONSECRATION) then
         return 40;
     end
     return -1;
