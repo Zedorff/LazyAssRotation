@@ -28,7 +28,7 @@ function ShockModule.new(shockType, enabledByDefault)
 
     self.spellName = shockType
 
-    if insselftance.enabled then
+    if self.enabled then
         self:DisableRestShockModules()
     end
 
