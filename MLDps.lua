@@ -27,6 +27,9 @@ end
 -- Main Code
 
 function PerformDps()
+    if not DpsRotation then
+        DpsRotation = CreateDpsRotation()
+    end
     if DpsRotation then
         DpsRotation:execute()
     end
