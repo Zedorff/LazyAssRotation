@@ -16,7 +16,8 @@ end
 
 --- @param context PaladinModuleRunContext
 function ExcorcismModule:getPriority(context)
-    if self.enabled and context.mana > context.exorcismCost and Helpers:SpellReady(ABILITY_EXORCISM) then
+    local targetCreatureType = UnitCreatureType("target")
+    if self.enabled and context.mana > context.exorcismCost and Helpers:SpellReady(ABILITY_EXORCISM) and (targetCreatureType == "Undead" or targetCreatureType == "Demon") then
         return 20;
     end
     return -1;
