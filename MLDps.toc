@@ -11,11 +11,11 @@ libs\AceLibrary\AceLibrary.lua
 libs\AceOO-2.0\AceOO-2.0.lua
 libs\AceHook\AceHook-2.0.lua
 
+Core.lua
 Localization.lua
 Logging.lua
 Helpers.lua
 EventBus.lua
-SpellCastInterceptor.lua
 
 Common\Logging.lua
 Common\Helpers.lua

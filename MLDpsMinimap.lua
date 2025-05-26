@@ -1,4 +1,4 @@
-MLDps = MLDps or {}
+Core = Core or {}
 
 local dropdownCount = 0
 local moduleDropdown
@@ -13,7 +13,7 @@ function MLDpsMinimapButton_OnClick()
     if arg1 == "LeftButton" then
         Logging:ToggleDebug()
     else
-        MLDps:ShowModuleToggleMenu()
+        Core:ShowModuleToggleMenu()
     end
 end
 
@@ -32,7 +32,7 @@ function MLDpsMinimapButton_OnLeave()
 end
 
 -- Called on right-click
-function MLDps:ShowModuleToggleMenu()
+function Core:ShowModuleToggleMenu()
     if not moduleDropdown then
         dropdownCount = dropdownCount + 1
         moduleDropdown = CreateFrame("Frame", "MLDps_DropDown" .. dropdownCount, UIParent, "UIDropDownMenuTemplate")
@@ -88,7 +88,7 @@ function MLDps:ShowModuleToggleMenu()
     end
 
     UIDropDownMenu_Initialize(moduleDropdown, Initialize, "MENU")
-    ToggleDropDownMenu(1, nil, moduleDropdown, "cursor", 0, 0)
+    ToggleDropDownMenu(1, nil, moduleDropdown, "Minimap", 0, 0)
 
     -- Optional style
     UIDropDownMenu_SetWidth(100, moduleDropdown)

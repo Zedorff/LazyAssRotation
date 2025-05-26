@@ -30,6 +30,7 @@ function Helpers:SpellReady(spellname)
     return false;
 end
 
+--- @deprecated Use `HasBuff` instead
 --- @param unit string
 --- @param buffName string
 --- @return boolean
@@ -56,6 +57,7 @@ function Helpers:HasBuffName(unit, buffName)
     return false
 end
 
+--- @deprecated Use `HasDebuff` instead
 --- @param unit string
 --- @param debuffName string
 --- @return boolean
@@ -229,7 +231,7 @@ function Helpers:ParseCombatEvent(spellName, line)
   return false, false, false, false, false
 end
 
---- @deprecated Use `HasBuffName` instead
+
 --- @param unit string
 --- @param texturename string
 --- @return boolean
@@ -245,7 +247,6 @@ function Helpers:HasBuff(unit, texturename)
     return false;
 end
 
---- @deprecated Use `HasDebuffName` instead
 --- @param unit string
 --- @param texturename string
 --- @return boolean

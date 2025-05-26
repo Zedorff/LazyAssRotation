@@ -1,6 +1,3 @@
-MLDps = MLDps or {}
-local global = MLDps
-
 local debugMessages = {}
 local maxMessages = 200
 local filterText = ""
@@ -21,15 +18,15 @@ function DebugFrame_AddMessage(msg)
         table.remove(debugMessages, 1)
     end
 
-    if global.debugFrame then
-        global.debugFrame:UpdateContent()
+    if Core.debugFrame then
+        Core.debugFrame:UpdateContent()
     end
 end
 
 -- Create or show the debug frame
 function DebugFrame_Create()
-    if global.debugFrame then
-        global.debugFrame:Show()
+    if Core.debugFrame then
+        Core.debugFrame:Show()
         return
     end
 
@@ -120,5 +117,5 @@ function DebugFrame_Create()
     local close = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
     close:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -5, -5)
 
-    global.debugFrame = frame
+    Core.debugFrame = frame
 end

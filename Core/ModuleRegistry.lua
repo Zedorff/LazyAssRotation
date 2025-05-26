@@ -28,10 +28,11 @@ function ModuleRegistry:IsModuleEnabled(name)
     return self.modules[name] and self.modules[name].enabled
 end
 
---- @return table
+--- @return Module[]
 function ModuleRegistry:GetEnabledModules()
     local active = {}
     for _, data in pairs(self.modules) do
+        --- @cast data Module
         if data.enabled then
             table.insert(active, data)
         end

@@ -38,12 +38,12 @@ function RendTracker:onEvent(event, arg1)
 end
 
 function RendTracker:subscribe()
-    MLDps:StartHookingSpellCasts()
+    Core:StartHookingSpellCasts()
     CooldownTracker.subscribe(self)
 end
 
 function RendTracker:unsubscribe()
-    MLDps:StoptHookingSpellCasts()
+    Core:StoptHookingSpellCasts()
     CooldownTracker.unsubscribe(self)
 end
 

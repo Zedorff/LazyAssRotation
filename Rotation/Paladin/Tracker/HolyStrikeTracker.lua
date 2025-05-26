@@ -10,14 +10,14 @@ function HolyStrikeTracker.new()
     --- @class HolyStrikeTracker
     local self = CooldownTracker.new()
     setmetatable(self, HolyStrikeTracker)
-    self.holyMightIsUp = Helpers:HasBuffName("player", "Holy Might")
+    self.holyMightIsUp = Helpers:HasBuff("player", "Spell_Holy_HolyNova")
     self.lastHolyMightApply = GetTime() + 6
     return self
 end
 
 function HolyStrikeTracker:subscribe()
     CooldownTracker.subscribe(self)
-    self.holyMightIsUp = Helpers:HasBuffName("player", "Holy Might")
+    self.holyMightIsUp = Helpers:HasBuff("player", "Spell_Holy_HolyNova")
     self.lastHolyMightApply = GetTime() + 6
 end
 

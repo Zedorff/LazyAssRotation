@@ -9,13 +9,13 @@ function WaterShieldTracker.new()
     --- @class WaterShieldTracker
     local self = CooldownTracker.new()
     setmetatable(self, WaterShieldTracker)
-    self.shieldIsUp = Helpers:HasBuffName("player", ABILITY_WATER_SHIELD)
+    self.shieldIsUp = Helpers:HasBuff("player", "Spell_Nature_WaterShield")
     return self
 end
 
 function WaterShieldTracker:subscribe()
     CooldownTracker.subscribe(self)
-    self.shieldIsUp = Helpers:HasBuffName("player", ABILITY_WATER_SHIELD)
+    self.shieldIsUp = Helpers:HasBuff("player", "Spell_Nature_WaterShield")
 end
 
 --- @param event string

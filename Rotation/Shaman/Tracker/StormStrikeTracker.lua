@@ -9,13 +9,13 @@ function StormStrikeTracker.new()
     --- @class StormStrikeTracker
     local self = CooldownTracker.new()
     setmetatable(self, StormStrikeTracker)
-    self.buffIsUp = Helpers:HasBuffName("player", ABILITY_STORMSTRIKE)
+    self.buffIsUp = Helpers:HasBuff("player", "Ability_Hunter_RunningShot")
     return self
 end
 
 function StormStrikeTracker:subscribe()
     CooldownTracker.subscribe(self)
-    self.buffIsUp = Helpers:HasBuffName("player", ABILITY_STORMSTRIKE)
+    self.buffIsUp = Helpers:HasBuff("player", "Ability_Hunter_RunningShot")
 end
 
 --- @param event string

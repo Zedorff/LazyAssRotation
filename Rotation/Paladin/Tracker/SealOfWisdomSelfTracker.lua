@@ -9,13 +9,13 @@ function SealOfWisdomSelfTracker.new()
     --- @class SealOfWisdomSelfTracker
     local self = CooldownTracker.new()
     setmetatable(self, SealOfWisdomSelfTracker)
-    self.sowIsUp = Helpers:HasBuffName("player", ABILITY_SEAL_WISDOM)
+    self.sowIsUp = Helpers:HasBuff("player", "Spell_Holy_RighteousnessAura")
     return self
 end
 
 function SealOfWisdomSelfTracker:subscribe()
     CooldownTracker.subscribe(self)
-    self.sowIsUp = Helpers:HasBuffName("player", ABILITY_SEAL_WISDOM)
+    self.sowIsUp = Helpers:HasBuff("player", "Spell_Holy_RighteousnessAura")
 end
 
 --- @param event string

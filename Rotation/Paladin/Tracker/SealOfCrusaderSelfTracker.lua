@@ -9,13 +9,13 @@ function SealOfCrusaderSelfTracker.new()
     --- @class SealOfCrusaderSelfTracker
     local self = CooldownTracker.new()
     setmetatable(self, SealOfCrusaderSelfTracker)
-    self.socrIsUp = Helpers:HasBuffName("player", ABILITY_SEAL_CRUSADER)
+    self.socrIsUp = Helpers:HasBuff("player", "Spell_Holy_HolySmite")
     return self
 end
 
 function SealOfCrusaderSelfTracker:subscribe()
     CooldownTracker.subscribe(self)
-    self.socrIsUp = Helpers:HasBuffName("player", ABILITY_SEAL_CRUSADER)
+    self.socrIsUp = Helpers:HasBuff("player", "Spell_Holy_HolySmite")
 end
 
 --- @param event string

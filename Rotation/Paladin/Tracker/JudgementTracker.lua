@@ -9,19 +9,19 @@ function JudgementTracker.new()
     --- @class JudgementTracker
     local self = CooldownTracker.new()
     setmetatable(self, JudgementTracker)
-    self.hasSeal = Helpers:HasBuffName("player", ABILITY_SEAL_COMMAND)
-                    or Helpers:HasBuffName("player", ABILITY_SEAL_CRUSADER)
-                    or Helpers:HasBuffName("player", ABILITY_SEAL_RIGHTEOUSNESS)
-                    or Helpers:HasBuffName("player", ABILITY_SEAL_WISDOM)
+    self.hasSeal = Helpers:HasBuff("player", "Ability_Warrior_InnerRage")
+                    or Helpers:HasBuff("player", "Spell_Holy_HolySmite")
+                    or Helpers:HasBuff("player", "Ability_ThunderBolt")
+                    or Helpers:HasBuff("player", "Spell_Holy_RighteousnessAura")
     return self
 end
 
 function JudgementTracker:subscribe()
     CooldownTracker.subscribe(self)
-    self.hasSeal = Helpers:HasBuffName("player", ABILITY_SEAL_COMMAND)
-                    or Helpers:HasBuffName("player", ABILITY_SEAL_CRUSADER)
-                    or Helpers:HasBuffName("player", ABILITY_SEAL_RIGHTEOUSNESS)
-                    or Helpers:HasBuffName("player", ABILITY_SEAL_WISDOM)
+    self.hasSeal = Helpers:HasBuff("player", "Ability_Warrior_InnerRage")
+                    or Helpers:HasBuff("player", "Spell_Holy_HolySmite")
+                    or Helpers:HasBuff("player", "Ability_ThunderBolt")
+                    or Helpers:HasBuff("player", "Spell_Holy_RighteousnessAura")
 end
 
 --- @param event string

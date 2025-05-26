@@ -9,13 +9,13 @@ function ClearcastingTracker.new()
     --- @class ClearcastingTracker
     local self = CooldownTracker.new()
     setmetatable(self, ClearcastingTracker)
-    self.buffIsUp = Helpers:HasBuffName("player", PASSIVE_CLEARCASTING)
+    self.buffIsUp = Helpers:HasBuff("player", "Spell_Nature_Clearcasting")
     return self
 end
 
 function ClearcastingTracker:subscribe()
     CooldownTracker.subscribe(self)
-    self.buffIsUp = Helpers:HasBuffName("player", PASSIVE_CLEARCASTING)
+    self.buffIsUp = Helpers:HasBuff("player", "Spell_Nature_Clearcasting")
 end
 
 --- @param event string

@@ -9,13 +9,13 @@ function BattleShoutTracker.new()
     --- @class BattleShoutTracker
     local self = CooldownTracker.new()
     setmetatable(self, BattleShoutTracker)
-    self.battleShoutIsUp = Helpers:HasBuffName("player", ABILITY_BATTLE_SHOUT)
+    self.battleShoutIsUp = Helpers:HasBuff("player", "Ability_Warrior_BattleShout")
     return self
 end
 
 function BattleShoutTracker:subscribe()
     CooldownTracker.subscribe(self)
-    self.battleShoutIsUp = Helpers:HasBuffName("player", ABILITY_BATTLE_SHOUT)
+    self.battleShoutIsUp = Helpers:HasBuff("player", "Ability_Warrior_BattleShout")
 end
 
 --- @param event string

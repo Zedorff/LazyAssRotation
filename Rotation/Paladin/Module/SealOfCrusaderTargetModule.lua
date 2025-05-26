@@ -35,7 +35,7 @@ end
 
 --- @param context PaladinModuleRunContext
 function SealOfCrusaderTargetModule:getPriority(context)
-    if self.enabled and context.mana > context.socrCost and self.trackers.socrTargetTracker:ShouldCast() and not self.trackers.socrSelfTracker:ShouldCast() then
+    if self.enabled and context.mana > context.socrCost and self.trackers.socrTargetTracker:ShouldCast() and self.trackers.socrSelfTracker:ShouldCast() then
         return 85;
     end
     return -1;

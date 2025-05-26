@@ -9,13 +9,13 @@ function SealOfRighteousnessTracker.new()
     --- @class SealOfRighteousnessTracker
     local self = CooldownTracker.new()
     setmetatable(self, SealOfRighteousnessTracker)
-    self.sorIsUp = Helpers:HasBuffName("player", ABILITY_SEAL_RIGHTEOUSNESS)
+    self.sorIsUp = Helpers:HasBuff("player", "Ability_ThunderBolt")
     return self
 end
 
 function SealOfRighteousnessTracker:subscribe()
     CooldownTracker.subscribe(self)
-    self.sorIsUp = Helpers:HasBuffName("player", ABILITY_SEAL_RIGHTEOUSNESS)
+    self.sorIsUp = Helpers:HasBuff("player", "Ability_ThunderBolt")
 end
 
 --- @param event string

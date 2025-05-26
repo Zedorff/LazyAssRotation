@@ -33,7 +33,7 @@ end
 --- @param cache ManaCostCache
 function ShamanModuleRunContext.PreheatCache(cache)
     --- Cancel Clearcasting
-    if Helpers:HasBuffName("player", PASSIVE_CLEARCASTING) then
+    if Helpers:HasBuff("player", "Spell_Nature_Clearcasting") then
         for i = 1, 40 do
             local texture = UnitBuff("player", i)
             if texture and string.find(texture, "Spell_Nature_Lightning") then

@@ -8,13 +8,13 @@ LightningShieldTracker.__index = LightningShieldTracker
 function LightningShieldTracker.new()
     --- @class LightningShieldTracker
     local self = setmetatable(CooldownTracker.new(), LightningShieldTracker)
-    self.shieldIsUp = Helpers:HasBuffName("player", ABILITY_LIGHTNING_SHIELD)
+    self.shieldIsUp = Helpers:HasBuff("player", "Spell_Nature_LightningShield")
     return self
 end
 
 function LightningShieldTracker:subscribe()
     CooldownTracker.subscribe(self)
-    self.shieldIsUp = Helpers:HasBuffName("player", ABILITY_LIGHTNING_SHIELD)
+    self.shieldIsUp = Helpers:HasBuff("player", "Spell_Nature_LightningShield")
 end
 
 --- @param event string

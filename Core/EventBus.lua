@@ -1,13 +1,10 @@
-MLDps = MLDps or {}
-
-EventBus = {}
-EventBus.__index = EventBus
+--- @class EventSubscriber
+--- @field onEvent fun(self: table, event: string, ...)
 
 --- @class EventBus
 --- @field subscribers table
-
---- @class EventSubscriber
---- @field onEvent fun(self: table, event: string, ...)
+EventBus = {}
+EventBus.__index = EventBus
 
 function EventBus:new(frame)
     Logging:Log("Create EventBus")
@@ -46,10 +43,12 @@ function EventBus:new(frame)
     return instance
 end
 
+--- @param handler EventSubscriber
 function EventBus:subscribe(handler)
     self.subscribers[handler] = true
 end
 
+--- @param handler EventSubscriber
 function EventBus:unsubscribe(handler)
     self.subscribers[handler] = nil
 end

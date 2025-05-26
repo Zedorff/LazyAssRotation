@@ -1,7 +1,4 @@
-MLDps = MLDps or {}
-local global = MLDps
-
---- @class CooldownTracker
+--- @class CooldownTracker : EventSubscriber
 CooldownTracker = {}
 CooldownTracker.__index = CooldownTracker
 
@@ -16,11 +13,13 @@ function CooldownTracker:ShouldCast()
 end
 
 function CooldownTracker:subscribe()
-    global.eventBus:subscribe(self)
+    Logging:Debug("[Module Test]: subscribe tracker")
+    Core.eventBus:subscribe(self)
 end
 
 function CooldownTracker:unsubscribe()
-    global.eventBus:unsubscribe(self)
+    Logging:Debug("[Module Test]: unsubscribe tracker")
+    Core.eventBus:unsubscribe(self)
 end
 
 --- @param event string

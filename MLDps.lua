@@ -1,9 +1,3 @@
-MLDps = MLDps or {}
-local global = MLDps
-
---- @class MLDps
---- @field eventBus EventBus
-
 --- @type ClassRotation | nil
 local DpsRotation = nil
 
@@ -56,7 +50,7 @@ function ResetRotation()
         DpsRotation:clear()
     end
     DpsRotation = nil
-    MLDps:StoptHookingSpellCasts()
+    Core:StoptHookingSpellCasts()
 end
 
 -- Event Handlers
@@ -79,11 +73,11 @@ function MLDps_OnLoad()
 end
 
 function InitComponents(frame)
-    global.eventBus = EventBus:new(frame)
+    Core.eventBus = EventBus:new(frame)
 end
 
 function InitSubscribers()
-    global.eventBus:subscribe({
+    Core.eventBus:subscribe({
         onEvent = function (_, event, arg1)
             if (event == "CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE" or event == "CHAT_MSG_SPELL_AURA_GONE_OTHER") then
                 -- Logging:Log("Event: "..event..", arg1: "..tostring(arg1))

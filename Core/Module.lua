@@ -29,6 +29,7 @@ end
 
 function Module:enable()
     self.enabled = true
+    Logging:Debug("[Module Test]: enabled module - "..self.name)
     MLDpsModuleSettings.modulesEnabled[self.name] = true
     for _, tracker in pairs(self.trackers) do
         tracker:subscribe()
@@ -37,6 +38,7 @@ end
 
 function Module:disable()
     self.enabled = false
+    Logging:Debug("[Module Test]: disabled module - "..self.name)
     MLDpsModuleSettings.modulesEnabled[self.name] = false
     for _, tracker in pairs(self.trackers) do
         tracker:unsubscribe()

@@ -9,13 +9,13 @@ function SealOfCommandTracker.new()
     --- @class SealOfCommandTracker
     local self = CooldownTracker.new()
     setmetatable(self, SealOfCommandTracker)
-    self.socIsUp = Helpers:HasBuffName("player", ABILITY_SEAL_COMMAND)
+    self.socIsUp = Helpers:HasBuff("player", "Ability_Warrior_InnerRage")
     return self
 end
 
 function SealOfCommandTracker:subscribe()
     CooldownTracker.subscribe(self)
-    self.socIsUp = Helpers:HasBuffName("player", ABILITY_SEAL_COMMAND)
+    self.socIsUp = Helpers:HasBuff("player", "Ability_Warrior_InnerRage")
 end
 
 --- @param event string
