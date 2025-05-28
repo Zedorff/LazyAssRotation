@@ -2,7 +2,9 @@
 ManaCostCache = setmetatable({}, { __index = ModuleRunCache })
 ManaCostCache.__index = ManaCostCache
 
+--- @return ManaCostCache
 function ManaCostCache.new()
+    --- @type ManaCostCache
     return setmetatable(ModuleRunCache.new(), ManaCostCache)
 end
 

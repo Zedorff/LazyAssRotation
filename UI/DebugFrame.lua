@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-field, param-type-mismatch, inject-field
 local debugMessages = {}
 local maxMessages = 200
 local filterText = ""

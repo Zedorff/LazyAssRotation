@@ -13,12 +13,10 @@ function CooldownTracker:ShouldCast()
 end
 
 function CooldownTracker:subscribe()
-    Logging:Debug("[Module Test]: subscribe tracker")
     Core.eventBus:subscribe(self)
 end
 
 function CooldownTracker:unsubscribe()
-    Logging:Debug("[Module Test]: unsubscribe tracker")
     Core.eventBus:unsubscribe(self)
 end
 

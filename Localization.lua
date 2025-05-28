@@ -1,7 +1,11 @@
+-- Const
+MODULE_POWERSHIFTING       = "Poweshifting"
+
 -- Classes
 CLASS_WARRIOR_DPS          = "Warrior"
 CLASS_SHAMAN_DPS           = "Shaman"
 CLASS_PALADIN_DPS          = "Paladin"
+CLASS_DRUID_DPS            = "Druid"
 
 -- Chat
 CHAT_AUTOATTACK_DODGE      = "You attack.(.+) dodges."
@@ -45,7 +49,17 @@ ABILITY_SEAL_CRUSADER      = "Seal of the Crusader"
 ABILITY_SEAL_RIGHTEOUSNESS = "Seal of Righteousness"
 ABILITY_SEAL_WISDOM        = "Seal of Wisdom"
 
+-- Druid
+ABILITY_TIGER_FURY         = "Tiger's Fury"
+ABILITY_SHRED              = "Shred"
+ABILITY_RIP                = "Rip"
+ABILITY_RAKE               = "Rake"
+ABILITY_CLAW               = "Claw"
+ABILITY_FEROCIOUS_BITE     = "Ferocious Bite"
+ABILITY_CAT_FORM           = "Cat Form"
+
 -- Regex
 RAGE_DESCRIPTION_REGEX     = "(%d+)%s*Rage";
+ENERGY_DESCRIPTION_REGEX   = "(%d+)%s*Energy";
 COOLDOWN_DESCRIPTION_REGEX = "(%d+%.?%d*) sec";
 MANA_DESCRIPTION_REGEX     = "(%d+)%s*Mana"

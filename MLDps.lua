@@ -15,6 +15,8 @@ function CreateDpsRotation()
         return Shaman.new();
     elseif (class == CLASS_PALADIN_DPS) then
         return Paladin.new()
+    elseif (class == CLASS_DRUID_DPS) then
+        return Druid.new()
     end
 end
 
@@ -79,7 +81,7 @@ end
 function InitSubscribers()
     Core.eventBus:subscribe({
         onEvent = function (_, event, arg1)
-            if (event == "CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE" or event == "CHAT_MSG_SPELL_AURA_GONE_OTHER") then
+            if (event == "UNIT_MANA") then
                 -- Logging:Log("Event: "..event..", arg1: "..tostring(arg1))
             end
             if (event == "VARIABLES_LOADED") then

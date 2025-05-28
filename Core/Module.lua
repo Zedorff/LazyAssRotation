@@ -28,20 +28,22 @@ function Module.new(name, trackers, enabledByDefault)
 end
 
 function Module:enable()
-    self.enabled = true
-    Logging:Debug("[Module Test]: enabled module - "..self.name)
-    MLDpsModuleSettings.modulesEnabled[self.name] = true
-    for _, tracker in pairs(self.trackers) do
-        tracker:subscribe()
+    if not self.enabled then
+        self.enabled = true
+        MLDpsModuleSettings.modulesEnabled[self.name] = true
+        for _, tracker in pairs(self.trackers) do
+            tracker:subscribe()
+        end
     end
 end
 
 function Module:disable()
-    self.enabled = false
-    Logging:Debug("[Module Test]: disabled module - "..self.name)
-    MLDpsModuleSettings.modulesEnabled[self.name] = false
-    for _, tracker in pairs(self.trackers) do
-        tracker:unsubscribe()
+    if self.enabled then
+        self.enabled = false
+        MLDpsModuleSettings.modulesEnabled[self.name] = false
+        for _, tracker in pairs(self.trackers) do
+            tracker:unsubscribe()
+        end
     end
 end
 

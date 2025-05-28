@@ -34,7 +34,10 @@ function EventBus:new(frame)
     frame:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS")
     frame:RegisterEvent("UNIT_INVENTORY_CHANGED");
     frame:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER");
-    
+    frame:RegisterEvent("UNIT_MANA");
+    frame:RegisterEvent("UPDATE_SHAPESHIFT_FORM");
+    frame:RegisterEvent("UNIT_ENERGY");
+
     frame:SetScript( "OnEvent", function()
         --- @diagnostic disable-next-line: undefined-global
         instance:notify(event, arg1, arg2, arg3, arg4, arg5)

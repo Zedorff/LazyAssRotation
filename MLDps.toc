@@ -21,6 +21,7 @@ Core\ModuleRegistry.lua
 Core\CooldownTracker.lua
 Core\ModuleRunCache.lua
 Core\ManaCostCache.lua
+Core\EnergyCostCache.lua
 Core\SharedTracker\ClearcastingTracker.lua
 
 Common\Logging.lua
@@ -94,6 +95,24 @@ Rotation\Paladin\Module\SealOfRighteousnessModule.lua
 Rotation\Paladin\Module\SealOfWisdomTargetModule.lua
 
 Rotation\Paladin\Paladin.lua
+
+Rotation\Druid\DruidModuleRunContext.lua
+
+Rotation\Druid\Tracker\EnergyTickTracker.lua
+Rotation\Druid\Tracker\TigerFuryTracker.lua
+Rotation\Druid\Tracker\RakeTracker.lua
+Rotation\Druid\Tracker\RipTracker.lua
+Rotation\Druid\Tracker\DruidManaTracker.lua
+
+Rotation\Druid\Module\ClawModule.lua
+Rotation\Druid\Module\FerociousBiteModule.lua
+Rotation\Druid\Module\PowerShiftingModule.lua
+Rotation\Druid\Module\RipModule.lua
+Rotation\Druid\Module\RakeModule.lua
+Rotation\Druid\Module\ShredModule.lua
+Rotation\Druid\Module\TigerFuryModule.lua
+
+Rotation\Druid\Druid.lua
 
 UI\DebugFrame.lua
 

@@ -9,17 +9,21 @@ AceLibrary("AceHook-2.1"):embed(Core)
 local isHookingSpells = false
 
 function Core:StartHookingSpellCasts()
-    self:Hook("CastSpellByName")
-    self:Hook("UseAction")
-    self:Hook("CastSpell")
-    isHookingSpells = true
+    if not isHookingSpells then
+        self:Hook("CastSpellByName")
+        self:Hook("UseAction")
+        self:Hook("CastSpell")
+        isHookingSpells = true
+    end
 end
 
 function Core:StopHookingSpellCasts()
-    self:Unhook("CastSpellByName")
-    self:Unhook("UseAction")
-    self:Unhook("CastSpell")
-    isHookingSpells = false
+    if isHookingSpells then
+        self:Unhook("CastSpellByName")
+        self:Unhook("UseAction")
+        self:Unhook("CastSpell")
+        isHookingSpells = false
+    end
 end
 
 function Core:IsHookingSpells()
