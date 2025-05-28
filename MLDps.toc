@@ -11,25 +11,20 @@ libs\AceLibrary\AceLibrary.lua
 libs\AceOO-2.0\AceOO-2.0.lua
 libs\AceHook\AceHook-2.0.lua
 
-Core.lua
 Localization.lua
-Logging.lua
-Helpers.lua
-EventBus.lua
 
-Common\Logging.lua
-Common\Helpers.lua
-
+Core\Core.lua
 Core\EventBus.lua
-Core\SpellCastInterceptor.lua
 Core\ModuleRunContext.lua
 Core\Module.lua
 Core\ModuleRegistry.lua
 Core\CooldownTracker.lua
 Core\ModuleRunCache.lua
 Core\ManaCostCache.lua
-
 Core\SharedTracker\ClearcastingTracker.lua
+
+Common\Logging.lua
+Common\Helpers.lua
 
 Rotation\ClassRotation.lua
 Rotation\ClassRotationPerformer.lua

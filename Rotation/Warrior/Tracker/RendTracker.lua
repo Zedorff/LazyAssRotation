@@ -43,7 +43,7 @@ function RendTracker:subscribe()
 end
 
 function RendTracker:unsubscribe()
-    Core:StoptHookingSpellCasts()
+    Core:StopHookingSpellCasts()
     CooldownTracker.unsubscribe(self)
 end
 

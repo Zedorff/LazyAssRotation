@@ -1,5 +1,3 @@
-Core = Core or {}
-
 local dropdownCount = 0
 local moduleDropdown
 local optionList = {}

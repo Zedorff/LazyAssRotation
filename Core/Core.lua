@@ -15,7 +15,7 @@ function Core:StartHookingSpellCasts()
     isHookingSpells = true
 end
 
-function Core:StoptHookingSpellCasts()
+function Core:StopHookingSpellCasts()
     self:Unhook("CastSpellByName")
     self:Unhook("UseAction")
     self:Unhook("CastSpell")

@@ -50,7 +50,7 @@ function ResetRotation()
         DpsRotation:clear()
     end
     DpsRotation = nil
-    Core:StoptHookingSpellCasts()
+    Core:StopHookingSpellCasts()
 end
 
 -- Event Handlers
