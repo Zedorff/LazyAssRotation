@@ -10,14 +10,14 @@ end
 
 --- @param name string
 function ModuleRegistry:EnableModule(name)
-    if self.modules[name] then
+    if self.modules[name] and not self.modules[name].enabled then
         self.modules[name]:enable()
     end
 end
 
 --- @param name string
 function ModuleRegistry:DisableModule(name)
-    if self.modules[name] then
+    if self.modules[name] and self.modules[name].enabled then
         self.modules[name]:disable()
     end
 end
