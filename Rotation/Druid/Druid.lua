@@ -1,6 +1,7 @@
 --- @class Druid : ClassRotation
 --- @field cache EnergyCostCache
 --- @field manaCache ManaCostCache
+--- @field rageCache RageCostCache
 --- @diagnostic disable: duplicate-set-field
 Druid = setmetatable({}, { __index = ClassRotation })
 Druid.__index = Druid
@@ -11,12 +12,12 @@ function Druid.new()
     local self = ClassRotation.new(EnergyCostCache.new())
     setmetatable(self, Druid)
     self.manaCache = ManaCostCache.new()
+    self.rageCache = RageCostCache.new()
 
     local specs = {
-        SpecButtonInfo.new("Interface\\Icons\\Ability_Druid_CatForm", "Powershifting",
-            LARSelectedSpec == nil or LARSelectedSpec.name == "Powershifting"),
-        SpecButtonInfo.new("Interface\\Icons\\Ability_Druid_Disembowel", "Bleeds",
-            LARSelectedSpec and LARSelectedSpec.name == "Bleeds")
+        SpecButtonInfo.new("Interface\\Icons\\Ability_Druid_CatForm", "Powershifting", LARSelectedSpec == nil or LARSelectedSpec.name == "Powershifting"),
+        SpecButtonInfo.new("Interface\\Icons\\Ability_Druid_Disembowel", "Bleeds", LARSelectedSpec and LARSelectedSpec.name == "Bleeds"),
+        SpecButtonInfo.new("Interface\\Icons\\Ability_Racial_BearForm", "Bear", LARSelectedSpec and LARSelectedSpec.name == "Bear")
     }
 
     if not LARSelectedSpec then
@@ -27,13 +28,13 @@ function Druid.new()
 
     HotSwap_CreateSpecButtons(specs)
 
-    DruidModuleRunContext.PreheatCache(self.cache, self.manaCache)
+    DruidModuleRunContext.PreheatCache(self.cache, self.manaCache, self.rageCache)
 
     return self
 end
 
 function Druid:execute()
-    ClassRotationPerformer:PerformRotation(DruidModuleRunContext.new(self.cache, self.manaCache))
+    ClassRotationPerformer:PerformRotation(DruidModuleRunContext.new(self.cache, self.manaCache, self.rageCache))
 end
 
 function Druid:SelectSpec(spec)
@@ -42,7 +43,10 @@ function Druid:SelectSpec(spec)
         self:EnablePowershiftingSpec()
     elseif spec.name == "Bleeds" then
         self:EnableBleedSpec()
+    elseif spec.name == "Bear" then
+        self:EnabledBearSpec()
     end
+    HotSwap_InvalidateModuleButtons()
 end
 
 function Druid:EnableBleedSpec()
@@ -52,10 +56,6 @@ function Druid:EnableBleedSpec()
     ModuleRegistry:RegisterModule(ShredModule.new())
     ModuleRegistry:RegisterModule(FerociousBiteModule.new())
     ModuleRegistry:RegisterModule(TigerFuryModule.new())
-
-    HotSwap_CreateModuleButtons(Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
-        return ModuleButtonInfo.new(module.iconPath, module.name, module.enabled)
-    end))
 end
 
 function Druid:EnablePowershiftingSpec()
@@ -63,8 +63,10 @@ function Druid:EnablePowershiftingSpec()
     ModuleRegistry:RegisterModule(FerociousBiteModule.new())
     ModuleRegistry:RegisterModule(PowerShiftingModule.new())
     ModuleRegistry:RegisterModule(TigerFuryModule.new())
+end
 
-    HotSwap_CreateModuleButtons(Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
-        return ModuleButtonInfo.new(module.iconPath, module.name, module.enabled)
-    end))
+function Druid:EnabledBearSpec()
+    ModuleRegistry:RegisterModule(MaulModule.new())
+    ModuleRegistry:RegisterModule(SavageBiteModule.new())
+    ModuleRegistry:RegisterModule(SwipeModule.new())
 end

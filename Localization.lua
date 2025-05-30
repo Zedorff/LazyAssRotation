@@ -60,6 +60,9 @@ ABILITY_RAKE               = "Rake"
 ABILITY_CLAW               = "Claw"
 ABILITY_FEROCIOUS_BITE     = "Ferocious Bite"
 ABILITY_CAT_FORM           = "Cat Form"
+ABILITY_MAUL               = "Maul"
+ABILITY_SWIPE              = "Swipe"
+ABILITY_SAVAGE_BITE        = "Savege Bite"
 
 -- Regex
 RAGE_DESCRIPTION_REGEX     = "(%d+)%s*Rage";

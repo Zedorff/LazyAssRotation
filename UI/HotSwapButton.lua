@@ -190,8 +190,11 @@ function HotSwap_CreateSpecButtons(specs)
     ButtonSets["SpecSet"] = specButtons
 end
 
---- @param modules ModuleButtonInfo[]
-function HotSwap_CreateModuleButtons(modules)
+function HotSwap_InvalidateModuleButtons()
+    local modules = Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
+        return ModuleButtonInfo.new(module.iconPath, module.name, module.enabled)
+    end)
+
     local parent = HotSwapButton
     RemoveChildrenByPrefix(parent, "Module")
 

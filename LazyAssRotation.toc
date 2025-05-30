@@ -25,6 +25,7 @@ Core\EnergyCostCache.lua
 Core\SharedTracker\ClearcastingTracker.lua
 Core\ClassRotation.lua
 Core\ClassRotationPerformer.lua
+Core\RageCostCache.lua
 
 UI\SpecButtonInfo.lua
 UI\ModuleButtonInfo.lua
@@ -38,8 +39,6 @@ Rotation\Warrior\Tracker\AutoAttackTracker.lua
 Rotation\Warrior\Tracker\OverpowerTracker.lua
 Rotation\Warrior\Tracker\RendTracker.lua
 Rotation\Warrior\Tracker\RevengeTracker.lua
-
-Rotation\Warrior\RageCostCache.lua
 
 Rotation\Warrior\WarriorModuleRunContext.lua
 
@@ -118,6 +117,9 @@ Rotation\Druid\Module\RipModule.lua
 Rotation\Druid\Module\RakeModule.lua
 Rotation\Druid\Module\ShredModule.lua
 Rotation\Druid\Module\TigerFuryModule.lua
+Rotation\Druid\Module\MaulModule.lua
+Rotation\Druid\Module\SavageBiteModule.lua
+Rotation\Druid\Module\SwipeModule.lua
 
 Rotation\Druid\Druid.lua
 

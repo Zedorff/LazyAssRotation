@@ -45,6 +45,7 @@ function Warrior:SelectSpec(spec)
         self.spec = WarriorSpec.PROT
         self:EnableProtSpec()
     end
+    HotSwap_InvalidateModuleButtons()
 end
 
 function Warrior:EnableFurySpec()
@@ -54,10 +55,6 @@ function Warrior:EnableFurySpec()
     ModuleRegistry:RegisterModule(HeroicStrikeModule.new())
     ModuleRegistry:RegisterModule(HamstringModule.new())
     ModuleRegistry:RegisterModule(ExecuteModule.new())
-
-    HotSwap_CreateModuleButtons(Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
-        return ModuleButtonInfo.new(module.iconPath, module.name, module.enabled)
-    end))
 end
 
 function Warrior:EnableArmsSpec()
@@ -69,10 +66,6 @@ function Warrior:EnableArmsSpec()
     ModuleRegistry:RegisterModule(OverpowerModule.new())
     ModuleRegistry:RegisterModule(HeroicStrikeModule.new())
     ModuleRegistry:RegisterModule(ExecuteModule.new())
-
-    HotSwap_CreateModuleButtons(Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
-        return ModuleButtonInfo.new(module.iconPath, module.name, module.enabled)
-    end))
 end
 
 function Warrior:EnableProtSpec()
@@ -81,8 +74,4 @@ function Warrior:EnableProtSpec()
     ModuleRegistry:RegisterModule(ShieldSlamModule.new())
     ModuleRegistry:RegisterModule(HeroicStrikeModule.new())
     ModuleRegistry:RegisterModule(SunderArmorModule.new())
-
-    HotSwap_CreateModuleButtons(Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
-        return ModuleButtonInfo.new(module.iconPath, module.name, module.enabled)
-    end))
 end

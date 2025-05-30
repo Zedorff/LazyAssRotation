@@ -36,6 +36,7 @@ function Paladin:SelectSpec(spec)
     if spec.name == "Retrodin" then
         self:EnableRetrodinSpec()
     end
+    HotSwap_InvalidateModuleButtons()
 end
 
 function Paladin:EnableRetrodinSpec()
@@ -49,8 +50,4 @@ function Paladin:EnableRetrodinSpec()
     ModuleRegistry:RegisterModule(SealOfRighteousnessModule.new())
     ModuleRegistry:RegisterModule(SealOfWisdomTargetModule.new())
     ModuleRegistry:RegisterModule(ExcorcismModule.new())
-
-    HotSwap_CreateModuleButtons(Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
-        return ModuleButtonInfo.new(module.iconPath, module.name, module.enabled)
-    end))
 end

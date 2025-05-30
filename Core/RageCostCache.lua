@@ -2,7 +2,9 @@
 RageCostCache = setmetatable({}, { __index = ModuleRunCache })
 RageCostCache.__index = RageCostCache
 
+--- @return RageCostCache
 function RageCostCache.new()
+    --- @type RageCostCache
     return setmetatable(ModuleRunCache.new(), RageCostCache)
 end
 

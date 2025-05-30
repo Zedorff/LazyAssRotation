@@ -1,5 +1,7 @@
 --- @class DruidModuleRunContext : ModuleRunContext
 --- @field energy integer
+--- @field mana integer
+--- @field rage integer
 --- @field cp integer
 --- @field shredCost integer
 --- @field clawCost integer
@@ -8,25 +10,37 @@
 --- @field tigerFuryCost integer
 --- @field ferociousBiteCost integer
 --- @field catFormCost integer
+--- @field maulCost integer
+--- @field swipeCost integer
+--- @field savageBiteCost integer
 DruidModuleRunContext = setmetatable({}, { __index = ModuleRunContext })
 DruidModuleRunContext.__index = DruidModuleRunContext
 
 --- @param energyCache EnergyCostCache
 --- @param manaCache ManaCostCache
+--- @param rageCache RageCostCache
 --- @return DruidModuleRunContext
-function DruidModuleRunContext.new(energyCache, manaCache)
+function DruidModuleRunContext.new(energyCache, manaCache, rageCache)
     --- @class DruidModuleRunContext
     local self = ModuleRunContext.new()
     setmetatable(self, DruidModuleRunContext)
 
     local powerType = UnitPowerType("player")
-    local mana = UnitMana("player")
+    local unitMana = UnitMana("player")
+    local mana = 0
     local energy = 0
+    local rage = 0
     if powerType == 3 then
-        energy = mana
+        energy = unitMana
+    elseif powerType == 1 then
+        rage = unitMana
+    elseif powerType == 0 then
+        mana = unitMana
     end
 
     self.energy = energy
+    self.mana = mana
+    self.rage = rage
     self.cp = GetComboPoints("player", "target")
     self.shredCost = energyCache:Get(ABILITY_SHRED)
     self.clawCost = energyCache:Get(ABILITY_CLAW)
@@ -35,12 +49,15 @@ function DruidModuleRunContext.new(energyCache, manaCache)
     self.tigerFuryCost = energyCache:Get(ABILITY_TIGER_FURY)
     self.ferociousBiteCost = energyCache:Get(ABILITY_FEROCIOUS_BITE)
     self.catFormCost = manaCache:Get(ABILITY_CAT_FORM)
+    self.maulCost = rageCache:Get(ABILITY_MAUL)
+    self.swipeCost = rageCache:Get(ABILITY_SWIPE)
+    self.savageBiteCost = rageCache:Get(ABILITY_SAVAGE_BITE)
     return self
 end
 
 --- @param energyCache EnergyCostCache
 --- @param manaCache ManaCostCache
-function DruidModuleRunContext.PreheatCache(energyCache, manaCache)
+function DruidModuleRunContext.PreheatCache(energyCache, manaCache, rageCache)
     energyCache:Get(ABILITY_CLAW)
     energyCache:Get(ABILITY_RAKE)
     energyCache:Get(ABILITY_RIP)
@@ -48,4 +65,7 @@ function DruidModuleRunContext.PreheatCache(energyCache, manaCache)
     energyCache:Get(ABILITY_FEROCIOUS_BITE)
     energyCache:Get(ABILITY_SHRED)
     manaCache:Get(ABILITY_CAT_FORM)
+    rageCache:Get(ABILITY_SWIPE)
+    rageCache:Get(ABILITY_MAUL)
+    rageCache:Get(ABILITY_SAVAGE_BITE)
 end

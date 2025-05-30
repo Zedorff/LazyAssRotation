@@ -33,6 +33,7 @@ function Shaman:SelectSpec(spec)
     if spec.name == "Enhance" then
         self:EnableEnhanceSpec()
     end
+    HotSwap_InvalidateModuleButtons()
 end
 
 function Shaman:EnableEnhanceSpec()
@@ -45,8 +46,4 @@ function Shaman:EnableEnhanceSpec()
     ModuleRegistry:RegisterModule(ShockModule.new(ABILITY_FLAME_SHOCK, "Interface\\Icons\\Spell_Fire_FlameShock", false))
     ModuleRegistry:RegisterModule(WindfuryModule.new())
     ModuleRegistry:RegisterModule(RockbiterModule.new())
-
-    HotSwap_CreateModuleButtons(Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
-        return ModuleButtonInfo.new(module.iconPath, module.name, module.enabled)
-    end))
 end
