@@ -17,6 +17,7 @@ function Settings_InitializeLAR_SpecDropdown()
                 func = function(arg1)
                     UIDropDownMenu_SetSelectedValue(LAR_SpecDropdown, arg1)
                     LARSpecSide = arg1
+                    HotSwap_RearrangeButtons()
                 end,
             }
             UIDropDownMenu_AddButton(info)
@@ -36,7 +37,8 @@ function Settings_InitializeLAR_ModuleDropdown()
                 arg1 = side,
                 func = function(arg1)
                     UIDropDownMenu_SetSelectedValue(LAR_ModuleDropdown, arg1)
-                    LARSpecSidee = arg1
+                    LARModuleSide = arg1
+                    HotSwap_RearrangeButtons()
                 end,
             }
             UIDropDownMenu_AddButton(info)
@@ -44,7 +46,7 @@ function Settings_InitializeLAR_ModuleDropdown()
     end
 
     UIDropDownMenu_Initialize(LAR_ModuleDropdown, initialize)
-    UIDropDownMenu_SetSelectedValue(LAR_ModuleDropdown, LARSpecSide or "RIGHT")
+    UIDropDownMenu_SetSelectedValue(LAR_ModuleDropdown, LARModuleSide or "RIGHT")
 end
 
 function ToggleShowCurrentSpell(checked)

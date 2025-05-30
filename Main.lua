@@ -6,6 +6,7 @@ function Init()
         DpsRotation = CreateDpsRotation()
     end
     HotSwapButton:Show()
+    Settings_OnLoad()
 end
 
 function CreateDpsRotation()

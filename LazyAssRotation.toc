@@ -4,7 +4,7 @@
 ## Author: Zedorff
 ## DefaultState: enabled
 ## OptionalDeps: none
-## SavedVariablesPerCharacter: LARModuleSettings, LARFloatingButtonPosition, LARSelectedSpec, LARSpecSide, LARSpecSide, LARShowRotationSpells
+## SavedVariablesPerCharacter: LARModuleSettings, LARFloatingButtonPosition, LARSelectedSpec, LARSpecSide, LARModuleSide, LARShowRotationSpells
 
 ## Load Ace2 libraries first
 libs\AceLibrary\AceLibrary.lua

@@ -4,11 +4,6 @@
 
 	<Frame name="LAR_SettingsFrame" toplevel="true" frameStrata="DIALOG" movable="true"
 		enableMouse="true" hidden="true" parent="UIParent">
-		<Scripts>
-			<OnLoad>
-				Settings_OnLoad()
-			</OnLoad>
-		</Scripts>
 		<TitleRegion setAllPoints="true" />
 		<Size>
 			<AbsDimension x="260" y="260" />

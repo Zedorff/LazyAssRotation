@@ -219,7 +219,7 @@ function HotSwap_CreateModuleButtons(modules)
         table.insert(moduleButtons, btn)
     end
 
-    AnchorButtonSet(moduleButtons, LARSpecSide or "RIGHT", parent)
+    AnchorButtonSet(moduleButtons, LARModuleSide or "RIGHT", parent)
     ButtonSets["ModuleSet"] = moduleButtons
 end
 
@@ -310,4 +310,9 @@ function HotSwap_HideButtonSets()
         end
         hidden = true
     end
+end
+
+function HotSwap_RearrangeButtons()
+    AnchorButtonSet(ButtonSets["SpecSet"], LARSpecSide or "TOP", HotSwapButton)
+    AnchorButtonSet(ButtonSets["ModuleSet"], LARModuleSide or "RIGHT", HotSwapButton)
 end
