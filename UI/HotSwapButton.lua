@@ -28,7 +28,7 @@ function HotSwap_SaveDraggableButtonPosition()
     LARFloatingButtonPosition = { point, relativePoint, xOfs, yOfs }
 end
 
-local function RestoreDraggableButtonPosition()
+function RestoreDraggableButtonPosition()
     --- @type Frame
     local frame = HotSwapButton
     if LARFloatingButtonPosition then
