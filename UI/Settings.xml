@@ -55,6 +55,19 @@
 
 			<!-- Spec Selection Side Dropdown -->
 			<Frame name="LAR_SpecDropdown" inherits="UIDropDownMenuTemplate">
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString inherits="GameFontNormalSmall" text="Specs Expand Direction">
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="TOP">
+									<Offset>
+										<AbsDimension x="0" y="10" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
 				<Anchors>
 					<Anchor point="TOPLEFT">
 						<Offset>
@@ -63,18 +76,22 @@
 					</Anchor>
 				</Anchors>
 			</Frame>
-			<FontString inherits="GameFontNormalSmall" text="Spec Side">
-				<Anchors>
-					<Anchor point="BOTTOMLEFT" relativeTo="LAR_SpecDropdown">
-						<Offset>
-							<AbsDimension x="20" y="5" />
-						</Offset>
-					</Anchor>
-				</Anchors>
-			</FontString>
 
 			<!-- Module Selection Side Dropdown -->
 			<Frame name="LAR_ModuleDropdown" inherits="UIDropDownMenuTemplate">
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString inherits="GameFontNormalSmall" text="Modules Expand Direction">
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="TOP">
+									<Offset>
+										<AbsDimension x="0" y="10" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
 				<Anchors>
 					<Anchor point="TOPLEFT">
 						<Offset>
@@ -83,15 +100,6 @@
 					</Anchor>
 				</Anchors>
 			</Frame>
-			<FontString inherits="GameFontNormalSmall" text="Module Side">
-				<Anchors>
-					<Anchor point="BOTTOMLEFT" relativeTo="LAR_ModuleDropdown">
-						<Offset>
-							<AbsDimension x="20" y="5" />
-						</Offset>
-					</Anchor>
-				</Anchors>
-			</FontString>
 
 			<!-- Checkbox: Show Current Using Spell -->
 			<CheckButton name="LAR_ShowSpellCheckbox" inherits="UICheckButtonTemplate">
