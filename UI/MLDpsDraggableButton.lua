@@ -1,4 +1,4 @@
----@diagnostic disable: undefined-field
+--- @diagnostic disable: undefined-field, param-type-mismatch, inject-field
 --- @type table<string, table<number, Button>>
 MLDpsButtonCache = MLDpsButtonCache or {}
 

@@ -14,8 +14,8 @@ function MLDpsMinimapButton_OnEnter()
     GameTooltip:ClearLines()
     GameTooltip:AddLine("|cffffff00MLDps|r") 
     GameTooltip:AddLine(" ", 1, 1, 1)
-    GameTooltip:AddLine("Right-click to toggle modules", 1, 1, 1, true)
-    GameTooltip:AddLine("Left-click to toggle debug mode", 1, 1, 1, true)
+    GameTooltip:AddLine("Right-click to toggle modules", 1, 1, 1)
+    GameTooltip:AddLine("Left-click to toggle debug mode", 1, 1, 1)
     GameTooltip:Show()
 end
 
