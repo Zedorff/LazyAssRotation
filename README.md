@@ -13,8 +13,8 @@
 ## UI
 
 - 🖱 **Minimap Button**:  
-  - Left-click: toggle debug window 
-  - Right-click: toggle settings
+  - Right-click: toggle debug window 
+  - Left-click: toggle settings
 
 ## Install
 

@@ -5,9 +5,9 @@ end
 
 function LAR_MinimapButton_OnClick()
     if arg1 == "LeftButton" then
-        Logging:ToggleDebug()
-    else
         LAR_SettingsFrame:Show()
+    else
+        Logging:ToggleDebug()
     end
 end
 
