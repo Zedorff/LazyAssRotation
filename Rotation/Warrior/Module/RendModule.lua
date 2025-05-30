@@ -12,7 +12,7 @@ function RendModule.new()
         rendTracker = RendTracker.new()
     }
     --- @class RendModule
-    return setmetatable(Module.new(ABILITY_REND, trackers), RendModule)
+    return setmetatable(Module.new(ABILITY_REND, trackers, "Interface\\Icons\\Ability_Gouge"), RendModule)
 end
 
 function RendModule:run()

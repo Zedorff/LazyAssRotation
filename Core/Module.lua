@@ -2,20 +2,22 @@
 --- @field name string
 --- @field enabled boolean
 --- @field trackers table<string, table>
+--- @field iconPath string
 Module = {}
 Module.__index = Module
 
 --- @param name string
 --- @param trackers table<string, table>?
 --- @param enabledByDefault boolean | nil
-function Module.new(name, trackers, enabledByDefault)
+function Module.new(name, trackers, iconPath, enabledByDefault)
     if MLDpsModuleSettings.modulesEnabled[name] == nil then
         MLDpsModuleSettings.modulesEnabled[name] = enabledByDefault or true
     end
     local self = {
         name = name,
         enabled = MLDpsModuleSettings.modulesEnabled[name],
-        trackers = trackers or {}
+        trackers = trackers or {},
+        iconPath = iconPath
     }
 
     if self.enabled then

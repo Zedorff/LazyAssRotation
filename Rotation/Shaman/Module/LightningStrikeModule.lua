@@ -12,7 +12,7 @@ function LightningStrikeModule.new()
         clearcastingTracker = ClearcastingTracker.new()
     }
     --- @class LightningStrikeModule
-    return setmetatable(Module.new(ABILITY_LIGHTNING_STRIKE, trackers), LightningStrikeModule)
+    return setmetatable(Module.new(ABILITY_LIGHTNING_STRIKE, trackers, "Interface\\Icons\\Spell_Nature_ThunderClap"), LightningStrikeModule)
 end
 
 function LightningStrikeModule:run()

@@ -6,7 +6,7 @@ HamstringModule.__index = HamstringModule
 --- @class HamstringModule
 function HamstringModule.new()
     --- @class HamstringModule
-    return setmetatable(Module.new(ABILITY_HAMSTRING), HamstringModule)
+    return setmetatable(Module.new(ABILITY_HAMSTRING, nil, "Interface\\Icons\\Ability_ShockWave"), HamstringModule)
 end
 
 function HamstringModule:run()
@@ -16,23 +16,12 @@ end
 
 --- @param context WarriorModuleRunContext
 function HamstringModule:getPriority(context)
-    if self.enabled and context.stance == 3 then
-        if context.spec == WarriorSpec.ARMS then
-            return -1;
-        elseif context.spec == WarriorSpec.FURY then
-            return self:GetFuryHamstringPriority(context.rage)
+    if self.enabled and context.stance ~= 2 then
+        if Helpers:SpellReady(ABILITY_HAMSTRING) and rage >= 80 then
+            return 10
         else
             return -1;
         end
-    else
-        return -1;
     end
-end
-
-function HamstringModule:GetFuryHamstringPriority(rage)
-   if Helpers:SpellReady(ABILITY_HAMSTRING) and rage >= 80 then
-        return 10
-    else
-        return -1;
-    end
+    return -1;
 end

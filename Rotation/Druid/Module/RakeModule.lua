@@ -12,15 +12,7 @@ function RakeModule.new()
         rakeTracker = RakeTracker.new()
     }
     --- @class RakeModule
-    return setmetatable(Module.new(ABILITY_RAKE, trackers), RakeModule)
-end
-
-function RakeModule:enable()
-    Module.enable(self)
-    ModuleRegistry:DisableModule(MODULE_POWERSHIFTING)
-    ModuleRegistry:EnableModule(ABILITY_RIP)
-    ModuleRegistry:EnableModule(ABILITY_CLAW)
-    ModuleRegistry:EnableModule(ABILITY_TIGER_FURY)
+    return setmetatable(Module.new(ABILITY_RAKE, trackers, "Interface\\Icons\\Ability_Druid_Disembowel"), RakeModule)
 end
 
 function RakeModule:run()

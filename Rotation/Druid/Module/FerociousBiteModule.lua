@@ -12,7 +12,7 @@ function FerociousBiteModule.new()
         ripTracker = RipTracker.new()
     }
     --- @class FerociousBiteModule
-    return setmetatable(Module.new(ABILITY_FEROCIOUS_BITE, trackers), FerociousBiteModule)
+    return setmetatable(Module.new(ABILITY_FEROCIOUS_BITE, trackers, "Interface\\Icons\\Ability_Druid_FerociousBite"), FerociousBiteModule)
 end
 
 function FerociousBiteModule:run()

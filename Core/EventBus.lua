@@ -7,7 +7,6 @@ EventBus = {}
 EventBus.__index = EventBus
 
 function EventBus:new(frame)
-    Logging:Log("Create EventBus")
     local obj = {
         subscribers = {}
     }

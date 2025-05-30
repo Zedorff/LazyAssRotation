@@ -13,7 +13,7 @@ function SealOfCrusaderTargetModule.new()
         socrSelfTracker = SealOfCrusaderSelfTracker.new()
     }
     --- @class SealOfCrusaderTargetModule
-    local self = Module.new(ABILITY_SEAL_CRUSADER, trackers)
+    local self = Module.new(ABILITY_SEAL_CRUSADER, trackers, "Interface\\Icons\\Spell_Holy_HolySmite")
     setmetatable(self, SealOfCrusaderTargetModule)
 
     if self.enabled then

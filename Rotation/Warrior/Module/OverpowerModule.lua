@@ -12,7 +12,7 @@ function OverpowerModule.new()
         overpowerTracker = OverpowerTracker.new()
     }
     --- @class OverpowerModule
-    return setmetatable(Module.new(ABILITY_OVERPOWER, trackers), OverpowerModule)
+    return setmetatable(Module.new(ABILITY_OVERPOWER, trackers, "Interface\\Icons\\Ability_MeleeDamage"), OverpowerModule)
 end
 
 function OverpowerModule:run()

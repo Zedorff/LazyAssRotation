@@ -6,7 +6,7 @@ WhirlwindModule.__index = WhirlwindModule
 --- @return WhirlwindModule 
 function WhirlwindModule.new()
     --- @class WhirlwindModule
-    return setmetatable(Module.new(ABILITY_WHIRLWIND), WhirlwindModule)
+    return setmetatable(Module.new(ABILITY_WHIRLWIND, nil, "Interface\\Icons\\Ability_Whirlwind"), WhirlwindModule)
 end
 
 function WhirlwindModule:run()

@@ -1,11 +1,13 @@
 --- @class ModuleRegistry
 --- @field modules table<string, Module>
+--- @field orderedModules Module[]
 ModuleRegistry = {}
 ModuleRegistry.modules = {}
 
 --- @param module Module
 function ModuleRegistry:RegisterModule(module)
     self.modules[module.name] = module
+    table.insert(self.orderedModules, module)
 end
 
 --- @param name string
@@ -42,4 +44,9 @@ end
 
 function ModuleRegistry:ClearRegistry()
     self.modules = {}
+    self.orderedModules = {}
+end
+
+function ModuleRegistry:GetOrderedModules()
+    return self.orderedModules
 end

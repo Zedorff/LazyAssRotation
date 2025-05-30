@@ -12,15 +12,7 @@ function RipModule.new()
         ripTracker = RipTracker.new()
     }
     --- @class RipModule
-    return setmetatable(Module.new(ABILITY_RIP, trackers), RipModule)
-end
-
-function RipModule:enable()
-    Module.enable(self)
-    ModuleRegistry:DisableModule(MODULE_POWERSHIFTING)
-    ModuleRegistry:EnableModule(ABILITY_RAKE)
-    ModuleRegistry:EnableModule(ABILITY_CLAW)
-    ModuleRegistry:EnableModule(ABILITY_TIGER_FURY)
+    return setmetatable(Module.new(ABILITY_RIP, trackers, "Interface\\Icons\\Ability_GhoulFrenzy"), RipModule)
 end
 
 function RipModule:run()

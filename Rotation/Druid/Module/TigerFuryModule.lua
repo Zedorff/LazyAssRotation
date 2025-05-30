@@ -12,15 +12,7 @@ function TigerFuryModule.new()
         tigerFuryTracker = TigerFuryTracker.new()
     }
     --- @class TigerFuryModule
-    return setmetatable(Module.new(ABILITY_TIGER_FURY, trackers), TigerFuryModule)
-end
-
-function TigerFuryModule:enable()
-    Module.enable(self)
-    ModuleRegistry:DisableModule(MODULE_POWERSHIFTING)
-    ModuleRegistry:EnableModule(ABILITY_RAKE)
-    ModuleRegistry:EnableModule(ABILITY_CLAW)
-    ModuleRegistry:EnableModule(ABILITY_RIP)
+    return setmetatable(Module.new(ABILITY_TIGER_FURY, trackers, "Interface\\Icons\\Ability_Mount_JungleTiger"), TigerFuryModule)
 end
 
 function TigerFuryModule:run()

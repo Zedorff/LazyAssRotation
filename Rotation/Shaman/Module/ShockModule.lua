@@ -15,16 +15,17 @@ ShockModule = setmetatable({}, { __index = Module })
 ShockModule.__index = ShockModule
 
 --- @param shockType ShockType
+--- @param iconPath string
 --- @param enabledByDefault boolean | nil
 --- @return ShockModule
-function ShockModule.new(shockType, enabledByDefault)
+function ShockModule.new(shockType, iconPath, enabledByDefault)
     --- @type ShockTrackers
     local trackers = {
         stormStrikeTracker = StormStrikeTracker.new(),
         clearcastingTracker = ClearcastingTracker.new()
     }
     --- @class ShockModule
-    local self = setmetatable(Module.new(shockType, trackers, enabledByDefault), ShockModule)
+    local self = setmetatable(Module.new(shockType, trackers, iconPath, enabledByDefault), ShockModule)
 
     self.spellName = shockType
 

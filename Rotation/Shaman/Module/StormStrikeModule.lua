@@ -12,7 +12,7 @@ function StormStrikeModule.new()
         clearcastingTracker = ClearcastingTracker.new()
     }
     --- @class StormStrikeModule
-    return setmetatable(Module.new(ABILITY_STORMSTRIKE, trackers), StormStrikeModule)
+    return setmetatable(Module.new(ABILITY_STORMSTRIKE, trackers, "Interface\\Icons\\Ability_Shaman_Stormstrike"), StormStrikeModule)
 end
 
 function StormStrikeModule:run()

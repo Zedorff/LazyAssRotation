@@ -4,7 +4,7 @@
 ## Author: Zedorff
 ## DefaultState: enabled
 ## OptionalDeps: none
-## SavedVariables: MLDpsModuleSettings
+## SavedVariablesPerCharacter: MLDpsModuleSettings, MLDpsButtonPosition, MLDpsSelectedSpec
 
 ## Load Ace2 libraries first
 libs\AceLibrary\AceLibrary.lua
@@ -24,8 +24,12 @@ Core\ManaCostCache.lua
 Core\EnergyCostCache.lua
 Core\SharedTracker\ClearcastingTracker.lua
 
+UI\SpecButtonInfo.lua
+UI\ModuleButtonInfo.lua
+
 Common\Logging.lua
 Common\Helpers.lua
+Common\Collection.lua
 
 Rotation\ClassRotation.lua
 Rotation\ClassRotationPerformer.lua
@@ -115,5 +119,7 @@ Rotation\Druid\Module\TigerFuryModule.lua
 Rotation\Druid\Druid.lua
 
 UI\DebugFrame.lua
+UI\MLDpsMinimap.lua
+UI\MLDpsDraggableButton.lua
 
-MLDps.xml
+Main.xml

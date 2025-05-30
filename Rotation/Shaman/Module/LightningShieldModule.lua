@@ -13,7 +13,7 @@ function LightningShieldModule.new()
         waterTracker = WaterShieldTracker.new()
     }
     --- @class LightningShieldModule
-    return setmetatable(Module.new(ABILITY_LIGHTNING_SHIELD, trackers), LightningShieldModule)
+    return setmetatable(Module.new(ABILITY_LIGHTNING_SHIELD, trackers, "Interface\\Icons\\Spell_Nature_LightningShield"), LightningShieldModule)
 end
 
 function LightningShieldModule:run()

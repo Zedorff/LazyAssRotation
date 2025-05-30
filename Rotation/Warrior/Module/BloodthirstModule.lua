@@ -6,7 +6,7 @@ BloodthirstModule.__index = BloodthirstModule
 --- @return BloodthirstModule
 function BloodthirstModule.new()
     --- @class BloodthirstModule
-    return setmetatable(Module.new(ABILITY_BLOODTHIRST), BloodthirstModule)
+    return setmetatable(Module.new(ABILITY_BLOODTHIRST, nil, "Interface\\Icons\\Spell_Nature_Bloodlust"), BloodthirstModule)
 end
 
 function BloodthirstModule:run()

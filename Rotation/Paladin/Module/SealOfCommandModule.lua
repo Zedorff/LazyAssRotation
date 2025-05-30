@@ -14,7 +14,7 @@ function SealOfCommandModule.new()
         socrTargetTracker = SealOfCrusaderTargetTracker.new()
     }
     --- @class SealOfCommandModule 
-    return setmetatable(Module.new(ABILITY_SEAL_COMMAND, trackers), SealOfCommandModule)
+    return setmetatable(Module.new(ABILITY_SEAL_COMMAND, trackers, "Interface\\Icons\\Ability_Warrior_InnerRage"), SealOfCommandModule)
 end
 
 function SealOfCommandModule:enable()

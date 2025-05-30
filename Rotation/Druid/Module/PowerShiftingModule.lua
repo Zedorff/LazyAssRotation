@@ -13,17 +13,8 @@ function PowerShiftingModule.new()
         energyTickTracker = EnergyTickTracker.new()
     }
     --- @class PowerShiftingModule
-    return setmetatable(Module.new(MODULE_POWERSHIFTING, trackers, false), PowerShiftingModule)
+    return setmetatable(Module.new(MODULE_POWERSHIFTING, trackers, "Interface\\Icons\\Ability_Druid_CatForm"), PowerShiftingModule)
 end
-
-function PowerShiftingModule:enable()
-    Module.enable(self)
-    ModuleRegistry:DisableModule(ABILITY_RIP)
-    ModuleRegistry:DisableModule(ABILITY_RAKE)
-    ModuleRegistry:DisableModule(ABILITY_CLAW)
-    ModuleRegistry:DisableModule(ABILITY_TIGER_FURY)
-end
-
 
 function PowerShiftingModule:run()
     Logging:Debug("Casting "..ABILITY_CAT_FORM)

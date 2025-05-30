@@ -19,3 +19,11 @@ end
 function ClassRotation:clear()
     self.cache:Clear()
 end
+
+--- @param spec SpecButtonInfo
+function ClassRotation:SelectSpec(spec)
+    MLDpsSelectedSpec = spec
+    MLDps_SetDraggableButtonIcon(spec.icon)
+    Core:StopHookingSpellCasts()
+    ModuleRegistry:ClearRegistry()
+end

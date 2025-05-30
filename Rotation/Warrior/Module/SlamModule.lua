@@ -12,7 +12,7 @@ function SlamModule.new()
         autoAttackTracker = AutoAttackTracker.new()
     }
     --- @class SlamModule
-    return setmetatable(Module.new(ABILITY_SLAM, trackers), SlamModule)
+    return setmetatable(Module.new(ABILITY_SLAM, trackers, "Interface\\Icons\\Ability_Warrior_DecisiveStrike_New"), SlamModule)
 end
 
 function SlamModule:run()

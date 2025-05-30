@@ -12,7 +12,7 @@ function BattleShoutModule.new()
         battleShoutTracker = BattleShoutTracker.new()
     }
     --- @class BattleShoutModule
-    return setmetatable(Module.new(ABILITY_BATTLE_SHOUT, trackers), BattleShoutModule)
+    return setmetatable(Module.new(ABILITY_BATTLE_SHOUT, trackers, "Interface\\Icons\\Ability_Warrior_BattleShout"), BattleShoutModule)
 end
 
 function BattleShoutModule:run()

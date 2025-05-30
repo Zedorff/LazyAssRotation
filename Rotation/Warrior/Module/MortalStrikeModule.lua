@@ -6,7 +6,7 @@ MortalStrikeModule.__index = MortalStrikeModule
 --- @return MortalStrikeModule 
 function MortalStrikeModule.new()
     --- @class MortalStrikeModule
-    return setmetatable(Module.new(ABILITY_MORTAL_STRIKE), MortalStrikeModule)
+    return setmetatable(Module.new(ABILITY_MORTAL_STRIKE, nil, "Interface\\Icons\\Ability_Warrior_SavageBlow"), MortalStrikeModule)
 end
 
 function MortalStrikeModule:run()

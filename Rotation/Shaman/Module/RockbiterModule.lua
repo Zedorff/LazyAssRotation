@@ -12,7 +12,7 @@ function RockbiterModule.new()
         rockbiterTracker = RockbiterTracker.new()
     }
     --- @class RockbiterModule
-    local self = setmetatable(Module.new(ABILITY_ROCKBITER, trackers, false), RockbiterModule)
+    local self = setmetatable(Module.new(ABILITY_ROCKBITER, trackers, "Interface\\Icons\\Spell_Nature_RockBiter", false), RockbiterModule)
 
     if self.enabled then
         ModuleRegistry:DisableModule(ABILITY_WINDFURY)

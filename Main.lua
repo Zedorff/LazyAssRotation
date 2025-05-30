@@ -5,6 +5,7 @@ function Init()
     if not DpsRotation then
         DpsRotation = CreateDpsRotation()
     end
+    MLDpsDraggableButton:Show()
 end
 
 function CreateDpsRotation()
@@ -23,9 +24,6 @@ end
 -- Main Code
 
 function PerformDps()
-    if not DpsRotation then
-        DpsRotation = CreateDpsRotation()
-    end
     if DpsRotation then
         DpsRotation:execute()
     end
@@ -47,17 +45,9 @@ function MLDps_SlashCommand(msg)
     end
 end
 
-function ResetRotation()
-    if DpsRotation then
-        DpsRotation:clear()
-    end
-    DpsRotation = nil
-    Core:StopHookingSpellCasts()
-end
-
 -- Event Handlers
 
-function MLDps_OnLoad()
+function Main_OnLoad()
     if not MLDpsModuleSettings then
         MLDpsModuleSettings = {}
     end
@@ -86,9 +76,8 @@ function InitSubscribers()
             end
             if (event == "VARIABLES_LOADED") then
                 Init()
-            elseif (event == "CHARACTER_POINTS_CHANGED" or event == "LEARNED_SPELL_IN_TAB") then
-                ModuleRegistry:ClearRegistry()
-                ResetRotation()
+            elseif event == "SPEC_CHANGED" and DpsRotation then
+                DpsRotation:SelectSpec(arg1)
             end
     end})
 end

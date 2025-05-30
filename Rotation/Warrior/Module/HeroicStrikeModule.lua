@@ -6,7 +6,7 @@ HeroicStrikeModule.__index = HeroicStrikeModule
 --- @return HeroicStrikeModule 
 function HeroicStrikeModule.new()
     --- @class HeroicStrikeModule
-    return setmetatable(Module.new(ABILITY_HEROIC_STRIKE), HeroicStrikeModule);
+    return setmetatable(Module.new(ABILITY_HEROIC_STRIKE, nil, "Interface\\Icons\\Ability_Rogue_Ambush"), HeroicStrikeModule);
 end
 
 function HeroicStrikeModule:run()

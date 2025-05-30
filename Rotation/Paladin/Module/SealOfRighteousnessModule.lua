@@ -14,7 +14,7 @@ function SealOfRighteousnessModule.new()
         socrTargetTracker = SealOfCrusaderTargetTracker.new()
     }
     --- @class SealOfRighteousnessModule
-    local self = Module.new(ABILITY_SEAL_RIGHTEOUSNESS, trackers)
+    local self = Module.new(ABILITY_SEAL_RIGHTEOUSNESS, trackers, "Interface\\Icons\\Ability_ThunderBolt")
     setmetatable(self, SealOfRighteousnessModule)
 
     if self.enabled then

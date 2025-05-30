@@ -6,7 +6,7 @@ ExcorcismModule.__index = ExcorcismModule
 --- @return ExcorcismModule
 function ExcorcismModule.new()
     --- @class ExcorcismModule
-    return setmetatable(Module.new(ABILITY_EXORCISM), ExcorcismModule)
+    return setmetatable(Module.new(ABILITY_EXORCISM, nil, "Interface\\Icons\\Spell_Holy_Excorcism"), ExcorcismModule)
 end
 
 function ExcorcismModule:run()

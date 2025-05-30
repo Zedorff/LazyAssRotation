@@ -12,7 +12,7 @@ function ShredModule.new()
         clearCastingTracker = ClearcastingTracker.new()
     }
     --- @class ShredModule
-    return setmetatable(Module.new(ABILITY_SHRED, trackers), ShredModule)
+    return setmetatable(Module.new(ABILITY_SHRED, trackers, "Interface\\Icons\\Spell_Shadow_VampiricAura"), ShredModule)
 end
 
 function ShredModule:run()

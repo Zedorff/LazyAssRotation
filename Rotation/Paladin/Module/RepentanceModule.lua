@@ -6,7 +6,7 @@ RepentanceModule.__index = RepentanceModule
 --- @return RepentanceModule
 function RepentanceModule.new()
     --- @class RepentanceModule
-    return setmetatable(Module.new(ABILITY_REPENTANCE), RepentanceModule)
+    return setmetatable(Module.new(ABILITY_REPENTANCE, nil, "Interface\\Icons\\Spell_Holy_PrayerOfHealing"), RepentanceModule)
 end
 
 function RepentanceModule:run()

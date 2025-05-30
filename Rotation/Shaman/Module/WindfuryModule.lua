@@ -12,7 +12,7 @@ function WindfuryModule.new()
         wfTracker = WindfuryTracker.new()
     }
     --- @class WindfuryModule
-    local self = setmetatable(Module.new(ABILITY_WINDFURY, trackers), WindfuryModule)
+    local self = setmetatable(Module.new(ABILITY_WINDFURY, trackers, "Interface\\Icons\\Spell_Nature_Cyclone"), WindfuryModule)
 
     if self.enabled then
         ModuleRegistry:DisableModule(ABILITY_ROCKBITER)

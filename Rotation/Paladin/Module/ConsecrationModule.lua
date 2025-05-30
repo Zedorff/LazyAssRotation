@@ -6,7 +6,7 @@ ConsecrationModule.__index = ConsecrationModule
 --- @return ConsecrationModule
 function ConsecrationModule.new()
     --- @class ConsecrationModule
-    return setmetatable(Module.new(ABILITY_CONSECRATION), ConsecrationModule)
+    return setmetatable(Module.new(ABILITY_CONSECRATION, nil, "Interface\\Icons\\Spell_Holy_InnerFire"), ConsecrationModule)
 end
 
 function ConsecrationModule:run()

@@ -6,7 +6,7 @@ ExecuteModule.__index = ExecuteModule
 --- @return ExecuteModule
 function ExecuteModule.new()
     --- @class ExecuteModule
-    return setmetatable(Module.new(ABILITY_EXECUTE), ExecuteModule);
+    return setmetatable(Module.new(ABILITY_EXECUTE, nil, "Interface\\Icons\\INV_Sword_48"), ExecuteModule);
 end
 
 function ExecuteModule:run()

@@ -13,7 +13,7 @@ function HolyStrikeModule.new()
         holyStrikeTracker = HolyStrikeTracker.new()
     }
     --- @class HolyStrikeModule
-    return setmetatable(Module.new(ABILITY_HOLY_STRIKE, trackers), HolyStrikeModule)
+    return setmetatable(Module.new(ABILITY_HOLY_STRIKE, trackers, "Interface\\Icons\\INV_Sword_01"), HolyStrikeModule)
 end
 
 function HolyStrikeModule:run()

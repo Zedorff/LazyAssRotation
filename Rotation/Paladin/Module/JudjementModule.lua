@@ -12,7 +12,7 @@ function JudjementModule.new()
         judgTracker = JudgementTracker.new()
     }
     --- @class JudjementModule
-    return setmetatable(Module.new(ABILITY_JUDGEMENT, trackers), JudjementModule)
+    return setmetatable(Module.new(ABILITY_JUDGEMENT, trackers, "Interface\\Icons\\Spell_Holy_RighteousFury"), JudjementModule)
 end
 
 function JudjementModule:run()

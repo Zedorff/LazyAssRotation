@@ -13,7 +13,7 @@ function SealOfWisdomTargetModule.new()
         sowSelfTracker = SealOfWisdomSelfTracker.new()
     }
     --- @class SealOfWisdomTargetModule
-    local self = Module.new(ABILITY_SEAL_WISDOM, trackers)
+    local self = Module.new(ABILITY_SEAL_WISDOM, trackers, "Interface\\Icons\\Spell_Holy_RighteousnessAura")
     setmetatable(self, SealOfWisdomTargetModule)
 
     if self.enabled then

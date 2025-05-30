@@ -12,7 +12,7 @@ function CrusaderStrikeModule.new()
         zealTracker = CrusaderStrikeTracker.new()
     }
     --- @class CrusaderStrikeModule
-    return setmetatable(Module.new(ABILITY_CRUSADER_STRIKE, trackers), CrusaderStrikeModule)
+    return setmetatable(Module.new(ABILITY_CRUSADER_STRIKE, trackers, "Interface\\Icons\\Spell_Holy_CrusaderStrike"), CrusaderStrikeModule)
 end
 
 function CrusaderStrikeModule:run()
