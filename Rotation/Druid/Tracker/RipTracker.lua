@@ -26,7 +26,7 @@ function RipTracker:onEvent(event, arg1)
     if event == "PLAYER_TARGET_CHANGED" then
         self:ResetTracking()
 
-    elseif event == "MLDPS_SPELL_CAST" and arg1 == "Rip" then
+    elseif event == "LAR_SPELL_CAST" and arg1 == "Rip" then
         self:StartPendingRip()
 
     elseif event == "CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE" then

@@ -9,16 +9,16 @@ function Shaman.new()
     setmetatable(self, Shaman)
 
     local specs = {
-        SpecButtonInfo.new("Interface\\Icons\\Spell_Nature_LightningShield", "Enhance", MLDpsSelectedSpec == nil or MLDpsSelectedSpec.name == "Enhance")
+        SpecButtonInfo.new("Interface\\Icons\\Spell_Nature_LightningShield", "Enhance", SelectedSpec == nil or SelectedSpec.name == "Enhance")
     }
 
-    if not MLDpsSelectedSpec then
-        MLDpsSelectedSpec = specs[1]
+    if not SelectedSpec then
+        SelectedSpec = specs[1]
     end
 
-    MLDps_CreateSpecButtons("TOP", specs)
+    HotSwap_CreateSpecButtons("TOP", specs)
 
-    self:SelectSpec(MLDpsSelectedSpec)
+    self:SelectSpec(SelectedSpec)
 
     ShamanModuleRunContext.PreheatCache(self.cache)
     return self
@@ -46,7 +46,7 @@ function Shaman:EnableEnhanceSpec()
     ModuleRegistry:RegisterModule(WindfuryModule.new())
     ModuleRegistry:RegisterModule(RockbiterModule.new())
 
-    MLDps_CreateModuleButtons("RIGHT", Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
+    HotSwap_CreateModuleButtons("RIGHT", Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
         return ModuleButtonInfo.new(module.iconPath, module.name, module.enabled)
     end))
 end

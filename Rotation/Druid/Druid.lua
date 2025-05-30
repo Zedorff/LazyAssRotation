@@ -14,18 +14,18 @@ function Druid.new()
 
     local specs = {
         SpecButtonInfo.new("Interface\\Icons\\Ability_Druid_CatForm", "Powershifting",
-            MLDpsSelectedSpec == nil or MLDpsSelectedSpec.name == "Powershifting"),
+            SelectedSpec == nil or SelectedSpec.name == "Powershifting"),
         SpecButtonInfo.new("Interface\\Icons\\Ability_Druid_Disembowel", "Bleeds",
-            MLDpsSelectedSpec and MLDpsSelectedSpec.name == "Bleeds")
+            SelectedSpec and SelectedSpec.name == "Bleeds")
     }
 
-    if not MLDpsSelectedSpec then
-        MLDpsSelectedSpec = specs[1]
+    if not SelectedSpec then
+        SelectedSpec = specs[1]
     end
 
-    self:SelectSpec(MLDpsSelectedSpec)
+    self:SelectSpec(SelectedSpec)
 
-    MLDps_CreateSpecButtons("TOP", specs)
+    HotSwap_CreateSpecButtons("TOP", specs)
 
     DruidModuleRunContext.PreheatCache(self.cache, self.manaCache)
 
@@ -53,7 +53,7 @@ function Druid:EnableBleedSpec()
     ModuleRegistry:RegisterModule(FerociousBiteModule.new())
     ModuleRegistry:RegisterModule(TigerFuryModule.new())
 
-    MLDps_CreateModuleButtons("RIGHT", Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
+    HotSwap_CreateModuleButtons("RIGHT", Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
         return ModuleButtonInfo.new(module.iconPath, module.name, module.enabled)
     end))
 end
@@ -64,7 +64,7 @@ function Druid:EnablePowershiftingSpec()
     ModuleRegistry:RegisterModule(PowerShiftingModule.new())
     ModuleRegistry:RegisterModule(TigerFuryModule.new())
 
-    MLDps_CreateModuleButtons("RIGHT", Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
+    HotSwap_CreateModuleButtons("RIGHT", Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
         return ModuleButtonInfo.new(module.iconPath, module.name, module.enabled)
     end))
 end

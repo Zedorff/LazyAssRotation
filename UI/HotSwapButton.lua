@@ -1,12 +1,12 @@
 --- @diagnostic disable: undefined-field, param-type-mismatch, inject-field
 --- @type table<string, table<number, Button>>
-MLDpsButtonCache = MLDpsButtonCache or {}
+ButtonCache = ButtonCache or {}
 
 --- @type table<string, Button[]>
-MLDpsButtonSets = MLDpsButtonSets or {}
+ButtonSets = ButtonSets or {}
 
 --- @type boolean
-MLDpsDraggableButton_AllowDragging = true
+HotSwapButton_AllowDragging = true
 
 --- @type number
 local lastUpdate = 0
@@ -20,19 +20,19 @@ local hideDelay = 0.5
 --- @type boolean
 local hidden = true
 
-function MLDps_SaveDraggableButtonPosition()
+function SaveDraggableButtonPosition()
     --- @type Frame
-    local frame = MLDpsDraggableButton
+    local frame = HotSwapButton
     local point, _, relativePoint, xOfs, yOfs = frame:GetPoint()
     --- @type { [1]: string, [2]: string, [3]: number, [4]: number }
-    MLDpsButtonPosition = { point, relativePoint, xOfs, yOfs }
+    FloatingButtonPosition = { point, relativePoint, xOfs, yOfs }
 end
 
-function MLDps_RestoreDraggableButtonPosition()
+function RestoreDraggableButtonPosition()
     --- @type Frame
-    local frame = MLDpsDraggableButton
-    if MLDpsButtonPosition then
-        local point, relativePoint, xOfs, yOfs = unpack(MLDpsButtonPosition)
+    local frame = HotSwapButton
+    if FloatingButtonPosition then
+        local point, relativePoint, xOfs, yOfs = unpack(FloatingButtonPosition)
         frame:ClearAllPoints()
         frame:SetPoint(point, UIParent, relativePoint, xOfs, yOfs)
     else
@@ -41,26 +41,26 @@ function MLDps_RestoreDraggableButtonPosition()
     end
 end
 
-function MLDpsDraggableButton_OnMouseUp()
+function HotSwapButton_OnMouseUp()
     this:StopMovingOrSizing()
-    MLDps_SaveDraggableButtonPosition()
+    SaveDraggableButtonPosition()
 end
 
-function MLDpsDraggableButton_OnLoad()
-    MLDps_RestoreDraggableButtonPosition()
-    this:SetScript("OnUpdate", MLDps_DraggableButton_OnUpdate)
+function HotSwapButton_OnLoad()
+    RestoreDraggableButtonPosition()
+    this:SetScript("OnUpdate", HotSwap_DraggableButton_OnUpdate)
 end
 
-function MLDpsDraggableButton_OnMouseDown()
-    if MLDpsDraggableButton_AllowDragging then
+function HotSwapButton_OnMouseDown()
+    if HotSwapButton_AllowDragging then
         this:StartMoving()
     end
 end
 
 --- @param texturePath string
-function MLDps_SetDraggableButtonIcon(texturePath)
-    if MLDpsDraggableButtonIcon then
-        MLDpsDraggableButtonIcon:SetTexture(texturePath)
+function SetDraggableButtonIcon(texturePath)
+    if HotSwapButtonIcon then
+        HotSwapButtonIcon:SetTexture(texturePath)
     end
 end
 
@@ -124,8 +124,8 @@ end
 --- @param icon string
 --- @return Button
 local function AcquireButton(cacheKey, index, parent, icon)
-    MLDpsButtonCache[cacheKey] = MLDpsButtonCache[cacheKey] or {}
-    local cache = MLDpsButtonCache[cacheKey]
+    ButtonCache[cacheKey] = ButtonCache[cacheKey] or {}
+    local cache = ButtonCache[cacheKey]
 
     if cache[index] then
         local btn = cache[index]
@@ -161,8 +161,8 @@ end
 
 --- @param specSide "TOP" | "BOTTOM" | "LEFT" | "RIGHT"
 --- @param specs SpecButtonInfo[]
-function MLDps_CreateSpecButtons(specSide, specs)
-    local parent = MLDpsDraggableButton
+function HotSwap_CreateSpecButtons(specSide, specs)
+    local parent = HotSwapButton
     RemoveChildrenByPrefix(parent, "Spec")
 
     --- @type Button[]
@@ -173,7 +173,7 @@ function MLDps_CreateSpecButtons(specSide, specs)
         local btn = AcquireButton("Spec", i, parent, localSpec.icon)
         btn:SetScript("OnClick", function()
             Core.eventBus:notify("SPEC_CHANGED", localSpec)
-            local set = MLDpsButtonSets["SpecSet"]
+            local set = ButtonSets["SpecSet"]
             if set then
                 for _, spec in ipairs(set) do
                     SetButtonEnabled(spec, false)
@@ -188,13 +188,13 @@ function MLDps_CreateSpecButtons(specSide, specs)
     end
 
     AnchorButtonSet(specButtons, specSide, parent)
-    MLDpsButtonSets["SpecSet"] = specButtons
+    ButtonSets["SpecSet"] = specButtons
 end
 
 --- @param moduleSide "TOP" | "BOTTOM" | "LEFT" | "RIGHT"
 --- @param modules ModuleButtonInfo[]
-function MLDps_CreateModuleButtons(moduleSide, modules)
-    local parent = MLDpsDraggableButton
+function HotSwap_CreateModuleButtons(moduleSide, modules)
+    local parent = HotSwapButton
     RemoveChildrenByPrefix(parent, "Module")
 
     --- @type Button[]
@@ -210,7 +210,7 @@ function MLDps_CreateModuleButtons(moduleSide, modules)
             else
                 ModuleRegistry:EnableModule(localModule.name)
             end
-            local set = MLDpsButtonSets["ModuleSet"]
+            local set = ButtonSets["ModuleSet"]
             if set then
                 for index, spec in ipairs(set) do
                     SetButtonEnabled(spec, ModuleRegistry:GetOrderedModules()[index].enabled)
@@ -222,7 +222,7 @@ function MLDps_CreateModuleButtons(moduleSide, modules)
     end
 
     AnchorButtonSet(moduleButtons, moduleSide, parent)
-    MLDpsButtonSets["ModuleSet"] = moduleButtons
+    ButtonSets["ModuleSet"] = moduleButtons
 end
 
 --- @param button Button
@@ -239,11 +239,11 @@ end
 local function IsMouseOverMainOrSet()
     local mouseFocus = GetMouseFocus()
 
-    if mouseFocus == MLDpsDraggableButton then
+    if mouseFocus == HotSwapButton then
         return true
     end
 
-    local set = MLDpsButtonSets["SpecSet"]
+    local set = ButtonSets["SpecSet"]
     if set then
         for _, btn in ipairs(set) do
             if mouseFocus == btn then
@@ -252,7 +252,7 @@ local function IsMouseOverMainOrSet()
         end
     end
 
-    set = MLDpsButtonSets["ModuleSet"]
+    set = ButtonSets["ModuleSet"]
     if set then
         for _, btn in ipairs(set) do
             if mouseFocus == btn then
@@ -264,7 +264,7 @@ local function IsMouseOverMainOrSet()
     return false
 end
 
-function MLDps_DraggableButton_OnUpdate()
+function HotSwap_DraggableButton_OnUpdate()
     local now = GetTime()
     local elapsed = 0
     if lastUpdate > 0 then
@@ -288,11 +288,11 @@ end
 
 function ShowButtonSets()
     if hidden then
-        local set = MLDpsButtonSets["SpecSet"]
+        local set = ButtonSets["SpecSet"]
         if set then
             for _, btn in ipairs(set) do btn:Show() end
         end
-        set = MLDpsButtonSets["ModuleSet"]
+        set = ButtonSets["ModuleSet"]
         if set then
             for _, btn in ipairs(set) do btn:Show() end
         end
@@ -302,11 +302,11 @@ end
 
 function HideButtonSets()
     if not hidden then
-        local set = MLDpsButtonSets["SpecSet"]
+        local set = ButtonSets["SpecSet"]
         if set then
             for _, btn in ipairs(set) do btn:Hide() end
         end
-        set = MLDpsButtonSets["ModuleSet"]
+        set = ButtonSets["ModuleSet"]
         if set then
             for _, btn in ipairs(set) do btn:Hide() end
         end

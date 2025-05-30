@@ -12,17 +12,17 @@ function Warrior.new()
     setmetatable(self, Warrior)
 
     local specs = {
-        SpecButtonInfo.new("Interface\\Icons\\Spell_Nature_Bloodlust", "Fury",  MLDpsSelectedSpec == nil or MLDpsSelectedSpec.name == "Fury"),
-        SpecButtonInfo.new("Interface\\Icons\\Ability_Warrior_SavageBlow", "Arms", MLDpsSelectedSpec and MLDpsSelectedSpec.name == "Arms")
+        SpecButtonInfo.new("Interface\\Icons\\Spell_Nature_Bloodlust", "Fury",  SelectedSpec == nil or SelectedSpec.name == "Fury"),
+        SpecButtonInfo.new("Interface\\Icons\\Ability_Warrior_SavageBlow", "Arms", SelectedSpec and SelectedSpec.name == "Arms")
     }
 
-    if not MLDpsSelectedSpec then
-        MLDpsSelectedSpec = specs[1]
+    if not SelectedSpec then
+        SelectedSpec = specs[1]
     end
 
-    MLDps_CreateSpecButtons("TOP", specs)
+    HotSwap_CreateSpecButtons("TOP", specs)
 
-    self:SelectSpec(MLDpsSelectedSpec)
+    self:SelectSpec(SelectedSpec)
 
     WarriorModuleRunContext.PreheatCache(self.cache)
     return self
@@ -51,7 +51,7 @@ function Warrior:EnableFurySpec()
     ModuleRegistry:RegisterModule(HamstringModule.new())
     ModuleRegistry:RegisterModule(ExecuteModule.new())
 
-    MLDps_CreateModuleButtons("RIGHT", Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
+    HotSwap_CreateModuleButtons("RIGHT", Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
         return ModuleButtonInfo.new(module.iconPath, module.name, module.enabled)
     end))
 end
@@ -66,7 +66,7 @@ function Warrior:EnableArmsSpec()
     ModuleRegistry:RegisterModule(HeroicStrikeModule.new())
     ModuleRegistry:RegisterModule(ExecuteModule.new())
 
-    MLDps_CreateModuleButtons("RIGHT", Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
+    HotSwap_CreateModuleButtons("RIGHT", Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
         return ModuleButtonInfo.new(module.iconPath, module.name, module.enabled)
     end))
 end

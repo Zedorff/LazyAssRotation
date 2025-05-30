@@ -5,7 +5,7 @@ function Init()
     if not DpsRotation then
         DpsRotation = CreateDpsRotation()
     end
-    MLDpsDraggableButton:Show()
+    HotSwapButton:Show()
 end
 
 function CreateDpsRotation()
@@ -31,7 +31,7 @@ end
 
 -- Chat Handlers
 
-function MLDps_SlashCommand(msg)
+function SlashCommand(msg)
     local _, _, command, options = string.find(msg, "([%w%p]+)%s*(.*)$");
     if (command) then
         command = string.lower(command);
@@ -41,27 +41,27 @@ function MLDps_SlashCommand(msg)
     elseif (command == "debug") then
         Logging:ToggleDebug()
     elseif (command == "reset") then
-        MLDpsLastSpellCast = GetTime();
+        LastSpellCast = GetTime();
     end
 end
 
 -- Event Handlers
 
 function Main_OnLoad()
-    if not MLDpsModuleSettings then
-        MLDpsModuleSettings = {}
+    if not ModuleSettings then
+        ModuleSettings = {}
     end
 
-    if not MLDpsModuleSettings.modulesEnabled then
-        MLDpsModuleSettings.modulesEnabled = {}
+    if not ModuleSettings.modulesEnabled then
+        ModuleSettings.modulesEnabled = {}
     end
 
     InitComponents(this)
     InitSubscribers()
 
-    MLDpsLastSpellCast = GetTime();
-    SlashCmdList["MLDPS"] = MLDps_SlashCommand;
-    SLASH_MLDPS1 = "/mldps";
+    LastSpellCast = GetTime();
+    SlashCmdList["LAR"] = SlashCommand;
+    SLASH_LAR1 = "/lar";
 end
 
 function InitComponents(frame)

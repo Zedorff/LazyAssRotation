@@ -32,7 +32,7 @@ end
 
 function Core:CastSpellByName(text, onself)
 	if Core.eventBus then
-        Core.eventBus:notify("MLDPS_SPELL_CAST", text)
+        Core.eventBus:notify("LAR_SPELL_CAST", text)
     end
 	return self.hooks["CastSpellByName"](text, onself)
 end
@@ -42,17 +42,17 @@ function Core:UseAction(slot, clicked, onself)
 
     -- Only check if the action is a spell
     if HasAction(slot) then
-        MLDpsTooltip:SetOwner(UIParent, "ANCHOR_NONE");
-        MLDpsTooltip:SetAction(slot)
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE");
+        GameTooltip:SetAction(slot)
 
-        local text = getglobal("MLDpsTooltipTextLeft1")
+        local text = getglobal("GameTooltipTextLeft1")
         if text then
             spellName = text:GetText()
         end
     end
 
     if Core.eventBus and spellName then
-        Core.eventBus:notify("MLDPS_SPELL_CAST", spellName)
+        Core.eventBus:notify("LAR_SPELL_CAST", spellName)
     end
 
     return self.hooks["UseAction"](slot, clicked, onself)
@@ -62,7 +62,7 @@ function Core:CastSpell(index, bookType)
     local spellName = GetSpellName(index, bookType)
 
     if Core.eventBus and spellName then
-        Core.eventBus:notify("MLDPS_SPELL_CAST", spellName)
+        Core.eventBus:notify("LAR_SPELL_CAST", spellName)
     end
 
     return self.hooks["CastSpell"](index, bookType)

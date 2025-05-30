@@ -10,12 +10,12 @@ Module.__index = Module
 --- @param trackers table<string, table>?
 --- @param enabledByDefault boolean | nil
 function Module.new(name, trackers, iconPath, enabledByDefault)
-    if MLDpsModuleSettings.modulesEnabled[name] == nil then
-        MLDpsModuleSettings.modulesEnabled[name] = enabledByDefault or true
+    if ModuleSettings.modulesEnabled[name] == nil then
+        ModuleSettings.modulesEnabled[name] = enabledByDefault or true
     end
     local self = {
         name = name,
-        enabled = MLDpsModuleSettings.modulesEnabled[name],
+        enabled = ModuleSettings.modulesEnabled[name],
         trackers = trackers or {},
         iconPath = iconPath
     }
@@ -31,7 +31,7 @@ end
 
 function Module:enable()
     self.enabled = true
-    MLDpsModuleSettings.modulesEnabled[self.name] = true
+    ModuleSettings.modulesEnabled[self.name] = true
     for _, tracker in pairs(self.trackers) do
         tracker:subscribe()
     end
@@ -39,7 +39,7 @@ end
 
 function Module:disable()
     self.enabled = false
-    MLDpsModuleSettings.modulesEnabled[self.name] = false
+    ModuleSettings.modulesEnabled[self.name] = false
     for _, tracker in pairs(self.trackers) do
         tracker:unsubscribe()
     end

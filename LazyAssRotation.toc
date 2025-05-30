@@ -1,10 +1,10 @@
 ## Interface: 11200
-## Title: MLDps
-## Notes: To make DPSing easier.
+## Title: Lazy Ass Rotation
+## Notes: To make rotations easier.
 ## Author: Zedorff
 ## DefaultState: enabled
 ## OptionalDeps: none
-## SavedVariablesPerCharacter: MLDpsModuleSettings, MLDpsButtonPosition, MLDpsSelectedSpec
+## SavedVariablesPerCharacter: ModuleSettings, FloatingButtonPosition, SelectedSpec, SpecSide, ModuleSide, ShowRotationSpells
 
 ## Load Ace2 libraries first
 libs\AceLibrary\AceLibrary.lua
@@ -119,7 +119,14 @@ Rotation\Druid\Module\TigerFuryModule.lua
 Rotation\Druid\Druid.lua
 
 UI\DebugFrame.lua
-UI\MLDpsMinimap.lua
-UI\MLDpsDraggableButton.lua
+UI\Minimap.lua
+UI\DraggableButton.lua
+UI\Settings.lua
+UI\HotSwapButton.lua
+UI\Minimap.lua
+
+UI\Settings.xml
+UI\HotSwapButton.xml
+UI\Minimap.lua
 
 Main.xml

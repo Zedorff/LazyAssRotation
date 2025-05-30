@@ -1,0 +1,140 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.blizzard.com/wow/ui/ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
+
+	<Frame name="SettingsFrame" toplevel="true" frameStrata="DIALOG" movable="true"
+		enableMouse="true" hidden="true" parent="UIParent">
+		<Scripts>
+			<OnLoad>
+				Settings_OnLoad()
+			</OnLoad>
+		</Scripts>
+		<TitleRegion setAllPoints="true" />
+		<Size>
+			<AbsDimension x="260" y="260" />
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" />
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background"
+			edgeFile="Interface\DialogFrame\UI-DialogBox-Border"
+			tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32" />
+			</EdgeSize>
+		</Backdrop>
+
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="TitleTexture" file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="320" y="64" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="12" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString inherits="GameFontNormal" text="Lazy Ass Rotation Settings">
+					<Anchors>
+						<Anchor point="TOP" relativeTo="TitleTexture">
+							<Offset>
+								<AbsDimension x="0" y="-14" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+
+		<Frames>
+
+			<!-- Spec Selection Side Dropdown -->
+			<Frame name="SpecDropdown" inherits="UIDropDownMenuTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="20" y="-60" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+			<FontString inherits="GameFontNormalSmall" text="Spec Side">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" relativeTo="SpecDropdown">
+						<Offset>
+							<AbsDimension x="20" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</FontString>
+
+			<!-- Module Selection Side Dropdown -->
+			<Frame name="ModuleDropdown" inherits="UIDropDownMenuTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="20" y="-110" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+			<FontString inherits="GameFontNormalSmall" text="Module Side">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" relativeTo="ModuleDropdown">
+						<Offset>
+							<AbsDimension x="20" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</FontString>
+
+			<!-- Checkbox: Show Current Using Spell -->
+			<CheckButton name="ShowSpellCheckbox" inherits="UICheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="24" y="-160" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("Show Current Using Spell");
+					</OnLoad>
+					<OnClick>
+						ToggleShowCurrentSpell(this:GetChecked());
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+
+			<!-- Close Button -->
+			<Button name="CloseButton" inherits="GameMenuButtonTemplate" text="Close">
+				<Size>
+					<AbsDimension x="100" y="24" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="20" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						SettingsFrame:Hide();
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+	</Frame>
+</Ui>
