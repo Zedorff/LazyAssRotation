@@ -22,8 +22,8 @@ end
 
 --- @param spec SpecButtonInfo
 function ClassRotation:SelectSpec(spec)
-    SelectedSpec = spec
-    SetDraggableButtonIcon(spec.icon)
+    LARSelectedSpec = spec
+    HotSwap_SetDraggableButtonIcon(spec.icon)
     Core:StopHookingSpellCasts()
     ModuleRegistry:ClearRegistry()
 end

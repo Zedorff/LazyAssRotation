@@ -42,10 +42,10 @@ function Core:UseAction(slot, clicked, onself)
 
     -- Only check if the action is a spell
     if HasAction(slot) then
-        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE");
-        GameTooltip:SetAction(slot)
+        LAR_GameTooltip:SetOwner(UIParent, "ANCHOR_NONE");
+        LAR_GameTooltip:SetAction(slot)
 
-        local text = getglobal("GameTooltipTextLeft1")
+        local text = getglobal("LAR_GameTooltipTextLeft1")
         if text then
             spellName = text:GetText()
         end

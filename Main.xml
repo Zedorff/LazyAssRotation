@@ -6,7 +6,7 @@
 	<Script file="Main.lua" />
 
 	<!-- Tooltip -->
-	<GameTooltip name="GameTooltip" frameStrata="TOOLTIP" hidden="true" parent="UIParent"
+	<LAR_GameTooltip name="LAR_GameTooltip" frameStrata="TOOLTIP" hidden="true" parent="UIParent"
 		inherits="GameTooltipTemplate" />
 
 	<!-- Main Addon Frame -->

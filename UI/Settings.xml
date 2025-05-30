@@ -2,7 +2,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.blizzard.com/wow/ui/ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 
-	<Frame name="SettingsFrame" toplevel="true" frameStrata="DIALOG" movable="true"
+	<Frame name="LAR_SettingsFrame" toplevel="true" frameStrata="DIALOG" movable="true"
 		enableMouse="true" hidden="true" parent="UIParent">
 		<Scripts>
 			<OnLoad>
@@ -59,7 +59,7 @@
 		<Frames>
 
 			<!-- Spec Selection Side Dropdown -->
-			<Frame name="SpecDropdown" inherits="UIDropDownMenuTemplate">
+			<Frame name="LAR_SpecDropdown" inherits="UIDropDownMenuTemplate">
 				<Anchors>
 					<Anchor point="TOPLEFT">
 						<Offset>
@@ -70,7 +70,7 @@
 			</Frame>
 			<FontString inherits="GameFontNormalSmall" text="Spec Side">
 				<Anchors>
-					<Anchor point="BOTTOMLEFT" relativeTo="SpecDropdown">
+					<Anchor point="BOTTOMLEFT" relativeTo="LAR_SpecDropdown">
 						<Offset>
 							<AbsDimension x="20" y="5" />
 						</Offset>
@@ -79,7 +79,7 @@
 			</FontString>
 
 			<!-- Module Selection Side Dropdown -->
-			<Frame name="ModuleDropdown" inherits="UIDropDownMenuTemplate">
+			<Frame name="LAR_ModuleDropdown" inherits="UIDropDownMenuTemplate">
 				<Anchors>
 					<Anchor point="TOPLEFT">
 						<Offset>
@@ -90,7 +90,7 @@
 			</Frame>
 			<FontString inherits="GameFontNormalSmall" text="Module Side">
 				<Anchors>
-					<Anchor point="BOTTOMLEFT" relativeTo="ModuleDropdown">
+					<Anchor point="BOTTOMLEFT" relativeTo="LAR_ModuleDropdown">
 						<Offset>
 							<AbsDimension x="20" y="5" />
 						</Offset>
@@ -99,7 +99,7 @@
 			</FontString>
 
 			<!-- Checkbox: Show Current Using Spell -->
-			<CheckButton name="ShowSpellCheckbox" inherits="UICheckButtonTemplate">
+			<CheckButton name="LAR_ShowSpellCheckbox" inherits="UICheckButtonTemplate">
 				<Anchors>
 					<Anchor point="TOPLEFT">
 						<Offset>
@@ -118,7 +118,7 @@
 			</CheckButton>
 
 			<!-- Close Button -->
-			<Button name="CloseButton" inherits="GameMenuButtonTemplate" text="Close">
+			<Button name="LAR_CloseButton" inherits="GameMenuButtonTemplate" text="Close">
 				<Size>
 					<AbsDimension x="100" y="24" />
 				</Size>
@@ -131,7 +131,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						SettingsFrame:Hide();
+						LAR_SettingsFrame:Hide();
 					</OnClick>
 				</Scripts>
 			</Button>

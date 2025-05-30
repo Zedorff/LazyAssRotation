@@ -12,17 +12,18 @@ function Warrior.new()
     setmetatable(self, Warrior)
 
     local specs = {
-        SpecButtonInfo.new("Interface\\Icons\\Spell_Nature_Bloodlust", "Fury",  SelectedSpec == nil or SelectedSpec.name == "Fury"),
-        SpecButtonInfo.new("Interface\\Icons\\Ability_Warrior_SavageBlow", "Arms", SelectedSpec and SelectedSpec.name == "Arms")
+        SpecButtonInfo.new("Interface\\Icons\\Spell_Nature_Bloodlust", "Fury",  LARSelectedSpec == nil or LARSelectedSpec.name == "Fury"),
+        SpecButtonInfo.new("Interface\\Icons\\Ability_Warrior_SavageBlow", "Arms", LARSelectedSpec and LARSelectedSpec.name == "Arms"),
+        SpecButtonInfo.new("Interface\\Icons\\Ability_Warrior_DefensiveStance", "Prot", LARSelectedSpec and LARSelectedSpec.name == "Prot")
     }
 
-    if not SelectedSpec then
-        SelectedSpec = specs[1]
+    if not LARSelectedSpec then
+        LARSelectedSpec = specs[1]
     end
 
-    HotSwap_CreateSpecButtons("TOP", specs)
+    HotSwap_CreateSpecButtons(specs)
 
-    self:SelectSpec(SelectedSpec)
+    self:SelectSpec(LARSelectedSpec)
 
     WarriorModuleRunContext.PreheatCache(self.cache)
     return self
@@ -40,6 +41,9 @@ function Warrior:SelectSpec(spec)
     elseif spec.name == "Arms" then
         self.spec = WarriorSpec.ARMS
         self:EnableArmsSpec()
+    elseif spec.name == "Prot" then
+        self.spec = WarriorSpec.PROT
+        self:EnableProtSpec()
     end
 end
 
@@ -51,7 +55,7 @@ function Warrior:EnableFurySpec()
     ModuleRegistry:RegisterModule(HamstringModule.new())
     ModuleRegistry:RegisterModule(ExecuteModule.new())
 
-    HotSwap_CreateModuleButtons("RIGHT", Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
+    HotSwap_CreateModuleButtons(Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
         return ModuleButtonInfo.new(module.iconPath, module.name, module.enabled)
     end))
 end
@@ -66,7 +70,19 @@ function Warrior:EnableArmsSpec()
     ModuleRegistry:RegisterModule(HeroicStrikeModule.new())
     ModuleRegistry:RegisterModule(ExecuteModule.new())
 
-    HotSwap_CreateModuleButtons("RIGHT", Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
+    HotSwap_CreateModuleButtons(Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
+        return ModuleButtonInfo.new(module.iconPath, module.name, module.enabled)
+    end))
+end
+
+function Warrior:EnableProtSpec()
+    ModuleRegistry:RegisterModule(BattleShoutModule.new())
+    ModuleRegistry:RegisterModule(RevengeModule.new())
+    ModuleRegistry:RegisterModule(ShieldSlamModule.new())
+    ModuleRegistry:RegisterModule(HeroicStrikeModule.new())
+    ModuleRegistry:RegisterModule(SunderArmorModule.new())
+
+    HotSwap_CreateModuleButtons(Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
         return ModuleButtonInfo.new(module.iconPath, module.name, module.enabled)
     end))
 end

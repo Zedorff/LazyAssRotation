@@ -114,7 +114,7 @@ function DebugFrame_Create()
     end
 
     -- Close button
-    local close = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
+    local close = CreateFrame("Button", nil, frame, "UIPanelLAR_CloseButton")
     close:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -5, -5)
 
     Core.debugFrame = frame

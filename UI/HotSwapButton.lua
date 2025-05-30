@@ -20,19 +20,19 @@ local hideDelay = 0.5
 --- @type boolean
 local hidden = true
 
-function SaveDraggableButtonPosition()
+function HotSwap_SaveDraggableButtonPosition()
     --- @type Frame
     local frame = HotSwapButton
     local point, _, relativePoint, xOfs, yOfs = frame:GetPoint()
     --- @type { [1]: string, [2]: string, [3]: number, [4]: number }
-    FloatingButtonPosition = { point, relativePoint, xOfs, yOfs }
+    LARFloatingButtonPosition = { point, relativePoint, xOfs, yOfs }
 end
 
-function RestoreDraggableButtonPosition()
+local function RestoreDraggableButtonPosition()
     --- @type Frame
     local frame = HotSwapButton
-    if FloatingButtonPosition then
-        local point, relativePoint, xOfs, yOfs = unpack(FloatingButtonPosition)
+    if LARFloatingButtonPosition then
+        local point, relativePoint, xOfs, yOfs = unpack(LARFloatingButtonPosition)
         frame:ClearAllPoints()
         frame:SetPoint(point, UIParent, relativePoint, xOfs, yOfs)
     else
@@ -43,7 +43,7 @@ end
 
 function HotSwapButton_OnMouseUp()
     this:StopMovingOrSizing()
-    SaveDraggableButtonPosition()
+    HotSwap_SaveDraggableButtonPosition()
 end
 
 function HotSwapButton_OnLoad()
@@ -58,7 +58,7 @@ function HotSwapButton_OnMouseDown()
 end
 
 --- @param texturePath string
-function SetDraggableButtonIcon(texturePath)
+function HotSwap_SetDraggableButtonIcon(texturePath)
     if HotSwapButtonIcon then
         HotSwapButtonIcon:SetTexture(texturePath)
     end
@@ -159,9 +159,8 @@ local function RemoveChildrenByPrefix(parent, prefix)
     end
 end
 
---- @param specSide "TOP" | "BOTTOM" | "LEFT" | "RIGHT"
 --- @param specs SpecButtonInfo[]
-function HotSwap_CreateSpecButtons(specSide, specs)
+function HotSwap_CreateSpecButtons(specs)
     local parent = HotSwapButton
     RemoveChildrenByPrefix(parent, "Spec")
 
@@ -176,24 +175,23 @@ function HotSwap_CreateSpecButtons(specSide, specs)
             local set = ButtonSets["SpecSet"]
             if set then
                 for _, spec in ipairs(set) do
-                    SetButtonEnabled(spec, false)
+                    HotSwap_SetButtonEnabled(spec, false)
                 end
             end
-            SetButtonEnabled(btn, true)
-            HideButtonSets()
+            HotSwap_SetButtonEnabled(btn, true)
+            HotSwap_HideButtonSets()
         end)
-        SetButtonEnabled(btn, localSpec.enabled)
+        HotSwap_SetButtonEnabled(btn, localSpec.enabled)
         btn:Hide()
         table.insert(specButtons, btn)
     end
 
-    AnchorButtonSet(specButtons, specSide, parent)
+    AnchorButtonSet(specButtons, LARSpecSide or "TOP", parent)
     ButtonSets["SpecSet"] = specButtons
 end
 
---- @param moduleSide "TOP" | "BOTTOM" | "LEFT" | "RIGHT"
 --- @param modules ModuleButtonInfo[]
-function HotSwap_CreateModuleButtons(moduleSide, modules)
+function HotSwap_CreateModuleButtons(modules)
     local parent = HotSwapButton
     RemoveChildrenByPrefix(parent, "Module")
 
@@ -203,7 +201,7 @@ function HotSwap_CreateModuleButtons(moduleSide, modules)
         --- @cast module ModuleButtonInfo
         local localModule = module
         local btn = AcquireButton("Module", i, parent, localModule.icon)
-        SetButtonEnabled(btn, localModule.enabled)
+        HotSwap_SetButtonEnabled(btn, localModule.enabled)
         btn:SetScript("OnClick", function()
             if ModuleRegistry:IsModuleEnabled(localModule.name) then
                 ModuleRegistry:DisableModule(localModule.name)
@@ -213,7 +211,7 @@ function HotSwap_CreateModuleButtons(moduleSide, modules)
             local set = ButtonSets["ModuleSet"]
             if set then
                 for index, spec in ipairs(set) do
-                    SetButtonEnabled(spec, ModuleRegistry:GetOrderedModules()[index].enabled)
+                    HotSwap_SetButtonEnabled(spec, ModuleRegistry:GetOrderedModules()[index].enabled)
                 end
             end
         end)
@@ -221,13 +219,13 @@ function HotSwap_CreateModuleButtons(moduleSide, modules)
         table.insert(moduleButtons, btn)
     end
 
-    AnchorButtonSet(moduleButtons, moduleSide, parent)
+    AnchorButtonSet(moduleButtons, LARSpecSide or "RIGHT", parent)
     ButtonSets["ModuleSet"] = moduleButtons
 end
 
 --- @param button Button
 --- @param enabled boolean
-function SetButtonEnabled(button, enabled)
+function HotSwap_SetButtonEnabled(button, enabled)
     if enabled then
         button.border:Show()
     else
@@ -276,17 +274,17 @@ function HotSwap_DraggableButton_OnUpdate()
 
     if isMouseOverNow then
         hideTimer = 0
-        ShowButtonSets()
+        HotSwap_ShowButtonSets()
     else
         hideTimer = hideTimer + elapsed
         if hideTimer >= hideDelay then
-            HideButtonSets()
+            HotSwap_HideButtonSets()
             hideTimer = 0
         end
     end
 end
 
-function ShowButtonSets()
+function HotSwap_ShowButtonSets()
     if hidden then
         local set = ButtonSets["SpecSet"]
         if set then
@@ -300,7 +298,7 @@ function ShowButtonSets()
     end
 end
 
-function HideButtonSets()
+function HotSwap_HideButtonSets()
     if not hidden then
         local set = ButtonSets["SpecSet"]
         if set then

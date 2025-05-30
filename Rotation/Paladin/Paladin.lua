@@ -12,16 +12,16 @@ function Paladin.new()
 
     local specs = {
         SpecButtonInfo.new("Interface\\Icons\\INV_Sword_01", "Retrodin",
-            SelectedSpec == nil or SelectedSpec.name == "Retrodin")
+            LARSelectedSpec == nil or LARSelectedSpec.name == "Retrodin")
     }
 
-    if not SelectedSpec then
-        SelectedSpec = specs[1]
+    if not LARSelectedSpec then
+        LARSelectedSpec = specs[1]
     end
 
-    self:SelectSpec(SelectedSpec)
+    self:SelectSpec(LARSelectedSpec)
 
-    HotSwap_CreateSpecButtons("TOP", specs)
+    HotSwap_CreateSpecButtons(specs)
 
     PaladinModuleRunContext.PreheatCache(self.cache)
     return self
@@ -50,7 +50,7 @@ function Paladin:EnableRetrodinSpec()
     ModuleRegistry:RegisterModule(SealOfWisdomTargetModule.new())
     ModuleRegistry:RegisterModule(ExcorcismModule.new())
 
-    HotSwap_CreateModuleButtons("RIGHT", Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
+    HotSwap_CreateModuleButtons(Collection.map(ModuleRegistry:GetOrderedModules(), function(module)
         return ModuleButtonInfo.new(module.iconPath, module.name, module.enabled)
     end))
 end

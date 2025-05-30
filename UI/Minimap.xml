@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://www.blizzard.com/wow/ui/ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 
 	<!-- Minimap button -->
-	<Button name="MinimapButton" frameStrata="LOW" parent="Minimap" enableMouse="true"
+	<Button name="LAR_MinimapButton" frameStrata="LOW" parent="Minimap" enableMouse="true"
 		movable="true" toplevel="true" hidden="false">
 		<Size>
 			<AbsDimension x="32" y="32" />
@@ -13,7 +13,7 @@
 		</Anchors>
 		<Layers>
 			<Layer level="BACKGROUND">
-				<Texture name="MinimapButtonIcon"
+				<Texture name="LAR_MinimapButtonIcon"
 					file="Interface\Icons\Ability_Warrior_BattleShout">
 					<Size>
 						<AbsDimension x="18" y="18" />
@@ -28,7 +28,7 @@
 				</Texture>
 			</Layer>
 			<Layer level="OVERLAY">
-				<Texture name="MinimapButtonBorder"
+				<Texture name="LAR_MinimapButtonBorder"
 					file="Interface\Minimap\MiniMap-TrackingBorder.tga">
 					<Size>
 						<AbsDimension x="52" y="52" />
@@ -45,13 +45,13 @@
 				this:RegisterForClicks("LeftButtonUp","RightButtonUp")
 			</OnLoad>
 			<OnEnter>
-				MinimapButton_OnEnter(this)
+				LAR_MinimapButton_OnEnter(this)
 			</OnEnter>
 			<OnLeave>
-				MinimapButton_OnLeave(this)
+				LAR_MinimapButton_OnLeave(this)
 			</OnLeave>
 			<OnClick>
-				MinimapButton_OnClick()
+				LAR_MinimapButton_OnClick()
 			</OnClick>
 		</Scripts>
 	</Button>

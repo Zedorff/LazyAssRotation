@@ -1,17 +1,17 @@
-function MinimapButton_OnLoad()
+function LAR_MinimapButton_OnLoad()
     this:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 0, 0)
     this:Show()
 end
 
-function MinimapButton_OnClick()
+function LAR_MinimapButton_OnClick()
     if arg1 == "LeftButton" then
         Logging:ToggleDebug()
     else
-        SettingsFrame:Show()
+        LAR_SettingsFrame:Show()
     end
 end
 
-function MinimapButton_OnEnter()
+function LAR_MinimapButton_OnEnter()
     GameTooltip:SetOwner(this, "ANCHOR_LEFT")
     GameTooltip:ClearLines()
     GameTooltip:AddLine("|cffffff00Lazy Ass Rotation|r") 
@@ -21,6 +21,6 @@ function MinimapButton_OnEnter()
     GameTooltip:Show()
 end
 
-function MinimapButton_OnLeave()
+function LAR_MinimapButton_OnLeave()
     GameTooltip:Hide()
 end

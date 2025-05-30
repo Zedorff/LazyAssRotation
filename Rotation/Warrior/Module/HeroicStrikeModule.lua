@@ -20,15 +20,15 @@ function HeroicStrikeModule:getPriority(context)
         if context.spec == WarriorSpec.ARMS then
             return self:GetArmsHeroicPriority(context.rage)
         elseif context.spec == WarriorSpec.FURY then
-            return self:GetFuryHeroicPriority(context.rage)
-        else
-            return -1;
+            return self:GetFuryHeroicPriority(context.rage, context)
+        elseif context.spec == WarriorSpec.PROT then
+            return self:GetProtHeroicPriority(context.rage, context)
         end
-    else
-        return -1;
     end
+    return -1;
 end
 
+--- @param rage integer
 function HeroicStrikeModule:GetArmsHeroicPriority(rage)
     if rage >= 80 then
         return 50
@@ -37,11 +37,21 @@ function HeroicStrikeModule:GetArmsHeroicPriority(rage)
     end
 end
 
-function HeroicStrikeModule:GetFuryHeroicPriority(rage)
-    local bsCost = Helpers:RageCost(ABILITY_BLOODTHIRST)
-    local wwCost = Helpers:RageCost(ABILITY_WHIRLWIND)
-    if Helpers:SpellReady(ABILITY_HEROIC_STRIKE) and rage >= bsCost + wwCost then
+--- @param rage integer
+--- @param context WarriorModuleRunContext
+function HeroicStrikeModule:GetFuryHeroicPriority(rage, context)
+    if Helpers:SpellReady(ABILITY_HEROIC_STRIKE) and rage >= context.bsCost + context.wwCost then
         return 50
+    else
+        return -1;
+    end
+end
+
+--- @param rage integer
+--- @param context WarriorModuleRunContext
+function HeroicStrikeModule:GetProtHeroicPriority(rage, context)
+    if Helpers:SpellReady(ABILITY_HEROIC_STRIKE) and rage >= context.shieldSlamCost + context.hsCost then
+        return 70
     else
         return -1;
     end

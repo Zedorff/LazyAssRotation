@@ -25,6 +25,9 @@ ABILITY_WHIRLWIND          = "Whirlwind";
 ABILITY_EXECUTE            = "Execute"
 ABILITY_BLOODTHIRST        = "Bloodthirst"
 ABILITY_HAMSTRING          = "Hamstring"
+ABILITY_REVENGE            = "Revenge"
+ABILITY_SHIELD_SLAM        = "Shield Slam"
+ABILITY_SUNDER_ARMOR       = "Sunder Armor"
 
 -- Shaman
 ABILITY_LIGHTNING_SHIELD   = "Lightning Shield"

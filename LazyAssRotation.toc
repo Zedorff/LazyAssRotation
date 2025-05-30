@@ -4,7 +4,7 @@
 ## Author: Zedorff
 ## DefaultState: enabled
 ## OptionalDeps: none
-## SavedVariablesPerCharacter: ModuleSettings, FloatingButtonPosition, SelectedSpec, SpecSide, ModuleSide, ShowRotationSpells
+## SavedVariablesPerCharacter: LARModuleSettings, LARFloatingButtonPosition, LARSelectedSpec, LARSpecSide, LARSpecSide, LARShowRotationSpells
 
 ## Load Ace2 libraries first
 libs\AceLibrary\AceLibrary.lua
@@ -37,6 +37,7 @@ Rotation\Warrior\Tracker\BattleShoutTracker.lua
 Rotation\Warrior\Tracker\AutoAttackTracker.lua
 Rotation\Warrior\Tracker\OverpowerTracker.lua
 Rotation\Warrior\Tracker\RendTracker.lua
+Rotation\Warrior\Tracker\RevengeTracker.lua
 
 Rotation\Warrior\RageCostCache.lua
 
@@ -52,6 +53,9 @@ Rotation\Warrior\Module\SlamModule.lua
 Rotation\Warrior\Module\WhirlwindModule.lua
 Rotation\Warrior\Module\RendModule.lua
 Rotation\Warrior\Module\OverpowerModule.lua
+Rotation\Warrior\Module\RevengeModule.lua
+Rotation\Warrior\Module\ShieldSlamModule.lua
+Rotation\Warrior\Module\SunderArmorModule.lua
 
 Rotation\Warrior\WarriorSpec.lua
 Rotation\Warrior\Warrior.lua
@@ -126,6 +130,6 @@ UI\Minimap.lua
 
 UI\Settings.xml
 UI\HotSwapButton.xml
-UI\Minimap.lua
+UI\Minimap.xml
 
 Main.xml

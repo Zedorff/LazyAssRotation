@@ -1,15 +1,13 @@
 local sides = { "TOP", "LEFT", "RIGHT", "BOTTOM" }
 
 function Settings_OnLoad()
-    InitializeSpecDropdown()
-    InitializeModuleDropdown()
+    Settings_InitializeLAR_SpecDropdown()
+    Settings_InitializeLAR_ModuleDropdown()
 
-
-    -- Checkbox
-    ShowSpellCheckbox:SetChecked(ShowRotationSpells or false)
+    LAR_ShowSpellCheckbox:SetChecked(LARShowRotationSpells or false)
 end
 
-function InitializeSpecDropdown()
+function Settings_InitializeLAR_SpecDropdown()
     local function initialize()
         for _, side in ipairs(sides) do
             local info = {
@@ -17,19 +15,19 @@ function InitializeSpecDropdown()
                 value = side,
                 arg1 = side,
                 func = function(arg1)
-                    UIDropDownMenu_SetSelectedValue(SpecDropdown, arg1)
-                    SpecSide = arg1
+                    UIDropDownMenu_SetSelectedValue(LAR_SpecDropdown, arg1)
+                    LARSpecSide = arg1
                 end,
             }
             UIDropDownMenu_AddButton(info)
         end
     end
 
-    UIDropDownMenu_Initialize(SpecDropdown, initialize)
-    UIDropDownMenu_SetSelectedValue(SpecDropdown, SpecSide or "TOP")
+    UIDropDownMenu_Initialize(LAR_SpecDropdown, initialize)
+    UIDropDownMenu_SetSelectedValue(LAR_SpecDropdown, LARSpecSide or "TOP")
 end
 
-function InitializeModuleDropdown()
+function Settings_InitializeLAR_ModuleDropdown()
     local function initialize()
         for _, side in ipairs(sides) do
             local info = {
@@ -37,18 +35,18 @@ function InitializeModuleDropdown()
                 value = side,
                 arg1 = side,
                 func = function(arg1)
-                    UIDropDownMenu_SetSelectedValue(ModuleDropdown, arg1)
-                    ModuleSidee = arg1
+                    UIDropDownMenu_SetSelectedValue(LAR_ModuleDropdown, arg1)
+                    LARSpecSidee = arg1
                 end,
             }
             UIDropDownMenu_AddButton(info)
         end
     end
 
-    UIDropDownMenu_Initialize(ModuleDropdown, initialize)
-    UIDropDownMenu_SetSelectedValue(ModuleDropdown, ModuleSide or "RIGHT")
+    UIDropDownMenu_Initialize(LAR_ModuleDropdown, initialize)
+    UIDropDownMenu_SetSelectedValue(LAR_ModuleDropdown, LARSpecSide or "RIGHT")
 end
 
 function ToggleShowCurrentSpell(checked)
-    ShowRotationSpells = checked == 1
+    LARShowRotationSpells = checked == 1
 end

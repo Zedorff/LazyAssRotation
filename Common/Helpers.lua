@@ -39,7 +39,7 @@ function Helpers:HasBuffName(unit, buffName)
         return false
     end
 
-    local tooltip = GameTooltip
+    local tooltip = LAR_GameTooltip
     local text = getglobal(tooltip:GetName().."TextLeft1")
     local targetName = string.gsub(buffName, "_", " ") -- only once, before loop
 
@@ -66,7 +66,7 @@ function Helpers:HasDebuffName(unit, debuffName)
         return false
     end
 
-    local tooltip = GameTooltip
+    local tooltip = LAR_GameTooltip
     local text = getglobal(tooltip:GetName().."TextLeft1")
     local targetName = string.gsub(debuffName, "_", " ") -- only once, before loop
 
@@ -114,7 +114,7 @@ end
 --- @param intRegex string
 --- @return number
 function Helpers:ParseIntViaTooltip(spellName, intRegex)
-    GameTooltip:SetOwner(UIParent, "ANCHOR_NONE");
+    LAR_GameTooltip:SetOwner(UIParent, "ANCHOR_NONE");
 
     local spellID = Helpers:SpellId(spellName);
     if not spellID then
@@ -123,12 +123,12 @@ function Helpers:ParseIntViaTooltip(spellName, intRegex)
     end
 
     --- @diagnostic disable-next-line: param-type-mismatch
-    GameTooltip:SetSpell(spellID, BOOKTYPE_SPELL);
+    LAR_GameTooltip:SetSpell(spellID, BOOKTYPE_SPELL);
 
-    local lineCount = GameTooltip:NumLines();
+    local lineCount = LAR_GameTooltip:NumLines();
 
     for i = 1, lineCount do
-        local leftText = getglobal("GameTooltipTextLeft" .. i);
+        local leftText = getglobal("LAR_GameTooltipTextLeft" .. i);
 
         if leftText:GetText() then
             local _, _, int = string.find(leftText:GetText(), intRegex);
@@ -144,12 +144,12 @@ end
 --- @param enchantName string
 --- @return boolean
 function Helpers:HasMainWeaponEnchantTooltip(enchantName)
-    GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+    LAR_GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
     --- @diagnostic disable-next-line: discard-returns
-    GameTooltip:SetInventoryItem("player", 16) --- main hand
+    LAR_GameTooltip:SetInventoryItem("player", 16) --- main hand
 
-    for i = 1, GameTooltip:NumLines() do
-        local leftText = getglobal("GameTooltipTextLeft" .. i)
+    for i = 1, LAR_GameTooltip:NumLines() do
+        local leftText = getglobal("LAR_GameTooltipTextLeft" .. i)
         if leftText then
             local text = leftText:GetText()
             if text and string.find(text, enchantName) then

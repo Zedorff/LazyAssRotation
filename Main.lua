@@ -48,12 +48,12 @@ end
 -- Event Handlers
 
 function Main_OnLoad()
-    if not ModuleSettings then
-        ModuleSettings = {}
+    if not LARModuleSettings then
+        LARModuleSettings = {}
     end
 
-    if not ModuleSettings.modulesEnabled then
-        ModuleSettings.modulesEnabled = {}
+    if not LARModuleSettings.modulesEnabled then
+        LARModuleSettings.modulesEnabled = {}
     end
 
     InitComponents(this)
