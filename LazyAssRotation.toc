@@ -23,6 +23,8 @@ Core\ModuleRunCache.lua
 Core\ManaCostCache.lua
 Core\EnergyCostCache.lua
 Core\SharedTracker\ClearcastingTracker.lua
+Core\ClassRotation.lua
+Core\ClassRotationPerformer.lua
 
 UI\SpecButtonInfo.lua
 UI\ModuleButtonInfo.lua
@@ -30,9 +32,6 @@ UI\ModuleButtonInfo.lua
 Common\Logging.lua
 Common\Helpers.lua
 Common\Collection.lua
-
-Rotation\ClassRotation.lua
-Rotation\ClassRotationPerformer.lua
 
 Rotation\Warrior\Tracker\BattleShoutTracker.lua
 Rotation\Warrior\Tracker\AutoAttackTracker.lua

@@ -122,6 +122,7 @@ function Helpers:ParseIntViaTooltip(spellName, intRegex)
         return 0;
     end
 
+    --- @diagnostic disable-next-line: param-type-mismatch
     GameTooltip:SetSpell(spellID, BOOKTYPE_SPELL);
 
     local lineCount = GameTooltip:NumLines();
@@ -144,6 +145,7 @@ end
 --- @return boolean
 function Helpers:HasMainWeaponEnchantTooltip(enchantName)
     GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+    --- @diagnostic disable-next-line: discard-returns
     GameTooltip:SetInventoryItem("player", 16) --- main hand
 
     for i = 1, GameTooltip:NumLines() do
