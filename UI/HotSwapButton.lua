@@ -5,9 +5,6 @@ ButtonCache = ButtonCache or {}
 --- @type table<string, Button[]>
 ButtonSets = ButtonSets or {}
 
---- @type boolean
-HotSwapButton_AllowDragging = true
-
 --- @type number
 local lastUpdate = 0
 
@@ -52,7 +49,7 @@ function HotSwapButton_OnLoad()
 end
 
 function HotSwapButton_OnMouseDown()
-    if HotSwapButton_AllowDragging then
+    if LARLockHotSwapButton ~= true then
         this:StartMoving()
     end
 end

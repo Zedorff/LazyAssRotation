@@ -6,7 +6,7 @@
 		enableMouse="true" hidden="true" parent="UIParent">
 		<TitleRegion setAllPoints="true" />
 		<Size>
-			<AbsDimension x="260" y="260" />
+			<AbsDimension x="260" y="280" />
 		</Size>
 		<Anchors>
 			<Anchor point="CENTER" />
@@ -115,7 +115,26 @@
 						getglobal(this:GetName().."Text"):SetText("Show Current Using Spell");
 					</OnLoad>
 					<OnClick>
-						ToggleShowCurrentSpell(this:GetChecked());
+						LAR_ToggleShowCurrentSpell(this:GetChecked());
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+
+			<!-- Checkbox: Lock HotSwap Button -->
+			<CheckButton name="LAR_LockHotSwapButtonCheckbox" inherits="UICheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="24" y="-190" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("Lock HotSwap Button");
+					</OnLoad>
+					<OnClick>
+						LAR_ToggleLockHotSwapButtonCheckbox(this:GetChecked());
 					</OnClick>
 				</Scripts>
 			</CheckButton>

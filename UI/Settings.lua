@@ -1,13 +1,14 @@
 local sides = { "TOP", "LEFT", "RIGHT", "BOTTOM" }
 
 function Settings_OnLoad()
-    Settings_InitializeLAR_SpecDropdown()
-    Settings_InitializeLAR_ModuleDropdown()
+    Settings_Initialize_SpecDropdown()
+    Settings_Initialize_ModuleDropdown()
 
-    LAR_ShowSpellCheckbox:SetChecked(LARShowRotationSpells or false)
+    LAR_ShowSpellCheckbox:SetChecked(LARShowRotationSpells == true)
+    LAR_LockHotSwapButtonCheckbox:SetChecked(LARLockHotSwapButton == true)
 end
 
-function Settings_InitializeLAR_SpecDropdown()
+function Settings_Initialize_SpecDropdown()
     local function initialize()
         for _, side in ipairs(sides) do
             local info = {
@@ -28,7 +29,7 @@ function Settings_InitializeLAR_SpecDropdown()
     UIDropDownMenu_SetSelectedValue(LAR_SpecDropdown, LARSpecSide or "TOP")
 end
 
-function Settings_InitializeLAR_ModuleDropdown()
+function Settings_Initialize_ModuleDropdown()
     local function initialize()
         for _, side in ipairs(sides) do
             local info = {
@@ -49,6 +50,10 @@ function Settings_InitializeLAR_ModuleDropdown()
     UIDropDownMenu_SetSelectedValue(LAR_ModuleDropdown, LARModuleSide or "RIGHT")
 end
 
-function ToggleShowCurrentSpell(checked)
+function LAR_ToggleShowCurrentSpell(checked)
     LARShowRotationSpells = checked == 1
+end
+
+function LAR_ToggleLockHotSwapButtonCheckbox(checked)
+    LARLockHotSwapButton = checked == 1
 end
