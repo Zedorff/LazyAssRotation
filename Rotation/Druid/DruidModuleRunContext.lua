@@ -13,14 +13,16 @@
 --- @field maulCost integer
 --- @field swipeCost integer
 --- @field savageBiteCost integer
+--- @field spec DruidSpec
 DruidModuleRunContext = setmetatable({}, { __index = ModuleRunContext })
 DruidModuleRunContext.__index = DruidModuleRunContext
 
 --- @param energyCache EnergyCostCache
 --- @param manaCache ManaCostCache
 --- @param rageCache RageCostCache
+--- @param spec DruidSpec
 --- @return DruidModuleRunContext
-function DruidModuleRunContext.new(energyCache, manaCache, rageCache)
+function DruidModuleRunContext.new(energyCache, manaCache, rageCache, spec)
     --- @class DruidModuleRunContext
     local self = ModuleRunContext.new()
     setmetatable(self, DruidModuleRunContext)
@@ -52,6 +54,7 @@ function DruidModuleRunContext.new(energyCache, manaCache, rageCache)
     self.maulCost = rageCache:Get(ABILITY_MAUL)
     self.swipeCost = rageCache:Get(ABILITY_SWIPE)
     self.savageBiteCost = rageCache:Get(ABILITY_SAVAGE_BITE)
+    self.spec = spec
     return self
 end
 

@@ -2,6 +2,7 @@
 --- @field cache EnergyCostCache
 --- @field manaCache ManaCostCache
 --- @field rageCache RageCostCache
+--- @field spec DruidSpec
 --- @diagnostic disable: duplicate-set-field
 Druid = setmetatable({}, { __index = ClassRotation })
 Druid.__index = Druid
@@ -34,16 +35,19 @@ function Druid.new()
 end
 
 function Druid:execute()
-    ClassRotationPerformer:PerformRotation(DruidModuleRunContext.new(self.cache, self.manaCache, self.rageCache))
+    ClassRotationPerformer:PerformRotation(DruidModuleRunContext.new(self.cache, self.manaCache, self.rageCache, self.spec))
 end
 
 function Druid:SelectSpec(spec)
     ClassRotation.SelectSpec(self, spec)
     if spec.name == "Powershifting" then
+        self.spec = DruidSpec.POWERSHIFTING
         self:EnablePowershiftingSpec()
     elseif spec.name == "Bleeds" then
+        self.spec = DruidSpec.BLEED
         self:EnableBleedSpec()
     elseif spec.name == "Bear" then
+        self.spec = DruidSpec.BEAR
         self:EnabledBearSpec()
     end
     HotSwap_InvalidateModuleButtons()

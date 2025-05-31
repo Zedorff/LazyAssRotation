@@ -126,6 +126,7 @@ Rotation\Druid\Module\MaulModule.lua
 Rotation\Druid\Module\SavageBiteModule.lua
 Rotation\Druid\Module\SwipeModule.lua
 
+Rotation\Druid\DruidSpec.lua
 Rotation\Druid\Druid.lua
 
 UI\DebugFrame.lua
