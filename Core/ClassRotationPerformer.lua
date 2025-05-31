@@ -18,5 +18,8 @@ function ClassRotationPerformer:PerformRotation(context)
 
     if bestModule then
         bestModule:run()
+        if LARShowRotationSpells then
+            HotSwap_SetDraggableButtonIcon(bestModule.iconPath)
+        end
     end
 end

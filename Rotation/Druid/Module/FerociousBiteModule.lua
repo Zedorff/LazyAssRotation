@@ -26,9 +26,9 @@ function FerociousBiteModule:getPriority(context)
         local psEnabled = ModuleRegistry:IsModuleEnabled(MODULE_POWERSHIFTING)
         if psEnabled and context.cp == 5 then
             return 90;
-        elseif not psEnabled and context.cp >= 1 and self.trackers.ripTracker:GetRipRemainingTime() < 3 and context.energy >= context.ferociousBiteCost then
+        elseif not psEnabled and context.cp >= 4 and self.trackers.ripTracker:GetRipRemainingTime() < 3 then
             return 90;
-        elseif not psEnabled and context.cp == 5 and self.trackers.ripTracker:GetRipRemainingTime() > 3 and context.energy >= context.ferociousBiteCost then
+        elseif not psEnabled and context.cp == 5 and self.trackers.ripTracker:GetRipRemainingTime() > 3 then
             return 90;
         end
     end

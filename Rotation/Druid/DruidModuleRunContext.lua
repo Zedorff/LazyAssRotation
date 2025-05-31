@@ -57,6 +57,7 @@ end
 
 --- @param energyCache EnergyCostCache
 --- @param manaCache ManaCostCache
+--- @param rageCache RageCostCache
 function DruidModuleRunContext.PreheatCache(energyCache, manaCache, rageCache)
     energyCache:Get(ABILITY_CLAW)
     energyCache:Get(ABILITY_RAKE)

@@ -18,7 +18,7 @@ end
 function ClawModule:getPriority(context)
     if self.enabled then
         if context.energy > context.clawCost and context.cp < 5 then
-            return 85;
+            return 50;
         end
     end
     return -1;

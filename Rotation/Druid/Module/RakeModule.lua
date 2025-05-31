@@ -23,7 +23,7 @@ end
 --- @param context DruidModuleRunContext
 function RakeModule:getPriority(context)
     if self.enabled and Helpers:SpellReady(ABILITY_RAKE) then
-        if self.trackers.rakeTracker:ShouldCast() and context.energy > context.rakeCost then
+        if self.trackers.rakeTracker:ShouldCast() then
             return 95;
         end
     end
