@@ -35,9 +35,6 @@ end
 
 --- @param context DruidModuleRunContext
 function FerociousBiteModule:GetBleedFerociousBitePriority(context)
-    -- if context.cp >= 4 then
-    --     return 90;
-    -- end
     if context.cp >= 4 and self.trackers.ripTracker:GetRipRemainingTime() < 4 then
         return 90;
     elseif context.cp == 5 and self.trackers.ripTracker:GetRipRemainingTime() > 4 then

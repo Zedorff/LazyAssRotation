@@ -74,4 +74,5 @@ function Warrior:EnableProtSpec()
     ModuleRegistry:RegisterModule(ShieldSlamModule.new())
     ModuleRegistry:RegisterModule(HeroicStrikeModule.new())
     ModuleRegistry:RegisterModule(SunderArmorModule.new())
+    ModuleRegistry:RegisterModule(ShieldBlockModule.new())
 end

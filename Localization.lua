@@ -28,6 +28,7 @@ ABILITY_HAMSTRING          = "Hamstring"
 ABILITY_REVENGE            = "Revenge"
 ABILITY_SHIELD_SLAM        = "Shield Slam"
 ABILITY_SUNDER_ARMOR       = "Sunder Armor"
+ABILITY_SHIELD_BLOCK       = "Shield Block"
 
 -- Shaman
 ABILITY_LIGHTNING_SHIELD   = "Lightning Shield"
