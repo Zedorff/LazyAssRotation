@@ -40,7 +40,7 @@ function HolyStrikeModule:GetRetriPriority()
     if not self.trackers.socTacker:ShouldCast() and self.trackers.holyStrikeTracker:ShouldCast() then
         return 75;
     else
-        return -1;
+        return 50;
     end
 end
 
