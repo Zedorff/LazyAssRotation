@@ -6,35 +6,31 @@ Core = {}
 Core.__index = Core
 AceLibrary("AceHook-2.1"):embed(Core)
 
-local isHookingSpells = false
+local hookListenersCounter = 0
 
 function Core:StartHookingSpellCasts()
-    if not isHookingSpells then
+    if hookListenersCounter == 0 then
         self:Hook("CastSpellByName")
         self:Hook("UseAction")
         self:Hook("CastSpell")
-        isHookingSpells = true
     end
+    hookListenersCounter = hookListenersCounter + 1
 end
 
 function Core:StopHookingSpellCasts()
-    if isHookingSpells then
+    hookListenersCounter = hookListenersCounter - 1
+    if hookListenersCounter == 0 then
         self:Unhook("CastSpellByName")
         self:Unhook("UseAction")
         self:Unhook("CastSpell")
-        isHookingSpells = false
     end
-end
-
-function Core:IsHookingSpells()
-    return isHookingSpells
 end
 
 function Core:CastSpellByName(text, onself)
-	if Core.eventBus then
+    if Core.eventBus then
         Core.eventBus:notify("LAR_SPELL_CAST", text)
     end
-	return self.hooks["CastSpellByName"](text, onself)
+    return self.hooks["CastSpellByName"](text, onself)
 end
 
 function Core:UseAction(slot, clicked, onself)
@@ -67,4 +63,3 @@ function Core:CastSpell(index, bookType)
 
     return self.hooks["CastSpell"](index, bookType)
 end
-
