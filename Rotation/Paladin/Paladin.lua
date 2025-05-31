@@ -11,8 +11,8 @@ function Paladin.new()
     setmetatable(self, Paladin)
 
     local specs = {
-        SpecButtonInfo.new("Interface\\Icons\\INV_Sword_01", "Retrodin",
-            LARSelectedSpec == nil or LARSelectedSpec.name == "Retrodin")
+        SpecButtonInfo.new("Interface\\Icons\\INV_Sword_01", "Retrodin", LARSelectedSpec == nil or LARSelectedSpec.name == "Retrodin"),
+        SpecButtonInfo.new("Interface\\Icons\\Spell_Holy_BlessingOfProtection", "Prot", LARSelectedSpec == nil or LARSelectedSpec.name == "Prot")
     }
 
     if not LARSelectedSpec then
@@ -35,6 +35,8 @@ function Paladin:SelectSpec(spec)
     ClassRotation.SelectSpec(self, spec)
     if spec.name == "Retrodin" then
         self:EnableRetrodinSpec()
+    elseif spec.name == "Prot" then
+        self:EnableProtSpec()
     end
     HotSwap_InvalidateModuleButtons()
 end
@@ -49,5 +51,15 @@ function Paladin:EnableRetrodinSpec()
     ModuleRegistry:RegisterModule(SealOfCrusaderTargetModule.new())
     ModuleRegistry:RegisterModule(SealOfRighteousnessModule.new())
     ModuleRegistry:RegisterModule(SealOfWisdomTargetModule.new())
+    ModuleRegistry:RegisterModule(ExcorcismModule.new())
+end
+
+function Paladin:EnableProtSpec()
+    ModuleRegistry:RegisterModule(HolyStrikeModule.new())
+    ModuleRegistry:RegisterModule(JudjementModule.new())
+    ModuleRegistry:RegisterModule(SealOfWisdomTargetModule.new())
+    ModuleRegistry:RegisterModule(HolyShieldModule.new())
+    ModuleRegistry:RegisterModule(RighteousFuryModule.new())
+    ModuleRegistry:RegisterModule(SealOfRighteousnessModule.new())
     ModuleRegistry:RegisterModule(ExcorcismModule.new())
 end

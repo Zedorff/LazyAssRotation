@@ -10,6 +10,7 @@
 --- @field socrCost integer
 --- @field sorCost integer
 --- @field sowCost integer
+--- @field holyShieldCost integer
 PaladinModuleRunContext = setmetatable({}, { __index = ModuleRunContext })
 PaladinModuleRunContext.__index = PaladinModuleRunContext
 
@@ -34,6 +35,7 @@ function PaladinModuleRunContext.new(cache)
     self.socrCost = cache:Get(ABILITY_SEAL_CRUSADER)
     self.sorCost = cache:Get(ABILITY_SEAL_RIGHTEOUSNESS)
     self.sowCost = cache:Get(ABILITY_SEAL_WISDOM)
+    self.holyShieldCost = cache:Get(ABILITY_HOLY_SHIELD)
     return self
 end
 
@@ -49,4 +51,5 @@ function PaladinModuleRunContext.PreheatCache(cache)
     cache:Get(ABILITY_SEAL_CRUSADER)
     cache:Get(ABILITY_SEAL_RIGHTEOUSNESS)
     cache:Get(ABILITY_SEAL_WISDOM)
+    cache:Get(ABILITY_HOLY_SHIELD)
 end

@@ -23,6 +23,7 @@ end
 
 --- @param context PaladinModuleRunContext
 function HolyStrikeModule:getPriority(context)
+    local furyEnabled = ModuleRegistry:IsModuleEnabled(ABILITY_RIGHTEOUS_FURY)
     local hasMana = context.mana > context.holyStrikeCost
     if not self.enabled or not hasMana then
         return -1;

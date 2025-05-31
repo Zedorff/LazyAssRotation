@@ -51,6 +51,8 @@ ABILITY_SEAL_COMMAND       = "Seal of Command"
 ABILITY_SEAL_CRUSADER      = "Seal of the Crusader"
 ABILITY_SEAL_RIGHTEOUSNESS = "Seal of Righteousness"
 ABILITY_SEAL_WISDOM        = "Seal of Wisdom"
+ABILITY_HOLY_SHIELD        = "Holy Shield"
+ABILITY_RIGHTEOUS_FURY     = "Righteous Fury"
 
 -- Druid
 ABILITY_TIGER_FURY         = "Tiger's Fury"
