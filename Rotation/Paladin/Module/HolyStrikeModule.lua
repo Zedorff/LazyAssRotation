@@ -23,17 +23,27 @@ end
 
 --- @param context PaladinModuleRunContext
 function HolyStrikeModule:getPriority(context)
-    local furyEnabled = ModuleRegistry:IsModuleEnabled(ABILITY_RIGHTEOUS_FURY)
-    local hasMana = context.mana > context.holyStrikeCost
-    if not self.enabled or not hasMana then
+    if not self.enabled or context.mana < context.holyStrikeCost or not Helpers:SpellReady(ABILITY_HOLY_STRIKE) then
         return -1;
     end
 
-    if not self.trackers.socTacker:ShouldCast() and self.trackers.holyStrikeTracker:ShouldCast() and Helpers:SpellReady(ABILITY_HOLY_STRIKE) then
-        return 75;
-    elseif Helpers:SpellReady(ABILITY_HOLY_STRIKE) then
-        return 50;
+    if context.spec == PaladinSpec.RETRI then
+        return self:GetRetriPriority()
+    elseif context.spec == PaladinSpec.PROT then
+        return self:GetProtPriority()
     end
 
     return -1;
+end
+
+function HolyStrikeModule:GetRetriPriority()
+    if not self.trackers.socTacker:ShouldCast() and self.trackers.holyStrikeTracker:ShouldCast() then
+        return 75;
+    else
+        return -1;
+    end
+end
+
+function HolyStrikeModule:GetProtPriority()
+    return 90;
 end

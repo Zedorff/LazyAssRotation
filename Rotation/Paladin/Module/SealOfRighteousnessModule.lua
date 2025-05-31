@@ -30,19 +30,43 @@ function SealOfRighteousnessModule:enable()
 end
 
 function SealOfRighteousnessModule:run()
-    Logging:Debug("Casting "..ABILITY_SEAL_RIGHTEOUSNESS)
+    Logging:Debug("Casting " .. ABILITY_SEAL_RIGHTEOUSNESS)
     CastSpellByName(ABILITY_SEAL_RIGHTEOUSNESS)
 end
 
 --- @param context PaladinModuleRunContext
 function SealOfRighteousnessModule:getPriority(context)
+    if not self.enabled or context.mana < context.sorCost then
+        return -1;
+    end
+
+    if context.spec == PaladinSpec.RETRI then
+        return self:GetRetriSealOfRighteousnessPriority()
+    elseif context.spec == PaladinSpec.PROT then
+        return self:GetProtSealOfRighteousnessPriority()
+    end
+
+    return -1;
+end
+
+function SealOfRighteousnessModule:GetRetriSealOfRighteousnessPriority()
     local sowEnabled = ModuleRegistry:IsModuleEnabled(ABILITY_SEAL_WISDOM)
     local socrEnabled = ModuleRegistry:IsModuleEnabled(ABILITY_SEAL_CRUSADER)
-    if self.enabled
-        and context.mana > context.sorCost 
-        and self.trackers.sorTracker:ShouldCast()
+    if self.trackers.sorTracker:ShouldCast()
         and ((sowEnabled and not self.trackers.sowTargetTracker:ShouldCast()) or (socrEnabled and not self.trackers.socrTargetTracker:ShouldCast())) then
         return 80;
+    else
+        return -1;
     end
-    return -1;
+end
+
+function SealOfRighteousnessModule:GetProtSealOfRighteousnessPriority()
+    local sowEnabled = ModuleRegistry:IsModuleEnabled(ABILITY_SEAL_WISDOM)
+    if sowEnabled and not self.trackers.sowTargetTracker:ShouldCast() and self.trackers.sorTracker:ShouldCast() then
+        return 80;
+    elseif not sowEnabled and self.trackers.sorTracker:ShouldCast() then
+        return 80;
+    else
+        return -1;
+    end
 end

@@ -1,5 +1,6 @@
 --- @class Paladin : ClassRotation
 --- @field cache ManaCostCache
+--- @field spec PaladinSpec
 --- @diagnostic disable: duplicate-set-field
 Paladin = setmetatable({}, { __index = ClassRotation })
 Paladin.__index = Paladin
@@ -28,14 +29,16 @@ function Paladin.new()
 end
 
 function Paladin:execute()
-    ClassRotationPerformer:PerformRotation(PaladinModuleRunContext.new(self.cache))
+    ClassRotationPerformer:PerformRotation(PaladinModuleRunContext.new(self.cache, self.spec))
 end
 
 function Paladin:SelectSpec(spec)
     ClassRotation.SelectSpec(self, spec)
     if spec.name == "Retrodin" then
+        self.spec = PaladinSpec.RETRI
         self:EnableRetrodinSpec()
     elseif spec.name == "Prot" then
+        self.spec = PaladinSpec.PROT
         self:EnableProtSpec()
     end
     HotSwap_InvalidateModuleButtons()

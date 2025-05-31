@@ -104,6 +104,7 @@ Rotation\Paladin\Module\SealOfWisdomTargetModule.lua
 Rotation\Paladin\Module\RighteousFuryModule.lua
 Rotation\Paladin\Module\HolyShieldModule.lua
 
+Rotation\Paladin\PaladinSpec.lua
 Rotation\Paladin\Paladin.lua
 
 Rotation\Druid\DruidModuleRunContext.lua
