@@ -23,7 +23,7 @@ end
 
 --- @param context WarriorModuleRunContext
 function ShieldBlockModule:getPriority(context)
-    if self.enabled and Helpers:SpellReady(ABILITY_SHIELD_BLOCK) then
+    if self.enabled and not Helpers:SpellReady(ABILITY_SHIELD_SLAM) and Helpers:SpellReady(ABILITY_SHIELD_BLOCK) then
         if self.trackers.shieldBlockTracker:ShouldCast() and self.trackers.shieldSlamTracker:ShouldCast() then
             return 84;
         end

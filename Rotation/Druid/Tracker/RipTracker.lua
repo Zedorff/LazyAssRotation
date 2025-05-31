@@ -38,12 +38,12 @@ function RipTracker:onEvent(event, arg1)
 end
 
 function RipTracker:subscribe()
-    Core:StartHookingSpellCasts()
+    Core:SubscribeToHookedEvents()
     CooldownTracker.subscribe(self)
 end
 
 function RipTracker:unsubscribe()
-    Core:StopHookingSpellCasts()
+    Core:UnsubscribeFromHookedEvents()
     CooldownTracker.unsubscribe(self)
 end
 

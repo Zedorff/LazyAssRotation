@@ -24,6 +24,6 @@ end
 function ClassRotation:SelectSpec(spec)
     LARSelectedSpec = spec
     HotSwap_SetDraggableButtonIcon(spec.icon)
-    Core:StopHookingSpellCasts()
+    Core:ForceUnhook()
     ModuleRegistry:ClearRegistry()
 end

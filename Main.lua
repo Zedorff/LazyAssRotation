@@ -72,7 +72,7 @@ end
 function InitSubscribers()
     Core.eventBus:subscribe({
         onEvent = function (_, event, arg1)
-            if (event == "VARIABLES_LOADED") then
+            if (event == "LAR_SPELL_CAST") then
                 -- Logging:Log("Event: "..event..", arg1: "..tostring(arg1))
             end
             if (event == "VARIABLES_LOADED") then

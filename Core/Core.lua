@@ -8,22 +8,35 @@ AceLibrary("AceHook-2.1"):embed(Core)
 
 local hookListenersCounter = 0
 
-function Core:StartHookingSpellCasts()
+function Core:SubscribeToHookedEvents()
     if hookListenersCounter == 0 then
-        self:Hook("CastSpellByName")
-        self:Hook("UseAction")
-        self:Hook("CastSpell")
+        Core:StartHookingSpellCasts()
     end
     hookListenersCounter = hookListenersCounter + 1
 end
 
-function Core:StopHookingSpellCasts()
+function Core:UnsubscribeFromHookedEvents()
     hookListenersCounter = hookListenersCounter - 1
     if hookListenersCounter == 0 then
-        self:Unhook("CastSpellByName")
-        self:Unhook("UseAction")
-        self:Unhook("CastSpell")
+        Core:StopHookingSpellCasts()
     end
+end
+
+function Core:ForceUnhook()
+    Core:StopHookingSpellCasts()
+    hookListenersCounter = 0
+end
+
+function Core:StartHookingSpellCasts()
+    if not self:IsHooked("CastSpellByName") then self:Hook("CastSpellByName") end
+    if not self:IsHooked("UseAction") then self:Hook("UseAction") end
+    if not self:IsHooked("CastSpell") then self:Hook("CastSpell") end
+end
+
+function Core:StopHookingSpellCasts()
+    if self:IsHooked("CastSpellByName") then self:Unhook("CastSpellByName") end
+    if self:IsHooked("UseAction") then self:Unhook("UseAction") end
+    if self:IsHooked("CastSpell") then self:Unhook("CastSpell") end
 end
 
 function Core:CastSpellByName(text, onself)
