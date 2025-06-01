@@ -11,6 +11,7 @@ end
 
 function ExecuteModule:run()
     Logging:Debug("Casting Execute")
+    _ = SpellStopCasting()
     CastSpellByName(ABILITY_EXECUTE)
 end
 
