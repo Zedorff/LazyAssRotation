@@ -19,6 +19,8 @@ function CreateDpsRotation()
         return Paladin.new()
     elseif (class == CLASS_DRUID_DPS) then
         return Druid.new()
+    elseif (class == CLASS_MAGE_DPS) then
+        return Mage.new()
     end
 end
 
@@ -72,7 +74,7 @@ end
 function InitSubscribers()
     Core.eventBus:subscribe({
         onEvent = function (_, event, arg1)
-            if (event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_COMBAT_SELF_HITS") then
+            if (event == "CHAT_MSG_SPELL_SELF_DAMAGE") then
                 -- Logging:Log("Event: "..event..", arg1: "..tostring(arg1))
             end
             if (event == "VARIABLES_LOADED") then

@@ -23,6 +23,7 @@ Core\ModuleRunCache.lua
 Core\ManaCostCache.lua
 Core\EnergyCostCache.lua
 Core\SharedTracker\ClearcastingTracker.lua
+Core\SharedTracker\ChannelingTracker.lua
 Core\ClassRotation.lua
 Core\ClassRotationPerformer.lua
 Core\RageCostCache.lua
@@ -131,6 +132,18 @@ Rotation\Druid\Module\SwipeModule.lua
 
 Rotation\Druid\DruidSpec.lua
 Rotation\Druid\Druid.lua
+
+Rotation\Mage\MageModuleRunContext.lua
+
+Rotation\Mage\Tracker\ArcaneRuptureTracker.lua
+Rotation\Mage\Tracker\ArcaneSurgeTracker.lua
+Rotation\Mage\Tracker\TemporalConvergenceTracker.lua
+
+Rotation\Mage\Module\ArcaneMissilesModule.lua
+Rotation\Mage\Module\ArcaneRuptureModule.lua
+Rotation\Mage\Module\ArcaneSurgeModule.lua
+
+Rotation\Mage\Mage.lua
 
 UI\DebugFrame.lua
 UI\Minimap.lua
