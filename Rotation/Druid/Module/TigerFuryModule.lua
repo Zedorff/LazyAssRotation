@@ -24,7 +24,7 @@ end
 function TigerFuryModule:getPriority(context)
     if self.enabled then
         if self.trackers.tigerFuryTracker:ShouldCast() then
-            return 100;
+            return 70;
         end
     end
     return -1;
