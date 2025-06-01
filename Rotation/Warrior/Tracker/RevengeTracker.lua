@@ -20,8 +20,8 @@ function RevengeTracker:onEvent(event, arg1)
         if string.find(arg1, "You block") or string.find(arg1, "You parry") or string.find(arg1, "You dodge") then
             self.revengeReadyUntil = GetTime() + 4;
         end
-    elseif event == "PLAYER_TARGET_CHANGED" then
-        self.revengeReadyUntil = 0;
+    elseif event == "CHAT_MSG_COMBAT_CREATURE_VS_SELF_HITS" and string.find(arg1, "%(.- blocked%)") then
+        self.revengeReadyUntil = GetTime() + 4;
     elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" then
         local hit, crit, _, miss, _ = Helpers:ParseCombatEvent(ABILITY_REVENGE, arg1)
         if hit or crit or miss then

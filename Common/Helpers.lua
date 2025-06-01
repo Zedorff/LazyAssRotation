@@ -198,41 +198,34 @@ end
 
 --- @param spellName string
 --- @param line string
---- @return boolean hit
---- @return boolean crit
---- @return boolean parry
---- @return boolean miss
---- @return boolean dodge
+--- @return boolean hit, boolean crit, boolean parry, boolean miss, boolean dodge
 function Helpers:ParseCombatEvent(spellName, line)
-  local escaped = string.gsub(spellName, "(%p)", "%%%1")
+    local escapedSpell = string.gsub(spellName, "([%(%)%.%%%+%-%*%?%[%^%$])", "%%%1")
 
-  local critHitPattern = string.format("Your %s (crits|hits) (.+) for (%%d+).", escaped)
-  local missPattern    = string.format("Your %s missed (.+).", escaped)
-  local parryPattern   = string.format("Your %s was parried by (.+).", escaped)
-  local dodgePattern   = string.format("Your %s was dodged by (.+).", escaped)
+    -- Match hit or crit
+    if string.find(line, "^Your " .. escapedSpell .. " hits .+ for %d+") then
+        return true, false, false, false, false
+    elseif string.find(line, "^Your " .. escapedSpell .. " crits .+ for %d+") then
+        return true, true, false, false, false
+    end
 
-  local _, _, hitType = strfind(line, critHitPattern)
-  if hitType == "crits" then
-    return true, true, false, false, false
-  elseif hitType == "hits" then
-    return true, false, false, false, false
-  end
+    -- Match parry
+    if string.find(line, "^Your " .. escapedSpell .. " was parried by .+") then
+        return false, false, true, false, false
+    end
 
-  if strfind(line, missPattern) then
-    return false, false, false, true, false
-  end
+    -- Match dodge
+    if string.find(line, "^Your " .. escapedSpell .. " was dodged by .+") then
+        return false, false, false, false, true
+    end
 
-  if strfind(line, parryPattern) then
-    return false, false, true, false, false
-  end
+    -- Match miss
+    if string.find(line, "^Your " .. escapedSpell .. " missed .+") then
+        return false, false, false, true, false
+    end
 
-  if strfind(line, dodgePattern) then
-    return false, false, false, false, true
-  end
-
-  return false, false, false, false, false
+    return false, false, false, false, false
 end
-
 
 --- @param unit string
 --- @param texturename string

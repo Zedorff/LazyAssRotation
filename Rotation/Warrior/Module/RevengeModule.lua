@@ -17,7 +17,7 @@ end
 
 function RevengeModule:run()
     Logging:Debug("Casting "..ABILITY_REVENGE)
-    CastSpellByName(ABILITY_OVERPOWER)
+    CastSpellByName(ABILITY_REVENGE)
 end
 
 --- @param context WarriorModuleRunContext
