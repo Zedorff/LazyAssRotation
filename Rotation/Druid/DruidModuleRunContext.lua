@@ -62,6 +62,16 @@ end
 --- @param manaCache ManaCostCache
 --- @param rageCache RageCostCache
 function DruidModuleRunContext.PreheatCache(energyCache, manaCache, rageCache)
+    --- Cancel Clearcasting
+    if Helpers:HasBuff("player", "Spell_Nature_Clearcasting") then
+        for i = 1, 40 do
+            local texture = UnitBuff("player", i)
+            if texture and string.find(texture, "Spell_Nature_Lightning") then
+                CancelPlayerBuff(i)
+                break
+            end
+        end
+    end
     energyCache:Get(ABILITY_CLAW)
     energyCache:Get(ABILITY_RAKE)
     energyCache:Get(ABILITY_RIP)
