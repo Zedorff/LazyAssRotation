@@ -24,6 +24,7 @@ Core\ManaCostCache.lua
 Core\EnergyCostCache.lua
 Core\SharedTracker\ClearcastingTracker.lua
 Core\SharedTracker\ChannelingTracker.lua
+Core\SharedTracker\NotBehindTargetTracker.lua
 Core\ClassRotation.lua
 Core\ClassRotationPerformer.lua
 Core\RageCostCache.lua

@@ -20,7 +20,6 @@ function RipTracker.new()
     self.currentTargetName = nil
     self.pendingRipTarget = nil
     self.pendingRipApplyTime = nil
-    self:CheckGear()
     return self
 end
 
@@ -29,7 +28,9 @@ end
 function RipTracker:onEvent(event, arg1)
     local now = GetTime()
 
-    if event == "PLAYER_TARGET_CHANGED" then
+    if event == "PLAYER_ENTERING_WORLD" then
+        self:CheckGear()
+    elseif event == "PLAYER_TARGET_CHANGED" then
         self:ResetTracking()
 
     elseif event == "LAR_SPELL_CAST" and arg1 == "Rip" then
@@ -48,7 +49,6 @@ end
 function RipTracker:subscribe()
     Core:SubscribeToHookedEvents()
     CooldownTracker.subscribe(self)
-    self:CheckGear()
 end
 
 function RipTracker:unsubscribe()
@@ -120,6 +120,10 @@ function RipTracker:CheckGear()
 end
 
 function RipTracker:CalculateRipDuration()
+    if haveRavagerCloak == nil and haveSavageryIdol == nil then
+        self:CheckGear()
+    end
+
     local tickMultiplier = 1
     if haveRavagerCloak then
         tickMultiplier = tickMultiplier - 0.05

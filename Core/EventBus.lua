@@ -39,6 +39,7 @@ function EventBus:new(frame)
     frame:RegisterEvent("UNIT_MANA");
     frame:RegisterEvent("UPDATE_SHAPESHIFT_FORM");
     frame:RegisterEvent("VARIABLES_LOADED");
+    frame:RegisterEvent("UI_ERROR_MESSAGE");
 
     frame:SetScript("OnEvent", function()
         --- @diagnostic disable-next-line: undefined-global

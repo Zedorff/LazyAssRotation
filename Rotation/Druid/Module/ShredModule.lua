@@ -1,4 +1,4 @@
---- @alias ShredTrackers { clearCastingTracker: ClearcastingTracker }
+--- @alias ShredTrackers { clearCastingTracker: ClearcastingTracker, notBehindTargetTracker: NotBehindTargetTracker }
 --- @class ShredModule : Module
 --- @field trackers ShredTrackers
 --- @diagnostic disable: duplicate-set-field
@@ -9,7 +9,8 @@ ShredModule.__index = ShredModule
 function ShredModule.new()
     --- @type ShredTrackers
     local trackers = {
-        clearCastingTracker = ClearcastingTracker.new()
+        clearCastingTracker = ClearcastingTracker.new(),
+        notBehindTargetTracker = NotBehindTargetTracker.new()
     }
     --- @class ShredModule
     return setmetatable(Module.new(ABILITY_SHRED, trackers, "Interface\\Icons\\Spell_Shadow_VampiricAura"), ShredModule)
@@ -23,6 +24,10 @@ end
 --- @param context DruidModuleRunContext
 function ShredModule:getPriority(context)
     if self.enabled and Helpers:SpellReady(ABILITY_SHRED) then
+        if self.trackers.notBehindTargetTracker:GetLastAttemptTime() < 0.2 then
+            return -1;
+        end
+
         if self.trackers.clearCastingTracker:ShouldCast() then
             return 110;
         end
