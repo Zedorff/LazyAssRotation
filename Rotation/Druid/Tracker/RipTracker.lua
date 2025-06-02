@@ -6,6 +6,11 @@
 RipTracker = setmetatable({}, { __index = CooldownTracker })
 RipTracker.__index = RipTracker
 
+local RIP_DURATION = 12
+
+local haveSavageryIdol = false
+local haveRavagerCloak = false
+
 --- @return RipTracker
 function RipTracker.new()
     --- @class RipTracker
@@ -15,6 +20,7 @@ function RipTracker.new()
     self.currentTargetName = nil
     self.pendingRipTarget = nil
     self.pendingRipApplyTime = nil
+    self:CheckGear()
     return self
 end
 
@@ -34,12 +40,15 @@ function RipTracker:onEvent(event, arg1)
 
     elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" then
         self:HandleSelfDamage(arg1, now)
+    elseif event == "UNIT_INVENTORY_CHANGED" then
+        self:CheckGear()
     end
 end
 
 function RipTracker:subscribe()
     Core:SubscribeToHookedEvents()
     CooldownTracker.subscribe(self)
+    self:CheckGear()
 end
 
 function RipTracker:unsubscribe()
@@ -68,7 +77,7 @@ function RipTracker:CheckRipTick(arg1, now)
         if self.pendingRipTarget and self.pendingRipApplyTime then
             local delay = now - self.pendingRipApplyTime
             if delay <= 5 then
-                local remaining = 12.5 - delay
+                local remaining = (self:CalculateRipDuration() + 0.5) - delay
                 self.ripActiveUntil = now + remaining
                 Logging:Debug(string.format("Rip confirmed by tick. Delay: %.1fs, Set duration to %.1fs", delay, remaining))
             end
@@ -103,4 +112,21 @@ end
 --- @return number
 function RipTracker:GetRipRemainingTime()
     return self.ripActiveUntil - GetTime()
+end
+
+function RipTracker:CheckGear()
+    haveSavageryIdol = string.find(GetInventoryItemLink("player", 18), "item:61699:")
+    haveRavagerCloak = string.find(GetInventoryItemLink("player", 15), "item:55095:")
+end
+
+function RipTracker:CalculateRipDuration()
+    local tickMultiplier = 1
+    if haveRavagerCloak then
+        tickMultiplier = tickMultiplier - 0.05
+    end
+    if haveSavageryIdol then
+        tickMultiplier = tickMultiplier - 0.1
+    end
+
+    return RIP_DURATION * tickMultiplier
 end
