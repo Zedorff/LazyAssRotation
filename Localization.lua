@@ -73,6 +73,8 @@ ABILITY_ARCANE_SURGE         = "Arcane Surge"
 ABILITY_ARCANE_RUPTURE       = "Arcane Rupture"
 ABILITY_ARCANE_MISSILES      = "Arcane Missiles"
 PASSIVE_TEMPORAL_CONVERGENCE = "Temporal Convergence"
+ABILITY_ARCANE_POWER         = "Arcane Power"
+ITEM_MQG                     = "Mind Quickening"
 
 -- Regex
 RAGE_DESCRIPTION_REGEX       = "(%d+)%s*Rage";

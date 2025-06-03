@@ -1,4 +1,4 @@
---- @alias ArcaneSurgeTrackers { arcaneSurgeTracker: ArcaneSurgeTracker, channelingTracker: ChannelingTracker, arcaneRuptureTracker: ArcaneRuptureTracker }
+--- @alias ArcaneSurgeTrackers { arcaneSurgeTracker: ArcaneSurgeTracker, channelingTracker: ChannelingTracker, mqgTracker: MindQuickingGemTracker, arcanePowerTracker: ArcanePowerTracker }
 --- @class ArcaneSurgeModule : Module
 --- @field trackers ArcaneSurgeTrackers
 --- @diagnostic disable: duplicate-set-field
@@ -11,7 +11,8 @@ function ArcaneSurgeModule.new()
     local trackers = {
         arcaneSurgeTracker = ArcaneSurgeTracker.new(),
         channelingTracker = ChannelingTracker.new(),
-        arcaneRuptureTracker = ArcaneRuptureTracker.new()
+        mqgTracker = MindQuickingGemTracker.new(),
+        arcanePowerTracker = ArcanePowerTracker.new()
     }
     --- @class ArcaneSurgeModule
     return setmetatable(Module.new(ABILITY_ARCANE_SURGE, trackers, "Interface\\Icons\\INV_Enchant_EssenceMysticalLarge"), ArcaneSurgeModule)
@@ -25,7 +26,7 @@ end
 --- @param context MageModuleRunContext
 function ArcaneSurgeModule:getPriority(context)
     if self.enabled and self.trackers.channelingTracker:ShouldCast() and Helpers:SpellReady(ABILITY_ARCANE_SURGE) then
-        if self.trackers.arcaneSurgeTracker:ShouldCast() and (self.trackers.arcaneRuptureTracker:ShouldCast() or self.trackers.arcaneRuptureTracker:GetRuptureRemainingTime() < 4) and context.mana >= context.asCost then
+        if self.trackers.arcaneSurgeTracker:ShouldCast() and self.trackers.mqgTracker:ShouldCast() and self.trackers.arcanePowerTracker:ShouldCast() and context.mana >= context.asCost then
             return 90;
         end
     else

@@ -139,6 +139,8 @@ Rotation\Mage\MageModuleRunContext.lua
 Rotation\Mage\Tracker\ArcaneRuptureTracker.lua
 Rotation\Mage\Tracker\ArcaneSurgeTracker.lua
 Rotation\Mage\Tracker\TemporalConvergenceTracker.lua
+Rotation\Mage\Tracker\MindQuickingGemTracker.lua
+Rotation\Mage\Tracker\ArcanePowerTracker.lua
 
 Rotation\Mage\Module\ArcaneMissilesModule.lua
 Rotation\Mage\Module\ArcaneRuptureModule.lua
