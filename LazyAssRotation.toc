@@ -145,6 +145,7 @@ Rotation\Mage\Tracker\ArcanePowerTracker.lua
 Rotation\Mage\Module\ArcaneMissilesModule.lua
 Rotation\Mage\Module\ArcaneRuptureModule.lua
 Rotation\Mage\Module\ArcaneSurgeModule.lua
+Rotation\Mage\Module\ClearcastingModule.lua
 
 Rotation\Mage\Mage.lua
 

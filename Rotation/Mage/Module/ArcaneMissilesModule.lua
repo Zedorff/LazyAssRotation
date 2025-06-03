@@ -1,4 +1,4 @@
---- @alias ArcaneMissilesTrackers { channelingTracker: ChannelingTracker, clearcastingTracker: ClearcastingTracker }
+--- @alias ArcaneMissilesTrackers { channelingTracker: ChannelingTracker }
 --- @class ArcaneMissilesModule : Module
 --- @field trackers ArcaneMissilesTrackers
 --- @diagnostic disable: duplicate-set-field
@@ -9,8 +9,7 @@ ArcaneMissilesModule.__index = ArcaneMissilesModule
 function ArcaneMissilesModule.new()
     --- @type ArcaneMissilesTrackers
     local trackers = {
-        channelingTracker = ChannelingTracker.new(),
-        clearcastingTracker = ClearcastingTracker.new()
+        channelingTracker = ChannelingTracker.new()
     }
     --- @class ArcaneMissilesModule
     return setmetatable(Module.new(ABILITY_ARCANE_MISSILES, trackers, "Interface\\Icons\\Spell_Nature_StarFall"), ArcaneMissilesModule)
@@ -24,9 +23,7 @@ end
 --- @param context MageModuleRunContext
 function ArcaneMissilesModule:getPriority(context)
     if self.enabled and self.trackers.channelingTracker:ShouldCast() then
-        if self.trackers.clearcastingTracker:ShouldCast() then
-            return 100;
-        elseif context.mana >= context.amCost then
+        if context.mana >= context.amCost then
             return 80;
         end
     else
