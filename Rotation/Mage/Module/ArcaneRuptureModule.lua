@@ -26,7 +26,7 @@ end
 function ArcaneRuptureModule:getPriority(context)
     if self.enabled and self.trackers.channelingTracker:ShouldCast() then
         local hasMana = context.mana >= context.arCost
-        if self.trackers.convergenceTracker:ShouldCast() and self.trackers.arcaneRuptureTracker:GetRirptureRemainingTime() < 2 and hasMana then
+        if self.trackers.convergenceTracker:ShouldCast() and self.trackers.arcaneRuptureTracker:GetRuptureRemainingTime() < 2 and hasMana then
             return 95;
         elseif Helpers:SpellReady(ABILITY_ARCANE_RUPTURE) and self.trackers.arcaneRuptureTracker:ShouldCast() and hasMana then
             return 85;

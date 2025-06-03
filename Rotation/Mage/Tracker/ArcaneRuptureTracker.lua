@@ -40,6 +40,6 @@ function ArcaneRuptureTracker:ShouldCast()
     return not self.ruptureIsUp
 end
 
-function ArcaneRuptureTracker:GetRirptureRemainingTime()
+function ArcaneRuptureTracker:GetRuptureRemainingTime()
     return self.ruptureIsUpUntill - GetTime()
 end

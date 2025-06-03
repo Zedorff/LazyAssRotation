@@ -25,7 +25,7 @@ end
 --- @param context MageModuleRunContext
 function ArcaneSurgeModule:getPriority(context)
     if self.enabled and self.trackers.channelingTracker:ShouldCast() and Helpers:SpellReady(ABILITY_ARCANE_SURGE) then
-        if self.trackers.arcaneSurgeTracker:ShouldCast() and (self.trackers.arcaneRuptureTracker:ShouldCast() or self.trackers.arcaneRuptureTracker:GetRirptureRemainingTime() < 4) and context.mana >= context.asCost then
+        if self.trackers.arcaneSurgeTracker:ShouldCast() and (self.trackers.arcaneRuptureTracker:ShouldCast() or self.trackers.arcaneRuptureTracker:GetRuptureRemainingTime() < 4) and context.mana >= context.asCost then
             return 90;
         end
     else
