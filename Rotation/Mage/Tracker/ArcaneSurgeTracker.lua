@@ -27,5 +27,5 @@ end
 
 --- @return boolean
 function ArcaneSurgeTracker:ShouldCast()
-    return GetTime() < self.surgeReadyUntil and Helpers:SpellReady(ABILITY_ARCANE_SURGE)
+    return GetTime() < self.surgeReadyUntil
 end

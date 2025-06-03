@@ -30,6 +30,23 @@ function Helpers:SpellReady(spellname)
     return false;
 end
 
+--- @param spellname string
+--- @param delta number
+--- @return boolean
+function Helpers:SpellAlmostReady(spellname, delta)
+    local id = Helpers:SpellId(spellname)
+    if id then
+        local start, duration = GetSpellCooldown(id, 0)
+        if start == 0 and duration == 0 then
+            return true
+        end
+        local remaining = (start + duration) - GetTime()
+        return remaining <= delta
+    end
+    return false
+end
+
+
 --- @deprecated Use `HasBuff` instead
 --- @param unit string
 --- @param buffName string
