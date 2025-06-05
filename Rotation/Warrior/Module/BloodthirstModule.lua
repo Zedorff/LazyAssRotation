@@ -19,10 +19,7 @@ function BloodthirstModule:getPriority(context)
     if self.enabled then
         if Helpers:SpellReady(ABILITY_BLOODTHIRST) and context.rage >= context.bsCost then
             return 90;
-        else
-            return -1;
         end
-    else
-        return -1;
     end
+    return -1;
 end

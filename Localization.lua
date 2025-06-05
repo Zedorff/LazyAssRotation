@@ -30,6 +30,7 @@ ABILITY_REVENGE              = "Revenge"
 ABILITY_SHIELD_SLAM          = "Shield Slam"
 ABILITY_SUNDER_ARMOR         = "Sunder Armor"
 ABILITY_SHIELD_BLOCK         = "Shield Block"
+ABILITY_PUMMEL               = "Pummel"
 
 -- Shaman
 ABILITY_LIGHTNING_SHIELD     = "Lightning Shield"

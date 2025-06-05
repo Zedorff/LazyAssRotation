@@ -60,6 +60,7 @@ Rotation\Warrior\Module\RevengeModule.lua
 Rotation\Warrior\Module\ShieldSlamModule.lua
 Rotation\Warrior\Module\SunderArmorModule.lua
 Rotation\Warrior\Module\ShieldBlockModule.lua
+Rotation\Warrior\Module\PummelModule.lua
 
 Rotation\Warrior\WarriorSpec.lua
 Rotation\Warrior\Warrior.lua

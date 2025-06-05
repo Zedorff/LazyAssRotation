@@ -54,6 +54,7 @@ function Warrior:EnableFurySpec()
     ModuleRegistry:RegisterModule(WhirlwindModule.new())
     ModuleRegistry:RegisterModule(HeroicStrikeModule.new())
     ModuleRegistry:RegisterModule(HamstringModule.new())
+    ModuleRegistry:RegisterModule(PummelModule.new())
     ModuleRegistry:RegisterModule(ExecuteModule.new())
 end
 

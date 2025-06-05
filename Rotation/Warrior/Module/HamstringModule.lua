@@ -17,7 +17,7 @@ end
 --- @param context WarriorModuleRunContext
 function HamstringModule:getPriority(context)
     if self.enabled and context.stance ~= 2 then
-        if Helpers:SpellReady(ABILITY_HAMSTRING) and context.rage >= 80 then
+        if Helpers:SpellReady(ABILITY_HAMSTRING) and context.rage >= 90 then
             return 10
         else
             return -1;

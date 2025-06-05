@@ -18,9 +18,9 @@ end
 function WhirlwindModule:getPriority(context)
     if self.enabled and context.stance == 3 then
         if context.spec == WarriorSpec.ARMS then
-            return self:GetArmsWhirlwindPriority(context.rage)
+            return self:GetArmsWhirlwindPriority(context)
         elseif context.spec == WarriorSpec.FURY then
-            return self:GetFuryWhirlwindPriority(context.rage)
+            return self:GetFuryWhirlwindPriority(context)
         else
             return -1;
         end
@@ -29,18 +29,18 @@ function WhirlwindModule:getPriority(context)
     end
 end
 
-function WhirlwindModule:GetArmsWhirlwindPriority(rage)
-    local wwCost = Helpers:RageCost(ABILITY_WHIRLWIND)
-    if Helpers:SpellReady(ABILITY_WHIRLWIND) and not Helpers:SpellReady(ABILITY_MORTAL_STRIKE) and rage >= wwCost then
+--- @param context WarriorModuleRunContext
+function WhirlwindModule:GetArmsWhirlwindPriority(context)
+    if Helpers:SpellReady(ABILITY_WHIRLWIND) and not Helpers:SpellAlmostReady(ABILITY_MORTAL_STRIKE, 0.5) and context.rage >= context.wwCost then
         return 70
     else
         return -1;
     end
 end
 
-function WhirlwindModule:GetFuryWhirlwindPriority(rage)
-    local wwCost = Helpers:RageCost(ABILITY_WHIRLWIND)
-    if Helpers:SpellReady(ABILITY_WHIRLWIND) and not Helpers:SpellReady(ABILITY_BLOODTHIRST) and rage >= wwCost then
+--- @param context WarriorModuleRunContext
+function WhirlwindModule:GetFuryWhirlwindPriority(context)
+    if Helpers:SpellReady(ABILITY_WHIRLWIND) and not Helpers:SpellAlmostReady(ABILITY_BLOODTHIRST, 0.5) and context.rage >= context.wwCost then
         return 70
     else
         return -1;

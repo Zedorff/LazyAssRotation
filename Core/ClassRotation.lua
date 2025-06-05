@@ -26,4 +26,5 @@ function ClassRotation:SelectSpec(spec)
     HotSwap_SetDraggableButtonIcon(spec.icon)
     Core:ForceUnhook()
     ModuleRegistry:ClearRegistry()
+    self.cache:Clear()
 end

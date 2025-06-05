@@ -21,5 +21,9 @@ function ClassRotationPerformer:PerformRotation(context)
         if LARShowRotationSpells then
             HotSwap_SetDraggableButtonIcon(bestModule.iconPath)
         end
+    else
+        if LARShowRotationSpells then
+            HotSwap_SetDraggableButtonIcon("Interface\\Icons\\INV_Misc_QuestionMark")
+        end
     end
 end
