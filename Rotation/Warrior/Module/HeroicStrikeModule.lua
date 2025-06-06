@@ -63,6 +63,11 @@ function HeroicStrikeModule:GetFuryHeroicPriority(context)
         reserve = context.wwCost
     end
 
+    if context.rage < (reserve + context.hsCost) then
+        Logging:Debug("Cancelling HS to preserve rage for main abilities")
+        _ = SpellStopCasting()
+    end
+
     if context.rage >= (reserve + context.hsCost) then
         return 65
     end
