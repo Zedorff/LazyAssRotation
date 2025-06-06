@@ -16,6 +16,10 @@ end
 --- @param event string
 --- @param arg1 string
 function ArcaneSurgeTracker:onEvent(event, arg1)
+    if event == "UI_ERROR_MESSAGE" and string.find(arg1, "You can't do that yet") then
+        self.surgeReadyUntil = 0;
+        Logging:Debug(ABILITY_ARCANE_SURGE .. " is down")
+    end
     if event == "CHAT_MSG_SPELL_SELF_DAMAGE" and string.find(arg1, "resisted") then
         self.surgeReadyUntil = GetTime() + 4
         Logging:Debug(ABILITY_ARCANE_SURGE .. " is up")
@@ -27,5 +31,9 @@ end
 
 --- @return boolean
 function ArcaneSurgeTracker:ShouldCast()
-    return GetTime() < self.surgeReadyUntil
+    local now = GetTime()
+    local delta = self.surgeReadyUntil - now
+    local cd = Helpers:SpellNotReadyFor(ABILITY_ARCANE_SURGE)
+
+    return delta >= cd and cd <= 0.8
 end

@@ -29,7 +29,6 @@ function ArcaneSurgeModule:getPriority(context)
         if self.trackers.arcaneSurgeTracker:ShouldCast()
             and self.trackers.mqgTracker:ShouldCast()
             and self.trackers.arcanePowerTracker:ShouldCast()
-            and Helpers:SpellAlmostReady(ABILITY_ARCANE_SURGE, 0.8)
             and context.mana >= context.asCost then
             return 90;
         end

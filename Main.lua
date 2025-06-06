@@ -74,7 +74,7 @@ end
 function InitSubscribers()
     Core.eventBus:subscribe({
         onEvent = function (_, event, arg1)
-            if (event == "SPELLCAST_FAILED") then
+            if (event == "UI_ERROR_MESSAGE") then
                 -- Logging:Log("Event: "..event..", arg1: "..tostring(arg1))
             end
             if (event == "VARIABLES_LOADED") then
