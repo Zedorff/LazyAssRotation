@@ -16,7 +16,9 @@ end
 --- @param event string
 --- @param arg1 string
 function RevengeTracker:onEvent(event, arg1)
-    if (event == "CHAT_MSG_COMBAT_CREATURE_VS_SELF_MISSES") then
+    if event == "PLAYER_DEAD" then
+        self.revengeReadyUntil = 0;
+    elseif (event == "CHAT_MSG_COMBAT_CREATURE_VS_SELF_MISSES") then
         if string.find(arg1, "You block") or string.find(arg1, "You parry") or string.find(arg1, "You dodge") then
             self.revengeReadyUntil = GetTime() + 4;
         end

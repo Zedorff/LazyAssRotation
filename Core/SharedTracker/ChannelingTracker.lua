@@ -21,7 +21,9 @@ end
 --- @param event string
 --- @param arg1 string
 function ChannelingTracker:onEvent(event, arg1)
-    if event == "SPELLCAST_CHANNEL_START" and arg1 then
+    if event == "PLAYER_DEAD" then
+        self.channelingUntill = 0
+    elseif event == "SPELLCAST_CHANNEL_START" and arg1 then
         Logging:Debug("Channeling spell is casting")
         self.channelingUntill = GetTime() + arg1 / 1000
     elseif event == "SPELLCAST_CHANNEL_STOP" or event == "SPELLCAST_INTERRUPTED" then

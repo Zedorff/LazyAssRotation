@@ -26,7 +26,10 @@ end
 --- @param event string
 --- @param arg1 string
 function CrusaderStrikeTracker:onEvent(event, arg1)
-    if event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" and string.find(arg1, "Zeal") then
+    if event == "PLAYER_DEAD" then
+        self.zealStacks = 0
+        self.lastZealApply = 0
+    elseif event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" and string.find(arg1, "Zeal") then
         Logging:Debug("Zeal is up")
         if self.zealStacks < 3 then
            self.zealStacks = self.zealStacks + 1

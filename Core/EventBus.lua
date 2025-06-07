@@ -29,6 +29,7 @@ function EventBus:new(frame)
     frame:RegisterEvent("LEARNED_SPELL_IN_TAB");
     frame:RegisterEvent("PLAYER_ENTER_COMBAT");
     frame:RegisterEvent("PLAYER_ENTERING_WORLD");
+    frame:RegisterEvent("PLAYER_DEAD");
     frame:RegisterEvent("PLAYER_LEAVE_COMBAT");
     frame:RegisterEvent("PLAYER_TARGET_CHANGED");
     frame:RegisterEvent("SPELLCAST_CHANNEL_START");

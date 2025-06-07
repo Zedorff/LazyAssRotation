@@ -27,7 +27,9 @@ end
 --- @param event string
 --- @param arg1 string
 function JudgementTracker:onEvent(event, arg1)
-    if event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" and string.find(arg1, "Seal") then
+    if event == "PLAYER_DEAD" then
+        self.hasSeal = false
+    elseif event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" and string.find(arg1, "Seal") then
         Logging:Debug("Seal spell is up")
         self.hasSeal = true
     elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" and string.find(arg1, "Seal") then

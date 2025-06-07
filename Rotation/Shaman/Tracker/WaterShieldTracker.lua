@@ -1,36 +1,12 @@
---- @class WaterShieldTracker : CooldownTracker
---- @field shieldIsUp boolean
+--- @class WaterShieldTracker : SelfBuffTracker
 --- @diagnostic disable: duplicate-set-field
-WaterShieldTracker = setmetatable({}, { __index = CooldownTracker })
+WaterShieldTracker = setmetatable({}, { __index = SelfBuffTracker })
 WaterShieldTracker.__index = WaterShieldTracker
 
 --- @return WaterShieldTracker
 function WaterShieldTracker.new()
     --- @class WaterShieldTracker
-    local self = CooldownTracker.new()
+    local self = SelfBuffTracker.new(ABILITY_WATER_SHIELD, "Spell_Nature_WaterShield")
     setmetatable(self, WaterShieldTracker)
-    self.shieldIsUp = Helpers:HasBuff("player", "Spell_Nature_WaterShield")
     return self
-end
-
-function WaterShieldTracker:subscribe()
-    CooldownTracker.subscribe(self)
-    self.shieldIsUp = Helpers:HasBuff("player", "Spell_Nature_WaterShield")
-end
-
---- @param event string
---- @param arg1 string
-function WaterShieldTracker:onEvent(event, arg1)
-    if event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" and string.find(arg1, ABILITY_WATER_SHIELD) then
-        Logging:Debug(ABILITY_WATER_SHIELD.." is up")
-        self.shieldIsUp = true
-    elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" and string.find(arg1, ABILITY_WATER_SHIELD) then
-        Logging:Debug(ABILITY_WATER_SHIELD.." is down")
-        self.shieldIsUp = false
-    end 
-end
-
---- @return boolean
-function WaterShieldTracker:ShouldCast()
-    return not self.shieldIsUp
 end

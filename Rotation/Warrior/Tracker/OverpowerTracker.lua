@@ -16,7 +16,9 @@ end
 --- @param event string
 --- @param arg1 string
 function OverpowerTracker:onEvent(event, arg1)
-    if (event == "CHAT_MSG_COMBAT_SELF_MISSES" or event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF") then
+    if event == "PLAYER_DEAD" then
+        self.overpowerReadyUntil = 0;
+    elseif (event == "CHAT_MSG_COMBAT_SELF_MISSES" or event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF") then
         local _, _, _, _, dodge = Helpers:ParseCombatEvent(".+", arg1)
         if dodge or string.find(arg1, CHAT_AUTOATTACK_DODGE) then
             self.overpowerReadyUntil = GetTime() + 5;

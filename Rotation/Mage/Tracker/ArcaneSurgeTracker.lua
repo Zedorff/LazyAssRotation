@@ -16,7 +16,9 @@ end
 --- @param event string
 --- @param arg1 string
 function ArcaneSurgeTracker:onEvent(event, arg1)
-    if event == "UI_ERROR_MESSAGE" and string.find(arg1, "You can't do that yet") then
+    if event == "PLAYER_DEAD" then
+        self.surgeReadyUntil = 0;
+    elseif event == "UI_ERROR_MESSAGE" and string.find(arg1, "You can't do that yet") then
         self.surgeReadyUntil = 0;
         Logging:Debug(ABILITY_ARCANE_SURGE .. " is down")
     end

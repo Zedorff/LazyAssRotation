@@ -1,36 +1,12 @@
---- @class SealOfCrusaderSelfTracker : CooldownTracker
---- @field socrIsUp boolean
+--- @class SealOfCrusaderSelfTracker : SelfBuffTracker
 --- @diagnostic disable: duplicate-set-field
-SealOfCrusaderSelfTracker = setmetatable({}, { __index = CooldownTracker })
+SealOfCrusaderSelfTracker = setmetatable({}, { __index = SelfBuffTracker })
 SealOfCrusaderSelfTracker.__index = SealOfCrusaderSelfTracker
 
 --- @return SealOfCrusaderSelfTracker
 function SealOfCrusaderSelfTracker.new()
     --- @class SealOfCrusaderSelfTracker
-    local self = CooldownTracker.new()
+    local self = SelfBuffTracker.new(ABILITY_SEAL_CRUSADER, "Spell_Holy_HolySmite")
     setmetatable(self, SealOfCrusaderSelfTracker)
-    self.socrIsUp = Helpers:HasBuff("player", "Spell_Holy_HolySmite")
     return self
-end
-
-function SealOfCrusaderSelfTracker:subscribe()
-    CooldownTracker.subscribe(self)
-    self.socrIsUp = Helpers:HasBuff("player", "Spell_Holy_HolySmite")
-end
-
---- @param event string
---- @param arg1 string
-function SealOfCrusaderSelfTracker:onEvent(event, arg1)
-    if event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" and string.find(arg1, ABILITY_SEAL_CRUSADER) then
-        Logging:Debug(ABILITY_SEAL_CRUSADER.." is up")
-        self.socrIsUp = true
-    elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" and string.find(arg1, ABILITY_SEAL_CRUSADER) then
-        Logging:Debug(ABILITY_SEAL_CRUSADER.." is down")
-        self.socrIsUp = false
-    end
-end
-
---- @return boolean
-function SealOfCrusaderSelfTracker:ShouldCast()
-    return not self.socrIsUp;
 end

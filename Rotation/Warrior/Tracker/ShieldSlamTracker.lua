@@ -24,7 +24,10 @@ end
 --- @param event string
 --- @param arg1 string
 function ShieldSlamTracker:onEvent(event, arg1)
-    if event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" and string.find(arg1, "Improved Shield Slam") then
+    if event == "PLAYER_DEAD" then
+        self.shieldSlamIsUp = false
+        self.shieldSlamUpUntill = GetTime()
+    elseif event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" and string.find(arg1, "Improved Shield Slam") then
         Logging:Debug("Improved Shield Slam is up")
         self.shieldSlamIsUp = true
     elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" and string.find(arg1, "Improved Shield Slam") then

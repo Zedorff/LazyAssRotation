@@ -1,41 +1,13 @@
---- @class ClearcastingTracker : CooldownTracker
+--- @class ClearcastingTracker : SelfBuffTracker
 --- @field buffIsUp boolean
 --- @diagnostic disable: duplicate-set-field
-ClearcastingTracker = setmetatable({}, { __index = CooldownTracker })
+ClearcastingTracker = setmetatable({}, { __index = SelfBuffTracker })
 ClearcastingTracker.__index = ClearcastingTracker
 
 --- @return ClearcastingTracker
 function ClearcastingTracker.new()
     --- @class ClearcastingTracker
-    local self = CooldownTracker.new()
+    local self = SelfBuffTracker.new(PASSIVE_CLEARCASTING, "Spell_Shadow_ManaBurn")
     setmetatable(self, ClearcastingTracker)
-    self.buffIsUp = Helpers:HasBuff("player", "Spell_Shadow_ManaBurn")
     return self
-end
-
-function ClearcastingTracker:subscribe()
-    CooldownTracker.subscribe(self)
-    self.buffIsUp = Helpers:HasBuff("player", "Spell_Shadow_ManaBurn")
-end
-
---- @param event string
---- @param arg1 string
-function ClearcastingTracker:onEvent(event, arg1)
-    if event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" and string.find(arg1, PASSIVE_CLEARCASTING) then
-        Logging:Debug(PASSIVE_CLEARCASTING.." is up")
-        self.buffIsUp = true
-    elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" and string.find(arg1, PASSIVE_CLEARCASTING) then
-        Logging:Debug(PASSIVE_CLEARCASTING.." is down")
-        self.buffIsUp = false
-    end 
-end
-
---- @return boolean
-function ClearcastingTracker:ShouldCast()
-    return self.buffIsUp
-end
-
---- @return number
-function ClearcastingTracker:GetWhenAvailable()
-    return 0;
 end

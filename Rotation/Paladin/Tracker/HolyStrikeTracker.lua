@@ -24,7 +24,10 @@ end
 --- @param event string
 --- @param arg1 string
 function HolyStrikeTracker:onEvent(event, arg1)
-    if event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" and string.find(arg1, "Holy Might") then
+    if event == "PLAYER_DEAD" then
+        self.holyMightIsUp = false
+        self.lastHolyMightApply = 0
+    elseif event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" and string.find(arg1, "Holy Might") then
         Logging:Debug("Holy Might is up")
         self.holyMightIsUp = true
         self.lastHolyMightApply = GetTime() + 20
