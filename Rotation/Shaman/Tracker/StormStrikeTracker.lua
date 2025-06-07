@@ -1,5 +1,4 @@
 --- @class StormStrikeTracker : SelfBuffTracker
---- @field buffIsUp boolean
 --- @diagnostic disable: duplicate-set-field
 StormStrikeTracker = setmetatable({}, { __index = SelfBuffTracker })
 StormStrikeTracker.__index = StormStrikeTracker
