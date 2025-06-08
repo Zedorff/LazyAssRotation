@@ -17,6 +17,24 @@ function Helpers:SpellId(spellname)
   return nil;
 end
 
+--- @param spellName string
+--- @return number|nil
+function Helpers:SpellIdMaxRank(spellName)
+    -- Walk each spell-tab in reverse so we hit higher-rank versions first.
+    local numTabs = GetNumSpellTabs()
+    for tab = numTabs, 1, -1 do
+        local _, _, offset, numSpells = GetSpellTabInfo(tab)
+        -- scan that tab bottom-up
+        for i = offset + numSpells, offset + 1, -1 do
+            local name = GetSpellName(i, BOOKTYPE_SPELL)
+            if name == spellName then
+                return i
+            end
+        end
+    end
+    return nil
+end
+
 --- @param spellname string
 --- @return boolean
 function Helpers:SpellReady(spellname)
@@ -147,7 +165,7 @@ end
 function Helpers:ParseIntViaTooltip(spellName, intRegex)
     LAR_GameTooltip:SetOwner(UIParent, "ANCHOR_NONE");
 
-    local spellID = Helpers:SpellId(spellName);
+    local spellID = Helpers:SpellIdMaxRank(spellName);
     if not spellID then
         Logging:Debug("Can't find " .. spellName .. " in book");
         return 0;
