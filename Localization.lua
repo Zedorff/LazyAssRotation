@@ -42,6 +42,8 @@ ABILITY_FLAME_SHOCK          = "Flame Shock"
 ABILITY_FROST_SHOCK          = "Frost Shock"
 ABILITY_WINDFURY             = "Windfury Weapon"
 ABILITY_ROCKBITER            = "Rockbiter Weapon"
+ABILITY_LIGHTNING_BOLT       = "Lightning Bolt"
+ABILITY_CHAIN_LIGHTNING      = "Chain Lightning"
 
 -- Paladin
 ABILITY_CONSECRATION         = "Consecration"

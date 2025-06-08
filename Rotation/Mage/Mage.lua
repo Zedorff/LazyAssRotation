@@ -43,5 +43,5 @@ function Mage:EnableArcaneSpec()
     ModuleRegistry:RegisterModule(ArcaneRuptureModule.new())
     ModuleRegistry:RegisterModule(ArcaneSurgeModule.new())
     ModuleRegistry:RegisterModule(ArcaneMissilesModule.new())
-    ModuleRegistry:RegisterModule(ClearcastingModule.new())
+    ModuleRegistry:RegisterModule(MageClearcastingModule.new())
 end

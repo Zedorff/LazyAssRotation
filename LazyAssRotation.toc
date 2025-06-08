@@ -81,7 +81,11 @@ Rotation\Shaman\Module\LightningStrikeModule.lua
 Rotation\Shaman\Module\ShockModule.lua
 Rotation\Shaman\Module\RockbiterModule.lua
 Rotation\Shaman\Module\WindfuryModule.lua
+Rotation\Shaman\Module\ShamanClearcastingModule.lua
+Rotation\Shaman\Module\LightningBoltModule.lua
+Rotation\Shaman\Module\ChainLightningModule.lua
 
+Rotation\Shaman\ShamanSpec.lua
 Rotation\Shaman\Shaman.lua
 
 Rotation\Paladin\PaladinModuleRunContext.lua
@@ -147,7 +151,7 @@ Rotation\Mage\Tracker\ArcanePowerTracker.lua
 Rotation\Mage\Module\ArcaneMissilesModule.lua
 Rotation\Mage\Module\ArcaneRuptureModule.lua
 Rotation\Mage\Module\ArcaneSurgeModule.lua
-Rotation\Mage\Module\ClearcastingModule.lua
+Rotation\Mage\Module\MageClearcastingModule.lua
 
 Rotation\Mage\Mage.lua
 

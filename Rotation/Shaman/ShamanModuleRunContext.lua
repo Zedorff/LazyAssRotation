@@ -6,12 +6,16 @@
 --- @field earthCost integer
 --- @field frostCost integer
 --- @field flameCost integer
+--- @field lbCost integer
+--- @field clCost integer
+--- @field spec ShamanSpec
 ShamanModuleRunContext = setmetatable({}, { __index = ModuleRunContext })
 ShamanModuleRunContext.__index = ShamanModuleRunContext
 
 --- @param cache ManaCostCache
+--- @param spec ShamanSpec
 --- @return ShamanModuleRunContext
-function ShamanModuleRunContext.new(cache)
+function ShamanModuleRunContext.new(cache, spec)
     --- @class ShamanModuleRunContext
     local self = ModuleRunContext.new()
     setmetatable(self, ShamanModuleRunContext)
@@ -26,6 +30,9 @@ function ShamanModuleRunContext.new(cache)
     self.earthCost = cache:Get(ABILITY_EARTH_SHOCK)
     self.frostCost = cache:Get(ABILITY_FROST_SHOCK)
     self.flameCost = cache:Get(ABILITY_FLAME_SHOCK)
+    self.lbCost = cache:Get(ABILITY_LIGHTNING_BOLT)
+    self.clCost = cache:Get(ABILITY_CHAIN_LIGHTNING)
+    self.spec = spec
 
     return self
 end
@@ -48,4 +55,6 @@ function ShamanModuleRunContext.PreheatCache(cache)
     cache:Get(ABILITY_EARTH_SHOCK)
     cache:Get(ABILITY_FLAME_SHOCK)
     cache:Get(ABILITY_FROST_SHOCK)
+    cache:Get(ABILITY_CHAIN_LIGHTNING)
+    cache:Get(ABILITY_LIGHTNING_BOLT)
 end
