@@ -115,8 +115,15 @@ function RipTracker:GetRipRemainingTime()
 end
 
 function RipTracker:CheckGear()
-    haveSavageryIdol = string.find(GetInventoryItemLink("player", 18), "item:61699:")
-    haveRavagerCloak = string.find(GetInventoryItemLink("player", 15), "item:55095:")
+    local idolLink = GetInventoryItemLink("player", 18)
+    local cloakLink = GetInventoryItemLink("player", 15)
+    if idolLink then
+        haveSavageryIdol = string.find(idolLink, "item:61699:")
+    end
+
+    if cloakLink then
+        haveRavagerCloak = string.find(cloakLink, "item:55095:")
+    end
 end
 
 function RipTracker:CalculateRipDuration()
