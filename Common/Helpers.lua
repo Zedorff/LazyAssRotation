@@ -3,18 +3,18 @@ Helpers = {}
 --- @param spellname string
 --- @return number | nil
 function Helpers:SpellId(spellname)
-  local id = 1;
-  for i = 1, GetNumSpellTabs() do
-    local _, _, _, numSpells = GetSpellTabInfo(i);
-    for j = 1, numSpells do
-      local spellName = GetSpellName(id, BOOKTYPE_SPELL);
-      if (spellName == spellname) then
-        return id;
-      end
-      id = id + 1;
+    local id = 1;
+    for i = 1, GetNumSpellTabs() do
+        local _, _, _, numSpells = GetSpellTabInfo(i);
+        for j = 1, numSpells do
+            local spellName = GetSpellName(id, BOOKTYPE_SPELL);
+            if (spellName == spellname) then
+                return id;
+            end
+            id = id + 1;
+        end
     end
-  end
-  return nil;
+    return nil;
 end
 
 --- @param spellName string
@@ -78,7 +78,6 @@ function Helpers:SpellNotReadyFor(spellname)
     return 0
 end
 
-
 --- @deprecated Use `HasBuff` instead
 --- @param unit string
 --- @param buffName string
@@ -89,7 +88,7 @@ function Helpers:HasBuffName(unit, buffName)
     end
 
     local tooltip = LAR_GameTooltip
-    local text = getglobal(tooltip:GetName().."TextLeft1")
+    local text = getglobal(tooltip:GetName() .. "TextLeft1")
     local targetName = string.gsub(buffName, "_", " ") -- only once, before loop
 
     for i = 1, 32 do
@@ -116,7 +115,7 @@ function Helpers:HasDebuffName(unit, debuffName)
     end
 
     local tooltip = LAR_GameTooltip
-    local text = getglobal(tooltip:GetName().."TextLeft1")
+    local text = getglobal(tooltip:GetName() .. "TextLeft1")
     local targetName = string.gsub(debuffName, "_", " ") -- only once, before loop
 
     for i = 1, 32 do
@@ -137,15 +136,15 @@ end
 --- @param textureSubstring string
 --- @return integer
 function Helpers:GetBuffStackCount(unit, textureSubstring)
-  for i = 1, 32 do
-    local texture, stacks = UnitBuff(unit, i)
-    if not texture then break end
-    
-    if string.find(texture, textureSubstring) then
-      return tonumber(stacks or 1)
+    for i = 1, 32 do
+        local texture, stacks = UnitBuff(unit, i)
+        if not texture then break end
+
+        if string.find(texture, textureSubstring) then
+            return tonumber(stacks or 1)
+        end
     end
-  end
-  return 0
+    return 0
 end
 
 --- @return number
@@ -305,4 +304,32 @@ function Helpers:HasDebuff(unit, texturename)
         debuffTexture = UnitDebuff(unit, id)
     end
     return false
+end
+
+--- @param talentName string
+--- @return number|nil
+function Helpers:PointsInTalent(talentName)
+    local numTabs = GetNumTalentTabs()
+    for tab = 1, numTabs do
+        local numTalents = GetNumTalents(tab)
+        for index = 1, numTalents do
+            local name, _, _, _, currentRank, _ = GetTalentInfo(tab, index)
+            if name == talentName then
+                return currentRank
+            end
+        end
+    end
+    return 0
+end
+
+function string.match(s, pattern, init)
+    local start_pos, end_pos, capture = string.find(s, pattern, init)
+    if start_pos then
+        if capture then
+            return capture
+        else
+            return s:sub(start_pos, end_pos)
+        end
+    end
+    return nil
 end

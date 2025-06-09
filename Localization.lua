@@ -7,6 +7,7 @@ CLASS_SHAMAN_DPS             = "Shaman"
 CLASS_PALADIN_DPS            = "Paladin"
 CLASS_DRUID_DPS              = "Druid"
 CLASS_MAGE_DPS               = "Mage"
+CLASS_WARLOCK_DPS            = "Warlock"
 
 -- Chat
 CHAT_AUTOATTACK_DODGE        = "You attack.(.+) dodges."
@@ -78,6 +79,18 @@ ABILITY_ARCANE_MISSILES      = "Arcane Missiles"
 PASSIVE_TEMPORAL_CONVERGENCE = "Temporal Convergence"
 ABILITY_ARCANE_POWER         = "Arcane Power"
 ITEM_MQG                     = "Mind Quickening"
+
+-- Warlock
+ABILITY_SEARING_PAIN         = "Searing Pain"
+ABILITY_IMMOLATE             = "Immolate"
+ABILITY_CONFLAGRATE          = "Conflagrate"
+ABILITY_SOUL_FIRE            = "Soul Fire"
+ABILITY_LIFE_TAP             = "Life Tap"
+ABILITY_COA                  = "Curse of Agony"
+ABILITY_COR                  = "Curse of Recklessness"
+ABILITY_COE                  = "Curse of the Elements"
+ABILITY_COS                  = "Curse of Shadow"
+ABILITY_COW                  = "Curse of Weakness"
 
 -- Regex
 RAGE_DESCRIPTION_REGEX       = "(%d+)%s*Rage";

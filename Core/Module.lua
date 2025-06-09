@@ -8,6 +8,7 @@ Module.__index = Module
 
 --- @param name string
 --- @param trackers table<string, table>?
+--- @param iconPath string
 --- @param enabledByDefault boolean | nil
 function Module.new(name, trackers, iconPath, enabledByDefault)
     if LARModuleSettings.modulesEnabled[name] == nil then

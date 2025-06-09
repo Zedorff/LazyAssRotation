@@ -15,6 +15,7 @@ function EventBus:new(frame)
 
     frame:RegisterEvent("CHAT_MSG_COMBAT_CREATURE_VS_SELF_HITS");
     frame:RegisterEvent("CHAT_MSG_COMBAT_CREATURE_VS_SELF_MISSES");
+    frame:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH");
     frame:RegisterEvent("CHAT_MSG_COMBAT_SELF_HITS");
     frame:RegisterEvent("CHAT_MSG_COMBAT_SELF_MISSES");
     frame:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER");
@@ -31,6 +32,7 @@ function EventBus:new(frame)
     frame:RegisterEvent("PLAYER_ENTERING_WORLD");
     frame:RegisterEvent("PLAYER_DEAD");
     frame:RegisterEvent("PLAYER_LEAVE_COMBAT");
+    frame:RegisterEvent("PLAYER_REGEN_ENABLED");
     frame:RegisterEvent("PLAYER_TARGET_CHANGED");
     frame:RegisterEvent("SPELLCAST_CHANNEL_START");
     frame:RegisterEvent("SPELLCAST_CHANNEL_STOP");

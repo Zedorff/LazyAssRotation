@@ -21,6 +21,8 @@ function CreateDpsRotation()
         return Druid.new()
     elseif (class == CLASS_MAGE_DPS) then
         return Mage.new()
+    elseif (class == CLASS_WARLOCK_DPS) then
+        return Warlock.new()
     end
 end
 

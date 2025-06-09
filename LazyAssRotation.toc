@@ -23,6 +23,8 @@ Core\ModuleRunCache.lua
 Core\ManaCostCache.lua
 Core\EnergyCostCache.lua
 Core\SharedTracker\SelfBuffTracker.lua
+Core\SharedTracker\DebuffTracker.lua
+Core\SharedTracker\DotTracker.lua
 Core\SharedTracker\ClearcastingTracker.lua
 Core\SharedTracker\ChannelingTracker.lua
 Core\SharedTracker\NotBehindTargetTracker.lua
@@ -154,6 +156,29 @@ Rotation\Mage\Module\ArcaneSurgeModule.lua
 Rotation\Mage\Module\MageClearcastingModule.lua
 
 Rotation\Mage\Mage.lua
+
+Rotation\Warlock\WarlockModuleRunContext.lua
+
+Rotation\Warlock\Tracker\ImmolateTracker.lua
+Rotation\Warlock\Tracker\CurseOfAgonyTracker.lua
+Rotation\Warlock\Tracker\CurseOfRecklessnessTracker.lua
+Rotation\Warlock\Tracker\CurseOfShadowTracker.lua
+Rotation\Warlock\Tracker\CurseOfTheElementsTracker.lua
+Rotation\Warlock\Tracker\CurseOfWeaknessTracker.lua
+
+Rotation\Warlock\Module\ConflagrateModule.lua
+Rotation\Warlock\Module\ImmolateModule.lua
+Rotation\Warlock\Module\LifeTapModule.lua
+Rotation\Warlock\Module\SearingPainModule.lua
+Rotation\Warlock\Module\SoulFireModule.lua
+Rotation\Warlock\Module\CurseOfAgonyModule.lua
+Rotation\Warlock\Module\CurseOfRecklessnessModule.lua
+Rotation\Warlock\Module\CurseOfShadowModule.lua
+Rotation\Warlock\Module\CurseOfTheElementsModule.lua
+Rotation\Warlock\Module\CurseOfWeaknessModule.lua
+
+Rotation\Warlock\WarlockSpec.lua
+Rotation\Warlock\Warlock.lua
 
 UI\DebugFrame.lua
 UI\Minimap.lua
