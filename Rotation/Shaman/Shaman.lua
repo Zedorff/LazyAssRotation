@@ -22,12 +22,15 @@ function Shaman.new()
 
     self:SelectSpec(LARSelectedSpec)
 
-    ShamanModuleRunContext.PreheatCache(self.cache)
     return self
 end
 
 function Shaman:execute()
     ClassRotationPerformer:PerformRotation(ShamanModuleRunContext.new(self.cache, self.spec))
+end
+
+function Shaman:Preheat()
+    ShamanModuleRunContext.PreheatCache(self.cache)
 end
 
 function Shaman:SelectSpec(spec)

@@ -32,6 +32,10 @@ function Paladin:execute()
     ClassRotationPerformer:PerformRotation(PaladinModuleRunContext.new(self.cache, self.spec))
 end
 
+function Paladin:Preheat()
+    PaladinModuleRunContext.PreheatCache(self.cache)
+end
+
 function Paladin:SelectSpec(spec)
     ClassRotation.SelectSpec(self, spec)
     if spec.name == "Retrodin" then

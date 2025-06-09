@@ -23,12 +23,15 @@ function Warlock.new()
 
     self:SelectSpec(LARSelectedSpec)
 
-    WarlockModuleRunContext.PreheatCache(self.cache)
     return self
 end
 
 function Warlock:execute()
     ClassRotationPerformer:PerformRotation(WarlockModuleRunContext.new(self.cache))
+end
+
+function Warlock:Preheat()
+    WarlockModuleRunContext.PreheatCache(self.cache)
 end
 
 function Warlock:SelectSpec(spec)

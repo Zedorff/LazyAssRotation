@@ -76,8 +76,8 @@ end
 function InitSubscribers()
     Core.eventBus:subscribe({
         onEvent = function (_, event, arg1)
-            if (event == "PLAYER_DEAD") then
-                -- Logging:Log("Event: "..event..", arg1: "..tostring(arg1))
+            if (event == "PLAYER_ENTERING_WORLD") and DpsRotation then
+                DpsRotation:PreheatData()
             end
             if (event == "VARIABLES_LOADED") then
                 Init()

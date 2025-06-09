@@ -29,13 +29,15 @@ function Druid.new()
 
     HotSwap_CreateSpecButtons(specs)
 
-    DruidModuleRunContext.PreheatCache(self.cache, self.manaCache, self.rageCache)
-
     return self
 end
 
 function Druid:execute()
     ClassRotationPerformer:PerformRotation(DruidModuleRunContext.new(self.cache, self.manaCache, self.rageCache, self.spec))
+end
+
+function Druid:Preheat()
+    DruidModuleRunContext.PreheatCache(self.cache, self.manaCache, self.rageCache)
 end
 
 function Druid:SelectSpec(spec)

@@ -25,12 +25,15 @@ function Warrior.new()
 
     self:SelectSpec(LARSelectedSpec)
 
-    WarriorModuleRunContext.PreheatCache(self.cache)
     return self
 end
 
 function Warrior:execute()
     ClassRotationPerformer:PerformRotation(WarriorModuleRunContext.new(self.cache, self.spec))
+end
+
+function Warrior:Preheat()
+    WarriorModuleRunContext.PreheatCache(self.cache)
 end
 
 function Warrior:SelectSpec(spec)

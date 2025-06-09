@@ -23,12 +23,15 @@ function Mage.new()
 
     self:SelectSpec(LARSelectedSpec)
 
-    MageModuleRunContext.PreheatCache(self.cache)
     return self
 end
 
 function Mage:execute()
     ClassRotationPerformer:PerformRotation(MageModuleRunContext.new(self.cache))
+end
+
+function Mage:Preheat()
+    MageModuleRunContext.PreheatCache(self.cache)
 end
 
 function Mage:SelectSpec(spec)
