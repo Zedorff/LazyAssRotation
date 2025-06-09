@@ -41,32 +41,42 @@ function SealOfRighteousnessModule:getPriority(context)
     end
 
     if context.spec == PaladinSpec.RETRI then
-        return self:GetRetriSealOfRighteousnessPriority()
+        return self:GetRetriSealOfRighteousnessPriority(context)
     elseif context.spec == PaladinSpec.PROT then
-        return self:GetProtSealOfRighteousnessPriority()
+        return self:GetProtSealOfRighteousnessPriority(context)
     end
 
     return -1;
 end
 
-function SealOfRighteousnessModule:GetRetriSealOfRighteousnessPriority()
+--- @param context PaladinModuleRunContext
+function SealOfRighteousnessModule:GetRetriSealOfRighteousnessPriority(context)
     local sowEnabled = ModuleRegistry:IsModuleEnabled(ABILITY_SEAL_WISDOM)
     local socrEnabled = ModuleRegistry:IsModuleEnabled(ABILITY_SEAL_CRUSADER)
-    if self.trackers.sorTracker:ShouldCast()
-        and ((sowEnabled and not self.trackers.sowTargetTracker:ShouldCast()) or (socrEnabled and not self.trackers.socrTargetTracker:ShouldCast())) then
-        return 80;
-    else
-        return -1;
+
+    if self.trackers.sorTracker:ShouldCast() and context.mana > context.sorCost then
+        if not sowEnabled and not socrEnabled then
+            return 80
+        end
+
+        if (sowEnabled and not self.trackers.sowTargetTracker:ShouldCast())
+            or (socrEnabled and not self.trackers.socrTargetTracker:ShouldCast()) then
+            return 80
+        end
     end
+
+    return -1
 end
 
-function SealOfRighteousnessModule:GetProtSealOfRighteousnessPriority()
+--- @param context PaladinModuleRunContext
+function SealOfRighteousnessModule:GetProtSealOfRighteousnessPriority(context)
     local sowEnabled = ModuleRegistry:IsModuleEnabled(ABILITY_SEAL_WISDOM)
-    if sowEnabled and not self.trackers.sowTargetTracker:ShouldCast() and self.trackers.sorTracker:ShouldCast() then
-        return 80;
-    elseif not sowEnabled and self.trackers.sorTracker:ShouldCast() then
-        return 80;
-    else
-        return -1;
+    if context.mana > context.sorCost then
+        if sowEnabled and not self.trackers.sowTargetTracker:ShouldCast() and self.trackers.sorTracker:ShouldCast() then
+            return 80;
+        elseif not sowEnabled and self.trackers.sorTracker:ShouldCast() then
+            return 80;
+        end
     end
+    return -1;
 end

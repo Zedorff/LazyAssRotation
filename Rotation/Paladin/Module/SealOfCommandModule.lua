@@ -31,11 +31,17 @@ end
 function SealOfCommandModule:getPriority(context)
     local sowEnabled = ModuleRegistry:IsModuleEnabled(ABILITY_SEAL_WISDOM)
     local socrEnabled = ModuleRegistry:IsModuleEnabled(ABILITY_SEAL_CRUSADER)
-    if self.enabled
-        and context.mana > context.sorCost 
-        and self.trackers.socTracker:ShouldCast()
-        and ((sowEnabled and not self.trackers.sowTargetTracker:ShouldCast()) or (socrEnabled and not self.trackers.socrTargetTracker:ShouldCast())) then
-        return 80;
+
+    if self.trackers.socTracker:ShouldCast() and context.mana > context.socCost then
+        if not sowEnabled and not socrEnabled then
+            return 80
+        end
+
+        if (sowEnabled and not self.trackers.sowTargetTracker:ShouldCast())
+            or (socrEnabled and not self.trackers.socrTargetTracker:ShouldCast()) then
+            return 80
+        end
     end
+
     return -1;
 end
