@@ -72,6 +72,7 @@ function WarlockDotTracker:ApplyDot(now, mob)
     dotData.lastTick    = nil
     dotData.dhStartTime = nil
     dotData.dhEndTime   = nil
+    Logging:Log("Apply dot: " .. self.ability .. ", withDuration: " .. duration)
 end
 
 --- @param msg string
@@ -142,7 +143,7 @@ function WarlockDotTracker:HandleCastError(message)
     end
 
     local msgLower = string.lower(message)
-    if string.find(msgLower, "out of range") or
+    if string.find(msgLower, "out of range") or string.find(msgLower, "is not ready") or
         string.find(msgLower, "interrupted") or string.find(msgLower, "moving") or
         string.find(msgLower, "stunned") or string.find(msgLower, "mounted") or
         string.find(msgLower, "standing") then
