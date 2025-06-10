@@ -1,4 +1,4 @@
---- @alias CorruptionTrackers { corruptionTracker: CorruptionTracker, darkHarvestTracker: DarkHarvestTracker, channelingTracker: ChannelingTracker, siphonLifeTracker: SiphonLifeTracker, coaTracker: CurseOfAgonyTracker }
+--- @alias CorruptionTrackers { corruptionTracker: CorruptionTracker, channelingTracker: ChannelingTracker, coaTracker: CurseOfAgonyTracker }
 --- @class CorruptionModule : Module
 --- @field trackers CorruptionTrackers
 --- @diagnostic disable: duplicate-set-field
@@ -11,9 +11,7 @@ function CorruptionModule.new(allowAgonyWithOtherCurses)
     --- @type CorruptionTrackers
     local trackers = {
         corruptionTracker = CorruptionTracker.GetInstance(),
-        darkHarvestTracker = DarkHarvestTracker.new(),
         channelingTracker = ChannelingTracker.GetInstance(),
-        siphonLifeTracker = SiphonLifeTracker.GetInstance(),
         coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses)
     }
     --- @class CorruptionModule
@@ -32,7 +30,7 @@ end
 --- @param context WarlockModuleRunContext
 function CorruptionModule:getPriority(context)
     if not (self.enabled
-        and Helpers:SpellReady(ABILITY_CORRUPTION)
+        and Helpers:SpellReady(ABILITY_SIPHON_LIFE) --- GCD check, corruption can't be used for this
         and self.trackers.channelingTracker:ShouldCast()
         and context.mana > context.corruptionCost)
     then
@@ -40,17 +38,16 @@ function CorruptionModule:getPriority(context)
     end
 
     local corrRemaining  = self.trackers.corruptionTracker:GetRemainingDuration()
-    local siphRemaining  = self.trackers.siphonLifeTracker:GetRemainingDuration()
     local agonyRemaining = self.trackers.coaTracker:GetRemainingDuration()
 
-    if Helpers:SpellReady(ABILITY_DARK_HARVEST)
+    if Helpers:SpellAlmostReady(ABILITY_DARK_HARVEST, 2)
         and agonyRemaining >= 13
         and corrRemaining  <  10
     then
         return 100
     end
 
-    if self.trackers.corruptionTracker:ShouldCast() then
+    if self.trackers.corruptionTracker:ShouldCast() or self.trackers.corruptionTracker:GetRemainingDuration() <= 3 then
         return 80
     end
     return -1

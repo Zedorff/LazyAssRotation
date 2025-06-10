@@ -1,4 +1,4 @@
---- @alias CurseOfAgonyTrackers { coaTracker: CurseOfAgonyTracker, darkHarvestTracker: DarkHarvestTracker, channelingTracker: ChannelingTracker }
+--- @alias CurseOfAgonyTrackers { coaTracker: CurseOfAgonyTracker, channelingTracker: ChannelingTracker }
 --- @class CurseOfAgonyModule : Module
 --- @field trackers CurseOfAgonyTrackers
 --- @field allowAgonyWithOtherCurses boolean
@@ -12,7 +12,6 @@ function CurseOfAgonyModule.new(allowAgonyWithOtherCurses)
     --- @type CurseOfAgonyTrackers
     local trackers = {
         coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses),
-        darkHarvestTracker = DarkHarvestTracker.new(),
         channelingTracker = ChannelingTracker.GetInstance()
     }
     --- @class CurseOfAgonyModule

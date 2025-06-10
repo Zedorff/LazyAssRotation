@@ -9,9 +9,9 @@ local sharedInstance = nil
 
 --- @return ChannelingTracker
 function ChannelingTracker.GetInstance()
-    -- if sharedInstance then
-        -- return sharedInstance
-    -- end
+    if sharedInstance then
+        return sharedInstance
+    end
 
     --- @class ChannelingTracker
     local self = CooldownTracker.new()

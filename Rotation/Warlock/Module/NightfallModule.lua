@@ -25,7 +25,7 @@ end
 function NightfallModule:getPriority(context)
     if self.enabled and Helpers:SpellReady(ABILITY_SHADOW_BOLT) then
         if self.trackers.nightfallTracker:ShouldCast() and self.trackers.channelingTracker:ShouldCast() and context.mana > context.sbCost then
-            return 90
+            return 40
         end
     end
     return -1;

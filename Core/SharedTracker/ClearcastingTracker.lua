@@ -8,9 +8,9 @@ local sharedInstance = nil
 
 --- @return ClearcastingTracker
 function ClearcastingTracker.GetInstance()
-    -- if sharedInstance then
-        -- return sharedInstance
-    -- end
+    if sharedInstance then
+        return sharedInstance
+    end
 
     --- @class ClearcastingTracker
     local self = SelfBuffTracker.new(PASSIVE_CLEARCASTING, "Spell_Shadow_ManaBurn")

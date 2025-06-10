@@ -3,17 +3,17 @@ CorruptionTracker = setmetatable({}, { __index = WarlockDotTracker })
 CorruptionTracker.__index = CorruptionTracker
 
 --- @type CorruptionTracker | nil
-local sharedInstance = nil
+local _sharedInstance = nil
 
 --- @return CorruptionTracker
 function CorruptionTracker.GetInstance()
-    -- if sharedInstance then
-        -- return sharedInstance
-    -- end
+    if _sharedInstance then
+        return _sharedInstance
+    end
     --- @class CorruptionTracker
     local self = WarlockDotTracker.new(ABILITY_CORRUPTION, ABILITY_CORRUPTION)
     setmetatable(self, CorruptionTracker)
 
-    sharedInstance = self
-    return sharedInstance
+    _sharedInstance = self
+    return _sharedInstance
 end

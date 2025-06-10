@@ -1,4 +1,4 @@
---- @alias SiphonLifeTrackers { siphonLifeTracker: SiphonLifeTracker, darkHarvestTracker: DarkHarvestTracker, channelingTracker: ChannelingTracker, corruptionTracker: CorruptionTracker, coaTracker: CurseOfAgonyTracker }
+--- @alias SiphonLifeTrackers { siphonLifeTracker: SiphonLifeTracker, channelingTracker: ChannelingTracker, coaTracker: CurseOfAgonyTracker }
 --- @class SiphonLifeModule : Module
 --- @field trackers SiphonLifeTrackers
 --- @diagnostic disable: duplicate-set-field
@@ -11,7 +11,6 @@ function SiphonLifeModule.new(allowAgonyWithOtherCurses)
     --- @type SiphonLifeTrackers
     local trackers = {
         siphonLifeTracker = SiphonLifeTracker.GetInstance(),
-        darkHarvestTracker = DarkHarvestTracker.new(),
         channelingTracker = ChannelingTracker.GetInstance(),
         corruptionTracker = CorruptionTracker.GetInstance(),
         coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses)
@@ -40,10 +39,9 @@ function SiphonLifeModule:getPriority(context)
     end
 
     local siphRemaining  = self.trackers.siphonLifeTracker:GetRemainingDuration()
-    local corrRemaining  = self.trackers.corruptionTracker:GetRemainingDuration()
     local agonyRemaining = self.trackers.coaTracker:GetRemainingDuration()
 
-    if Helpers:SpellReady(ABILITY_DARK_HARVEST)
+    if Helpers:SpellAlmostReady(ABILITY_DARK_HARVEST, 2)
         and agonyRemaining >= 13
         and siphRemaining  <  10
     then

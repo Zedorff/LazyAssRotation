@@ -78,6 +78,10 @@ end
 --- @param msg string
 --- @param now number
 function WarlockDotTracker:RecordTick(msg, now)
+    if (string.find(msg, "by your "..self.ability)) then
+        Logging:Debug("Spell cast confirmed by debuff appliance")
+        self.lastCastTime = nil
+    end
     local mob = string.match(msg, "^(.-) suffers %d+ .- from your " .. self.ability)
     if not mob then return end
 

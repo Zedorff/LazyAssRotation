@@ -1,4 +1,4 @@
---- @alias DrainSoulTrackers { channelingTracker: ChannelingTracker }
+--- @alias DrainSoulTrackers { channelingTracker: ChannelingTracker, coaTracker: CurseOfAgonyTracker }
 --- @class DrainSoulModule : Module
 --- @field trackers DrainSoulTrackers
 --- @diagnostic disable: duplicate-set-field
@@ -9,7 +9,8 @@ DrainSoulModule.__index = DrainSoulModule
 function DrainSoulModule.new()
     --- @type DrainSoulTrackers
     local trackers = {
-        channelingTracker = ChannelingTracker.GetInstance()
+        channelingTracker = ChannelingTracker.GetInstance(),
+        coaTracker = CurseOfAgonyTracker.GetInstance(true)
     }
     --- @class DrainSoulModule
     return setmetatable(Module.new(ABILITY_DRAIN_SOUL, trackers, "Interface\\Icons\\Spell_Shadow_Haunting"), DrainSoulModule)
@@ -23,7 +24,7 @@ end
 --- @param context WarlockModuleRunContext
 function DrainSoulModule:getPriority(context)
     if self.enabled and Helpers:SpellReady(ABILITY_DRAIN_SOUL) and self.trackers.channelingTracker:ShouldCast() then
-        if context.mana >= context.drainSoulCost then
+        if not (Helpers:SpellAlmostReady(ABILITY_DRAIN_SOUL, 3) and self.trackers.coaTracker:GetRemainingDuration() <= 3) and context.mana >= context.drainSoulCost then
             return 30;
         end
     else
