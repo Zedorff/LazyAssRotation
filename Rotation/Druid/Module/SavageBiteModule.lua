@@ -9,7 +9,7 @@ SavageBiteModule.__index = SavageBiteModule
 function SavageBiteModule.new()
     --- @type SavageBiteTrackers
     local trackers = {
-        clearcastingTracker = ClearcastingTracker.new()
+        clearcastingTracker = ClearcastingTracker.GetInstance()
     }
     --- @class SavageBiteModule
     return setmetatable(Module.new(ABILITY_SAVAGE_BITE, trackers, "Interface\\Icons\\Ability_Racial_Cannibalize"), SavageBiteModule)

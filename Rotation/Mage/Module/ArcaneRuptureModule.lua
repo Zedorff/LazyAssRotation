@@ -11,7 +11,7 @@ function ArcaneRuptureModule.new()
     local trackers = {
         arcaneRuptureTracker = ArcaneRuptureTracker.new(),
         convergenceTracker = TemporalConvergenceTracker.new(),
-        channelingTracker = ChannelingTracker.new()
+        channelingTracker = ChannelingTracker.GetInstance()
     }
     --- @class ArcaneRuptureModule
     return setmetatable(Module.new(ABILITY_ARCANE_RUPTURE, trackers, "Interface\\Icons\\Spell_Arcane_Blast"), ArcaneRuptureModule)

@@ -22,7 +22,7 @@ function ShockModule.new(shockType, iconPath, enabledByDefault)
     --- @type ShockTrackers
     local trackers = {
         stormStrikeTracker = StormStrikeTracker.new(),
-        clearcastingTracker = ClearcastingTracker.new()
+        clearcastingTracker = ClearcastingTracker.GetInstance()
     }
     --- @class ShockModule
     local self = setmetatable(Module.new(shockType, trackers, iconPath, enabledByDefault), ShockModule)

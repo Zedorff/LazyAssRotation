@@ -2,11 +2,15 @@
 local DpsRotation = nil
 
 function Init()
+    HotSwapButton:Show()
+    Settings_OnLoad()
+end
+
+function OnPlayerLoaded()
     if not DpsRotation then
         DpsRotation = CreateDpsRotation()
     end
-    HotSwapButton:Show()
-    Settings_OnLoad()
+    DpsRotation:PreheatData()
 end
 
 function CreateDpsRotation()
@@ -61,6 +65,11 @@ function Main_OnLoad()
         LARModuleSettings.modulesEnabled = {}
     end
 
+    if not SUPERWOW_VERSION then
+        Logging:Log("SuperWoW not found, LAR shutting down.")
+        return
+    end
+
     InitComponents(this)
     InitSubscribers()
 
@@ -75,14 +84,15 @@ end
 
 function InitSubscribers()
     Core.eventBus:subscribe({
-        onEvent = function (_, event, arg1)
-            if (event == "PLAYER_ENTERING_WORLD") and DpsRotation then
-                DpsRotation:PreheatData()
+        onEvent = function(_, event, arg1)
+            if (event == "PLAYER_ENTERING_WORLD") then
+                OnPlayerLoaded()
             end
             if (event == "VARIABLES_LOADED") then
                 Init()
             elseif event == "SPEC_CHANGED" and DpsRotation then
                 DpsRotation:SelectSpec(arg1)
             end
-    end})
+        end
+    })
 end

@@ -91,9 +91,16 @@ ABILITY_COR                  = "Curse of Recklessness"
 ABILITY_COE                  = "Curse of the Elements"
 ABILITY_COS                  = "Curse of Shadow"
 ABILITY_COW                  = "Curse of Weakness"
+ABILITY_DARK_HARVEST         = "Dark Harvest"
+ABILITY_CORRUPTION           = "Corruption"
+ABILITY_SIPHON_LIFE          = "Siphon Life"
+ABILITY_DRAIN_SOUL           = "Drain Soul"
+PASSIVE_NIGHTFALL            = "Shadow Trance"
+ABILITY_SHADOW_BOLT          = "Shadow Bolt"
 
 -- Regex
 RAGE_DESCRIPTION_REGEX       = "(%d+)%s*Rage";
 ENERGY_DESCRIPTION_REGEX     = "(%d+)%s*Energy";
 COOLDOWN_DESCRIPTION_REGEX   = "(%d+%.?%d*) sec";
 MANA_DESCRIPTION_REGEX       = "(%d+)%s*Mana"
+DURATION_DESCRIPTION_REGEX   = "(%d+%.?%d*) ?sec"

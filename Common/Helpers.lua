@@ -221,6 +221,12 @@ function Helpers:RageCost(spellName)
     return Helpers:ParseIntViaTooltip(spellName, RAGE_DESCRIPTION_REGEX)
 end
 
+--- @param spellName string
+--- @return number
+function Helpers:SpellDuration(spellName)
+    return Helpers:ParseIntViaTooltip(spellName, DURATION_DESCRIPTION_REGEX)
+end
+
 --- @return boolean
 function Helpers:ShouldUseExecute()
     local targetHealth = UnitHealth("target")

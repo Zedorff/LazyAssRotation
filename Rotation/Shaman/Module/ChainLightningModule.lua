@@ -9,7 +9,7 @@ ChainLightningModule.__index = ChainLightningModule
 function ChainLightningModule.new()
     --- @type ChainLightningTrackers
     local trackers = {
-        clearcastingTracker = ClearcastingTracker.new()
+        clearcastingTracker = ClearcastingTracker.GetInstance()
     }
     --- @class ChainLightningModule
     return setmetatable(Module.new(ABILITY_CHAIN_LIGHTNING, trackers, "Interface\\Icons\\Spell_Nature_ChainLightning"), ChainLightningModule)
