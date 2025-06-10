@@ -37,9 +37,9 @@ function DarkHarvestModule:getPriority(context)
         return -1
     end
 
-    local corrRemaining  = self.trackers.corruptionTracker:GetRemainingDuration()
-    local siphRemaining  = self.trackers.siphonLifeTracker:GetRemainingDuration()
-    local agonyRemaining = self.trackers.coaTracker:GetRemainingDuration()
+    local corrRemaining  = ModuleRegistry:IsModuleEnabled(ABILITY_CORRUPTION) and self.trackers.corruptionTracker:GetRemainingDuration() or 100
+    local siphRemaining  = ModuleRegistry:IsModuleEnabled(ABILITY_SIPHON_LIFE) and self.trackers.siphonLifeTracker:GetRemainingDuration() or 100
+    local agonyRemaining = ModuleRegistry:IsModuleEnabled(ABILITY_COA) and self.trackers.coaTracker:GetRemainingDuration() or 100
 
     if Helpers:SpellAlmostReady(ABILITY_DARK_HARVEST, 2) and corrRemaining >= 8 and siphRemaining >= 8 and agonyRemaining >= 8 then
         return 50

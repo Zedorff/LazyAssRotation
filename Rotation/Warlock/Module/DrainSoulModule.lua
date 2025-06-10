@@ -24,7 +24,8 @@ end
 --- @param context WarlockModuleRunContext
 function DrainSoulModule:getPriority(context)
     if self.enabled and Helpers:SpellReady(ABILITY_DRAIN_SOUL) and self.trackers.channelingTracker:ShouldCast() then
-        if not (Helpers:SpellAlmostReady(ABILITY_DRAIN_SOUL, 3) and self.trackers.coaTracker:GetRemainingDuration() <= 3) and context.mana >= context.drainSoulCost then
+        local skipBecauseOfCoe = Helpers:SpellAlmostReady(ABILITY_DARK_HARVEST, 3) and self.trackers.coaTracker:GetRemainingDuration() <= 3 and ModuleRegistry:IsModuleEnabled(ABILITY_COE)
+        if not skipBecauseOfCoe and context.mana >= context.drainSoulCost then
             return 30;
         end
     else
