@@ -37,7 +37,7 @@ function DarkHarvestTracker:onEvent(event, arg1)
         self.dhCasting = true
         self.pendingChannel = false
         Core.eventBus:notify("LAR_DH_CHANNEL_START")
-        Logging:Debug("Dark Harvest channel started (" .. durationSec .. "s)")
+        Logging:Debug("Dark Harvest channel started (" .. (arg1 or 0) / 1000 .. "s)")
 
     elseif event == "SPELLCAST_CHANNEL_STOP" or event == "SPELLCAST_INTERRUPTED" then
         if self.dhCasting then
