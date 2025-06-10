@@ -2,11 +2,15 @@
 local DpsRotation = nil
 
 function Init()
+    HotSwapButton:Show()
+    Settings_OnLoad()
+end
+
+function OnPlayerLoaded()
     if not DpsRotation then
         DpsRotation = CreateDpsRotation()
     end
-    HotSwapButton:Show()
-    Settings_OnLoad()
+    DpsRotation:PreheatData()
 end
 
 function CreateDpsRotation()
@@ -76,8 +80,8 @@ end
 function InitSubscribers()
     Core.eventBus:subscribe({
         onEvent = function (_, event, arg1)
-            if (event == "PLAYER_ENTERING_WORLD") and DpsRotation then
-                DpsRotation:PreheatData()
+            if (event == "PLAYER_ENTERING_WORLD") then
+                OnPlayerLoaded()
             end
             if (event == "VARIABLES_LOADED") then
                 Init()

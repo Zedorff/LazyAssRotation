@@ -5,7 +5,7 @@ RendTracker.__index = RendTracker
 --- @return RendTracker
 function RendTracker.new()
     --- @class RendTracker
-    local self = DotTracker.new(ABILITY_REND, 21.5)
+    local self = DotTracker.new(ABILITY_REND)
     setmetatable(self, RendTracker)
     return self
 end

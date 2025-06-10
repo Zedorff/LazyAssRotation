@@ -12,7 +12,10 @@ function Warlock.new()
     setmetatable(self, Warlock)
 
     local specs = {
-        SpecButtonInfo.new("Interface\\Icons\\Spell_Fire_Immolation", "Fire",  LARSelectedSpec == nil or LARSelectedSpec.name == "Fire"),
+        SpecButtonInfo.new("Interface\\Icons\\Spell_Fire_Immolation", "Fire",
+            LARSelectedSpec == nil or LARSelectedSpec.name == "Fire"),
+        SpecButtonInfo.new("Interface\\Icons\\Spell_Shadow_AbominationExplosion", "Afly",
+            LARSelectedSpec and LARSelectedSpec.name == "Afly"),
     }
 
     if not LARSelectedSpec then
@@ -38,6 +41,8 @@ function Warlock:SelectSpec(spec)
     ClassRotation.SelectSpec(self, spec)
     if spec.name == "Fire" then
         self:EnableFireSpec()
+    elseif spec.name == "Afly" then
+        self:EnableAflySpec()
     end
     HotSwap_InvalidateModuleButtons()
 end
@@ -52,5 +57,19 @@ function Warlock:EnableFireSpec()
     ModuleRegistry:RegisterModule(ImmolateModule.new())
     ModuleRegistry:RegisterModule(ConflagrateModule.new())
     ModuleRegistry:RegisterModule(SearingPainModule.new())
+    ModuleRegistry:RegisterModule(LifeTapModule.new())
+end
+
+function Warlock:EnableAflySpec()
+    ModuleRegistry:RegisterModule(CurseOfRecklessnessModule.new(Helpers:PointsInTalent("Malediction") > 0))
+    ModuleRegistry:RegisterModule(CurseOfTheElementsModule.new(Helpers:PointsInTalent("Malediction") > 0))
+    ModuleRegistry:RegisterModule(CurseOfShadowModule.new(Helpers:PointsInTalent("Malediction") > 0))
+    ModuleRegistry:RegisterModule(CurseOfWeaknessModule.new(Helpers:PointsInTalent("Malediction") > 0))
+    ModuleRegistry:RegisterModule(CurseOfAgonyModule.new(Helpers:PointsInTalent("Malediction") > 0))
+    ModuleRegistry:RegisterModule(CorruptionModule.new())
+    ModuleRegistry:RegisterModule(SiphonLifeModule.new())
+    ModuleRegistry:RegisterModule(DarkHarvestModule.new())
+    ModuleRegistry:RegisterModule(DrainSoulModule.new())
+    ModuleRegistry:RegisterModule(NightfallModule.new())
     ModuleRegistry:RegisterModule(LifeTapModule.new())
 end

@@ -1,4 +1,4 @@
---- @alias CurseOfAgonyTrackers { coaTracker: CurseOfAgonyTracker }
+--- @alias CurseOfAgonyTrackers { coaTracker: CurseOfAgonyTracker, darkHarvestTracker: DarkHarvestTracker, channelingTracker: ChannelingTracker }
 --- @class CurseOfAgonyModule : Module
 --- @field trackers CurseOfAgonyTrackers
 --- @field allowAgonyWithOtherCurses boolean
@@ -11,7 +11,9 @@ CurseOfAgonyModule.__index = CurseOfAgonyModule
 function CurseOfAgonyModule.new(allowAgonyWithOtherCurses)
     --- @type CurseOfAgonyTrackers
     local trackers = {
-        coaTracker = CurseOfAgonyTracker.new()
+        coaTracker = CurseOfAgonyTracker.new(allowAgonyWithOtherCurses),
+        darkHarvestTracker = DarkHarvestTracker.new(),
+        channelingTracker = ChannelingTracker.new()
     }
     --- @class CurseOfAgonyModule
     local self = Module.new(ABILITY_COA, trackers, "Interface\\Icons\\Spell_Shadow_CurseOfSargeras")
@@ -40,13 +42,18 @@ function CurseOfAgonyModule:enable()
 end
 
 function CurseOfAgonyModule:run()
+    _ = SpellStopCasting()
     Logging:Debug("Casting " .. ABILITY_COA)
     CastSpellByName(ABILITY_COA)
 end
 
 --- @param context WarlockModuleRunContext
 function CurseOfAgonyModule:getPriority(context)
-    if self.enabled and self.trackers.coaTracker:ShouldCast() and context.mana > context.coaCost then
+    if self.enabled
+        and Helpers:SpellReady(ABILITY_COA)
+        and self.trackers.coaTracker:ShouldCast()
+        and self.trackers.channelingTracker:ShouldCast()
+        and context.mana > context.coaCost then
         return 60;
     end
     return -1;

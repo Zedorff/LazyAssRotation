@@ -159,12 +159,17 @@ Rotation\Mage\Mage.lua
 
 Rotation\Warlock\WarlockModuleRunContext.lua
 
+Rotation\Warlock\Tracker\WarlockDotTracker.lua
+Rotation\Warlock\Tracker\CorruptionTracker.lua
+Rotation\Warlock\Tracker\SiphonLifeTracker.lua
 Rotation\Warlock\Tracker\ImmolateTracker.lua
 Rotation\Warlock\Tracker\CurseOfAgonyTracker.lua
 Rotation\Warlock\Tracker\CurseOfRecklessnessTracker.lua
 Rotation\Warlock\Tracker\CurseOfShadowTracker.lua
 Rotation\Warlock\Tracker\CurseOfTheElementsTracker.lua
 Rotation\Warlock\Tracker\CurseOfWeaknessTracker.lua
+Rotation\Warlock\Tracker\DarkHarvestTracker.lua
+Rotation\Warlock\Tracker\NightfallTracker.lua
 
 Rotation\Warlock\Module\ConflagrateModule.lua
 Rotation\Warlock\Module\ImmolateModule.lua
@@ -176,6 +181,11 @@ Rotation\Warlock\Module\CurseOfRecklessnessModule.lua
 Rotation\Warlock\Module\CurseOfShadowModule.lua
 Rotation\Warlock\Module\CurseOfTheElementsModule.lua
 Rotation\Warlock\Module\CurseOfWeaknessModule.lua
+Rotation\Warlock\Module\DarkHarvestModule.lua
+Rotation\Warlock\Module\SiphonLifeModule.lua
+Rotation\Warlock\Module\CorruptionModule.lua
+Rotation\Warlock\Module\DrainSoulModule.lua
+Rotation\Warlock\Module\NightfallModule.lua
 
 Rotation\Warlock\WarlockSpec.lua
 Rotation\Warlock\Warlock.lua
