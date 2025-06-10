@@ -48,7 +48,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function CurseOfWeaknessModule:getPriority(context)
-    if self.enabled and self.trackers.cowTracker:ShouldCast() and context.mana > context.cowCost then
+    if self.enabled and Helpers:SpellReady(ABILITY_COW) and self.trackers.cowTracker:ShouldCast() and context.mana > context.cowCost then
         return 95;
     end
     return -1;

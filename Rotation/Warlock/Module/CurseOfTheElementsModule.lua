@@ -48,7 +48,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function CurseOfTheElementsModule:getPriority(context)
-    if self.enabled and self.trackers.coeTracker:ShouldCast() and context.mana > context.coeCost then
+    if self.enabled and Helpers:SpellReady(ABILITY_COE) and self.trackers.coeTracker:ShouldCast() and context.mana > context.coeCost then
         return 95;
     end
     return -1;

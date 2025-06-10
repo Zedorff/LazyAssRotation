@@ -22,7 +22,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function ImmolateModule:getPriority(context)
-    if self.enabled and Helpers:SpellAlmostReady(ABILITY_IMMOLATE, 0.3) then
+    if self.enabled and Helpers:SpellReady(ABILITY_IMMOLATE) then
         if self.trackers.immolateTracker:ShouldCast() and context.mana > context.immolateCost then
             return 80;
         end

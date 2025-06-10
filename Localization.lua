@@ -103,4 +103,4 @@ RAGE_DESCRIPTION_REGEX       = "(%d+)%s*Rage";
 ENERGY_DESCRIPTION_REGEX     = "(%d+)%s*Energy";
 COOLDOWN_DESCRIPTION_REGEX   = "(%d+%.?%d*) sec";
 MANA_DESCRIPTION_REGEX       = "(%d+)%s*Mana"
-DURATION_DESCRIPTION_REGEX   = "(%d+%.?%d*) ?sec"
+DURATION_DESCRIPTION_REGEX   = "over (%d+%.?%d*) ?sec"

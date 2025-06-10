@@ -50,7 +50,7 @@ function DotTracker:ApplyDot(now, mob)
     local dotData    = self:GetMobData(mob)
     dotData.start    = now
     dotData.duration = duration
-    Logging:Debug(self.ability.." Applied")
+    Logging:Debug(self.ability.." Applied, duration: "..duration)
 end
 
 --- @param msg string

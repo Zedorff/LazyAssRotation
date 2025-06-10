@@ -48,7 +48,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function CurseOfShadowModule:getPriority(context)
-    if self.enabled and self.trackers.cosTracker:ShouldCast() and context.mana > context.cosCost then
+    if self.enabled and Helpers:SpellReady(ABILITY_COS) and self.trackers.cosTracker:ShouldCast() and context.mana > context.cosCost then
         return 95;
     end
     return -1;

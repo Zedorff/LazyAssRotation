@@ -49,7 +49,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function CurseOfRecklessnessModule:getPriority(context)
-    if self.enabled and self.trackers.corTracker:ShouldCast() and context.mana > context.corCost then
+    if self.enabled and Helpers:SpellReady(ABILITY_COR) and self.trackers.corTracker:ShouldCast() and context.mana > context.corCost then
         return 95;
     end
     return -1;
