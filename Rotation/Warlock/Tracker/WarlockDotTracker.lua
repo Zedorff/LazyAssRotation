@@ -133,6 +133,8 @@ function WarlockDotTracker:HandleCastError(message)
     if not self.lastCastTime then return end
     if type(message) ~= "string" or message == "" then return end
 
+    Logging:Log(message)
+
     local now = GetTime()
     if now - self.lastCastTime > 2 then
         self.lastCastTime = nil

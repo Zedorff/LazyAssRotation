@@ -5,15 +5,16 @@
 SiphonLifeModule = setmetatable({}, { __index = Module })
 SiphonLifeModule.__index = SiphonLifeModule
 
+--- @param allowAgonyWithOtherCurses boolean
 --- @return SiphonLifeModule
-function SiphonLifeModule.new()
+function SiphonLifeModule.new(allowAgonyWithOtherCurses)
     --- @type SiphonLifeTrackers
     local trackers = {
-        siphonLifeTracker = SiphonLifeTracker.new(),
+        siphonLifeTracker = SiphonLifeTracker.GetInstance(),
         darkHarvestTracker = DarkHarvestTracker.new(),
-        channelingTracker = ChannelingTracker.new(),
-        corruptionTracker = CorruptionTracker.new(),
-        coaTracker = CurseOfAgonyTracker.new(true)
+        channelingTracker = ChannelingTracker.GetInstance(),
+        corruptionTracker = CorruptionTracker.GetInstance(),
+        coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses)
     }
     --- @class SiphonLifeModule
     local self = Module.new(ABILITY_SIPHON_LIFE, trackers, "Interface\\Icons\\Spell_Shadow_Requiem")
@@ -31,7 +32,7 @@ end
 --- @param context WarlockModuleRunContext
 function SiphonLifeModule:getPriority(context)
     if not (self.enabled
-        and Helpers:SpellReady(ABILITY_SIPHON_LIFE)   -- NB: check correct constant
+        and Helpers:SpellReady(ABILITY_SIPHON_LIFE)
         and self.trackers.channelingTracker:ShouldCast()
         and context.mana > context.siphonLifeCost)
     then
@@ -42,16 +43,13 @@ function SiphonLifeModule:getPriority(context)
     local corrRemaining  = self.trackers.corruptionTracker:GetRemainingDuration()
     local agonyRemaining = self.trackers.coaTracker:GetRemainingDuration()
 
-    -- (4) Renew Siphon Life before Dark Harvest if Agony ≥ 13 s and dots will meet the 10 s rule
     if Helpers:SpellReady(ABILITY_DARK_HARVEST)
         and agonyRemaining >= 13
-        and corrRemaining  >= 10          -- satisfy rule 1 for CORRUPTION
         and siphRemaining  <  10
     then
         return 100
     end
 
-    -- Standard cast if expired
     if self.trackers.siphonLifeTracker:ShouldCast() then
         return 70
     end

@@ -5,14 +5,15 @@
 DarkHarvestModule = setmetatable({}, { __index = Module })
 DarkHarvestModule.__index = DarkHarvestModule
 
+--- @param allowAgonyWithOtherCurses boolean
 --- @return DarkHarvestModule
-function DarkHarvestModule.new()
+function DarkHarvestModule.new(allowAgonyWithOtherCurses)
     --- @type DarkHarvestTrackers
     local trackers = {
-        channelingTracker = ChannelingTracker.new(),
-        coaTracker = CurseOfAgonyTracker.new(true),
-        corruptionTracker = CorruptionTracker.new(),
-        siphonLifeTracker = SiphonLifeTracker.new()
+        channelingTracker = ChannelingTracker.GetInstance(),
+        coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses),
+        corruptionTracker = CorruptionTracker.GetInstance(),
+        siphonLifeTracker = SiphonLifeTracker.GetInstance()
     }
     --- @class DarkHarvestModule
     return setmetatable(Module.new(ABILITY_DARK_HARVEST, trackers, "Interface\\Icons\\Spell_Shadow_SoulLeech"), DarkHarvestModule)
@@ -37,7 +38,7 @@ function DarkHarvestModule:getPriority(context)
     local siphRemaining  = self.trackers.siphonLifeTracker:GetRemainingDuration()
     local agonyRemaining = self.trackers.coaTracker:GetRemainingDuration()
 
-    if corrRemaining >= 10 and siphRemaining >= 10 and agonyRemaining >= 10 then
+    if corrRemaining >= 8 and siphRemaining >= 8 and agonyRemaining >= 8 then
         return 50
     end
     return -1

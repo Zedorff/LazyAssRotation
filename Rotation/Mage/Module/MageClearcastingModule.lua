@@ -9,8 +9,8 @@ MageClearcastingModule.__index = MageClearcastingModule
 function MageClearcastingModule.new()
     --- @type MageClearcastingTrackers
     local trackers = {
-        channelingTracker = ChannelingTracker.new(),
-        clearcastingTracker = ClearcastingTracker.new()
+        channelingTracker = ChannelingTracker.GetInstance(),
+        clearcastingTracker = ClearcastingTracker.GetInstance()
     }
     --- @class MageClearcastingModule
     return setmetatable(Module.new(PASSIVE_CLEARCASTING, trackers, "Interface\\Icons\\Spell_Shadow_ManaBurn"), MageClearcastingModule)

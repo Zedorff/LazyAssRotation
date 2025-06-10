@@ -9,7 +9,7 @@ ArcaneMissilesModule.__index = ArcaneMissilesModule
 function ArcaneMissilesModule.new()
     --- @type ArcaneMissilesTrackers
     local trackers = {
-        channelingTracker = ChannelingTracker.new()
+        channelingTracker = ChannelingTracker.GetInstance()
     }
     --- @class ArcaneMissilesModule
     return setmetatable(Module.new(ABILITY_ARCANE_MISSILES, trackers, "Interface\\Icons\\Spell_Nature_StarFall"), ArcaneMissilesModule)

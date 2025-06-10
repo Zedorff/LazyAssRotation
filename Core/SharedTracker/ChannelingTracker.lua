@@ -4,13 +4,23 @@
 ChannelingTracker = setmetatable({}, { __index = CooldownTracker })
 ChannelingTracker.__index = ChannelingTracker
 
+--- @type ChannelingTracker | nil
+local sharedInstance = nil
+
 --- @return ChannelingTracker
-function ChannelingTracker.new()
+function ChannelingTracker.GetInstance()
+    if sharedInstance then
+        return sharedInstance
+    end
+
     --- @class ChannelingTracker
     local self = CooldownTracker.new()
     setmetatable(self, ChannelingTracker)
     self.channelingUntill = 0
-    return self
+
+    sharedInstance = self
+
+    return sharedInstance
 end
 
 function ChannelingTracker:subscribe()

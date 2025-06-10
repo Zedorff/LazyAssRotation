@@ -9,7 +9,7 @@ ShamanClearcastingModule.__index = ShamanClearcastingModule
 function ShamanClearcastingModule.new()
     --- @type ShamanClearcastingTrackers
     local trackers = {
-        clearcastingTracker = ClearcastingTracker.new()
+        clearcastingTracker = ClearcastingTracker.GetInstance()
     }
     --- @class ShamanClearcastingModule
     return setmetatable(Module.new(PASSIVE_CLEARCASTING, trackers, "Interface\\Icons\\Spell_Shadow_ManaBurn"), ShamanClearcastingModule)

@@ -10,7 +10,7 @@ function NightfallModule.new()
     --- @type NightfallTrackers
     local trackers = {
         nightfallTracker = NightfallTracker.new(),
-        channelingTracker = ChannelingTracker.new()
+        channelingTracker = ChannelingTracker.GetInstance()
     }
     --- @class NightfallModule
     return setmetatable(Module.new(PASSIVE_NIGHTFALL, trackers, "Interface\\Icons\\Spell_Shadow_Twilight"), NightfallModule)

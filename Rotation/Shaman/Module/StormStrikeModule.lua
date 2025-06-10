@@ -9,7 +9,7 @@ StormStrikeModule.__index = StormStrikeModule
 function StormStrikeModule.new()
     --- @type StormStrikeTrackers
     local trackers = {
-        clearcastingTracker = ClearcastingTracker.new()
+        clearcastingTracker = ClearcastingTracker.GetInstance()
     }
     --- @class StormStrikeModule
     return setmetatable(Module.new(ABILITY_STORMSTRIKE, trackers, "Interface\\Icons\\Ability_Shaman_Stormstrike"), StormStrikeModule)

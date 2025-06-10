@@ -11,9 +11,9 @@ CurseOfAgonyModule.__index = CurseOfAgonyModule
 function CurseOfAgonyModule.new(allowAgonyWithOtherCurses)
     --- @type CurseOfAgonyTrackers
     local trackers = {
-        coaTracker = CurseOfAgonyTracker.new(allowAgonyWithOtherCurses),
+        coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses),
         darkHarvestTracker = DarkHarvestTracker.new(),
-        channelingTracker = ChannelingTracker.new()
+        channelingTracker = ChannelingTracker.GetInstance()
     }
     --- @class CurseOfAgonyModule
     local self = Module.new(ABILITY_COA, trackers, "Interface\\Icons\\Spell_Shadow_CurseOfSargeras")

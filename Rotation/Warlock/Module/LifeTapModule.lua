@@ -9,7 +9,7 @@ LifeTapModule.__index = LifeTapModule
 function LifeTapModule.new()
     --- @type LifeTapTrackers
     local trackers = {
-        channelingTracker = ChannelingTracker.new()
+        channelingTracker = ChannelingTracker.GetInstance()
     }
     --- @class ImmolateModule
     return setmetatable(Module.new(ABILITY_LIFE_TAP, trackers, "Interface\\Icons\\Spell_Shadow_BurningSpirit"), LifeTapModule)

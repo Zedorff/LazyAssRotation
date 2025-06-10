@@ -5,15 +5,16 @@
 CorruptionModule = setmetatable({}, { __index = Module })
 CorruptionModule.__index = CorruptionModule
 
+--- @param allowAgonyWithOtherCurses boolean
 --- @return CorruptionModule
-function CorruptionModule.new()
+function CorruptionModule.new(allowAgonyWithOtherCurses)
     --- @type CorruptionTrackers
     local trackers = {
-        corruptionTracker = CorruptionTracker.new(),
+        corruptionTracker = CorruptionTracker.GetInstance(),
         darkHarvestTracker = DarkHarvestTracker.new(),
-        channelingTracker = ChannelingTracker.new(),
-        siphonLifeTracker = SiphonLifeTracker.new(),
-        coaTracker = CurseOfAgonyTracker.new(true)
+        channelingTracker = ChannelingTracker.GetInstance(),
+        siphonLifeTracker = SiphonLifeTracker.GetInstance(),
+        coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses)
     }
     --- @class CorruptionModule
     local self = Module.new(ABILITY_CORRUPTION, trackers, "Interface\\Icons\\Spell_Shadow_AbominationExplosion")
@@ -42,16 +43,13 @@ function CorruptionModule:getPriority(context)
     local siphRemaining  = self.trackers.siphonLifeTracker:GetRemainingDuration()
     local agonyRemaining = self.trackers.coaTracker:GetRemainingDuration()
 
-    -- (3) Renew Corruption before Dark Harvest if Agony ≥ 13 s and dots will meet the 10 s rule
     if Helpers:SpellReady(ABILITY_DARK_HARVEST)
         and agonyRemaining >= 13
-        and siphRemaining  >= 10          -- satisfy rule 1 for SIPHON
-        and corrRemaining  <  10          -- needs renewing
+        and corrRemaining  <  10
     then
-        return 100         -- top-priority refresh
+        return 100
     end
 
-    -- Standard cast if expired
     if self.trackers.corruptionTracker:ShouldCast() then
         return 80
     end

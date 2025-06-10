@@ -2,9 +2,16 @@
 CurseOfAgonyTracker = setmetatable({}, { __index = WarlockDotTracker })
 CurseOfAgonyTracker.__index = CurseOfAgonyTracker
 
+--- @type CurseOfAgonyTracker | nil
+local sharedInstance = nil
+
 --- @param allowAgonyWithOtherCurses boolean
 --- @return CurseOfAgonyTracker
-function CurseOfAgonyTracker.new(allowAgonyWithOtherCurses)
+function CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses)
+    if sharedInstance then
+        return sharedInstance
+    end
+
     local curses = {}
     if allowAgonyWithOtherCurses then
         table.insert(curses, ABILITY_COE)
@@ -19,5 +26,8 @@ function CurseOfAgonyTracker.new(allowAgonyWithOtherCurses)
     --- @class CurseOfAgonyTracker
     local self = WarlockDotTracker.new(joined, ABILITY_COA)
     setmetatable(self, CurseOfAgonyTracker)
-    return self
+
+    sharedInstance = self
+
+    return sharedInstance
 end

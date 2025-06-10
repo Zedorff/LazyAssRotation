@@ -10,7 +10,7 @@ function ArcaneSurgeModule.new()
     --- @type ArcaneSurgeTrackers
     local trackers = {
         arcaneSurgeTracker = ArcaneSurgeTracker.new(),
-        channelingTracker = ChannelingTracker.new(),
+        channelingTracker = ChannelingTracker.GetInstance(),
         mqgTracker = MindQuickingGemTracker.new(),
         arcanePowerTracker = ArcanePowerTracker.new()
     }

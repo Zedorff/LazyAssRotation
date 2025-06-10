@@ -9,7 +9,7 @@ LightningStrikeModule.__index = LightningStrikeModule
 function LightningStrikeModule.new()
     --- @type LightningStrikeTrackers
     local trackers = {
-        clearcastingTracker = ClearcastingTracker.new()
+        clearcastingTracker = ClearcastingTracker.GetInstance()
     }
     --- @class LightningStrikeModule
     return setmetatable(Module.new(ABILITY_LIGHTNING_STRIKE, trackers, "Interface\\Icons\\Spell_Nature_ThunderClap"), LightningStrikeModule)

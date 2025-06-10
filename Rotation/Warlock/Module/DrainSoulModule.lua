@@ -9,7 +9,7 @@ DrainSoulModule.__index = DrainSoulModule
 function DrainSoulModule.new()
     --- @type DrainSoulTrackers
     local trackers = {
-        channelingTracker = ChannelingTracker.new()
+        channelingTracker = ChannelingTracker.GetInstance()
     }
     --- @class DrainSoulModule
     return setmetatable(Module.new(ABILITY_DRAIN_SOUL, trackers, "Interface\\Icons\\Spell_Shadow_Haunting"), DrainSoulModule)

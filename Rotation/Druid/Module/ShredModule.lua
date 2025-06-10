@@ -9,7 +9,7 @@ ShredModule.__index = ShredModule
 function ShredModule.new()
     --- @type ShredTrackers
     local trackers = {
-        clearCastingTracker = ClearcastingTracker.new(),
+        clearCastingTracker = ClearcastingTracker.GetInstance(),
         notBehindTargetTracker = NotBehindTargetTracker.new()
     }
     --- @class ShredModule

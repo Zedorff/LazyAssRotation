@@ -9,7 +9,7 @@ LightningBoltModule.__index = LightningBoltModule
 function LightningBoltModule.new()
     --- @type LightningBoltTrackers
     local trackers = {
-        clearcastingTracker = ClearcastingTracker.new()
+        clearcastingTracker = ClearcastingTracker.GetInstance()
     }
     --- @class LightningBoltModule
     return setmetatable(Module.new(ABILITY_LIGHTNING_BOLT, trackers, "Interface\\Icons\\Spell_Nature_Lightning"), LightningBoltModule)
