@@ -65,6 +65,11 @@ function Main_OnLoad()
         LARModuleSettings.modulesEnabled = {}
     end
 
+    if not SUPERWOW_VERSION then
+        Logging:Log("SuperWoW not found, LAR shutting down.")
+        return
+    end
+
     InitComponents(this)
     InitSubscribers()
 
@@ -79,7 +84,7 @@ end
 
 function InitSubscribers()
     Core.eventBus:subscribe({
-        onEvent = function (_, event, arg1)
+        onEvent = function(_, event, arg1)
             if (event == "PLAYER_ENTERING_WORLD") then
                 OnPlayerLoaded()
             end
@@ -88,5 +93,6 @@ function InitSubscribers()
             elseif event == "SPEC_CHANGED" and DpsRotation then
                 DpsRotation:SelectSpec(arg1)
             end
-    end})
+        end
+    })
 end

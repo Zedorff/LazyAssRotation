@@ -12,7 +12,7 @@ function SiphonLifeTracker.GetInstance()
     end
 
     --- @class SiphonLifeTracker
-    local self = WarlockDotTracker.new(ABILITY_SIPHON_LIFE, ABILITY_SIPHON_LIFE)
+    local self = WarlockDotTracker.new(18881, ABILITY_SIPHON_LIFE)
     setmetatable(self, SiphonLifeTracker)
 
     sharedInstance = self

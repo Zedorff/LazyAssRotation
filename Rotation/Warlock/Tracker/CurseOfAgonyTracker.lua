@@ -14,11 +14,11 @@ function CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses)
 
     local curses = {}
     if allowAgonyWithOtherCurses then
-        table.insert(curses, ABILITY_COE)
-        table.insert(curses, ABILITY_COA)
-        table.insert(curses, ABILITY_COS)
-        table.insert(curses, ABILITY_COW)
-        table.insert(curses, ABILITY_COR)
+        table.insert(curses, 11722) --- CoE
+        table.insert(curses, 11713) --- CoA
+        table.insert(curses, 17937) --- CoS
+        table.insert(curses, 702) --- CoW
+        table.insert(curses, 11717) --- CoR
     end
 
     local joined = table.concat(curses, ", ")

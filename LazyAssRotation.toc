@@ -168,7 +168,6 @@ Rotation\Warlock\Tracker\CurseOfRecklessnessTracker.lua
 Rotation\Warlock\Tracker\CurseOfShadowTracker.lua
 Rotation\Warlock\Tracker\CurseOfTheElementsTracker.lua
 Rotation\Warlock\Tracker\CurseOfWeaknessTracker.lua
-Rotation\Warlock\Tracker\DarkHarvestTracker.lua
 Rotation\Warlock\Tracker\NightfallTracker.lua
 
 Rotation\Warlock\Module\ConflagrateModule.lua

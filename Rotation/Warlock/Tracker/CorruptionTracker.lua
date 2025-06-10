@@ -11,7 +11,7 @@ function CorruptionTracker.GetInstance()
         return _sharedInstance
     end
     --- @class CorruptionTracker
-    local self = WarlockDotTracker.new(ABILITY_CORRUPTION, ABILITY_CORRUPTION)
+    local self = WarlockDotTracker.new(25311, ABILITY_CORRUPTION)
     setmetatable(self, CorruptionTracker)
 
     _sharedInstance = self

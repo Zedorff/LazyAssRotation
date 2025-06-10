@@ -1,4 +1,4 @@
---- @alias DarkHarvestTrackers { channelingTracker: ChannelingTracker, siphonLifeTracker: SiphonLifeTracker, coaTracker: CurseOfAgonyTracker, corruptionTracker: CorruptionTracker, darkHarvestTracler: DarkHarvestTracker }
+--- @alias DarkHarvestTrackers { channelingTracker: ChannelingTracker, siphonLifeTracker: SiphonLifeTracker, coaTracker: CurseOfAgonyTracker, corruptionTracker: CorruptionTracker }
 --- @class DarkHarvestModule : Module
 --- @field trackers DarkHarvestTrackers
 --- @diagnostic disable: duplicate-set-field
@@ -14,7 +14,6 @@ function DarkHarvestModule.new(allowAgonyWithOtherCurses)
         coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses),
         corruptionTracker = CorruptionTracker.GetInstance(),
         siphonLifeTracker = SiphonLifeTracker.GetInstance(),
-        darkHarvestTracler = DarkHarvestTracker.new()
     }
     --- @class DarkHarvestModule
     return setmetatable(Module.new(ABILITY_DARK_HARVEST, trackers, "Interface\\Icons\\Spell_Shadow_SoulLeech"), DarkHarvestModule)
