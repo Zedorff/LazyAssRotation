@@ -70,7 +70,7 @@ function Warlock:EnableAflySpec()
     ModuleRegistry:RegisterModule(CorruptionModule.new(hasMalediction))
     ModuleRegistry:RegisterModule(SiphonLifeModule.new(hasMalediction))
     ModuleRegistry:RegisterModule(DarkHarvestModule.new(hasMalediction))
-    ModuleRegistry:RegisterModule(DrainSoulModule.new())
+    ModuleRegistry:RegisterModule(DrainSoulModule.new(hasMalediction))
     ModuleRegistry:RegisterModule(NightfallModule.new())
     ModuleRegistry:RegisterModule(LifeTapModule.new())
 end
