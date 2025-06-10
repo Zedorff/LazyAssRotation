@@ -46,26 +46,24 @@ end
 
 --- @param context WarriorModuleRunContext
 function HeroicStrikeModule:GetFuryHeroicPriority(context)
+    if self.trackers.autoAttackTracker:GetNextSwingTime() > 0.6 then
+        return -1;
+    end
+
     local btCD      = Helpers:SpellNotReadyFor(ABILITY_BLOODTHIRST)
     local wwCD      = Helpers:SpellNotReadyFor(ABILITY_WHIRLWIND)
-    --- since we don't have reliable way to detect OH auto attacks, let's just use 2s await
-    local awaitTime = 2
-    local btReady   = btCD <= awaitTime and ModuleRegistry:IsModuleEnabled(ABILITY_BLOODTHIRST)
-    local wwReady   = wwCD <= awaitTime and ModuleRegistry:IsModuleEnabled(ABILITY_WHIRLWIND)
-    local bothSoon  = btReady and wwReady and math.abs(btCD - wwCD) < awaitTime
+    local GCD = 1.5
+    local btReady   = btCD <= GCD and ModuleRegistry:IsModuleEnabled(ABILITY_BLOODTHIRST)
+    local wwReady   = wwCD <= GCD and ModuleRegistry:IsModuleEnabled(ABILITY_WHIRLWIND)
+    local bothSoon  = btReady and wwReady and math.abs(btCD - wwCD) < GCD
 
-    local reserve   = context.hsCost
+    local reserve   = 0
     if bothSoon then
         reserve = context.bsCost + context.wwCost
     elseif btReady then
         reserve = context.bsCost
     elseif wwReady then
         reserve = context.wwCost
-    end
-
-    if context.rage < (reserve + context.hsCost) then
-        Logging:Debug("Cancelling HS to preserve rage for main abilities")
-        _ = SpellStopCasting()
     end
 
     if context.rage >= (reserve + context.hsCost) then
@@ -77,12 +75,11 @@ end
 
 --- @param context WarriorModuleRunContext
 function HeroicStrikeModule:GetProtHeroicPriority(context)
-    local nextSwing = self.trackers.autoAttackTracker:GetNextSwingTime()
-    if nextSwing > 0.7 then
+    if self.trackers.autoAttackTracker:GetNextSwingTime() > 0.7 then
         return -1
     end
 
-    local ssAlmostReady = Helpers:SpellAlmostReady(ABILITY_SHIELD_SLAM, 1.0)
+    local ssAlmostReady = Helpers:SpellAlmostReady(ABILITY_SHIELD_SLAM, 1.5)
     local canAffordSSAndHS = context.rage >= context.shieldSlamCost + context.hsCost
     local rageThreshold = context.rage >= 45
 

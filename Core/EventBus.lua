@@ -46,16 +46,16 @@ function EventBus:new(frame)
     frame:RegisterEvent("UNIT_CASTEVENT");
     frame:SetScript("OnEvent", function()
         --- @diagnostic disable-next-line: undefined-global
-        if event == "UNIT_CASTEVENT" then
-            local _, guid = UnitExists("player")
-            if arg1 ~= guid then
-                return
-            end
-            if arg3 ~= "CAST" then
-                return
-            end
+        -- if event == "UNIT_CASTEVENT" then
+        --     local _, guid = UnitExists("player")
+        --     if arg1 ~= guid then
+        --         return
+        --     end
+        --     if arg3 ~= "CAST" then
+        --         return
+        --     end
             -- Logging:Log("casterGuid: "..tostring(arg1)..", targetGuid: "..tostring(arg2)..", event: "..tostring(arg3)..", spellID: "..tostring(arg4)..", castDuration: "..tostring(arg5))
-        end
+        -- end
         instance:notify(event, arg1, arg2, arg3, arg4, arg5)
     end)
 
