@@ -7,9 +7,9 @@ local sharedInstance = nil
 
 --- @return CorruptionTracker
 function CorruptionTracker.GetInstance()
-    if sharedInstance then
-        return sharedInstance
-    end
+    -- if sharedInstance then
+        -- return sharedInstance
+    -- end
     --- @class CorruptionTracker
     local self = WarlockDotTracker.new(ABILITY_CORRUPTION, ABILITY_CORRUPTION)
     setmetatable(self, CorruptionTracker)

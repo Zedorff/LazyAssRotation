@@ -8,9 +8,9 @@ local sharedInstance = nil
 --- @param allowAgonyWithOtherCurses boolean
 --- @return CurseOfAgonyTracker
 function CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses)
-    if sharedInstance then
-        return sharedInstance
-    end
+    -- if sharedInstance then
+        -- return sharedInstance
+    -- end
 
     local curses = {}
     if allowAgonyWithOtherCurses then

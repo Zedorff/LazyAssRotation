@@ -7,9 +7,9 @@ local sharedInstance = nil
 
 --- @return SiphonLifeTracker
 function SiphonLifeTracker.GetInstance()
-    if sharedInstance then
-        return sharedInstance
-    end
+    -- if sharedInstance then
+        -- return sharedInstance
+    -- end
 
     --- @class SiphonLifeTracker
     local self = WarlockDotTracker.new(ABILITY_SIPHON_LIFE, ABILITY_SIPHON_LIFE)

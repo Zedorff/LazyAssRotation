@@ -72,7 +72,7 @@ function WarlockDotTracker:ApplyDot(now, mob)
     dotData.lastTick    = nil
     dotData.dhStartTime = nil
     dotData.dhEndTime   = nil
-    Logging:Log("Apply dot: " .. self.ability .. ", withDuration: " .. duration)
+    Logging:Debug("Apply dot: " .. self.ability .. ", withDuration: " .. duration)
 end
 
 --- @param msg string
@@ -85,6 +85,7 @@ function WarlockDotTracker:RecordTick(msg, now)
     if not dotData then return end
 
     dotData.lastTick = now
+    Logging:Debug("Tick recorded: " .. self.ability .. ", after : " .. (dotData.start - now) .. "s")
 end
 
 --- @param mob string | nil
@@ -99,6 +100,7 @@ function WarlockDotTracker:StartDarkHarvest(mob, now)
         dotData.dhStartTime = dotData.lastTick or now
         dotData.dhEndTime   = nil
     end
+    Logging:Debug("Dark Harvest started for: " .. self.ability)
 end
 
 --- @param mob string | nil
@@ -112,6 +114,7 @@ function WarlockDotTracker:EndDarkHarvest(mob, now)
     if not dotData.dhEndTime then
         dotData.dhEndTime = now
     end
+    Logging:Debug("Dark Harvest stopped for: " .. self.ability)
 end
 
 --- @param msg string
@@ -119,6 +122,7 @@ function WarlockDotTracker:HandleResist(msg)
     if msg and string.find(msg, self.ability) and (string.find(msg, "resist") or string.find(msg, "immune") or string.find(msg, "dodge") or string.find(msg, "parry") or string.find(msg, "miss")) then
         self.data[UnitName("target")] = nil
     end
+    Logging:Debug("Spell resist: " .. self.ability)
 end
 
 --- @param msg string
