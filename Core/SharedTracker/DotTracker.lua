@@ -75,6 +75,18 @@ function DotTracker:ShouldCast()
     return remaining <= 0 and Helpers:SpellReady(self.ability)
 end
 
+--- @return number
+function DotTracker:GetRemainingDuration()
+    local _, mob = UnitExists("target")
+    if not mob then return 0 end
+
+    local dotData = self.data[mob]
+    if not dotData then return 0 end
+
+    local now = GetTime()
+    return dotData.duration - (now - dotData.start)
+end
+
 --- @param mob string
 --- @return table
 function DotTracker:GetMobData(mob)
