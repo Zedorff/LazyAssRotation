@@ -64,21 +64,20 @@ end
 
 --- @return boolean
 function DotTracker:ShouldCast()
-    local _, mob = UnitExists("target")
-    if not mob then return false end
-
-    local dotData = self.data[mob]
-    if not dotData then return true end
-
-    local now = GetTime()
-    local remaining = dotData.duration - (now - dotData.start)
+    local remaining = self:GetRemainingOnTarget()
+    if not remaining then return true end
     return remaining <= 0 and Helpers:SpellReady(self.ability)
 end
 
 --- @return number
 function DotTracker:GetRemainingDuration()
+    return self:GetRemainingOnTarget() or 0
+end
+
+--- @return number | nil
+function DotTracker:GetRemainingOnTarget()
     local _, mob = UnitExists("target")
-    if not mob then return 0 end
+    if not mob then return nil end
 
     local dotData = self.data[mob]
     if not dotData then return 0 end

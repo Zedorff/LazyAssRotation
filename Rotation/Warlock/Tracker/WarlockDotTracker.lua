@@ -137,17 +137,23 @@ end
 
 --- @return boolean
 function WarlockDotTracker:ShouldCast()
-    local remaining = self:GetRemainingDuration()
+    local remaining = self:GetRemainingOnTarget()
+    if not remaining then return true end
     return remaining <= 0 and Helpers:SpellReady(self.ability)
 end
 
 --- @return number
 function WarlockDotTracker:GetRemainingDuration()
+    return self:GetRemainingOnTarget() or 0
+end
+
+--- @return number | nil
+function WarlockDotTracker:GetRemainingOnTarget()
     local _, mob = UnitExists("target")
-    if not mob then return -1 end
+    if not mob then return nil end
 
     local dotData = self.data[mob]
-    if not dotData then return -1 end
+    if not dotData then return 0 end
 
     local now = GetTime()
     local dhReduction = 0
