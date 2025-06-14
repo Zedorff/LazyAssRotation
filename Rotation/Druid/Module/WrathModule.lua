@@ -32,7 +32,11 @@ function WrathModule:getPriority(context)
         return 90;
     end
 
-    if self.trackers.sequenceTracker:GetLastCastedSpellId() ~= 9912 or self.trackers.solsticeTracker:GetSolsticeType() == SolsticeType.NATURE then
+    if self.trackers.solsticeTracker:GetSolsticeType() == SolsticeType.ARCANE then
+        return 51;
+    end
+
+    if self.trackers.sequenceTracker:GetLastCastedSpellId() ~= 9912 and self.trackers.solsticeTracker:CheckSolstice() == nil then
         return 51;
     end
 

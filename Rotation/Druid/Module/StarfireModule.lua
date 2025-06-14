@@ -32,7 +32,11 @@ function StarfireModule:getPriority(context)
         return 90;
     end
 
-    if self.trackers.sequenceTracker:GetLastCastedSpellId() ~= 25298 or self.trackers.solsticeTracker:GetSolsticeType() == SolsticeType.ARCANE then
+    if self.trackers.solsticeTracker:GetSolsticeType() == SolsticeType.NATURE then
+        return 51;
+    end
+
+    if self.trackers.sequenceTracker:GetLastCastedSpellId() ~= 25298 and self.trackers.solsticeTracker:GetSolsticeType() == nil then
         return 50;
     end
     return -1;
