@@ -71,6 +71,10 @@ ABILITY_CAT_FORM             = "Cat Form"
 ABILITY_MAUL                 = "Maul"
 ABILITY_SWIPE                = "Swipe"
 ABILITY_SAVAGE_BITE          = "Savege Bite"
+ABILITY_INSECT_SWARM         = "Insect Swarm"
+ABILITY_MOONFIRE             = "Moonfire"
+ABILITY_STARFIRE             = "Starfire"
+ABILITY_WRATH                = "Wrath"
 
 -- Mage
 ABILITY_ARCANE_SURGE         = "Arcane Surge"

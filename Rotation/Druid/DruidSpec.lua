@@ -2,5 +2,6 @@
 DruidSpec = {
     POWERSHIFTING = 1,
     BLEED = 2,
-    BEAR = 3
+    BEAR = 3,
+    BOOMKIN = 4
 }

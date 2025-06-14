@@ -127,6 +127,11 @@ Rotation\Druid\Tracker\TigerFuryTracker.lua
 Rotation\Druid\Tracker\RakeTracker.lua
 Rotation\Druid\Tracker\RipTracker.lua
 Rotation\Druid\Tracker\DruidManaTracker.lua
+Rotation\Druid\Tracker\SolsticeTracker.lua
+Rotation\Druid\Tracker\SequenceTracker.lua
+Rotation\Druid\Tracker\MoonfireTracker.lua
+Rotation\Druid\Tracker\InsectSwarmTracker.lua
+Rotation\Druid\Tracker\EclipseTracker.lua
 
 Rotation\Druid\Module\ClawModule.lua
 Rotation\Druid\Module\FerociousBiteModule.lua
@@ -138,6 +143,10 @@ Rotation\Druid\Module\TigerFuryModule.lua
 Rotation\Druid\Module\MaulModule.lua
 Rotation\Druid\Module\SavageBiteModule.lua
 Rotation\Druid\Module\SwipeModule.lua
+Rotation\Druid\Module\WrathModule.lua
+Rotation\Druid\Module\StarfireModule.lua
+Rotation\Druid\Module\MoonfireModule.lua
+Rotation\Druid\Module\InsectSwarmModule.lua
 
 Rotation\Druid\DruidSpec.lua
 Rotation\Druid\Druid.lua

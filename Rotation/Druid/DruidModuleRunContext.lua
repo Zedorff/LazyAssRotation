@@ -13,6 +13,10 @@
 --- @field maulCost integer
 --- @field swipeCost integer
 --- @field savageBiteCost integer
+--- @field moonfireCost integer
+--- @field starfireCost integer
+--- @field swarmCost integer
+--- @field wrathCost integer
 --- @field spec DruidSpec
 DruidModuleRunContext = setmetatable({}, { __index = ModuleRunContext })
 DruidModuleRunContext.__index = DruidModuleRunContext
@@ -54,6 +58,10 @@ function DruidModuleRunContext.new(energyCache, manaCache, rageCache, spec)
     self.maulCost = rageCache:Get(ABILITY_MAUL)
     self.swipeCost = rageCache:Get(ABILITY_SWIPE)
     self.savageBiteCost = rageCache:Get(ABILITY_SAVAGE_BITE)
+    self.moonfireCost = manaCache:Get(ABILITY_MOONFIRE)
+    self.starfireCost = manaCache:Get(ABILITY_STARFIRE)
+    self.wrathCost = manaCache:Get(ABILITY_WRATH)
+    self.swarmCost = manaCache:Get(ABILITY_INSECT_SWARM)
     self.spec = spec
     return self
 end
@@ -82,4 +90,8 @@ function DruidModuleRunContext.PreheatCache(energyCache, manaCache, rageCache)
     rageCache:Get(ABILITY_SWIPE)
     rageCache:Get(ABILITY_MAUL)
     rageCache:Get(ABILITY_SAVAGE_BITE)
+    manaCache:Get(ABILITY_INSECT_SWARM)
+    manaCache:Get(ABILITY_MOONFIRE)
+    manaCache:Get(ABILITY_WRATH)
+    manaCache:Get(ABILITY_STARFIRE)
 end

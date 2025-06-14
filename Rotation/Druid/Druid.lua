@@ -18,7 +18,8 @@ function Druid.new()
     local specs = {
         SpecButtonInfo.new("Interface\\Icons\\Ability_Druid_CatForm", "Powershifting", LARSelectedSpec == nil or LARSelectedSpec.name == "Powershifting"),
         SpecButtonInfo.new("Interface\\Icons\\Ability_Druid_Disembowel", "Bleeds", LARSelectedSpec and LARSelectedSpec.name == "Bleeds"),
-        SpecButtonInfo.new("Interface\\Icons\\Ability_Racial_BearForm", "Bear", LARSelectedSpec and LARSelectedSpec.name == "Bear")
+        SpecButtonInfo.new("Interface\\Icons\\Ability_Racial_BearForm", "Bear", LARSelectedSpec and LARSelectedSpec.name == "Bear"),
+        SpecButtonInfo.new("Interface\\Icons\\Spell_Arcane_StarFire", "Boomkin", LARSelectedSpec and LARSelectedSpec.name == "Boomkin")
     }
 
     if not LARSelectedSpec then
@@ -51,6 +52,9 @@ function Druid:SelectSpec(spec)
     elseif spec.name == "Bear" then
         self.spec = DruidSpec.BEAR
         self:EnabledBearSpec()
+    elseif spec.name == "Boomkin" then
+        self.spec = DruidSpec.BOOMKIN
+        self:EnableBoomkitSpec()
     end
     HotSwap_InvalidateModuleButtons()
 end
@@ -75,4 +79,11 @@ function Druid:EnabledBearSpec()
     ModuleRegistry:RegisterModule(MaulModule.new())
     ModuleRegistry:RegisterModule(SavageBiteModule.new())
     ModuleRegistry:RegisterModule(SwipeModule.new())
+end
+
+function Druid:EnableBoomkitSpec()
+    ModuleRegistry:RegisterModule(WrathModule.new())
+    ModuleRegistry:RegisterModule(StarfireModule.new())
+    ModuleRegistry:RegisterModule(InsectSwarmModule.new())
+    ModuleRegistry:RegisterModule(MoonfireModule.new())
 end

@@ -54,7 +54,7 @@ function EventBus:new(frame)
         --     if arg3 ~= "CAST" then
         --         return
         --     end
-            -- Logging:Log("casterGuid: "..tostring(arg1)..", targetGuid: "..tostring(arg2)..", event: "..tostring(arg3)..", spellID: "..tostring(arg4)..", castDuration: "..tostring(arg5))
+        --     Logging:Log("casterGuid: "..tostring(arg1)..", targetGuid: "..tostring(arg2)..", event: "..tostring(arg3)..", spellID: "..tostring(arg4)..", castDuration: "..tostring(arg5))
         -- end
         instance:notify(event, arg1, arg2, arg3, arg4, arg5)
     end)
