@@ -28,17 +28,15 @@ function WrathModule:getPriority(context)
         return -1
     end
 
-    if self.trackers.eclipseTracker:GetEclipseType() == EclipseType.NATURE then
-        if self.trackers.eclipseTracker:GetEclipseRemainingTime() >= Helpers:CastTime(ABILITY_WRATH) then
-            return 90;
-        end
+    if self.trackers.eclipseTracker:GetEclipseType() == EclipseType.NATURE and self.trackers.eclipseTracker:GetEclipseRemainingTime() >= Helpers:CastTime(ABILITY_WRATH) then
+        return 90;
     end
 
     if self.trackers.solsticeTracker:IsSolsticeTypeUp(SolsticeType.ARCANE) then
         return 51;
     end
 
-    if self.trackers.sequenceTracker:GetLastCastedSpellId() ~= 9912 and not self.trackers.solsticeTracker:IsAnySolsticeUp() then
+    if not ModuleRegistry:IsModuleEnabled(ABILITY_STARFIRE) or (self.trackers.sequenceTracker:GetLastCastedSpellId() ~= 9912 and not self.trackers.solsticeTracker:IsAnySolsticeUp()) then
         return 51;
     end
 

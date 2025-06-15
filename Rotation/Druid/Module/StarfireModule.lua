@@ -28,17 +28,15 @@ function StarfireModule:getPriority(context)
         return -1
     end
 
-    if self.trackers.eclipseTracker:GetEclipseType() == EclipseType.ARCANE then
-        if self.trackers.eclipseTracker:GetEclipseRemainingTime() >= Helpers:CastTime(ABILITY_STARFIRE) then
-            return 90;
-        end
+    if self.trackers.eclipseTracker:GetEclipseType() == EclipseType.ARCANE and self.trackers.eclipseTracker:GetEclipseRemainingTime() >= Helpers:CastTime(ABILITY_STARFIRE) then
+        return 90;
     end
 
     if self.trackers.solsticeTracker:IsSolsticeTypeUp(SolsticeType.NATURE) then
         return 50;
     end
 
-    if self.trackers.sequenceTracker:GetLastCastedSpellId() ~= 25298 and not self.trackers.solsticeTracker:IsAnySolsticeUp() then
+    if not ModuleRegistry:IsModuleEnabled(ABILITY_WRATH) or (self.trackers.sequenceTracker:GetLastCastedSpellId() ~= 25298 and not self.trackers.solsticeTracker:IsAnySolsticeUp()) then
         return 50;
     end
     return -1;
