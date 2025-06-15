@@ -29,11 +29,15 @@ function StarfireModule:getPriority(context)
     end
 
     if self.trackers.eclipseTracker:GetEclipseType() == EclipseType.ARCANE then
-        return 90;
+        if self.trackers.eclipseTracker:GetEclipseRemainingTime() >= Helpers:CastTime(ABILITY_STARFIRE) then
+            return 90;
+        else
+            return 50;
+        end
     end
 
     if self.trackers.solsticeTracker:GetSolsticeType() == SolsticeType.NATURE then
-        return 51;
+        return 50;
     end
 
     if self.trackers.sequenceTracker:GetLastCastedSpellId() ~= 25298 and self.trackers.solsticeTracker:GetSolsticeType() == nil then

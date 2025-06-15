@@ -35,7 +35,7 @@ function InsectSwarmModule:getPriority(context)
         return 100;
     end
 
-    if self.trackers.solsticeTracker:CheckSolstice() == nil and self.trackers.insectSwarmTracker:ShouldCast() then
+    if self.trackers.insectSwarmTracker:ShouldCast() then
         return 60;
     end
 

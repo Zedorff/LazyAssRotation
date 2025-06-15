@@ -29,12 +29,12 @@ function MoonfireModule:getPriority(context)
     end
 
     if self.trackers.eclipseTracker:GetEclipseType() == EclipseType.ARCANE
-        and (self.trackers.eclipseTracker:GetEclipseRemainingTime() <= 3.2
+        and (Helpers:CastTime(ABILITY_STARFIRE) > self.trackers.eclipseTracker:GetEclipseRemainingTime()
             and self.trackers.moonfireTracker:GetRemainingDuration() <= 3.5) then
         return 100;
     end
 
-    if self.trackers.solsticeTracker:CheckSolstice() == nil and self.trackers.moonfireTracker:ShouldCast() then
+    if self.trackers.moonfireTracker:ShouldCast() then
         return 60;
     end
 
