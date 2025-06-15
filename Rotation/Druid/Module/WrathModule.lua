@@ -36,7 +36,7 @@ function WrathModule:getPriority(context)
         return 51;
     end
 
-    if not ModuleRegistry:IsModuleEnabled(ABILITY_STARFIRE) or (self.trackers.sequenceTracker:GetLastCastedSpellId() ~= 9912 and not self.trackers.solsticeTracker:IsAnySolsticeUp()) then
+    if not ModuleRegistry:IsModuleEnabled(ABILITY_STARFIRE) or (not self.trackers.sequenceTracker:IsLastCastWasWrath() and not self.trackers.solsticeTracker:IsAnySolsticeUp()) then
         return 51;
     end
 

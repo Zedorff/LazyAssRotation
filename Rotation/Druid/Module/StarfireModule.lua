@@ -36,7 +36,7 @@ function StarfireModule:getPriority(context)
         return 50;
     end
 
-    if not ModuleRegistry:IsModuleEnabled(ABILITY_WRATH) or (self.trackers.sequenceTracker:GetLastCastedSpellId() ~= 25298 and not self.trackers.solsticeTracker:IsAnySolsticeUp()) then
+    if not ModuleRegistry:IsModuleEnabled(ABILITY_WRATH) or (not self.trackers.sequenceTracker:IsLastCastWasStarfire() and not self.trackers.solsticeTracker:IsAnySolsticeUp()) then
         return 50;
     end
     return -1;
