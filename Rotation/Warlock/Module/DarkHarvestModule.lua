@@ -16,31 +16,31 @@ function DarkHarvestModule.new(allowAgonyWithOtherCurses)
         siphonLifeTracker = SiphonLifeTracker.GetInstance(),
     }
     --- @class DarkHarvestModule
-    return setmetatable(Module.new(ABILITY_DARK_HARVEST, trackers, "Interface\\Icons\\Spell_Shadow_SoulLeech"), DarkHarvestModule)
+    return setmetatable(Module.new(Abilities.DarkHarvest.name, trackers, "Interface\\Icons\\Spell_Shadow_SoulLeech"), DarkHarvestModule)
 end
 
 function DarkHarvestModule:run()
-    if Helpers:SpellReady(ABILITY_DARK_HARVEST) then
-        Logging:Debug("Casting "..ABILITY_DARK_HARVEST)
-        CastSpellByName(ABILITY_DARK_HARVEST)
+    if Helpers:SpellReady(Abilities.DarkHarvest.name) then
+        Logging:Debug("Casting "..Abilities.DarkHarvest.name)
+        CastSpellByName(Abilities.DarkHarvest.name)
     end
 end
 
 --- @param context WarlockModuleRunContext
 function DarkHarvestModule:getPriority(context)
     if not (self.enabled
-        and Helpers:SpellReady(ABILITY_SIPHON_LIFE) --- just GCD check
+        and Helpers:SpellReady(Abilities.SiphonLife.name) --- just GCD check
         and self.trackers.channelingTracker:ShouldCast()
         and context.mana >= context.darkHarvestCost)
     then
         return -1
     end
 
-    local corrRemaining  = ModuleRegistry:IsModuleEnabled(ABILITY_CORRUPTION) and self.trackers.corruptionTracker:GetRemainingDuration() or 100
-    local siphRemaining  = ModuleRegistry:IsModuleEnabled(ABILITY_SIPHON_LIFE) and self.trackers.siphonLifeTracker:GetRemainingDuration() or 100
-    local agonyRemaining = ModuleRegistry:IsModuleEnabled(ABILITY_COA) and self.trackers.coaTracker:GetRemainingDuration() or 100
+    local corrRemaining  = ModuleRegistry:IsModuleEnabled(Abilities.Corruption.name) and self.trackers.corruptionTracker:GetRemainingDuration() or 100
+    local siphRemaining  = ModuleRegistry:IsModuleEnabled(Abilities.SiphonLife.name) and self.trackers.siphonLifeTracker:GetRemainingDuration() or 100
+    local agonyRemaining = ModuleRegistry:IsModuleEnabled(Abilities.CoA.name) and self.trackers.coaTracker:GetRemainingDuration() or 100
 
-    if Helpers:SpellAlmostReady(ABILITY_DARK_HARVEST, 2) and corrRemaining >= 8 and siphRemaining >= 8 and agonyRemaining >= 8 then
+    if Helpers:SpellAlmostReady(Abilities.DarkHarvest.name, 2) and corrRemaining >= 8 and siphRemaining >= 8 and agonyRemaining >= 8 then
         return 50
     end
     return -1

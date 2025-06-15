@@ -14,19 +14,19 @@ function ArcaneRuptureModule.new()
         channelingTracker = ChannelingTracker.GetInstance()
     }
     --- @class ArcaneRuptureModule
-    return setmetatable(Module.new(ABILITY_ARCANE_RUPTURE, trackers, "Interface\\Icons\\Spell_Arcane_Blast"), ArcaneRuptureModule)
+    return setmetatable(Module.new(Abilities.ArcaneRupture.name, trackers, "Interface\\Icons\\Spell_Arcane_Blast"), ArcaneRuptureModule)
 end
 
 function ArcaneRuptureModule:run()
-    Logging:Debug("Casting "..ABILITY_ARCANE_RUPTURE)
-    CastSpellByName(ABILITY_ARCANE_RUPTURE)
+    Logging:Debug("Casting "..Abilities.ArcaneRupture.name)
+    CastSpellByName(Abilities.ArcaneRupture.name)
 end
 
 --- @param context MageModuleRunContext
 function ArcaneRuptureModule:getPriority(context)
     if self.enabled and self.trackers.channelingTracker:ShouldCast() then
         local hasMana = context.mana >= context.arCost
-        if Helpers:SpellAlmostReady(ABILITY_ARCANE_RUPTURE, 0.8) and (self.trackers.convergenceTracker:ShouldCast() or self.trackers.arcaneRuptureTracker:ShouldCast()) and hasMana then
+        if Helpers:SpellAlmostReady(Abilities.ArcaneRupture.name, 0.8) and (self.trackers.convergenceTracker:ShouldCast() or self.trackers.arcaneRuptureTracker:ShouldCast()) and hasMana then
             return 85;
         end
     end

@@ -12,17 +12,17 @@ function ConflagrateModule.new()
         immolateTracker = ImmolateTracker.new()
     }
     --- @class ConflagrateModule
-    return setmetatable(Module.new(ABILITY_CONFLAGRATE, trackers, "Interface\\Icons\\Spell_Fire_Fireball"), ConflagrateModule)
+    return setmetatable(Module.new(Abilities.Conflagrate.name, trackers, "Interface\\Icons\\Spell_Fire_Fireball"), ConflagrateModule)
 end
 
 function ConflagrateModule:run()
-    Logging:Debug("Casting "..ABILITY_CONFLAGRATE)
-    CastSpellByName(ABILITY_CONFLAGRATE)
+    Logging:Debug("Casting "..Abilities.Conflagrate.name)
+    CastSpellByName(Abilities.Conflagrate.name)
 end
 
 --- @param context WarlockModuleRunContext
 function ConflagrateModule:getPriority(context)
-    if self.enabled and Helpers:SpellAlmostReady(ABILITY_CONFLAGRATE, 0.3) and not self.trackers.immolateTracker:ShouldCast() and context.mana > context.conflagrateCost then
+    if self.enabled and Helpers:SpellAlmostReady(Abilities.Conflagrate.name, 0.3) and not self.trackers.immolateTracker:ShouldCast() and context.mana > context.conflagrateCost then
         return 85;
     end
     return -1;

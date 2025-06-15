@@ -1,6 +1,5 @@
 --- @class WarlockDotTracker : CooldownTracker
---- @field castFind string
---- @field ability string
+--- @field rankedAbility RankedAbility
 --- @field pendingChannel boolean
 --- @field dhCasting boolean
 --- @field data table<string, table>
@@ -9,15 +8,14 @@ WarlockDotTracker.__index = WarlockDotTracker
 
 local HASTE_FACTOR = 0.30
 
---- @param ability string
+--- @param rankedAbility RankedAbility
 --- @return WarlockDotTracker
-function WarlockDotTracker.new(castFind, ability)
+function WarlockDotTracker.new(rankedAbility)
     --- @class WarlockDotTracker
     local self = CooldownTracker.new()
     setmetatable(self, WarlockDotTracker)
 
-    self.castFind       = castFind
-    self.ability        = ability
+    self.rankedAbility  = rankedAbility
     self.data           = {}
     self.pendingChannel = false
     self.dhCasting      = false
@@ -39,9 +37,9 @@ function WarlockDotTracker:onEvent(event, arg1, _, arg3, arg4)
     local _, target = UnitExists("target")
 
     if event == "UNIT_CASTEVENT" and arg1 == ({ UnitExists("player") })[2] then
-        if arg3 == "CAST" and string.find(self.castFind, arg4) then
+        if arg3 == "CAST" and IsMatchingRank(self.rankedAbility, tonumber(arg4)) then
             self:ApplyDot(now, target)
-        elseif arg3 == "CHANNEL" and arg4 == 52550 then
+        elseif arg3 == "CHANNEL" and IsMatchingRank(Abilities.DarkHarvest, tonumber(arg4)) then
             self.pendingChannel = true
         end
     elseif event == "SPELLCAST_CHANNEL_START" and self.pendingChannel then
@@ -73,7 +71,7 @@ end
 function WarlockDotTracker:ApplyDot(now, mob)
     if not mob then return end
 
-    local duration      = Helpers:SpellDuration(self.ability)
+    local duration      = Helpers:SpellDuration(self.rankedAbility.name)
 
     local dotData       = self:GetMobData(mob)
     dotData.start       = now
@@ -81,20 +79,20 @@ function WarlockDotTracker:ApplyDot(now, mob)
     dotData.lastTick    = nil
     dotData.dhStartTime = nil
     dotData.dhEndTime   = nil
-    Logging:Debug("Apply dot: " .. self.ability .. ", withDuration: " .. duration)
+    Logging:Debug("Apply dot: " .. self.rankedAbility.name .. ", withDuration: " .. duration)
 end
 
 --- @param msg string
 --- @param now number
 function WarlockDotTracker:RecordTick(msg, now)
-    local mob = string.match(msg, "^(.-) suffers %d+ .- from your " .. self.ability)
+    local mob = string.match(msg, "^(.-) suffers %d+ .- from your " .. self.rankedAbility.name)
     if not mob then return end
 
     local dotData = self.data[mob]
     if not dotData then return end
 
     dotData.lastTick = now
-    Logging:Debug("Tick recorded: " .. self.ability .. ", after : " .. (dotData.start - now) .. "s")
+    Logging:Debug("Tick recorded: " .. self.rankedAbility.name .. ", after : " .. (dotData.start - now) .. "s")
 end
 
 --- @param mob string | nil
@@ -109,7 +107,7 @@ function WarlockDotTracker:StartDarkHarvest(mob, now)
         dotData.dhStartTime = dotData.lastTick or now
         dotData.dhEndTime   = nil
     end
-    Logging:Debug("Dark Harvest started for: " .. self.ability)
+    Logging:Debug("Dark Harvest started for: " .. self.rankedAbility.name)
 end
 
 --- @param mob string | nil
@@ -123,15 +121,15 @@ function WarlockDotTracker:EndDarkHarvest(mob, now)
     if not dotData.dhEndTime then
         dotData.dhEndTime = now
     end
-    Logging:Debug("Dark Harvest stopped for: " .. self.ability)
+    Logging:Debug("Dark Harvest stopped for: " .. self.rankedAbility.name)
 end
 
 --- @param msg string
 function WarlockDotTracker:HandleResist(msg)
-    if msg and string.find(msg, self.ability) and (string.find(msg, "resisted") or string.find(msg, "immune") or string.find(msg, "dodged") or string.find(msg, "parried") or string.find(msg, "missed")) or string.find(msg, "blocked") then
+    if msg and string.find(msg, self.rankedAbility.name) and (string.find(msg, "resisted") or string.find(msg, "immune") or string.find(msg, "dodged") or string.find(msg, "parried") or string.find(msg, "missed")) or string.find(msg, "blocked") then
         local _, target = UnitExists("target")
         self.data[target] = nil
-        Logging:Debug(self.ability.." was miss/dodge/parry/miss/resist/blocked")
+        Logging:Debug(self.rankedAbility.name .. " was miss/dodge/parry/miss/resist/blocked")
     end
 end
 
@@ -139,7 +137,7 @@ end
 function WarlockDotTracker:ShouldCast()
     local remaining = self:GetRemainingOnTarget()
     if not remaining then return true end
-    return remaining <= 0 and Helpers:SpellReady(self.ability)
+    return remaining <= 0 and Helpers:SpellReady(self.rankedAbility.name)
 end
 
 --- @return number

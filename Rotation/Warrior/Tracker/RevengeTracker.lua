@@ -25,7 +25,7 @@ function RevengeTracker:onEvent(event, arg1)
     elseif event == "CHAT_MSG_COMBAT_CREATURE_VS_SELF_HITS" and string.find(arg1, "%(.- blocked%)") then
         self.revengeReadyUntil = GetTime() + 4;
     elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" then
-        local hit, crit, _, miss, _ = Helpers:ParseCombatEvent(ABILITY_REVENGE, arg1)
+        local hit, crit, _, miss, _ = Helpers:ParseCombatEvent(Abilities.Revenge.name, arg1)
         if hit or crit or miss then
             self.revengeReadyUntil = 0;
         end
@@ -34,5 +34,5 @@ end
 
 --- @return boolean
 function RevengeTracker:ShouldCast()
-    return GetTime() < self.revengeReadyUntil and Helpers:SpellReady(ABILITY_REVENGE)
+    return GetTime() < self.revengeReadyUntil and Helpers:SpellReady(Abilities.Revenge.name)
 end

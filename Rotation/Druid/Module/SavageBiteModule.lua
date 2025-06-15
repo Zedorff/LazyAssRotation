@@ -12,17 +12,17 @@ function SavageBiteModule.new()
         clearcastingTracker = ClearcastingTracker.GetInstance()
     }
     --- @class SavageBiteModule
-    return setmetatable(Module.new(ABILITY_SAVAGE_BITE, trackers, "Interface\\Icons\\Ability_Racial_Cannibalize"), SavageBiteModule)
+    return setmetatable(Module.new(Abilities.SavageBite.name, trackers, "Interface\\Icons\\Ability_Racial_Cannibalize"), SavageBiteModule)
 end
 
 function SavageBiteModule:run()
-    Logging:Debug("Casting "..ABILITY_SAVAGE_BITE)
-    CastSpellByName(ABILITY_SAVAGE_BITE)
+    Logging:Debug("Casting "..Abilities.SavageBite.name)
+    CastSpellByName(Abilities.SavageBite.name)
 end
 
 --- @param context DruidModuleRunContext
 function SavageBiteModule:getPriority(context)
-    if self.enabled and Helpers:SpellReady(ABILITY_SAVAGE_BITE) then
+    if self.enabled and Helpers:SpellReady(Abilities.SavageBite.name) then
         if self.trackers.clearcastingTracker:ShouldCast() then
             return 95;
         elseif context.rage >= context.maulCost + context.savageBiteCost then

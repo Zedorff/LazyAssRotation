@@ -35,7 +35,7 @@ function HolyStrikeTracker:onEvent(event, arg1)
         Logging:Debug("Holy Might is down")
         self.holyMightIsUp = false
         self.lastHolyMightApply = 0
-    elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" and string.find(arg1, ABILITY_HOLY_STRIKE) then
+    elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" and string.find(arg1, Abilities.HolyStrike.name) then
         self.holyMightIsUp = true
         self.lastHolyMightApply = GetTime() + 20
     end

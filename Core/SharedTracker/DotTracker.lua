@@ -1,20 +1,17 @@
 --- @class DotTracker : CooldownTracker
---- @field ability string
---- @field spellId integer
+--- @field rankedAbility RankedAbility
 --- @field data table<string, table>
 DotTracker = setmetatable({}, { __index = CooldownTracker })
 DotTracker.__index = DotTracker
 
---- @param spellId integer
---- @param ability string
+--- @param rankedAbility RankedAbility
 --- @return DotTracker
-function DotTracker.new(spellId, ability)
+function DotTracker.new(rankedAbility)
     --- @class DotTracker
     local self = CooldownTracker.new()
     setmetatable(self, DotTracker)
 
-    self.ability = ability
-    self.spellId = spellId
+    self.rankedAbility = rankedAbility
     self.data    = {}
 
     return self
@@ -31,7 +28,7 @@ function DotTracker:onEvent(event, arg1, arg2, arg3, arg4)
     local now = GetTime()
     local _, target = UnitExists("target")
 
-    if event == "UNIT_CASTEVENT" and arg1 == ({ UnitExists("player") })[2] and arg3 == "CAST" and arg4 == self.spellId then
+    if event == "UNIT_CASTEVENT" and arg1 == ({ UnitExists("player") })[2] and arg3 == "CAST" and IsMatchingRank(self.rankedAbility, tonumber(arg4)) then
         self:ApplyDot(now, target)
     elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_COMBAT_SELF_MISSES" then
         self:HandleResist(arg1)
@@ -45,20 +42,20 @@ end
 function DotTracker:ApplyDot(now, mob)
     if not mob then return end
 
-    local duration   = Helpers:SpellDuration(self.ability)
+    local duration   = Helpers:SpellDuration(self.rankedAbility.name)
 
     local dotData    = self:GetMobData(mob)
     dotData.start    = now
     dotData.duration = duration
-    Logging:Debug(self.ability.." Applied, duration: "..duration)
+    Logging:Debug(self.rankedAbility.name.." Applied, duration: "..duration)
 end
 
 --- @param msg string
 function DotTracker:HandleResist(msg)
-    if msg and string.find(msg, self.ability) and (string.find(msg, "resisted") or string.find(msg, "immune") or string.find(msg, "dodged") or string.find(msg, "parried") or string.find(msg, "missed")) or string.find(msg, "blocked") then
+    if msg and string.find(msg, self.rankedAbility.name) and (string.find(msg, "resisted") or string.find(msg, "immune") or string.find(msg, "dodged") or string.find(msg, "parried") or string.find(msg, "missed")) or string.find(msg, "blocked") then
         local _, target = UnitExists("target")
         self.data[target] = nil
-        Logging:Debug(self.ability.." was miss/dodge/parry/miss/resist/blocked")
+        Logging:Debug(self.rankedAbility.name.." was miss/dodge/parry/miss/resist/blocked")
     end
 end
 
@@ -66,7 +63,7 @@ end
 function DotTracker:ShouldCast()
     local remaining = self:GetRemainingOnTarget()
     if not remaining then return true end
-    return remaining <= 0 and Helpers:SpellReady(self.ability)
+    return remaining <= 0 and Helpers:SpellReady(self.rankedAbility.name)
 end
 
 --- @return number

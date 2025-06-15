@@ -6,12 +6,12 @@ WhirlwindModule.__index = WhirlwindModule
 --- @return WhirlwindModule 
 function WhirlwindModule.new()
     --- @class WhirlwindModule
-    return setmetatable(Module.new(ABILITY_WHIRLWIND, nil, "Interface\\Icons\\Ability_Whirlwind"), WhirlwindModule)
+    return setmetatable(Module.new(Abilities.Whirlwind.name, nil, "Interface\\Icons\\Ability_Whirlwind"), WhirlwindModule)
 end
 
 function WhirlwindModule:run()
-    Logging:Debug("Casting Whirlwind")
-    CastSpellByName(ABILITY_WHIRLWIND)
+    Logging:Debug("Casting "..Abilities.Whirlwind.name)
+    CastSpellByName(Abilities.Whirlwind.name)
 end
 
 --- @param context WarriorModuleRunContext
@@ -31,7 +31,7 @@ end
 
 --- @param context WarriorModuleRunContext
 function WhirlwindModule:GetArmsWhirlwindPriority(context)
-    if Helpers:SpellReady(ABILITY_WHIRLWIND) and not Helpers:SpellAlmostReady(ABILITY_MORTAL_STRIKE, 0.5) and context.rage >= context.wwCost then
+    if Helpers:SpellReady(Abilities.Whirlwind.name) and not Helpers:SpellAlmostReady(Abilities.MortalStrike.name, 0.5) and context.rage >= context.wwCost then
         return 70
     else
         return -1;
@@ -40,7 +40,7 @@ end
 
 --- @param context WarriorModuleRunContext
 function WhirlwindModule:GetFuryWhirlwindPriority(context)
-    if Helpers:SpellReady(ABILITY_WHIRLWIND) and not Helpers:SpellAlmostReady(ABILITY_BLOODTHIRST, 0.5) and context.rage >= context.wwCost then
+    if Helpers:SpellReady(Abilities.Whirlwind.name) and not Helpers:SpellAlmostReady(Abilities.Bloodthirst.name, 0.5) and context.rage >= context.wwCost then
         return 70
     else
         return -1;

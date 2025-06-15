@@ -6,18 +6,18 @@ BloodthirstModule.__index = BloodthirstModule
 --- @return BloodthirstModule
 function BloodthirstModule.new()
     --- @class BloodthirstModule
-    return setmetatable(Module.new(ABILITY_BLOODTHIRST, nil, "Interface\\Icons\\Spell_Nature_Bloodlust"), BloodthirstModule)
+    return setmetatable(Module.new(Abilities.Bloodthirst.name, nil, "Interface\\Icons\\Spell_Nature_Bloodlust"), BloodthirstModule)
 end
 
 function BloodthirstModule:run()
-    Logging:Debug("Casting Bloodthirst")
-    CastSpellByName(ABILITY_BLOODTHIRST)
+    Logging:Debug("Casting "..Abilities.Bloodthirst.name)
+    CastSpellByName(Abilities.Bloodthirst.name)
 end
 
 --- @param context WarriorModuleRunContext
 function BloodthirstModule:getPriority(context)
     if self.enabled then
-        if Helpers:SpellReady(ABILITY_BLOODTHIRST) and context.rage >= context.bsCost then
+        if Helpers:SpellReady(Abilities.Bloodthirst.name) and context.rage >= context.bsCost then
             return 90;
         end
     end

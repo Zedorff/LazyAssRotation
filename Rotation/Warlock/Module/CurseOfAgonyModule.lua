@@ -15,16 +15,16 @@ function CurseOfAgonyModule.new(allowAgonyWithOtherCurses)
         channelingTracker = ChannelingTracker.GetInstance()
     }
     --- @class CurseOfAgonyModule
-    local self = Module.new(ABILITY_COA, trackers, "Interface\\Icons\\Spell_Shadow_CurseOfSargeras")
+    local self = Module.new(Abilities.CoA.name, trackers, "Interface\\Icons\\Spell_Shadow_CurseOfSargeras")
     setmetatable(self, CurseOfAgonyModule)
 
     self.allowAgonyWithOtherCurses = allowAgonyWithOtherCurses
 
     if self.enabled and not self.allowAgonyWithOtherCurses then
-        ModuleRegistry:DisableModule(ABILITY_COW)
-        ModuleRegistry:DisableModule(ABILITY_COE)
-        ModuleRegistry:DisableModule(ABILITY_COS)
-        ModuleRegistry:DisableModule(ABILITY_COR)
+        ModuleRegistry:DisableModule(Abilities.CoW.name)
+        ModuleRegistry:DisableModule(Abilities.CoE.name)
+        ModuleRegistry:DisableModule(Abilities.CoS.name)
+        ModuleRegistry:DisableModule(Abilities.CoR.name)
     end
 
     return self
@@ -33,23 +33,23 @@ end
 function CurseOfAgonyModule:enable()
     Module.enable(self)
     if not self.allowAgonyWithOtherCurses then
-        ModuleRegistry:DisableModule(ABILITY_COW)
-        ModuleRegistry:DisableModule(ABILITY_COE)
-        ModuleRegistry:DisableModule(ABILITY_COS)
-        ModuleRegistry:DisableModule(ABILITY_COR)
+        ModuleRegistry:DisableModule(Abilities.CoW.name)
+        ModuleRegistry:DisableModule(Abilities.CoE.name)
+        ModuleRegistry:DisableModule(Abilities.CoS.name)
+        ModuleRegistry:DisableModule(Abilities.CoR.name)
     end
 end
 
 function CurseOfAgonyModule:run()
     _ = SpellStopCasting()
-    Logging:Debug("Casting " .. ABILITY_COA)
-    CastSpellByName(ABILITY_COA)
+    Logging:Debug("Casting " .. Abilities.CoA.name)
+    CastSpellByName(Abilities.CoA.name)
 end
 
 --- @param context WarlockModuleRunContext
 function CurseOfAgonyModule:getPriority(context)
     if self.enabled
-        and Helpers:SpellReady(ABILITY_COA)
+        and Helpers:SpellReady(Abilities.CoA.name)
         and self.trackers.coaTracker:ShouldCast()
         and self.trackers.channelingTracker:ShouldCast()
         and context.mana > context.coaCost then

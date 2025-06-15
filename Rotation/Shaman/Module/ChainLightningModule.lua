@@ -12,17 +12,17 @@ function ChainLightningModule.new()
         clearcastingTracker = ClearcastingTracker.GetInstance()
     }
     --- @class ChainLightningModule
-    return setmetatable(Module.new(ABILITY_CHAIN_LIGHTNING, trackers, "Interface\\Icons\\Spell_Nature_ChainLightning"), ChainLightningModule)
+    return setmetatable(Module.new(Abilities.ChainLightning.name, trackers, "Interface\\Icons\\Spell_Nature_ChainLightning"), ChainLightningModule)
 end
 
 function ChainLightningModule:run()
-    Logging:Debug("Casting "..ABILITY_CHAIN_LIGHTNING)
-    CastSpellByName(ABILITY_CHAIN_LIGHTNING)
+    Logging:Debug("Casting "..Abilities.ChainLightning.name)
+    CastSpellByName(Abilities.ChainLightning.name)
 end
 
 --- @param context ShamanModuleRunContext
 function ChainLightningModule:getPriority(context)
-    if self.enabled and Helpers:SpellReady(ABILITY_CHAIN_LIGHTNING) then
+    if self.enabled and Helpers:SpellReady(Abilities.ChainLightning.name) then
         local cost = self.trackers.clearcastingTracker:ShouldCast() and math.floor(context.clCost * 0.33) or context.clCost
         if context.mana > cost then
             if ModuleRegistry:IsModuleEnabled(PASSIVE_CLEARCASTING) then

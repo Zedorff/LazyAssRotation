@@ -16,13 +16,13 @@ function ShamanClearcastingModule.new()
 end
 
 function ShamanClearcastingModule:run()
-    Logging:Debug("Casting clearcast"..ABILITY_CHAIN_LIGHTNING)
-    CastSpellByName(ABILITY_CHAIN_LIGHTNING)
+    Logging:Debug("Casting clearcast"..Abilities.ChainLightning.name)
+    CastSpellByName(Abilities.ChainLightning.name)
 end
 
 --- @param context ShamanModuleRunContext
 function ShamanClearcastingModule:getPriority(context)
-    if self.enabled and self.trackers.clearcastingTracker:ShouldCast() and Helpers:SpellReady(ABILITY_CHAIN_LIGHTNING) then
+    if self.enabled and self.trackers.clearcastingTracker:ShouldCast() and Helpers:SpellReady(Abilities.ChainLightning.name) then
         local cost = math.floor(context.clCost * 0.33)
         if context.mana > cost then
             return 100;

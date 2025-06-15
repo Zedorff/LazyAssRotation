@@ -39,7 +39,7 @@ function CrusaderStrikeTracker:onEvent(event, arg1)
         Logging:Debug("Zeal is down")
         self.zealStacks = 0
         self.lastZealApply = 0
-    elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" and string.find(arg1, ABILITY_CRUSADER_STRIKE) then
+    elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" and string.find(arg1, Abilities.CrusaderStrike.name) then
         self.lastZealApply = GetTime() + 30
     end
 end

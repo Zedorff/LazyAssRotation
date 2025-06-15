@@ -12,20 +12,20 @@ function SlamModule.new()
         autoAttackTracker = AutoAttackTracker.new()
     }
     --- @class SlamModule
-    return setmetatable(Module.new(ABILITY_SLAM, trackers, "Interface\\Icons\\Ability_Warrior_DecisiveStrike_New"), SlamModule)
+    return setmetatable(Module.new(Abilities.Slam.name, trackers, "Interface\\Icons\\Ability_Warrior_DecisiveStrike_New"), SlamModule)
 end
 
 function SlamModule:run()
-    Logging:Debug("Casting Slam")
-    CastSpellByName(ABILITY_SLAM)
+    Logging:Debug("Casting "..Abilities.Slam.name)
+    CastSpellByName(Abilities.Slam.name)
 end
 
 --- @param context WarriorModuleRunContext
 function SlamModule:getPriority(context)
     if self.enabled then
-        local slamCastTime = Helpers:CastTime(ABILITY_SLAM)
+        local slamCastTime = Helpers:CastTime(Abilities.Slam.name)
         local nextSwing = self.trackers.autoAttackTracker:GetNextSwingTime()
-        if (nextSwing > slamCastTime) and Helpers:SpellReady(ABILITY_SLAM) and context.rage >= context.slamCost then
+        if (nextSwing > slamCastTime) and Helpers:SpellReady(Abilities.Slam.name) and context.rage >= context.slamCost then
             return 100;
         else
             return -1;

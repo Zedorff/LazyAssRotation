@@ -14,18 +14,18 @@ function DrainSoulModule.new(allowAgonyWithOtherCurses)
         coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses)
     }
     --- @class DrainSoulModule
-    return setmetatable(Module.new(ABILITY_DRAIN_SOUL, trackers, "Interface\\Icons\\Spell_Shadow_Haunting"), DrainSoulModule)
+    return setmetatable(Module.new(Abilities.DrainSoul.name, trackers, "Interface\\Icons\\Spell_Shadow_Haunting"), DrainSoulModule)
 end
 
 function DrainSoulModule:run()
-    Logging:Debug("Casting "..ABILITY_DRAIN_SOUL)
-    CastSpellByName(ABILITY_DRAIN_SOUL)
+    Logging:Debug("Casting "..Abilities.DrainSoul.name)
+    CastSpellByName(Abilities.DrainSoul.name)
 end
 
 --- @param context WarlockModuleRunContext
 function DrainSoulModule:getPriority(context)
-    if self.enabled and Helpers:SpellReady(ABILITY_DRAIN_SOUL) and self.trackers.channelingTracker:ShouldCast() then
-        local skipBecauseOfCoe = Helpers:SpellAlmostReady(ABILITY_DARK_HARVEST, 3) and self.trackers.coaTracker:GetRemainingDuration() <= 3 and ModuleRegistry:IsModuleEnabled(ABILITY_COE)
+    if self.enabled and Helpers:SpellReady(Abilities.DrainSoul.name) and self.trackers.channelingTracker:ShouldCast() then
+        local skipBecauseOfCoe = Helpers:SpellAlmostReady(Abilities.DarkHarvest.name, 3) and self.trackers.coaTracker:GetRemainingDuration() <= 3 and ModuleRegistry:IsModuleEnabled(Abilities.CoE.name)
         if not skipBecauseOfCoe and context.mana >= context.drainSoulCost then
             return 30;
         end

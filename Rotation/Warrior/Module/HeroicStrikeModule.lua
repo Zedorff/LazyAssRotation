@@ -12,13 +12,13 @@ function HeroicStrikeModule.new()
         autoAttackTracker = AutoAttackTracker.new()
     }
     --- @class HeroicStrikeModule
-    return setmetatable(Module.new(ABILITY_HEROIC_STRIKE, trackers, "Interface\\Icons\\Ability_Rogue_Ambush"),
+    return setmetatable(Module.new(Abilities.HeroicStrike.name, trackers, "Interface\\Icons\\Ability_Rogue_Ambush"),
         HeroicStrikeModule);
 end
 
 function HeroicStrikeModule:run()
-    Logging:Debug("Casting Heroic Strike")
-    CastSpellByName(ABILITY_HEROIC_STRIKE)
+    Logging:Debug("Casting "..Abilities.HeroicStrike.name)
+    CastSpellByName(Abilities.HeroicStrike.name)
 end
 
 --- @param context WarriorModuleRunContext
@@ -50,11 +50,11 @@ function HeroicStrikeModule:GetFuryHeroicPriority(context)
         return -1;
     end
 
-    local btCD      = Helpers:SpellNotReadyFor(ABILITY_BLOODTHIRST)
-    local wwCD      = Helpers:SpellNotReadyFor(ABILITY_WHIRLWIND)
+    local btCD      = Helpers:SpellNotReadyFor(Abilities.Bloodthirst.name)
+    local wwCD      = Helpers:SpellNotReadyFor(Abilities.Whirlwind.name)
     local GCD = 1.5
-    local btReady   = btCD <= GCD and ModuleRegistry:IsModuleEnabled(ABILITY_BLOODTHIRST)
-    local wwReady   = wwCD <= GCD and ModuleRegistry:IsModuleEnabled(ABILITY_WHIRLWIND)
+    local btReady   = btCD <= GCD and ModuleRegistry:IsModuleEnabled(Abilities.Bloodthirst.name)
+    local wwReady   = wwCD <= GCD and ModuleRegistry:IsModuleEnabled(Abilities.Whirlwind.name)
     local bothSoon  = btReady and wwReady and math.abs(btCD - wwCD) < GCD
 
     local reserve   = 0
@@ -79,7 +79,7 @@ function HeroicStrikeModule:GetProtHeroicPriority(context)
         return -1
     end
 
-    local ssAlmostReady = Helpers:SpellAlmostReady(ABILITY_SHIELD_SLAM, 1.5)
+    local ssAlmostReady = Helpers:SpellAlmostReady(Abilities.ShieldSlam.name, 1.5)
     local canAffordSSAndHS = context.rage >= context.shieldSlamCost + context.hsCost
     local rageThreshold = context.rage >= 45
 

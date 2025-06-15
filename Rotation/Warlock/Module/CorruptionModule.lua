@@ -15,22 +15,22 @@ function CorruptionModule.new(allowAgonyWithOtherCurses)
         coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses)
     }
     --- @class CorruptionModule
-    local self = Module.new(ABILITY_CORRUPTION, trackers, "Interface\\Icons\\Spell_Shadow_AbominationExplosion")
+    local self = Module.new(Abilities.Corruption.name, trackers, "Interface\\Icons\\Spell_Shadow_AbominationExplosion")
     setmetatable(self, CorruptionModule)
 
     return self
 end
 
 function CorruptionModule:run()
-    Logging:Debug("Casting " .. ABILITY_CORRUPTION)
+    Logging:Debug("Casting " .. Abilities.Corruption.name)
     _ = SpellStopCasting()
-    CastSpellByName(ABILITY_CORRUPTION)
+    CastSpellByName(Abilities.Corruption.name)
 end
 
 --- @param context WarlockModuleRunContext
 function CorruptionModule:getPriority(context)
     if not (self.enabled
-        and Helpers:SpellReady(ABILITY_SIPHON_LIFE) --- GCD check, corruption can't be used for this
+        and Helpers:SpellReady(Abilities.SiphonLife.name) --- GCD check, corruption can't be used for this
         and self.trackers.channelingTracker:ShouldCast()
         and context.mana > context.corruptionCost)
     then
@@ -40,7 +40,7 @@ function CorruptionModule:getPriority(context)
     local corrRemaining  = self.trackers.corruptionTracker:GetRemainingDuration()
     local agonyRemaining = self.trackers.coaTracker:GetRemainingDuration()
 
-    if Helpers:SpellAlmostReady(ABILITY_DARK_HARVEST, 2)
+    if Helpers:SpellAlmostReady(Abilities.DarkHarvest.name, 2)
         and agonyRemaining >= 13
         and corrRemaining  <  10
     then

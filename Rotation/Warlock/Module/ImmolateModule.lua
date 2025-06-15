@@ -12,17 +12,17 @@ function ImmolateModule.new()
         immolateTracker = ImmolateTracker.new()
     }
     --- @class ImmolateModule
-    return setmetatable(Module.new(ABILITY_IMMOLATE, trackers, "Interface\\Icons\\Spell_Fire_Immolation"), ImmolateModule)
+    return setmetatable(Module.new(Abilities.Immolate.name, trackers, "Interface\\Icons\\Spell_Fire_Immolation"), ImmolateModule)
 end
 
 function ImmolateModule:run()
-    Logging:Debug("Casting "..ABILITY_IMMOLATE)
-    CastSpellByName(ABILITY_IMMOLATE)
+    Logging:Debug("Casting "..Abilities.Immolate.name)
+    CastSpellByName(Abilities.Immolate.name)
 end
 
 --- @param context WarlockModuleRunContext
 function ImmolateModule:getPriority(context)
-    if self.enabled and Helpers:SpellReady(ABILITY_IMMOLATE) then
+    if self.enabled and Helpers:SpellReady(Abilities.Immolate.name) then
         if self.trackers.immolateTracker:ShouldCast() and context.mana > context.immolateCost then
             return 80;
         end

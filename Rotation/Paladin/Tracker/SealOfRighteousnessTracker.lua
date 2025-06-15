@@ -6,7 +6,7 @@ SealOfRighteousnessTracker.__index = SealOfRighteousnessTracker
 --- @return SealOfRighteousnessTracker
 function SealOfRighteousnessTracker.new()
     --- @class SealOfRighteousnessTracker
-    local self = SelfBuffTracker.new(ABILITY_SEAL_RIGHTEOUSNESS, "Ability_ThunderBolt")
+    local self = SelfBuffTracker.new(Abilities.SealRighteousness.name, "Ability_ThunderBolt")
     setmetatable(self, SealOfRighteousnessTracker)
     return self
 end

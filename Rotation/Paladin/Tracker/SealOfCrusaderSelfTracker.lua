@@ -6,7 +6,7 @@ SealOfCrusaderSelfTracker.__index = SealOfCrusaderSelfTracker
 --- @return SealOfCrusaderSelfTracker
 function SealOfCrusaderSelfTracker.new()
     --- @class SealOfCrusaderSelfTracker
-    local self = SelfBuffTracker.new(ABILITY_SEAL_CRUSADER, "Spell_Holy_HolySmite")
+    local self = SelfBuffTracker.new(Abilities.SealCrusader.name, "Spell_Holy_HolySmite")
     setmetatable(self, SealOfCrusaderSelfTracker)
     return self
 end

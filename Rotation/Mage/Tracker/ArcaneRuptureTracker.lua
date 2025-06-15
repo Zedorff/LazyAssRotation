@@ -23,11 +23,11 @@ end
 function ArcaneRuptureTracker:onEvent(event, arg1)
     if event == "PLAYER_DEAD" then
         self.ruptureIsUp = false
-    elseif event == "CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE" and string.find(arg1, ABILITY_ARCANE_RUPTURE) then
-        Logging:Debug(ABILITY_ARCANE_RUPTURE.." is up")
+    elseif event == "CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE" and string.find(arg1, Abilities.ArcaneRupture.name) then
+        Logging:Debug(Abilities.ArcaneRupture.name.." is up")
         self.ruptureIsUp = true
-    elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" and string.find(arg1, ABILITY_ARCANE_RUPTURE) then
-        Logging:Debug(ABILITY_ARCANE_RUPTURE.." is down")
+    elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" and string.find(arg1, Abilities.ArcaneRupture.name) then
+        Logging:Debug(Abilities.ArcaneRupture.name.." is down")
         self.ruptureIsUp = false
     end 
 end

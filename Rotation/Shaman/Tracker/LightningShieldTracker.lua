@@ -6,7 +6,7 @@ LightningShieldTracker.__index = LightningShieldTracker
 --- @return LightningShieldTracker
 function LightningShieldTracker.new()
     --- @class LightningShieldTracker
-    local self = SelfBuffTracker.new(ABILITY_LIGHTNING_SHIELD, "Spell_Nature_LightningShield")
+    local self = SelfBuffTracker.new(Abilities.LightningShield.name, "Spell_Nature_LightningShield")
     setmetatable(self, LightningShieldTracker)
     return self
 end

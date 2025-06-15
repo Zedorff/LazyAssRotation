@@ -6,7 +6,7 @@ SealOfWisdomSelfTracker.__index = SealOfWisdomSelfTracker
 --- @return SealOfWisdomSelfTracker
 function SealOfWisdomSelfTracker.new()
     --- @class SealOfWisdomSelfTracker
-    local self = SelfBuffTracker.new(ABILITY_SEAL_WISDOM, "Spell_Holy_RighteousnessAura")
+    local self = SelfBuffTracker.new(Abilities.SealWisdom.name, "Spell_Holy_RighteousnessAura")
     setmetatable(self, SealOfWisdomSelfTracker)
     return self
 end

@@ -12,19 +12,19 @@ function CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses)
         return sharedInstance
     end
 
-    local curses = {}
+    local rankedAbility = Abilities.CoA
+
     if allowAgonyWithOtherCurses then
-        table.insert(curses, 11722) --- CoE
-        table.insert(curses, 11713) --- CoA
-        table.insert(curses, 17937) --- CoS
-        table.insert(curses, 702) --- CoW
-        table.insert(curses, 11717) --- CoR
+        local ids = Collection.shallowCopy(Abilities.CoA.ids)
+        Collection.combine(ids, Abilities.CoR.ids)
+        Collection.combine(ids, Abilities.CoE.ids)
+        Collection.combine(ids, Abilities.CoW.ids)
+        Collection.combine(ids, Abilities.CoS.ids)
+        rankedAbility = { name = Abilities.CoA.name, ids = ids }
     end
 
-    local joined = table.concat(curses, ", ")
-
     --- @class CurseOfAgonyTracker
-    local self = WarlockDotTracker.new(joined, ABILITY_COA)
+    local self = WarlockDotTracker.new(rankedAbility)
     setmetatable(self, CurseOfAgonyTracker)
 
     sharedInstance = self

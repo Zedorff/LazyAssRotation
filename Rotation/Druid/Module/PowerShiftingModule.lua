@@ -17,8 +17,8 @@ function PowerShiftingModule.new()
 end
 
 function PowerShiftingModule:run()
-    Logging:Debug("Casting "..ABILITY_CAT_FORM)
-    CastSpellByName(ABILITY_CAT_FORM)
+    Logging:Debug("Casting "..Abilities.CatForm.name)
+    CastSpellByName(Abilities.CatForm.name)
 end
 
 --- @param context DruidModuleRunContext
@@ -30,7 +30,7 @@ function PowerShiftingModule:getPriority(context)
             return 100;
         end
 
-        if not isDefaultForm and haveMana and self.trackers.energyTickTracker:GetNextEnergyTick() < 1 and context.energy <= 27 and Helpers:SpellReady(ABILITY_CAT_FORM) then
+        if not isDefaultForm and haveMana and self.trackers.energyTickTracker:GetNextEnergyTick() < 1 and context.energy <= 27 and Helpers:SpellReady(Abilities.CatForm.name) then
             return 100;
         end
     end

@@ -38,23 +38,10 @@ end
 
 --- @return boolean
 function SequenceTracker:IsLastCastWasStarfire()
-    return self.lastCastSpellId == 25298
-            or self.lastCastSpellId == 9876
-            or self.lastCastSpellId == 9875
-            or self.lastCastSpellId == 8951
-            or self.lastCastSpellId == 8950
-            or self.lastCastSpellId == 8949
-            or self.lastCastSpellId == 2912
+    return IsMatchingRank(Abilities.Starfire, self.lastCastSpellId)
 end
 
 --- @return boolean
 function SequenceTracker:IsLastCastWasWrath()
-    return self.lastCastSpellId == 9912
-            or self.lastCastSpellId == 8905
-            or self.lastCastSpellId == 6780
-            or self.lastCastSpellId == 5180
-            or self.lastCastSpellId == 5179
-            or self.lastCastSpellId == 5178
-            or self.lastCastSpellId == 5177
-            or self.lastCastSpellId == 5176
+    return IsMatchingRank(Abilities.Wrath, self.lastCastSpellId)
 end

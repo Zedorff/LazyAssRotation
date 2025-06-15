@@ -6,17 +6,17 @@ ConsecrationModule.__index = ConsecrationModule
 --- @return ConsecrationModule
 function ConsecrationModule.new()
     --- @class ConsecrationModule
-    return setmetatable(Module.new(ABILITY_CONSECRATION, nil, "Interface\\Icons\\Spell_Holy_InnerFire"), ConsecrationModule)
+    return setmetatable(Module.new(Abilities.Consecration.name, nil, "Interface\\Icons\\Spell_Holy_InnerFire"), ConsecrationModule)
 end
 
 function ConsecrationModule:run()
-    Logging:Debug("Casting "..ABILITY_CONSECRATION)
-    CastSpellByName(ABILITY_CONSECRATION)
+    Logging:Debug("Casting "..Abilities.Consecration.name)
+    CastSpellByName(Abilities.Consecration.name)
 end
 
 --- @param context PaladinModuleRunContext
 function ConsecrationModule:getPriority(context)
-    if self.enabled and context.remainingManaPercents > 50 and Helpers:SpellReady(ABILITY_CONSECRATION) then
+    if self.enabled and context.remainingManaPercents > 50 and Helpers:SpellReady(Abilities.Consecration.name) then
         return 40;
     end
     return -1;

@@ -12,12 +12,12 @@ function ArcaneMissilesModule.new()
         channelingTracker = ChannelingTracker.GetInstance()
     }
     --- @class ArcaneMissilesModule
-    return setmetatable(Module.new(ABILITY_ARCANE_MISSILES, trackers, "Interface\\Icons\\Spell_Nature_StarFall"), ArcaneMissilesModule)
+    return setmetatable(Module.new(Abilities.ArcaneMissiles.name, trackers, "Interface\\Icons\\Spell_Nature_StarFall"), ArcaneMissilesModule)
 end
 
 function ArcaneMissilesModule:run()
-    Logging:Debug("Casting "..ABILITY_ARCANE_MISSILES)
-    CastSpellByName(ABILITY_ARCANE_MISSILES)
+    Logging:Debug("Casting "..Abilities.ArcaneMissiles.name)
+    CastSpellByName(Abilities.ArcaneMissiles.name)
 end
 
 --- @param context MageModuleRunContext

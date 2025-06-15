@@ -7,7 +7,7 @@ HolyShieldTracker.__index = HolyShieldTracker
 --- @return HolyShieldTracker
 function HolyShieldTracker.new()
     --- @class HolyShieldTracker
-    local self = SelfBuffTracker.new(ABILITY_HOLY_SHIELD, "Spell_Holy_BlessingOfProtection")
+    local self = SelfBuffTracker.new(Abilities.HolyShield.name, "Spell_Holy_BlessingOfProtection")
     setmetatable(self, HolyShieldTracker)
     return self
 end

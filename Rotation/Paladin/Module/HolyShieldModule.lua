@@ -12,12 +12,12 @@ function HolyShieldModule.new()
         holyShieldTracker = HolyShieldTracker.new()
     }
     --- @class HolyShieldModule
-    return setmetatable(Module.new(ABILITY_HOLY_SHIELD, trackers, "Interface\\Icons\\Spell_Holy_BlessingOfProtection"), HolyShieldModule)
+    return setmetatable(Module.new(Abilities.HolyShield.name, trackers, "Interface\\Icons\\Spell_Holy_BlessingOfProtection"), HolyShieldModule)
 end
 
 function HolyShieldModule:run()
-    Logging:Debug("Casting "..ABILITY_HOLY_SHIELD)
-    CastSpellByName(ABILITY_HOLY_SHIELD)
+    Logging:Debug("Casting "..Abilities.HolyShield.name)
+    CastSpellByName(Abilities.HolyShield.name)
 end
 
 --- @param context PaladinModuleRunContext
@@ -27,7 +27,7 @@ function HolyShieldModule:getPriority(context)
         return -1;
     end
 
-    if self.trackers.holyShieldTracker:ShouldCast() and Helpers:SpellReady(ABILITY_HOLY_SHIELD) then
+    if self.trackers.holyShieldTracker:ShouldCast() and Helpers:SpellReady(Abilities.HolyShield.name) then
         return 95;
     end
 

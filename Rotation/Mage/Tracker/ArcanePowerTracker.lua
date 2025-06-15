@@ -6,7 +6,7 @@ ArcanePowerTracker.__index = ArcanePowerTracker
 --- @return ArcanePowerTracker
 function ArcanePowerTracker.new()
     --- @class ArcanePowerTracker
-    local self = SelfBuffTracker.new(ABILITY_ARCANE_POWER, "Spell_Nature_Lightning")
+    local self = SelfBuffTracker.new(Abilities.ArcanePower.name, "Spell_Nature_Lightning")
     setmetatable(self, ArcanePowerTracker)
     return self
 end

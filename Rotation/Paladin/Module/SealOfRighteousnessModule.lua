@@ -14,11 +14,11 @@ function SealOfRighteousnessModule.new()
         socrTargetTracker = SealOfCrusaderTargetTracker.new()
     }
     --- @class SealOfRighteousnessModule
-    local self = Module.new(ABILITY_SEAL_RIGHTEOUSNESS, trackers, "Interface\\Icons\\Ability_ThunderBolt")
+    local self = Module.new(Abilities.SealRighteousness.name, trackers, "Interface\\Icons\\Ability_ThunderBolt")
     setmetatable(self, SealOfRighteousnessModule)
 
     if self.enabled then
-        ModuleRegistry:DisableModule(ABILITY_SEAL_COMMAND)
+        ModuleRegistry:DisableModule(Abilities.SealCommand.name)
     end
 
     return self
@@ -26,12 +26,12 @@ end
 
 function SealOfRighteousnessModule:enable()
     Module.enable(self)
-    ModuleRegistry:DisableModule(ABILITY_SEAL_COMMAND)
+    ModuleRegistry:DisableModule(Abilities.SealCommand.name)
 end
 
 function SealOfRighteousnessModule:run()
-    Logging:Debug("Casting " .. ABILITY_SEAL_RIGHTEOUSNESS)
-    CastSpellByName(ABILITY_SEAL_RIGHTEOUSNESS)
+    Logging:Debug("Casting " .. Abilities.SealRighteousness.name)
+    CastSpellByName(Abilities.SealRighteousness.name)
 end
 
 --- @param context PaladinModuleRunContext
@@ -51,8 +51,8 @@ end
 
 --- @param context PaladinModuleRunContext
 function SealOfRighteousnessModule:GetRetriSealOfRighteousnessPriority(context)
-    local sowEnabled = ModuleRegistry:IsModuleEnabled(ABILITY_SEAL_WISDOM)
-    local socrEnabled = ModuleRegistry:IsModuleEnabled(ABILITY_SEAL_CRUSADER)
+    local sowEnabled = ModuleRegistry:IsModuleEnabled(Abilities.SealWisdom.name)
+    local socrEnabled = ModuleRegistry:IsModuleEnabled(Abilities.SealCrusader.name)
 
     if self.trackers.sorTracker:ShouldCast() and context.mana > context.sorCost then
         if not sowEnabled and not socrEnabled then
@@ -70,7 +70,7 @@ end
 
 --- @param context PaladinModuleRunContext
 function SealOfRighteousnessModule:GetProtSealOfRighteousnessPriority(context)
-    local sowEnabled = ModuleRegistry:IsModuleEnabled(ABILITY_SEAL_WISDOM)
+    local sowEnabled = ModuleRegistry:IsModuleEnabled(Abilities.SealWisdom.name)
     if context.mana > context.sorCost then
         if sowEnabled and not self.trackers.sowTargetTracker:ShouldCast() and self.trackers.sorTracker:ShouldCast() then
             return 80;

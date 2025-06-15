@@ -6,7 +6,7 @@ CurseOfRecklessnessTracker.__index = CurseOfRecklessnessTracker
 --- @return CurseOfRecklessnessTracker
 function CurseOfRecklessnessTracker.new()
     --- @class CurseOfRecklessnessTracker
-    local self = DebuffTracker.new(ABILITY_COR, "Spell_Shadow_UnholyStrength")
+    local self = DebuffTracker.new(Abilities.CoR.name, "Spell_Shadow_UnholyStrength")
     setmetatable(self, CurseOfRecklessnessTracker)
     return self
 end

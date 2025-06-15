@@ -13,11 +13,11 @@ function SealOfCrusaderTargetModule.new()
         socrSelfTracker = SealOfCrusaderSelfTracker.new()
     }
     --- @class SealOfCrusaderTargetModule
-    local self = Module.new(ABILITY_SEAL_CRUSADER, trackers, "Interface\\Icons\\Spell_Holy_HolySmite")
+    local self = Module.new(Abilities.SealCrusader.name, trackers, "Interface\\Icons\\Spell_Holy_HolySmite")
     setmetatable(self, SealOfCrusaderTargetModule)
 
     if self.enabled then
-        ModuleRegistry:DisableModule(ABILITY_SEAL_WISDOM)
+        ModuleRegistry:DisableModule(Abilities.SealWisdom.name)
     end
 
     return self
@@ -25,12 +25,12 @@ end
 
 function SealOfCrusaderTargetModule:enable()
     Module.enable(self)
-    ModuleRegistry:DisableModule(ABILITY_SEAL_WISDOM)
+    ModuleRegistry:DisableModule(Abilities.SealWisdom.name)
 end
 
 function SealOfCrusaderTargetModule:run()
-    Logging:Debug("Casting " .. ABILITY_SEAL_CRUSADER)
-    CastSpellByName(ABILITY_SEAL_CRUSADER)
+    Logging:Debug("Casting " .. Abilities.SealCrusader.name)
+    CastSpellByName(Abilities.SealCrusader.name)
 end
 
 --- @param context PaladinModuleRunContext

@@ -13,11 +13,11 @@ function SealOfWisdomTargetModule.new()
         sowSelfTracker = SealOfWisdomSelfTracker.new()
     }
     --- @class SealOfWisdomTargetModule
-    local self = Module.new(ABILITY_SEAL_WISDOM, trackers, "Interface\\Icons\\Spell_Holy_RighteousnessAura")
+    local self = Module.new(Abilities.SealWisdom.name, trackers, "Interface\\Icons\\Spell_Holy_RighteousnessAura")
     setmetatable(self, SealOfWisdomTargetModule)
 
     if self.enabled then
-        ModuleRegistry:DisableModule(ABILITY_SEAL_CRUSADER)
+        ModuleRegistry:DisableModule(Abilities.SealCrusader.name)
     end
 
     return self
@@ -25,12 +25,12 @@ end
 
 function SealOfWisdomTargetModule:enable()
     Module.enable(self)
-    ModuleRegistry:DisableModule(ABILITY_SEAL_CRUSADER)
+    ModuleRegistry:DisableModule(Abilities.SealCrusader.name)
 end
 
 function SealOfWisdomTargetModule:run()
-    Logging:Debug("Casting "..ABILITY_SEAL_WISDOM)
-    CastSpellByName(ABILITY_SEAL_WISDOM)
+    Logging:Debug("Casting "..Abilities.SealWisdom.name)
+    CastSpellByName(Abilities.SealWisdom.name)
 end
 
 --- @param context PaladinModuleRunContext

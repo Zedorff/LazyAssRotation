@@ -6,7 +6,7 @@ RighteousFuryTracker.__index = RighteousFuryTracker
 --- @return RighteousFuryTracker
 function RighteousFuryTracker.new()
     --- @class RighteousFuryTracker
-    local self = SelfBuffTracker.new(ABILITY_RIGHTEOUS_FURY, "Spell_Holy_SealOfFury")
+    local self = SelfBuffTracker.new(Abilities.RighteousFury.name, "Spell_Holy_SealOfFury")
     setmetatable(self, RighteousFuryTracker)
     return self
 end

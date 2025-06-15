@@ -12,10 +12,10 @@ function WindfuryModule.new()
         wfTracker = WindfuryTracker.new()
     }
     --- @class WindfuryModule
-    local self = setmetatable(Module.new(ABILITY_WINDFURY, trackers, "Interface\\Icons\\Spell_Nature_Cyclone"), WindfuryModule)
+    local self = setmetatable(Module.new(Abilities.Windfury.name, trackers, "Interface\\Icons\\Spell_Nature_Cyclone"), WindfuryModule)
 
     if self.enabled then
-        ModuleRegistry:DisableModule(ABILITY_ROCKBITER)
+        ModuleRegistry:DisableModule(Abilities.Rockbiter.name)
     end
 
     return self
@@ -23,12 +23,12 @@ end
 
 function WindfuryModule:enable()
     Module.enable(self)
-    ModuleRegistry:DisableModule(ABILITY_ROCKBITER)
+    ModuleRegistry:DisableModule(Abilities.Rockbiter.name)
 end
 
 function WindfuryModule:run()
-    Logging:Debug("Casting Windfury Weapon")
-    CastSpellByName(ABILITY_WINDFURY)
+    Logging:Debug("Casting "..Abilities.Windfury.name)
+    CastSpellByName(Abilities.Windfury.name)
 end
 
 --- @param context ShamanModuleRunContext

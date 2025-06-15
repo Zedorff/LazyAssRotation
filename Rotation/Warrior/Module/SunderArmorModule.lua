@@ -6,18 +6,18 @@ SunderArmorModule.__index = SunderArmorModule
 --- @return SunderArmorModule
 function SunderArmorModule.new()
     --- @class SunderArmorModule
-    return setmetatable(Module.new(ABILITY_SUNDER_ARMOR, nil, "Interface\\Icons\\Ability_Warrior_Sunder"), SunderArmorModule)
+    return setmetatable(Module.new(Abilities.SunderArmor.name, nil, "Interface\\Icons\\Ability_Warrior_Sunder"), SunderArmorModule)
 end
 
 function SunderArmorModule:run()
-    Logging:Debug("Casting "..ABILITY_SUNDER_ARMOR)
-    CastSpellByName(ABILITY_SUNDER_ARMOR)
+    Logging:Debug("Casting "..Abilities.SunderArmor.name)
+    CastSpellByName(Abilities.SunderArmor.name)
 end
 
 --- @param context WarriorModuleRunContext
 function SunderArmorModule:getPriority(context)
     if self.enabled then
-        if Helpers:SpellReady(ABILITY_SUNDER_ARMOR) and context.rage >= 80 then
+        if Helpers:SpellReady(Abilities.SunderArmor.name) and context.rage >= 80 then
             return 50;
         end
     end

@@ -12,12 +12,12 @@ function RendModule.new()
         rendTracker = RendTracker.new()
     }
     --- @class RendModule
-    return setmetatable(Module.new(ABILITY_REND, trackers, "Interface\\Icons\\Ability_Gouge"), RendModule)
+    return setmetatable(Module.new(Abilities.Rend.name, trackers, "Interface\\Icons\\Ability_Gouge"), RendModule)
 end
 
 function RendModule:run()
-    Logging:Debug("Casting Rend")
-    CastSpellByName(ABILITY_REND)
+    Logging:Debug("Casting "..Abilities.Rend.name)
+    CastSpellByName(Abilities.Rend.name)
 end
 
 --- @param context WarriorModuleRunContext

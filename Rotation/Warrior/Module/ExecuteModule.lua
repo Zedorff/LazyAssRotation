@@ -6,13 +6,13 @@ ExecuteModule.__index = ExecuteModule
 --- @return ExecuteModule
 function ExecuteModule.new()
     --- @class ExecuteModule
-    return setmetatable(Module.new(ABILITY_EXECUTE, nil, "Interface\\Icons\\INV_Sword_48"), ExecuteModule);
+    return setmetatable(Module.new(Abilities.Execute.name, nil, "Interface\\Icons\\INV_Sword_48"), ExecuteModule);
 end
 
 function ExecuteModule:run()
-    Logging:Debug("Casting Execute")
+    Logging:Debug("Casting "..Abilities.Execute.name)
     _ = SpellStopCasting()
-    CastSpellByName(ABILITY_EXECUTE)
+    CastSpellByName(Abilities.Execute.name)
 end
 
 function ExecuteModule:getPriority()

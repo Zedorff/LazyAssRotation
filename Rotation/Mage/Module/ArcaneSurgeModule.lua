@@ -15,12 +15,12 @@ function ArcaneSurgeModule.new()
         arcanePowerTracker = ArcanePowerTracker.new()
     }
     --- @class ArcaneSurgeModule
-    return setmetatable(Module.new(ABILITY_ARCANE_SURGE, trackers, "Interface\\Icons\\INV_Enchant_EssenceMysticalLarge"), ArcaneSurgeModule)
+    return setmetatable(Module.new(Abilities.ArcaneSurge.name, trackers, "Interface\\Icons\\INV_Enchant_EssenceMysticalLarge"), ArcaneSurgeModule)
 end
 
 function ArcaneSurgeModule:run()
-    Logging:Debug("Casting "..ABILITY_ARCANE_SURGE)
-    CastSpellByName(ABILITY_ARCANE_SURGE)
+    Logging:Debug("Casting "..Abilities.ArcaneSurge.name)
+    CastSpellByName(Abilities.ArcaneSurge.name)
 end
 
 --- @param context MageModuleRunContext

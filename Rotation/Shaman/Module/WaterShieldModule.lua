@@ -12,13 +12,13 @@ function WaterShieldModule.new()
         waterShieldTracker = WaterShieldTracker.new()
     }
     --- @class WaterShieldModule
-    return setmetatable(Module.new(ABILITY_WATER_SHIELD, trackers, "Interface\\Icons\\Ability_Shaman_WaterShield"),
+    return setmetatable(Module.new(Abilities.WaterShield.name, trackers, "Interface\\Icons\\Ability_Shaman_WaterShield"),
         WaterShieldModule)
 end
 
 function WaterShieldModule:run()
-    Logging:Debug("Casting Water Shield")
-    CastSpellByName(ABILITY_WATER_SHIELD)
+    Logging:Debug("Casting "..Abilities.WaterShield.name)
+    CastSpellByName(Abilities.WaterShield.name)
 end
 
 --- @param context ShamanModuleRunContext

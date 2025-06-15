@@ -6,7 +6,7 @@ StormStrikeTracker.__index = StormStrikeTracker
 --- @return StormStrikeTracker
 function StormStrikeTracker.new()
     --- @class StormStrikeTracker
-    local self = SelfBuffTracker.new(ABILITY_STORMSTRIKE, "Ability_Hunter_RunningShot")
+    local self = SelfBuffTracker.new(Abilities.Stormstrike.name, "Ability_Hunter_RunningShot")
     setmetatable(self, StormStrikeTracker)
     return self
 end

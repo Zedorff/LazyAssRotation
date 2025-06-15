@@ -12,12 +12,12 @@ function RighteousFuryModule.new()
         rightneousFuryTracker = RighteousFuryTracker.new()
     }
     --- @class RighteousFuryModule
-    return setmetatable(Module.new(ABILITY_RIGHTEOUS_FURY, trackers, "Interface\\Icons\\Spell_Holy_SealOfFury"), RighteousFuryModule)
+    return setmetatable(Module.new(Abilities.RighteousFury.name, trackers, "Interface\\Icons\\Spell_Holy_SealOfFury"), RighteousFuryModule)
 end
 
 function RighteousFuryModule:run()
-    Logging:Debug("Casting "..ABILITY_RIGHTEOUS_FURY)
-    CastSpellByName(ABILITY_RIGHTEOUS_FURY)
+    Logging:Debug("Casting "..Abilities.RighteousFury.name)
+    CastSpellByName(Abilities.RighteousFury.name)
 end
 
 --- @param context PaladinModuleRunContext

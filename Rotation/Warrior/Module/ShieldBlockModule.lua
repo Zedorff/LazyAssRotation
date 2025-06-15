@@ -13,17 +13,17 @@ function ShieldBlockModule.new()
         shieldSlamTracker = ShieldSlamTracker.new()
     }
     --- @class ShieldBlockModule
-    return setmetatable(Module.new(ABILITY_SHIELD_BLOCK, trackers, "Interface\\Icons\\Ability_Defend"), ShieldBlockModule)
+    return setmetatable(Module.new(Abilities.ShieldBlock.name, trackers, "Interface\\Icons\\Ability_Defend"), ShieldBlockModule)
 end
 
 function ShieldBlockModule:run()
-    Logging:Debug("Casting "..ABILITY_SHIELD_BLOCK)
-    CastSpellByName(ABILITY_SHIELD_BLOCK)
+    Logging:Debug("Casting "..Abilities.ShieldBlock.name)
+    CastSpellByName(Abilities.ShieldBlock.name)
 end
 
 --- @param context WarriorModuleRunContext
 function ShieldBlockModule:getPriority(context)
-    if self.enabled and not Helpers:SpellReady(ABILITY_SHIELD_SLAM) and Helpers:SpellReady(ABILITY_SHIELD_BLOCK) then
+    if self.enabled and not Helpers:SpellReady(Abilities.ShieldSlam.name) and Helpers:SpellReady(Abilities.ShieldBlock.name) then
         if self.trackers.shieldBlockTracker:ShouldCast() and self.trackers.shieldSlamTracker:ShouldCast() then
             return 84;
         end

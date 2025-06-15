@@ -6,7 +6,7 @@ ShieldBlockTracker.__index = ShieldBlockTracker
 --- @return ShieldBlockTracker
 function ShieldBlockTracker.new()
     --- @class ShieldBlockTracker
-    local self = SelfBuffTracker.new(ABILITY_SHIELD_BLOCK, "Ability_Defend")
+    local self = SelfBuffTracker.new(Abilities.ShieldBlock.name, "Ability_Defend")
     setmetatable(self, ShieldBlockTracker)
     return self
 end

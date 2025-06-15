@@ -12,17 +12,17 @@ function RakeModule.new()
         rakeTracker = RakeTracker.new()
     }
     --- @class RakeModule
-    return setmetatable(Module.new(ABILITY_RAKE, trackers, "Interface\\Icons\\Ability_Druid_Disembowel"), RakeModule)
+    return setmetatable(Module.new(Abilities.Rake.name, trackers, "Interface\\Icons\\Ability_Druid_Disembowel"), RakeModule)
 end
 
 function RakeModule:run()
-    Logging:Debug("Casting "..ABILITY_RAKE)
-    CastSpellByName(ABILITY_RAKE)
+    Logging:Debug("Casting "..Abilities.Rake.name)
+    CastSpellByName(Abilities.Rake.name)
 end
 
 --- @param context DruidModuleRunContext
 function RakeModule:getPriority(context)
-    if self.enabled and Helpers:SpellReady(ABILITY_RAKE) then
+    if self.enabled and Helpers:SpellReady(Abilities.Rake.name) then
         if self.trackers.rakeTracker:ShouldCast() then
             return 95;
         end

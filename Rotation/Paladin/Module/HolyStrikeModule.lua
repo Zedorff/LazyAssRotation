@@ -13,17 +13,17 @@ function HolyStrikeModule.new()
         holyStrikeTracker = HolyStrikeTracker.new()
     }
     --- @class HolyStrikeModule
-    return setmetatable(Module.new(ABILITY_HOLY_STRIKE, trackers, "Interface\\Icons\\INV_Sword_01"), HolyStrikeModule)
+    return setmetatable(Module.new(Abilities.HolyStrike.name, trackers, "Interface\\Icons\\INV_Sword_01"), HolyStrikeModule)
 end
 
 function HolyStrikeModule:run()
-    Logging:Debug("Casting "..ABILITY_HOLY_STRIKE)
-    CastSpellByName(ABILITY_HOLY_STRIKE)
+    Logging:Debug("Casting "..Abilities.HolyStrike.name)
+    CastSpellByName(Abilities.HolyStrike.name)
 end
 
 --- @param context PaladinModuleRunContext
 function HolyStrikeModule:getPriority(context)
-    if not self.enabled or context.mana < context.holyStrikeCost or not Helpers:SpellReady(ABILITY_HOLY_STRIKE) then
+    if not self.enabled or context.mana < context.holyStrikeCost or not Helpers:SpellReady(Abilities.HolyStrike.name) then
         return -1;
     end
 

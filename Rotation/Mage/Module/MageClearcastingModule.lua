@@ -17,8 +17,8 @@ function MageClearcastingModule.new()
 end
 
 function MageClearcastingModule:run()
-    Logging:Debug("Casting "..ABILITY_ARCANE_MISSILES)
-    CastSpellByName(ABILITY_ARCANE_MISSILES)
+    Logging:Debug("Casting "..Abilities.ArcaneMissiles.name)
+    CastSpellByName(Abilities.ArcaneMissiles.name)
 end
 
 --- @param context MageModuleRunContext

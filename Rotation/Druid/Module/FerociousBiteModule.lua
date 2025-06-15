@@ -12,13 +12,13 @@ function FerociousBiteModule.new()
         ripTracker = RipTracker.new()
     }
     --- @class FerociousBiteModule
-    return setmetatable(Module.new(ABILITY_FEROCIOUS_BITE, trackers, "Interface\\Icons\\Ability_Druid_FerociousBite"),
+    return setmetatable(Module.new(Abilities.FerociousBite.name, trackers, "Interface\\Icons\\Ability_Druid_FerociousBite"),
         FerociousBiteModule)
 end
 
 function FerociousBiteModule:run()
-    Logging:Debug("Casting " .. ABILITY_FEROCIOUS_BITE)
-    CastSpellByName(ABILITY_FEROCIOUS_BITE)
+    Logging:Debug("Casting " .. Abilities.FerociousBite.name)
+    CastSpellByName(Abilities.FerociousBite.name)
 end
 
 --- @param context DruidModuleRunContext

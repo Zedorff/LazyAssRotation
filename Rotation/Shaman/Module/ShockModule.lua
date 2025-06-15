@@ -2,9 +2,9 @@
 
 --- @enum ShockType
 ShockType = {
-    EARTH = ABILITY_EARTH_SHOCK,
-    FLAME = ABILITY_FLAME_SHOCK,
-    FROST = ABILITY_FROST_SHOCK
+    EARTH = Abilities.EarthShock.name,
+    FLAME = Abilities.FlameShock.name,
+    FROST = Abilities.FrostShock.name
 }
 
 --- @class ShockModule : Module

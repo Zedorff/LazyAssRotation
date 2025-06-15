@@ -13,17 +13,17 @@ function ShredModule.new()
         notBehindTargetTracker = NotBehindTargetTracker.new()
     }
     --- @class ShredModule
-    return setmetatable(Module.new(ABILITY_SHRED, trackers, "Interface\\Icons\\Spell_Shadow_VampiricAura"), ShredModule)
+    return setmetatable(Module.new(Abilities.Shred.name, trackers, "Interface\\Icons\\Spell_Shadow_VampiricAura"), ShredModule)
 end
 
 function ShredModule:run()
-    Logging:Debug("Casting "..ABILITY_SHRED)
-    CastSpellByName(ABILITY_SHRED)
+    Logging:Debug("Casting "..Abilities.Shred.name)
+    CastSpellByName(Abilities.Shred.name)
 end
 
 --- @param context DruidModuleRunContext
 function ShredModule:getPriority(context)
-    if self.enabled and Helpers:SpellReady(ABILITY_SHRED) then
+    if self.enabled and Helpers:SpellReady(Abilities.Shred.name) then
         if self.trackers.notBehindTargetTracker:GetLastAttemptTime() < 0.2 then
             return -1;
         end

@@ -14,21 +14,21 @@ function StarfireModule.new()
         solsticeTracker = SolsticeTracker.GetInstance()
     }
     --- @class StarfireModule
-    return setmetatable(Module.new(ABILITY_STARFIRE, trackers, "Interface\\Icons\\Spell_Arcane_StarFire"), StarfireModule)
+    return setmetatable(Module.new(Abilities.Starfire.name, trackers, "Interface\\Icons\\Spell_Arcane_StarFire"), StarfireModule)
 end
 
 function StarfireModule:run()
-    Logging:Debug("Casting "..ABILITY_STARFIRE)
-    CastSpellByName(ABILITY_STARFIRE)
+    Logging:Debug("Casting "..Abilities.Starfire.name)
+    CastSpellByName(Abilities.Starfire.name)
 end
 
 --- @param context DruidModuleRunContext
 function StarfireModule:getPriority(context)
-    if not self.enabled or not Helpers:SpellReady(ABILITY_STARFIRE) then
+    if not self.enabled or not Helpers:SpellReady(Abilities.Starfire.name) then
         return -1
     end
 
-    if self.trackers.eclipseTracker:GetEclipseType() == EclipseType.ARCANE and self.trackers.eclipseTracker:GetEclipseRemainingTime() >= Helpers:CastTime(ABILITY_STARFIRE) then
+    if self.trackers.eclipseTracker:GetEclipseType() == EclipseType.ARCANE and self.trackers.eclipseTracker:GetEclipseRemainingTime() >= Helpers:CastTime(Abilities.Starfire.name) then
         return 90;
     end
 
@@ -36,7 +36,7 @@ function StarfireModule:getPriority(context)
         return 50;
     end
 
-    if not ModuleRegistry:IsModuleEnabled(ABILITY_WRATH) or (not self.trackers.sequenceTracker:IsLastCastWasStarfire() and not self.trackers.solsticeTracker:IsAnySolsticeUp()) then
+    if not ModuleRegistry:IsModuleEnabled(Abilities.Wrath.name) or (not self.trackers.sequenceTracker:IsLastCastWasStarfire() and not self.trackers.solsticeTracker:IsAnySolsticeUp()) then
         return 50;
     end
     return -1;

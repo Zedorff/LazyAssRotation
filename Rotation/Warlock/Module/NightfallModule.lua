@@ -17,13 +17,13 @@ function NightfallModule.new()
 end
 
 function NightfallModule:run()
-    Logging:Debug("Casting "..ABILITY_SHADOW_BOLT)
-    CastSpellByName(ABILITY_SHADOW_BOLT)
+    Logging:Debug("Casting "..Abilities.ShadowBolt.name)
+    CastSpellByName(Abilities.ShadowBolt.name)
 end
 
 --- @param context WarlockModuleRunContext
 function NightfallModule:getPriority(context)
-    if self.enabled and Helpers:SpellReady(ABILITY_SHADOW_BOLT) then
+    if self.enabled and Helpers:SpellReady(Abilities.ShadowBolt.name) then
         if self.trackers.nightfallTracker:ShouldCast() and self.trackers.channelingTracker:ShouldCast() and context.mana > context.sbCost then
             return 40
         end

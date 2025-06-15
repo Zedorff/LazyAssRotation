@@ -12,17 +12,17 @@ function LifeTapModule.new()
         channelingTracker = ChannelingTracker.GetInstance()
     }
     --- @class ImmolateModule
-    return setmetatable(Module.new(ABILITY_LIFE_TAP, trackers, "Interface\\Icons\\Spell_Shadow_BurningSpirit"), LifeTapModule)
+    return setmetatable(Module.new(Abilities.LifeTap.name, trackers, "Interface\\Icons\\Spell_Shadow_BurningSpirit"), LifeTapModule)
 end
 
 function LifeTapModule:run()
-    Logging:Debug("Casting "..ABILITY_LIFE_TAP)
-    CastSpellByName(ABILITY_LIFE_TAP)
+    Logging:Debug("Casting "..Abilities.LifeTap.name)
+    CastSpellByName(Abilities.LifeTap.name)
 end
 
 --- @param context WarlockModuleRunContext
 function LifeTapModule:getPriority(context)
-    if self.enabled and Helpers:SpellReady(ABILITY_LIFE_TAP) and self.trackers.channelingTracker:ShouldCast() and context.mana <= 600 then
+    if self.enabled and Helpers:SpellReady(Abilities.LifeTap.name) and self.trackers.channelingTracker:ShouldCast() and context.mana <= 600 then
         return 10;
     end
     return -1;

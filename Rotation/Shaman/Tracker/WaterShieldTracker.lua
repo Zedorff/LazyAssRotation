@@ -6,7 +6,7 @@ WaterShieldTracker.__index = WaterShieldTracker
 --- @return WaterShieldTracker
 function WaterShieldTracker.new()
     --- @class WaterShieldTracker
-    local self = SelfBuffTracker.new(ABILITY_WATER_SHIELD, "Ability_Shaman_WaterShield")
+    local self = SelfBuffTracker.new(Abilities.WaterShield.name, "Ability_Shaman_WaterShield")
     setmetatable(self, WaterShieldTracker)
     return self
 end

@@ -7,7 +7,7 @@ SealOfCommandTracker.__index = SealOfCommandTracker
 --- @return SealOfCommandTracker
 function SealOfCommandTracker.new()
     --- @class SealOfCommandTracker
-    local self = SelfBuffTracker.new(ABILITY_SEAL_COMMAND, "Ability_Warrior_InnerRage")
+    local self = SelfBuffTracker.new(Abilities.SealCommand.name, "Ability_Warrior_InnerRage")
     setmetatable(self, SealOfCommandTracker)
     return self
 end

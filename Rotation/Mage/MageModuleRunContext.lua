@@ -14,9 +14,9 @@ function MageModuleRunContext.new(cache)
     setmetatable(self, MageModuleRunContext)
 
     self.mana = UnitMana("player")
-    self.arCost = cache:Get(ABILITY_ARCANE_RUPTURE)
-    self.asCost = cache:Get(ABILITY_ARCANE_SURGE)
-    self.amCost = cache:Get(ABILITY_ARCANE_MISSILES)
+    self.arCost = cache:Get(Abilities.ArcaneRupture.name)
+    self.asCost = cache:Get(Abilities.ArcaneSurge.name)
+    self.amCost = cache:Get(Abilities.ArcaneMissiles.name)
     return self
 end
 
@@ -33,7 +33,7 @@ function MageModuleRunContext.PreheatCache(cache)
         end
     end
     
-    cache:Get(ABILITY_ARCANE_RUPTURE)
-    cache:Get(ABILITY_ARCANE_SURGE)
-    cache:Get(ABILITY_ARCANE_MISSILES)
+    cache:Get(Abilities.ArcaneRupture.name)
+    cache:Get(Abilities.ArcaneSurge.name)
+    cache:Get(Abilities.ArcaneMissiles.name)
 end

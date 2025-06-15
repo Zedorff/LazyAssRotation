@@ -12,12 +12,12 @@ function BattleShoutModule.new()
         battleShoutTracker = BattleShoutTracker.new()
     }
     --- @class BattleShoutModule
-    return setmetatable(Module.new(ABILITY_BATTLE_SHOUT, trackers, "Interface\\Icons\\Ability_Warrior_BattleShout"), BattleShoutModule)
+    return setmetatable(Module.new(Abilities.BattleShout.name, trackers, "Interface\\Icons\\Ability_Warrior_BattleShout"), BattleShoutModule)
 end
 
 function BattleShoutModule:run()
-    Logging:Debug("Casting Battle Shout")
-    CastSpellByName(ABILITY_BATTLE_SHOUT)
+    Logging:Debug("Casting "..Abilities.BattleShout.name)
+    CastSpellByName(Abilities.BattleShout.name)
 end
 
 --- @param context WarriorModuleRunContext

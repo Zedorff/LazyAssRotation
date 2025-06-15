@@ -25,13 +25,13 @@ function ShamanModuleRunContext.new(cache, spec)
 
     self.mana = mana
     self.remainingManaPercents = (mana / maxMana) * 100
-    self.ssCost = cache:Get(ABILITY_STORMSTRIKE)
-    self.lsCost = cache:Get(ABILITY_LIGHTNING_STRIKE)
-    self.earthCost = cache:Get(ABILITY_EARTH_SHOCK)
-    self.frostCost = cache:Get(ABILITY_FROST_SHOCK)
-    self.flameCost = cache:Get(ABILITY_FLAME_SHOCK)
-    self.lbCost = cache:Get(ABILITY_LIGHTNING_BOLT)
-    self.clCost = cache:Get(ABILITY_CHAIN_LIGHTNING)
+    self.ssCost = cache:Get(Abilities.Stormstrike.name)
+    self.lsCost = cache:Get(Abilities.LightningStrike.name)
+    self.earthCost = cache:Get(Abilities.EarthShock.name)
+    self.frostCost = cache:Get(Abilities.FrostShock.name)
+    self.flameCost = cache:Get(Abilities.FlameShock.name)
+    self.lbCost = cache:Get(Abilities.LightningBolt.name)
+    self.clCost = cache:Get(Abilities.ChainLightning.name)
     self.spec = spec
 
     return self
@@ -50,11 +50,11 @@ function ShamanModuleRunContext.PreheatCache(cache)
         end
     end
 
-    cache:Get(ABILITY_LIGHTNING_STRIKE)
-    cache:Get(ABILITY_STORMSTRIKE)
-    cache:Get(ABILITY_EARTH_SHOCK)
-    cache:Get(ABILITY_FLAME_SHOCK)
-    cache:Get(ABILITY_FROST_SHOCK)
-    cache:Get(ABILITY_CHAIN_LIGHTNING)
-    cache:Get(ABILITY_LIGHTNING_BOLT)
+    cache:Get(Abilities.LightningStrike.name)
+    cache:Get(Abilities.Stormstrike.name)
+    cache:Get(Abilities.EarthShock.name)
+    cache:Get(Abilities.FlameShock.name)
+    cache:Get(Abilities.FrostShock.name)
+    cache:Get(Abilities.ChainLightning.name)
+    cache:Get(Abilities.LightningBolt.name)
 end

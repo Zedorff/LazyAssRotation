@@ -12,18 +12,18 @@ function OverpowerModule.new()
         overpowerTracker = OverpowerTracker.new()
     }
     --- @class OverpowerModule
-    return setmetatable(Module.new(ABILITY_OVERPOWER, trackers, "Interface\\Icons\\Ability_MeleeDamage"), OverpowerModule)
+    return setmetatable(Module.new(Abilities.Overpower.name, trackers, "Interface\\Icons\\Ability_MeleeDamage"), OverpowerModule)
 end
 
 function OverpowerModule:run()
-    Logging:Debug("Casting Overpower")
-    CastSpellByName(ABILITY_OVERPOWER)
+    Logging:Debug("Casting "..Abilities.Overpower.name)
+    CastSpellByName(Abilities.Overpower.name)
 end
 
 --- @param context WarriorModuleRunContext
 function OverpowerModule:getPriority(context)
     if self.enabled and context.stance == 1 then
-        if self.trackers.overpowerTracker:ShouldCast() and Helpers:SpellReady(ABILITY_OVERPOWER) and context.rage >= 5 then
+        if self.trackers.overpowerTracker:ShouldCast() and Helpers:SpellReady(Abilities.Overpower.name) and context.rage >= 5 then
             return 90
         else
             return -1;

@@ -5,7 +5,7 @@ RakeTracker.__index = RakeTracker
 --- @return RakeTracker
 function RakeTracker.new()
     --- @class RakeTracker
-    local self = DotTracker.new(9904, ABILITY_RAKE)
+    local self = DotTracker.new(Abilities.Rake)
     setmetatable(self, RakeTracker)
     return self
 end

@@ -14,18 +14,18 @@ function CurseOfRecklessnessModule.new(allowAgonyWithOtherCurses)
         corTracker = CurseOfRecklessnessTracker.new()
     }
     --- @class CurseOfRecklessnessModule
-    local self = Module.new(ABILITY_COR, trackers, "Interface\\Icons\\Spell_Shadow_UnholyStrength")
+    local self = Module.new(Abilities.CoR.name, trackers, "Interface\\Icons\\Spell_Shadow_UnholyStrength")
     setmetatable(self, CurseOfRecklessnessModule)
 
     self.allowAgonyWithOtherCurses = allowAgonyWithOtherCurses
 
     if self.enabled then
-        ModuleRegistry:DisableModule(ABILITY_COW)
-        ModuleRegistry:DisableModule(ABILITY_COE)
-        ModuleRegistry:DisableModule(ABILITY_COS)
+        ModuleRegistry:DisableModule(Abilities.CoW.name)
+        ModuleRegistry:DisableModule(Abilities.CoE.name)
+        ModuleRegistry:DisableModule(Abilities.CoS.name)
 
         if not self.allowAgonyWithOtherCurses then
-            ModuleRegistry:DisableModule(ABILITY_COA)
+            ModuleRegistry:DisableModule(Abilities.CoA.name)
         end
     end
 
@@ -34,22 +34,22 @@ end
 
 function CurseOfRecklessnessModule:enable()
     Module.enable(self)
-    ModuleRegistry:DisableModule(ABILITY_COW)
-    ModuleRegistry:DisableModule(ABILITY_COE)
-    ModuleRegistry:DisableModule(ABILITY_COS)
+    ModuleRegistry:DisableModule(Abilities.CoW.name)
+    ModuleRegistry:DisableModule(Abilities.CoE.name)
+    ModuleRegistry:DisableModule(Abilities.CoS.name)
     if not self.allowAgonyWithOtherCurses then
-        ModuleRegistry:DisableModule(ABILITY_COA)
+        ModuleRegistry:DisableModule(Abilities.CoA.name)
     end
 end
 
 function CurseOfRecklessnessModule:run()
-    Logging:Debug("Casting " .. ABILITY_COR)
-    CastSpellByName(ABILITY_COR)
+    Logging:Debug("Casting " .. Abilities.CoR.name)
+    CastSpellByName(Abilities.CoR.name)
 end
 
 --- @param context WarlockModuleRunContext
 function CurseOfRecklessnessModule:getPriority(context)
-    if self.enabled and Helpers:SpellReady(ABILITY_COR) and self.trackers.corTracker:ShouldCast() and context.mana > context.corCost then
+    if self.enabled and Helpers:SpellReady(Abilities.CoR.name) and self.trackers.corTracker:ShouldCast() and context.mana > context.corCost then
         return 95;
     end
     return -1;

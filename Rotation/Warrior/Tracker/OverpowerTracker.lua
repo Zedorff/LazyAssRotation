@@ -26,7 +26,7 @@ function OverpowerTracker:onEvent(event, arg1)
     elseif event == "PLAYER_TARGET_CHANGED" then
         self.overpowerReadyUntil = 0;
     elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" then
-        local hit, crit, _, miss, _ = Helpers:ParseCombatEvent(ABILITY_OVERPOWER, arg1)
+        local hit, crit, _, miss, _ = Helpers:ParseCombatEvent(Abilities.Overpower.name, arg1)
         if hit or crit or miss then
             self.overpowerReadyUntil = 0;
         end
@@ -35,5 +35,5 @@ end
 
 --- @return boolean
 function OverpowerTracker:ShouldCast()
-    return GetTime() < self.overpowerReadyUntil and Helpers:SpellReady(ABILITY_OVERPOWER)
+    return GetTime() < self.overpowerReadyUntil and Helpers:SpellReady(Abilities.Overpower.name)
 end

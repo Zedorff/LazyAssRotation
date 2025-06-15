@@ -14,22 +14,22 @@ function MoonfireModule.new()
         moonfireTracker = MoonfireTracker.new()
     }
     --- @class MoonfireModule
-    return setmetatable(Module.new(ABILITY_MOONFIRE, trackers, "Interface\\Icons\\Spell_Nature_StarFall"), MoonfireModule)
+    return setmetatable(Module.new(Abilities.Moonfire.name, trackers, "Interface\\Icons\\Spell_Nature_StarFall"), MoonfireModule)
 end
 
 function MoonfireModule:run()
-    Logging:Debug("Casting " .. ABILITY_MOONFIRE)
-    CastSpellByName(ABILITY_MOONFIRE)
+    Logging:Debug("Casting " .. Abilities.Moonfire.name)
+    CastSpellByName(Abilities.Moonfire.name)
 end
 
 --- @param context DruidModuleRunContext
 function MoonfireModule:getPriority(context)
-    if not self.enabled or not Helpers:SpellReady(ABILITY_MOONFIRE) then
+    if not self.enabled or not Helpers:SpellReady(Abilities.Moonfire.name) then
         return -1;
     end
 
     if self.trackers.eclipseTracker:GetEclipseType() == EclipseType.ARCANE
-        and (Helpers:CastTime(ABILITY_STARFIRE) > self.trackers.eclipseTracker:GetEclipseRemainingTime()
+        and (Helpers:CastTime(Abilities.Starfire.name) > self.trackers.eclipseTracker:GetEclipseRemainingTime()
             and self.trackers.moonfireTracker:GetRemainingDuration() <= 3.5) then
         return 100;
     end

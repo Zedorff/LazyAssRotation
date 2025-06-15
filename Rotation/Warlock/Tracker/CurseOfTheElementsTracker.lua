@@ -6,7 +6,7 @@ CurseOfTheElementsTracker.__index = CurseOfTheElementsTracker
 --- @return CurseOfTheElementsTracker
 function CurseOfTheElementsTracker.new()
     --- @class CurseOfTheElementsTracker
-    local self = DebuffTracker.new(ABILITY_COE, "Spell_Shadow_ChillTouch")
+    local self = DebuffTracker.new(Abilities.CoE.name, "Spell_Shadow_ChillTouch")
     setmetatable(self, CurseOfTheElementsTracker)
     return self
 end

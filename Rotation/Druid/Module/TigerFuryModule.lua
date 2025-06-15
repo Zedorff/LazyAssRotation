@@ -12,12 +12,12 @@ function TigerFuryModule.new()
         tigerFuryTracker = TigerFuryTracker.new()
     }
     --- @class TigerFuryModule
-    return setmetatable(Module.new(ABILITY_TIGER_FURY, trackers, "Interface\\Icons\\Ability_Mount_JungleTiger"), TigerFuryModule)
+    return setmetatable(Module.new(Abilities.TigersFury.name, trackers, "Interface\\Icons\\Ability_Mount_JungleTiger"), TigerFuryModule)
 end
 
 function TigerFuryModule:run()
-    Logging:Debug("Casting "..ABILITY_TIGER_FURY)
-    CastSpellByName(ABILITY_TIGER_FURY)
+    Logging:Debug("Casting "..Abilities.TigersFury.name)
+    CastSpellByName(Abilities.TigersFury.name)
 end
 
 --- @param context DruidModuleRunContext

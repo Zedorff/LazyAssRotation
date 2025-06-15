@@ -14,18 +14,18 @@ function InsectSwarmModule.new()
         insectSwarmTracker = InsectSwarmTracker.new()
     }
     --- @class InsectSwarmModule
-    return setmetatable(Module.new(ABILITY_INSECT_SWARM, trackers, "Interface\\Icons\\Spell_Nature_InsectSwarm"),
+    return setmetatable(Module.new(Abilities.InsectSwarm.name, trackers, "Interface\\Icons\\Spell_Nature_InsectSwarm"),
         InsectSwarmModule)
 end
 
 function InsectSwarmModule:run()
-    Logging:Debug("Casting " .. ABILITY_INSECT_SWARM)
-    CastSpellByName(ABILITY_INSECT_SWARM)
+    Logging:Debug("Casting " .. Abilities.InsectSwarm.name)
+    CastSpellByName(Abilities.InsectSwarm.name)
 end
 
 --- @param context DruidModuleRunContext
 function InsectSwarmModule:getPriority(context)
-    if not self.enabled or not Helpers:SpellReady(ABILITY_INSECT_SWARM) then
+    if not self.enabled or not Helpers:SpellReady(Abilities.InsectSwarm.name) then
         return -1;
     end
 

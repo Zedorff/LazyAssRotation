@@ -12,17 +12,17 @@ function LightningBoltModule.new()
         clearcastingTracker = ClearcastingTracker.GetInstance()
     }
     --- @class LightningBoltModule
-    return setmetatable(Module.new(ABILITY_LIGHTNING_BOLT, trackers, "Interface\\Icons\\Spell_Nature_Lightning"), LightningBoltModule)
+    return setmetatable(Module.new(Abilities.LightningBolt.name, trackers, "Interface\\Icons\\Spell_Nature_Lightning"), LightningBoltModule)
 end
 
 function LightningBoltModule:run()
-    Logging:Debug("Casting "..ABILITY_LIGHTNING_BOLT)
-    CastSpellByName(ABILITY_LIGHTNING_BOLT)
+    Logging:Debug("Casting "..Abilities.LightningBolt.name)
+    CastSpellByName(Abilities.LightningBolt.name)
 end
 
 --- @param context ShamanModuleRunContext
 function LightningBoltModule:getPriority(context)
-    if self.enabled and Helpers:SpellReady(ABILITY_LIGHTNING_BOLT) then
+    if self.enabled and Helpers:SpellReady(Abilities.LightningBolt.name) then
         local cost = self.trackers.clearcastingTracker:ShouldCast() and math.floor(context.lbCost * 0.33) or context.lbCost
         if context.mana > cost then
             return 80;

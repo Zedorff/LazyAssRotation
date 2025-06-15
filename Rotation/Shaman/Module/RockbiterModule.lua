@@ -12,10 +12,10 @@ function RockbiterModule.new()
         rockbiterTracker = RockbiterTracker.new()
     }
     --- @class RockbiterModule
-    local self = setmetatable(Module.new(ABILITY_ROCKBITER, trackers, "Interface\\Icons\\Spell_Nature_RockBiter", false), RockbiterModule)
+    local self = setmetatable(Module.new(Abilities.Rockbiter.name, trackers, "Interface\\Icons\\Spell_Nature_RockBiter", false), RockbiterModule)
 
     if self.enabled then
-        ModuleRegistry:DisableModule(ABILITY_WINDFURY)
+        ModuleRegistry:DisableModule(Abilities.Windfury.name)
     end
 
     return self
@@ -23,12 +23,12 @@ end
 
 function RockbiterModule:enable()
     Module.enable(self)
-    ModuleRegistry:DisableModule(ABILITY_WINDFURY)
+    ModuleRegistry:DisableModule(Abilities.Windfury.name)
 end
 
 function RockbiterModule:run()
-    Logging:Debug("Casting Rockbiter Weapon")
-    CastSpellByName(ABILITY_ROCKBITER)
+    Logging:Debug("Casting "..Abilities.Rockbiter.name)
+    CastSpellByName(Abilities.Rockbiter.name)
 end
 
 --- @param context ShamanModuleRunContext

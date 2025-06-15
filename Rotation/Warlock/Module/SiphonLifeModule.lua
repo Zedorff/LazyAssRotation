@@ -16,7 +16,7 @@ function SiphonLifeModule.new(allowAgonyWithOtherCurses)
         coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses)
     }
     --- @class SiphonLifeModule
-    local self = Module.new(ABILITY_SIPHON_LIFE, trackers, "Interface\\Icons\\Spell_Shadow_Requiem")
+    local self = Module.new(Abilities.SiphonLife.name, trackers, "Interface\\Icons\\Spell_Shadow_Requiem")
     setmetatable(self, SiphonLifeModule)
 
     return self
@@ -24,14 +24,14 @@ end
 
 function SiphonLifeModule:run()
     _ = SpellStopCasting()
-    Logging:Debug("Casting " .. ABILITY_SIPHON_LIFE)
-    CastSpellByName(ABILITY_SIPHON_LIFE)
+    Logging:Debug("Casting " .. Abilities.SiphonLife.name)
+    CastSpellByName(Abilities.SiphonLife.name)
 end
 
 --- @param context WarlockModuleRunContext
 function SiphonLifeModule:getPriority(context)
     if not (self.enabled
-        and Helpers:SpellReady(ABILITY_SIPHON_LIFE)
+        and Helpers:SpellReady(Abilities.SiphonLife.name)
         and self.trackers.channelingTracker:ShouldCast()
         and context.mana > context.siphonLifeCost)
     then
@@ -41,7 +41,7 @@ function SiphonLifeModule:getPriority(context)
     local siphRemaining  = self.trackers.siphonLifeTracker:GetRemainingDuration()
     local agonyRemaining = self.trackers.coaTracker:GetRemainingDuration()
 
-    if Helpers:SpellAlmostReady(ABILITY_DARK_HARVEST, 2)
+    if Helpers:SpellAlmostReady(Abilities.DarkHarvest.name, 2)
         and agonyRemaining >= 13
         and siphRemaining  <  10
     then

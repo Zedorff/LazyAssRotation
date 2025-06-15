@@ -14,17 +14,17 @@ function CurseOfShadowModule.new(allowAgonyWithOtherCurses)
         cosTracker = CurseOfShadowTracker.new()
     }
     --- @class CurseOfShadowModule
-    local self = Module.new(ABILITY_COS, trackers, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", true)
+    local self = Module.new(Abilities.CoS.name, trackers, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", true)
     setmetatable(self, CurseOfShadowModule)
 
     self.allowAgonyWithOtherCurses = allowAgonyWithOtherCurses
 
     if self.enabled then
-        ModuleRegistry:DisableModule(ABILITY_COW)
-        ModuleRegistry:DisableModule(ABILITY_COE)
-        ModuleRegistry:DisableModule(ABILITY_COR)
+        ModuleRegistry:DisableModule(Abilities.CoW.name)
+        ModuleRegistry:DisableModule(Abilities.CoE.name)
+        ModuleRegistry:DisableModule(Abilities.CoR.name)
         if not self.allowAgonyWithOtherCurses then
-            ModuleRegistry:DisableModule(ABILITY_COA)
+            ModuleRegistry:DisableModule(Abilities.CoA.name)
         end
     end
 
@@ -33,22 +33,22 @@ end
 
 function CurseOfShadowModule:enable()
     Module.enable(self)
-    ModuleRegistry:DisableModule(ABILITY_COW)
-    ModuleRegistry:DisableModule(ABILITY_COE)
-    ModuleRegistry:DisableModule(ABILITY_COR)
+    ModuleRegistry:DisableModule(Abilities.CoW.name)
+    ModuleRegistry:DisableModule(Abilities.CoE.name)
+    ModuleRegistry:DisableModule(Abilities.CoR.name)
     if not self.allowAgonyWithOtherCurses then
-        ModuleRegistry:DisableModule(ABILITY_COA)
+        ModuleRegistry:DisableModule(Abilities.CoA.name)
     end
 end
 
 function CurseOfShadowModule:run()
-    Logging:Debug("Casting " .. ABILITY_COS)
-    CastSpellByName(ABILITY_COS)
+    Logging:Debug("Casting " .. Abilities.CoS.name)
+    CastSpellByName(Abilities.CoS.name)
 end
 
 --- @param context WarlockModuleRunContext
 function CurseOfShadowModule:getPriority(context)
-    if self.enabled and Helpers:SpellReady(ABILITY_COS) and self.trackers.cosTracker:ShouldCast() and context.mana > context.cosCost then
+    if self.enabled and Helpers:SpellReady(Abilities.CoS.name) and self.trackers.cosTracker:ShouldCast() and context.mana > context.cosCost then
         return 95;
     end
     return -1;

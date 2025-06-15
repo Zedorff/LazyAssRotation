@@ -12,17 +12,17 @@ function RipModule.new()
         ripTracker = RipTracker.new()
     }
     --- @class RipModule
-    return setmetatable(Module.new(ABILITY_RIP, trackers, "Interface\\Icons\\Ability_GhoulFrenzy"), RipModule)
+    return setmetatable(Module.new(Abilities.Rip.name, trackers, "Interface\\Icons\\Ability_GhoulFrenzy"), RipModule)
 end
 
 function RipModule:run()
-    Logging:Debug("Casting "..ABILITY_RIP)
-    CastSpellByName(ABILITY_RIP)
+    Logging:Debug("Casting "..Abilities.Rip.name)
+    CastSpellByName(Abilities.Rip.name)
 end
 
 --- @param context DruidModuleRunContext
 function RipModule:getPriority(context)
-    if self.enabled and Helpers:SpellReady(ABILITY_RIP) then
+    if self.enabled and Helpers:SpellReady(Abilities.Rip.name) then
         if self.trackers.ripTracker:ShouldCast() and context.cp >= 1 then
             return 94;
         end

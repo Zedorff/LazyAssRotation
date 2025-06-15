@@ -22,3 +22,25 @@ function Collection.size(input)
     end
     return count
 end
+
+--- @generic T
+--- @param arr1 T[]
+--- @param arr2 T[]
+--- @return T[]
+function Collection.combine(arr1, arr2)
+    local result = {}
+    for _, v in ipairs(arr1) do table.insert(result, v) end
+    for _, v in ipairs(arr2) do table.insert(result, v) end
+    return result
+end
+
+--- @generic T
+--- @param t T[]
+--- @return T[]
+function Collection.shallowCopy(t)
+    local copy = {}
+    for i, v in ipairs(t) do
+        copy[i] = v
+    end
+    return copy
+end

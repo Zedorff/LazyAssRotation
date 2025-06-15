@@ -5,7 +5,7 @@ RipTracker.__index = RipTracker
 --- @return RipTracker
 function RipTracker.new()
     --- @class RipTracker
-    local self = DotTracker.new(9896, ABILITY_RIP)
+    local self = DotTracker.new(Abilities.Rip)
     setmetatable(self, RipTracker)
     return self
 end
