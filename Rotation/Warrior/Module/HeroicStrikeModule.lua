@@ -9,7 +9,7 @@ HeroicStrikeModule.__index = HeroicStrikeModule
 function HeroicStrikeModule.new()
     --- @type HeroicStrikeTrackers
     local trackers = {
-        autoAttackTracker = AutoAttackTracker.new()
+        autoAttackTracker = AutoAttackTracker.GetInstance()
     }
     --- @class HeroicStrikeModule
     return setmetatable(Module.new(Abilities.HeroicStrike.name, trackers, "Interface\\Icons\\Ability_Rogue_Ambush"),

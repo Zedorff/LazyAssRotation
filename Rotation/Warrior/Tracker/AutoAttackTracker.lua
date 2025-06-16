@@ -5,14 +5,24 @@
 AutoAttackTracker = setmetatable({}, { __index = CooldownTracker })
 AutoAttackTracker.__index = AutoAttackTracker
 
+--- @type AutoAttackTracker | nil
+local sharedInstance = nil
+
 --- @return AutoAttackTracker
-function AutoAttackTracker.new()
+function AutoAttackTracker.GetInstance()
+    if sharedInstance then
+        return sharedInstance
+    end
+
     --- @class AutoAttackTracker
     local self = CooldownTracker.new()
     setmetatable(self, AutoAttackTracker)
     self.lastMainHandAttack = 0
     self.lastOffHandAttack = 0
-    return self
+
+    sharedInstance = self
+
+    return sharedInstance
 end
 
 --- @param event string

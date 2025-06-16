@@ -9,7 +9,7 @@ SlamModule.__index = SlamModule
 function SlamModule.new()
     --- @type SlamTrackers
     local trackers = {
-        autoAttackTracker = AutoAttackTracker.new()
+        autoAttackTracker = AutoAttackTracker.GetInstance()
     }
     --- @class SlamModule
     return setmetatable(Module.new(Abilities.Slam.name, trackers, "Interface\\Icons\\Ability_Warrior_DecisiveStrike_New"), SlamModule)
