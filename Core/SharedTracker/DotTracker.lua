@@ -1,10 +1,10 @@
 --- @class DotTracker : CooldownTracker
---- @field rankedAbility RankedAbility
+--- @field rankedAbility Ability
 --- @field data table<string, table>
 DotTracker = setmetatable({}, { __index = CooldownTracker })
 DotTracker.__index = DotTracker
 
---- @param rankedAbility RankedAbility
+--- @param rankedAbility Ability
 --- @return DotTracker
 function DotTracker.new(rankedAbility)
     --- @class DotTracker

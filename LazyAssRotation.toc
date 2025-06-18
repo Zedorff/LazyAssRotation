@@ -16,7 +16,7 @@ Localization.lua
 Core\Core.lua
 Core\EventBus.lua
 Core\ModuleRunContext.lua
-Core\MultiRankAbility.lua
+Core\Abilities.lua
 Core\Module.lua
 Core\ModuleRegistry.lua
 Core\CooldownTracker.lua

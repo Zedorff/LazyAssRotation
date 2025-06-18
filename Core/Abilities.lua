@@ -1,236 +1,236 @@
---- @alias RankedAbility { name: string, ids: integer[] }
+--- @alias Ability { name: string, ids: integer[] }
 
 Abilities = {}
 
 -- Warrior Abilities
 
---- @type RankedAbility
+--- @type Ability
 Abilities.BattleShout = { name = ABILITY_BATTLE_SHOUT, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Slam = { name = ABILITY_SLAM, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.MortalStrike = { name = ABILITY_MORTAL_STRIKE, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.HeroicStrike = { name = ABILITY_HEROIC_STRIKE, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Rend = { name = ABILITY_REND, ids = { 11574, 11573, 11572, 6548, 6547, 6546, 772 } }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Overpower = { name = ABILITY_OVERPOWER, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Whirlwind = { name = ABILITY_WHIRLWIND, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Execute = { name = ABILITY_EXECUTE, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Bloodthirst = { name = ABILITY_BLOODTHIRST, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Hamstring = { name = ABILITY_HAMSTRING, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Revenge = { name = ABILITY_REVENGE, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.ShieldSlam = { name = ABILITY_SHIELD_SLAM, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.SunderArmor = { name = ABILITY_SUNDER_ARMOR, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.ShieldBlock = { name = ABILITY_SHIELD_BLOCK, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Pummel = { name = ABILITY_PUMMEL, ids = {} }
 
 -- Shaman Abilities
 
---- @type RankedAbility
+--- @type Ability
 Abilities.LightningShield = { name = ABILITY_LIGHTNING_SHIELD, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.WaterShield = { name = ABILITY_WATER_SHIELD, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Stormstrike = { name = ABILITY_STORMSTRIKE, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.LightningStrike = { name = ABILITY_LIGHTNING_STRIKE, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.EarthShock = { name = ABILITY_EARTH_SHOCK, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.FlameShock = { name = ABILITY_FLAME_SHOCK, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.FrostShock = { name = ABILITY_FROST_SHOCK, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Windfury = { name = ABILITY_WINDFURY, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Rockbiter = { name = ABILITY_ROCKBITER, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.LightningBolt = { name = ABILITY_LIGHTNING_BOLT, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.ChainLightning = { name = ABILITY_CHAIN_LIGHTNING, ids = {} }
 
 -- Paladin Abilities
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Consecration = { name = ABILITY_CONSECRATION, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.CrusaderStrike = { name = ABILITY_CRUSADER_STRIKE, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Exorcism = { name = ABILITY_EXORCISM, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.HolyStrike = { name = ABILITY_HOLY_STRIKE, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Judgement = { name = ABILITY_JUDGEMENT, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Repentance = { name = ABILITY_REPENTANCE, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.SealCommand = { name = ABILITY_SEAL_COMMAND, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.SealCrusader = { name = ABILITY_SEAL_CRUSADER, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.SealRighteousness = { name = ABILITY_SEAL_RIGHTEOUSNESS, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.SealWisdom = { name = ABILITY_SEAL_WISDOM, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.HolyShield = { name = ABILITY_HOLY_SHIELD, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.RighteousFury = { name = ABILITY_RIGHTEOUS_FURY, ids = {} }
 
 -- Druid Abilities
 
---- @type RankedAbility
+--- @type Ability
 Abilities.TigersFury = { name = ABILITY_TIGER_FURY, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Shred = { name = ABILITY_SHRED, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Rip = { name = ABILITY_RIP, ids = { 9896, 9894, 9752, 9493, 9492, 1079 } }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Rake = { name = ABILITY_RAKE, ids = { 9904, 1824, 1823, 1822 } }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Claw = { name = ABILITY_CLAW, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.FerociousBite = { name = ABILITY_FEROCIOUS_BITE, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.CatForm = { name = ABILITY_CAT_FORM, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Maul = { name = ABILITY_MAUL, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Swipe = { name = ABILITY_SWIPE, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.SavageBite = { name = ABILITY_SAVAGE_BITE, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.InsectSwarm = { name = ABILITY_INSECT_SWARM, ids = { 24977, 24976, 24975, 24974, 5570 } }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Moonfire = { name = ABILITY_MOONFIRE, ids = { 9835, 9834, 9833, 8929, 8928, 8927, 8926, 8925, 8924, 8921 } }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Starfire = { name = ABILITY_STARFIRE, ids = { 25298, 9876, 9875, 8951, 8950, 8949, 2912 } }
 
---- @type RankedAbility
-Abilities.Wrath = { name = ABILITY_WRATH, ids = { 9912, 8905, 6780, 5180, 5179, 5178, 5177, 5176 } }
+--- @type Ability
+Abilities.Wrath = { name = ABILITY_WRATH, ids = { 45967, 9912, 8905, 6780, 5180, 5179, 5178, 5177, 5176 } }
 
 -- Mage Abilities
 
---- @type RankedAbility
+--- @type Ability
 Abilities.ArcaneSurge = { name = ABILITY_ARCANE_SURGE, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.ArcaneRupture = { name = ABILITY_ARCANE_RUPTURE, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.ArcaneMissiles = { name = ABILITY_ARCANE_MISSILES, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.ArcanePower = { name = ABILITY_ARCANE_POWER, ids = {} }
 
 -- Warlock Abilities
 
---- @type RankedAbility
+--- @type Ability
 Abilities.SearingPain = { name = ABILITY_SEARING_PAIN, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Immolate = { name = ABILITY_IMMOLATE, ids = { 25309, 11668, 11667, 11665, 2941, 1094, 707, 348 } }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Conflagrate = { name = ABILITY_CONFLAGRATE, ids = { 18932, 18931, 18930, 17962 } }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.SoulFire = { name = ABILITY_SOUL_FIRE, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.LifeTap = { name = ABILITY_LIFE_TAP, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.CoA = { name = ABILITY_COA, ids = { 11713, 11712, 11711, 6217, 1014, 980 } }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.CoR = { name = ABILITY_COR, ids = { 11717, 7659, 7658, 704 } }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.CoE = { name = ABILITY_COE, ids = { 11722, 11721, 1490 } }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.CoS = { name = ABILITY_COS, ids = { 17937, 17862 } }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.CoW = { name = ABILITY_COW, ids = { 702 } }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.DarkHarvest = { name = ABILITY_DARK_HARVEST, ids = { 52550 } }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.Corruption = { name = ABILITY_CORRUPTION, ids = { 25311, 11672, 11671, 7648, 6223, 6222, 172 } }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.SiphonLife = { name = ABILITY_SIPHON_LIFE, ids = { 18881 } }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.DrainSoul = { name = ABILITY_DRAIN_SOUL, ids = {} }
 
---- @type RankedAbility
+--- @type Ability
 Abilities.ShadowBolt = { name = ABILITY_SHADOW_BOLT, ids = {} }
 
 
 -- Helpers
 
---- @param ability RankedAbility
+--- @param ability Ability
 --- @param spellId integer
 --- @return boolean
 function IsMatchingRank(ability, spellId)

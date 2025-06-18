@@ -1,5 +1,5 @@
 --- @class WarlockDotTracker : CooldownTracker
---- @field rankedAbility RankedAbility
+--- @field rankedAbility Ability
 --- @field pendingChannel boolean
 --- @field dhCasting boolean
 --- @field data table<string, table>
@@ -8,7 +8,7 @@ WarlockDotTracker.__index = WarlockDotTracker
 
 local HASTE_FACTOR = 0.30
 
---- @param rankedAbility RankedAbility
+--- @param rankedAbility Ability
 --- @return WarlockDotTracker
 function WarlockDotTracker.new(rankedAbility)
     --- @class WarlockDotTracker
