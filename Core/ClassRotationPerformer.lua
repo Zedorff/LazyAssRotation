@@ -1,29 +1,46 @@
+--- @alias ModulePrio { module: Module, prio: integer }
+
 ClassRotationPerformer = {}
 
 --- @param context ModuleRunContext
 function ClassRotationPerformer:PerformRotation(context)
-    local highestPrio = -1
-    --- @type Module
-    local bestModule = nil
+    local best = nil
+    local bestPrio = -1
+    local toRun = {}
 
-    local modules = ModuleRegistry:GetEnabledModules()
-    for _, mod in pairs(modules) do
-        --- @cast mod Module
-        local prio = mod.getPriority and mod:getPriority(context)
-        if prio and prio > highestPrio then
-            highestPrio = prio
-            bestModule = mod
+    for _, module in pairs(ModuleRegistry:GetEnabledModules()) do
+        --- @cast module Module
+        local prio = module:getPriority(context)
+        local isMulti = module:isMultiCastAllowed()
+
+        if prio and prio > bestPrio then
+            best = module
+            bestPrio = prio
+        end
+
+        if prio and prio > 0 and isMulti then
+            table.insert(toRun, { module = module, prio = prio })
         end
     end
 
-    if bestModule then
-        bestModule:run()
-        if LARShowRotationSpells then
-            HotSwap_SetDraggableButtonIcon(bestModule.iconPath)
-        end
-    else
+    if not best or bestPrio <= 0 then
         if LARShowRotationSpells then
             HotSwap_SetDraggableButtonIcon("Interface\\Icons\\INV_Misc_QuestionMark")
         end
+        return
+    end
+
+    -- First run the best module
+    best:run()
+
+    -- Then run allowed multicast modules that aren't the best
+    for _, entry in ipairs(toRun) do
+        if entry.module ~= best then
+            entry.module:run()
+        end
+    end
+
+    if LARShowRotationSpells then
+        HotSwap_SetDraggableButtonIcon(best.iconPath)
     end
 end
