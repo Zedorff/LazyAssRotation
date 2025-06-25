@@ -41,10 +41,6 @@ end
 
 --- @param context WarriorModuleRunContext
 function HeroicStrikeModule:GetArmsHeroicPriority(context)
-    if self.trackers.autoAttackTracker:GetNextSwingTime() > 0.6 then
-        return -1;
-    end
-
     if context.rage >= 70 then
         return 50
     else
