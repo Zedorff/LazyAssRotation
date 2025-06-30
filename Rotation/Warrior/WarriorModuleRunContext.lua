@@ -11,6 +11,7 @@
 --- @field stance integer
 --- @field spec WarriorSpec
 --- @field shieldSlamCost integer
+--- @field cleaveCost integer
 WarriorModuleRunContext = setmetatable({}, { __index = ModuleRunContext })
 WarriorModuleRunContext.__index = WarriorModuleRunContext
 
@@ -34,6 +35,7 @@ function WarriorModuleRunContext.new(cache, spec)
     self.stance = Helpers:ActiveStance()
     self.spec = spec
     self.shieldSlamCost = cache:Get(Abilities.ShieldSlam.name)
+    self.cleaveCost = cache:Get(Abilities.Cleave.name)
 
     return self
 end
@@ -49,4 +51,5 @@ function WarriorModuleRunContext.PreheatCache(cache)
     cache:Get(Abilities.Slam.name)
     cache:Get(Abilities.Rend.name)
     cache:Get(Abilities.ShieldSlam.name)
+    cache:Get(Abilities.Cleave.name)
 end

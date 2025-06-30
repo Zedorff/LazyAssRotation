@@ -52,6 +52,7 @@ Rotation\Warrior\WarriorModuleRunContext.lua
 
 Rotation\Warrior\Module\BattleShoutModule.lua
 Rotation\Warrior\Module\BloodthirstModule.lua
+Rotation\Warrior\Module\CleaveModule.lua
 Rotation\Warrior\Module\ExecuteModule.lua
 Rotation\Warrior\Module\HamstringModule.lua
 Rotation\Warrior\Module\HeroicStrikeModule.lua

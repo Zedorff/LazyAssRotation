@@ -1,48 +1,52 @@
---- @alias HeroicStrikeTrackers { autoAttackTracker: AutoAttackTracker }
---- @class HeroicStrikeModule : Module
---- @field trackers HeroicStrikeTrackers
+--- @alias CleaveTrackers { autoAttackTracker: AutoAttackTracker }
+--- @class CleaveModule : Module
+--- @field trackers CleaveTrackers
 --- @diagnostic disable: duplicate-set-field
-HeroicStrikeModule = setmetatable({}, { __index = Module })
-HeroicStrikeModule.__index = HeroicStrikeModule
+CleaveModule = setmetatable({}, { __index = Module })
+CleaveModule.__index = CleaveModule
 
---- @return HeroicStrikeModule
-function HeroicStrikeModule.new()
-    --- @type HeroicStrikeTrackers
+--- @return CleaveModule
+function CleaveModule.new()
+    --- @type CleaveTrackers
     local trackers = {
         autoAttackTracker = AutoAttackTracker.GetInstance()
     }
-    --- @class HeroicStrikeModule
-    return setmetatable(Module.new(Abilities.HeroicStrike.name, trackers, "Interface\\Icons\\Ability_Rogue_Ambush"),
-        HeroicStrikeModule);
+    --- @class CleaveModule
+    return setmetatable(Module.new(Abilities.Cleave.name, trackers, "Interface\\Icons\\Ability_Warrior_Cleave", false),
+        CleaveModule);
 end
 
-function HeroicStrikeModule:run()
-    Logging:Debug("Casting "..Abilities.HeroicStrike.name)
-    CastSpellByName(Abilities.HeroicStrike.name)
+function CleaveModule:run()
+    Logging:Debug("Casting "..Abilities.Cleave.name)
+    CastSpellByName(Abilities.Cleave.name)
 end
 
-function HeroicStrikeModule:enable()
+function CleaveModule:enable()
     Module.enable(self)
-    ModuleRegistry:DisableModule(Abilities.Cleave.name)
+    ModuleRegistry:DisableModule(Abilities.HeroicStrike.name)
 end
 
 --- @param context WarriorModuleRunContext
-function HeroicStrikeModule:getPriority(context)
+function CleaveModule:getPriority(context)
     if self.enabled then
         if context.spec == WarriorSpec.ARMS then
-            return self:GetArmsHeroicPriority(context)
+            return self:GetArmsCleavePriority(context)
         elseif context.spec == WarriorSpec.FURY then
-            return self:GetFuryHeroicPriority(context)
+            return self:GetFuryCleavePriority(context)
         elseif context.spec == WarriorSpec.PROT then
-            return self:GetProtHeroicPriority(context)
+            return self:GetProtCleavePriority(context)
         end
     end
     return -1;
 end
 
+function CleaveModule:isMultiCastAllowed()
+    return true;
+end
+
 --- @param context WarriorModuleRunContext
-function HeroicStrikeModule:GetArmsHeroicPriority(context)
-    if context.rage >= 80 then
+function CleaveModule:GetArmsCleavePriority(context)
+    if context.rage >= 70 then
         return 50
     else
         return -1;
@@ -50,7 +54,7 @@ function HeroicStrikeModule:GetArmsHeroicPriority(context)
 end
 
 --- @param context WarriorModuleRunContext
-function HeroicStrikeModule:GetFuryHeroicPriority(context)
+function CleaveModule:GetFuryCleavePriority(context)
     if self.trackers.autoAttackTracker:GetNextSwingTime() > 0.6 then
         return -1;
     end
@@ -71,7 +75,7 @@ function HeroicStrikeModule:GetFuryHeroicPriority(context)
         reserve = context.wwCost
     end
 
-    if context.rage >= (reserve + context.hsCost) then
+    if context.rage >= (reserve + context.cleaveCost) then
         return 65
     end
 
@@ -79,16 +83,16 @@ function HeroicStrikeModule:GetFuryHeroicPriority(context)
 end
 
 --- @param context WarriorModuleRunContext
-function HeroicStrikeModule:GetProtHeroicPriority(context)
+function CleaveModule:GetProtCleavePriority(context)
     if self.trackers.autoAttackTracker:GetNextSwingTime() > 0.7 then
         return -1
     end
 
     local ssAlmostReady = Helpers:SpellAlmostReady(Abilities.ShieldSlam.name, 1.5)
-    local canAffordSSAndHS = context.rage >= context.shieldSlamCost + context.hsCost
+    local canAffordSSAndCleave = context.rage >= context.shieldSlamCost + context.cleaveCost
     local rageThreshold = context.rage >= 45
 
-    if (not ssAlmostReady and canAffordSSAndHS) or rageThreshold then
+    if (not ssAlmostReady and canAffordSSAndCleave) or rageThreshold then
         return 70
     end
 
