@@ -1,4 +1,4 @@
---- @alias HeroicStrikeTrackers { autoAttackTracker: AutoAttackTracker }
+--- @alias HeroicStrikeTrackers { autoAttackTracker: AutoAttackTracker, actionSlotTracker: ActionBarSlotTracker }
 --- @class HeroicStrikeModule : Module
 --- @field trackers HeroicStrikeTrackers
 --- @diagnostic disable: duplicate-set-field
@@ -9,7 +9,8 @@ HeroicStrikeModule.__index = HeroicStrikeModule
 function HeroicStrikeModule.new()
     --- @type HeroicStrikeTrackers
     local trackers = {
-        autoAttackTracker = AutoAttackTracker.GetInstance()
+        autoAttackTracker = AutoAttackTracker.GetInstance(),
+        actionSlotTracker = ActionBarSlotTracker.GetInstance()
     }
     --- @class HeroicStrikeModule
     return setmetatable(Module.new(Abilities.HeroicStrike.name, trackers, "Interface\\Icons\\Ability_Rogue_Ambush"),
@@ -28,7 +29,8 @@ end
 
 --- @param context WarriorModuleRunContext
 function HeroicStrikeModule:getPriority(context)
-    if self.enabled then
+    local hsSlot = self.trackers.actionSlotTracker:GetActionBarSlot(Abilities.HeroicStrike.name)
+    if self.enabled and hsSlot ~= nil and not IsCurrentAction(hsSlot) then
         if context.spec == WarriorSpec.ARMS then
             return self:GetArmsHeroicPriority(context)
         elseif context.spec == WarriorSpec.FURY then
@@ -40,21 +42,15 @@ function HeroicStrikeModule:getPriority(context)
     return -1;
 end
 
-function HeroicStrikeModule:isMultiCastAllowed()
-    return true;
-end
-
 --- @param context WarriorModuleRunContext
 function HeroicStrikeModule:GetArmsHeroicPriority(context)
-    if self.trackers.autoAttackTracker:GetNextSwingTime() > 0.6 then
-        return -1;
+    local msCost = ModuleRegistry:IsModuleEnabled(Abilities.MortalStrike.name) and context.msCost or 0
+    local bsCost = ModuleRegistry:IsModuleEnabled(Abilities.Bloodthirst.name) and context.bsCost or 0
+    local wwCost = ModuleRegistry:IsModuleEnabled(Abilities.Whirlwind.name) and context.wwCost or 0
+    if context.rage >= msCost + bsCost + wwCost + context.hsCost then
+        return 75
     end
-
-    if context.rage >= 70 then
-        return 50
-    else
-        return -1;
-    end
+    return -1;
 end
 
 --- @param context WarriorModuleRunContext

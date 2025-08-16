@@ -33,6 +33,7 @@ ABILITY_SUNDER_ARMOR         = "Sunder Armor"
 ABILITY_SHIELD_BLOCK         = "Shield Block"
 ABILITY_PUMMEL               = "Pummel"
 ABILITY_CLEAVE               = "Cleave"
+ABILITY_CONCUSSION_BLOW      = "Concussion Blow"
 
 -- Shaman
 ABILITY_LIGHTNING_SHIELD     = "Lightning Shield"

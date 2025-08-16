@@ -55,8 +55,3 @@ end
 function Module:getPriority(context)
     error("getPriority() not implementd")
 end
-
---- @return boolean
-function Module:isMultiCastAllowed()
-    return false;
-end

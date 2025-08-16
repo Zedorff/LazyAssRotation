@@ -2,6 +2,7 @@
 ## Title: Lazy Ass Rotation
 ## Notes: To make rotations easier.
 ## Author: Zedorff
+## Version: 0.6.6
 ## DefaultState: enabled
 ## OptionalDeps: none
 ## SavedVariablesPerCharacter: LARModuleSettings, LARFloatingButtonPosition, LARSelectedSpec, LARSpecSide, LARModuleSide, LARShowRotationSpells, LARLockHotSwapButton
@@ -19,10 +20,12 @@ Core\ModuleRunContext.lua
 Core\Abilities.lua
 Core\Module.lua
 Core\ModuleRegistry.lua
+Core\Tracker.lua
 Core\CooldownTracker.lua
 Core\ModuleRunCache.lua
 Core\ManaCostCache.lua
 Core\EnergyCostCache.lua
+Core\SharedTracker\ActionBarSlotTracker.lua
 Core\SharedTracker\SelfBuffTracker.lua
 Core\SharedTracker\DebuffTracker.lua
 Core\SharedTracker\DotTracker.lua
@@ -66,6 +69,7 @@ Rotation\Warrior\Module\ShieldSlamModule.lua
 Rotation\Warrior\Module\SunderArmorModule.lua
 Rotation\Warrior\Module\ShieldBlockModule.lua
 Rotation\Warrior\Module\PummelModule.lua
+Rotation\Warrior\Module\ConcussionBlowModule.lua
 
 Rotation\Warrior\WarriorSpec.lua
 Rotation\Warrior\Warrior.lua

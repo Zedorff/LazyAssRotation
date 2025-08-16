@@ -14,6 +14,10 @@ function MortalStrikeModule:run()
     CastSpellByName(Abilities.MortalStrike.name)
 end
 
+function MortalStrikeModule:enable()
+    Module.enable(self)
+    ModuleRegistry:DisableModule(Abilities.Bloodthirst.name)
+end
 
 --- @param context WarriorModuleRunContext
 function MortalStrikeModule:getPriority(context)

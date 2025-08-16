@@ -52,6 +52,9 @@ Abilities.Pummel = { name = ABILITY_PUMMEL, ids = {} }
 --- @type Ability
 Abilities.Cleave = { name = ABILITY_CLEAVE, ids = {} }
 
+--- @type Ability
+Abilities.ConcussionBlow = { name = ABILITY_CONCUSSION_BLOW, ids = {} }
+
 -- Shaman Abilities
 
 --- @type Ability

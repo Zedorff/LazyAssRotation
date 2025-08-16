@@ -21,28 +21,23 @@ function WhirlwindModule:getPriority(context)
             return self:GetArmsWhirlwindPriority(context)
         elseif context.spec == WarriorSpec.FURY then
             return self:GetFuryWhirlwindPriority(context)
-        else
-            return -1;
         end
-    else
-        return -1;
     end
+    return -1;
 end
 
 --- @param context WarriorModuleRunContext
 function WhirlwindModule:GetArmsWhirlwindPriority(context)
     if Helpers:SpellReady(Abilities.Whirlwind.name) and not Helpers:SpellAlmostReady(Abilities.MortalStrike.name, 0.5) and context.rage >= context.wwCost then
         return 70
-    else
-        return -1;
     end
+    return -1;
 end
 
 --- @param context WarriorModuleRunContext
 function WhirlwindModule:GetFuryWhirlwindPriority(context)
     if Helpers:SpellReady(Abilities.Whirlwind.name) and not Helpers:SpellAlmostReady(Abilities.Bloodthirst.name, 0.5) and context.rage >= context.wwCost then
         return 70
-    else
-        return -1;
     end
+    return -1;
 end

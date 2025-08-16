@@ -44,6 +44,7 @@ function EventBus:new(frame)
     frame:RegisterEvent("VARIABLES_LOADED");
     frame:RegisterEvent("UI_ERROR_MESSAGE");
     frame:RegisterEvent("UNIT_CASTEVENT");
+    frame:RegisterEvent("ACTIONBAR_SLOT_CHANGED");
     frame:SetScript("OnEvent", function()
         --- @diagnostic disable-next-line: undefined-global
         -- if event == "UNIT_CASTEVENT" then

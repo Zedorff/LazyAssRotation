@@ -19,10 +19,7 @@ function ExecuteModule:getPriority()
     if self.enabled then
         if Helpers:ShouldUseExecute() then
             return 1000; --- Max priority always!
-        else
-            return -1;
         end
-    else
-        return -1;
     end
+    return -1;
 end

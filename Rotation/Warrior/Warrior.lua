@@ -65,6 +65,7 @@ end
 function Warrior:EnableArmsSpec()
     ModuleRegistry:RegisterModule(BattleShoutModule.new())
     ModuleRegistry:RegisterModule(SlamModule.new())
+    ModuleRegistry:RegisterModule(BloodthirstModule.new(false))
     ModuleRegistry:RegisterModule(MortalStrikeModule.new())
     ModuleRegistry:RegisterModule(WhirlwindModule.new())
     ModuleRegistry:RegisterModule(RendModule.new())
@@ -76,6 +77,7 @@ end
 
 function Warrior:EnableProtSpec()
     ModuleRegistry:RegisterModule(BattleShoutModule.new())
+    ModuleRegistry:RegisterModule(ConcussionBlowModule.new())
     ModuleRegistry:RegisterModule(RevengeModule.new())
     ModuleRegistry:RegisterModule(ShieldSlamModule.new())
     ModuleRegistry:RegisterModule(HeroicStrikeModule.new())

@@ -23,9 +23,9 @@ end
 
 --- @param context WarriorModuleRunContext
 function SlamModule:getPriority(context)
-    if self.enabled and not Helpers:SpellAlmostReady(ABILITY_MORTAL_STRIKE, 0.5) and not Helpers:SpellAlmostReady(ABILITY_WHIRLWIND, 0.5) then
+    if self.enabled then
         local slamCastTime = Helpers:CastTime(Abilities.Slam.name)
-        local nextSwing = self.trackers.autoAttackTracker:GetNextSwingTime()
+        local nextSwing = self.trackers.autoAttackTracker:GetNextSwingTime() + 0.2 -- Add a small buffer to account for latency
 
         if (nextSwing < slamCastTime) then
             return -1;
@@ -50,7 +50,7 @@ function SlamModule:getPriority(context)
 
 
         if Helpers:SpellReady(Abilities.Slam.name) and context.rage >= reserve then
-            return 60;
+            return 65;
         end
     end
     return -1;
