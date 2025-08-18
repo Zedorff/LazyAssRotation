@@ -23,35 +23,19 @@ end
 
 --- @param context WarriorModuleRunContext
 function SlamModule:getPriority(context)
-    if self.enabled then
-        local slamCastTime = Helpers:CastTime(Abilities.Slam.name)
-        local nextSwing = self.trackers.autoAttackTracker:GetNextSwingTime() + 0.2 -- Add a small buffer to account for latency
-
-        if (nextSwing < slamCastTime) then
-            return -1;
-        end
-
-        local msCD      = Helpers:SpellNotReadyFor(Abilities.MortalStrike.name)
-        local wwCD      = Helpers:SpellNotReadyFor(Abilities.Whirlwind.name)
-
-        local awaitTime = 2
-        local msReady   = msCD <= awaitTime and ModuleRegistry:IsModuleEnabled(Abilities.MortalStrike.name)
-        local wwReady   = wwCD <= awaitTime and ModuleRegistry:IsModuleEnabled(Abilities.Whirlwind.name) and context.stance == 3
-        local bothSoon  = msReady and wwReady and math.abs(msCD - wwCD) < awaitTime
-
-        local reserve   = context.slamCost
-        if bothSoon then
-            reserve = context.msCost + context.wwCost
-        elseif msReady then
-            reserve = context.msCost
-        elseif wwReady then
-            reserve = context.wwCost
-        end
-
-
-        if Helpers:SpellReady(Abilities.Slam.name) and context.rage >= reserve then
-            return 65;
-        end
+    if not self.enabled then
+        return -1
     end
-    return -1;
+
+    local slamReady = Helpers:SpellReady(Abilities.Slam.name)
+    local slamCastTime = Helpers:CastTime(Abilities.Slam.name)
+    local nextSwing = self.trackers.autoAttackTracker:GetNextSwingTime() + 0.2
+    if nextSwing < slamCastTime then
+        return -1
+    end
+
+    if slamReady then
+        return 65
+    end
+    return -1
 end

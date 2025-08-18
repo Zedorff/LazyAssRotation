@@ -47,7 +47,8 @@ function HeroicStrikeModule:GetArmsHeroicPriority(context)
     local msCost = ModuleRegistry:IsModuleEnabled(Abilities.MortalStrike.name) and context.msCost or 0
     local bsCost = ModuleRegistry:IsModuleEnabled(Abilities.Bloodthirst.name) and context.bsCost or 0
     local wwCost = ModuleRegistry:IsModuleEnabled(Abilities.Whirlwind.name) and context.wwCost or 0
-    if context.rage >= msCost + bsCost + wwCost + context.hsCost then
+    local slamCost = ModuleRegistry:IsModuleEnabled(Abilities.Slam.name) and context.slamCost or 0
+    if context.rage >= msCost + bsCost + wwCost + slamCost + context.hsCost then
         return 75
     end
     return -1;
