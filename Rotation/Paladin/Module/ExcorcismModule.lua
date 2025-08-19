@@ -11,7 +11,7 @@ end
 
 function ExcorcismModule:run()
     Logging:Debug("Casting "..Abilities.Exorcism.name)
-    CastSpellByName(ABILITY_Abilities.Exorcism.nameEXORCISM)
+    CastSpellByName(Abilities.Exorcism.name)
 end
 
 --- @param context PaladinModuleRunContext
