@@ -23,8 +23,8 @@ end
 --- @param context MageModuleRunContext
 function ArcaneMissilesModule:getPriority(context)
     if self.enabled and self.trackers.channelingTracker:ShouldCast() then
-        if context.mana >= context.amCost then
-            return 80;
+        if not Helpers:SpellAlmostReady(Abilities.ArcaneRupture.name, 1.5) and context.mana >= context.amCost then
+            return 70;
         end
     else
         return -1;

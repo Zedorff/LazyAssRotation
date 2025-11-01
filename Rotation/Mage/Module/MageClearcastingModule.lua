@@ -24,8 +24,8 @@ end
 --- @param context MageModuleRunContext
 function MageClearcastingModule:getPriority(context)
     if self.enabled and self.trackers.channelingTracker:ShouldCast() then
-        if self.trackers.clearcastingTracker:ShouldCast() then
-            return 100;
+        if not Helpers:SpellAlmostReady(Abilities.ArcaneRupture.name, 1.5) and self.trackers.clearcastingTracker:ShouldCast() and context.mana <= context.amCost * 2 then
+            return 90;
         end
     end
     return -1;

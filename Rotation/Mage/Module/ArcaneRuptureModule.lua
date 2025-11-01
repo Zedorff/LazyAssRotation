@@ -19,15 +19,19 @@ end
 
 function ArcaneRuptureModule:run()
     Logging:Debug("Casting "..Abilities.ArcaneRupture.name)
+    if not self.trackers.channelingTracker:ShouldCast() then
+        _ = SpellStopCasting()
+    end
+
     CastSpellByName(Abilities.ArcaneRupture.name)
 end
 
 --- @param context MageModuleRunContext
 function ArcaneRuptureModule:getPriority(context)
-    if self.enabled and self.trackers.channelingTracker:ShouldCast() then
-        local hasMana = context.mana >= context.arCost
-        if Helpers:SpellAlmostReady(Abilities.ArcaneRupture.name, 0.8) and (self.trackers.convergenceTracker:ShouldCast() or self.trackers.arcaneRuptureTracker:ShouldCast()) and hasMana then
-            return 85;
+    local hasMana = context.mana >= context.arCost
+    if self.enabled and hasMana then
+        if (Helpers:SpellReady(Abilities.ArcaneRupture.name) and self.trackers.arcaneRuptureTracker:ShouldCast()) or (self.trackers.convergenceTracker:ShouldCast() and self.trackers.arcaneRuptureTracker:TimeUntilRuptureExpires() < 2) then
+            return 100;
         end
     end
     return -1;
