@@ -28,7 +28,7 @@ function HolyShieldModule:getPriority(context)
     end
 
     if self.trackers.holyShieldTracker:ShouldCast() and Helpers:SpellReady(Abilities.HolyShield.name) then
-        return 95;
+        return 90;
     end
 
     return -1;

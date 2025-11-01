@@ -45,5 +45,5 @@ function HolyStrikeModule:GetRetriPriority()
 end
 
 function HolyStrikeModule:GetProtPriority()
-    return 90;
+    return 95;
 end
