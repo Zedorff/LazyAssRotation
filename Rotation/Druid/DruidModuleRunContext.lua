@@ -9,7 +9,7 @@
 --- @field ripCost integer
 --- @field tigerFuryCost integer
 --- @field ferociousBiteCost integer
---- @field catFormCost integer
+--- @field reshiftCost integer
 --- @field maulCost integer
 --- @field swipeCost integer
 --- @field savageBiteCost integer
@@ -54,7 +54,7 @@ function DruidModuleRunContext.new(energyCache, manaCache, rageCache, spec)
     self.ripCost = energyCache:Get(Abilities.Rip.name)
     self.tigerFuryCost = energyCache:Get(Abilities.TigersFury.name)
     self.ferociousBiteCost = energyCache:Get(Abilities.FerociousBite.name)
-    self.catFormCost = manaCache:Get(Abilities.CatForm.name)
+    self.reshiftCost = manaCache:Get(Abilities.Reshift.name)
     self.maulCost = rageCache:Get(Abilities.Maul.name)
     self.swipeCost = rageCache:Get(Abilities.Swipe.name)
     self.savageBiteCost = rageCache:Get(Abilities.SavageBite.name)
@@ -86,7 +86,7 @@ function DruidModuleRunContext.PreheatCache(energyCache, manaCache, rageCache)
     energyCache:Get(Abilities.TigersFury.name)
     energyCache:Get(Abilities.FerociousBite.name)
     energyCache:Get(Abilities.Shred.name)
-    manaCache:Get(Abilities.CatForm.name)
+    manaCache:Get(Abilities.Reshift.name)
     rageCache:Get(Abilities.Swipe.name)
     rageCache:Get(Abilities.Maul.name)
     rageCache:Get(Abilities.SavageBite.name)

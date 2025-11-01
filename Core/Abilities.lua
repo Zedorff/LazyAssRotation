@@ -149,7 +149,7 @@ Abilities.Claw = { name = ABILITY_CLAW, ids = {} }
 Abilities.FerociousBite = { name = ABILITY_FEROCIOUS_BITE, ids = {} }
 
 --- @type Ability
-Abilities.CatForm = { name = ABILITY_CAT_FORM, ids = {} }
+Abilities.Reshift = { name = ABILITY_RESHIFT, ids = {} }
 
 --- @type Ability
 Abilities.Maul = { name = ABILITY_MAUL, ids = {} }

@@ -16,7 +16,7 @@ function Druid.new()
     self.rageCache = RageCostCache.new()
 
     local specs = {
-        SpecButtonInfo.new("Interface\\Icons\\Ability_Druid_CatForm", "Powershifting", LARSelectedSpec == nil or LARSelectedSpec.name == "Powershifting"),
+        SpecButtonInfo.new("Interface\\Icons\\spell_reshift_2", "Powershifting", LARSelectedSpec == nil or LARSelectedSpec.name == "Powershifting"),
         SpecButtonInfo.new("Interface\\Icons\\Ability_Druid_Disembowel", "Bleeds", LARSelectedSpec and LARSelectedSpec.name == "Bleeds"),
         SpecButtonInfo.new("Interface\\Icons\\Ability_Racial_BearForm", "Bear", LARSelectedSpec and LARSelectedSpec.name == "Bear"),
         SpecButtonInfo.new("Interface\\Icons\\Spell_Arcane_StarFire", "Boomkin", LARSelectedSpec and LARSelectedSpec.name == "Boomkin")

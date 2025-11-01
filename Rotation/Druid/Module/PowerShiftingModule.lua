@@ -13,24 +13,19 @@ function PowerShiftingModule.new()
         energyTickTracker = EnergyTickTracker.new()
     }
     --- @class PowerShiftingModule
-    return setmetatable(Module.new(MODULE_POWERSHIFTING, trackers, "Interface\\Icons\\Ability_Druid_CatForm"), PowerShiftingModule)
+    return setmetatable(Module.new(MODULE_POWERSHIFTING, trackers, "Interface\\Icons\\spell_reshift_2"), PowerShiftingModule)
 end
 
 function PowerShiftingModule:run()
-    Logging:Debug("Casting "..Abilities.CatForm.name)
-    CastSpellByName(Abilities.CatForm.name)
+    Logging:Debug("Casting "..Abilities.Reshift.name)
+    CastSpellByName(Abilities.Reshift.name)
 end
 
 --- @param context DruidModuleRunContext
 function PowerShiftingModule:getPriority(context)
     if self.enabled then
-        local haveMana = self.trackers.druidManaTracker:GetDruidMana() > context.catFormCost
-        local isDefaultForm = UnitPowerType("player") == 0
-        if isDefaultForm then
-            return 100;
-        end
-
-        if not isDefaultForm and haveMana and self.trackers.energyTickTracker:GetNextEnergyTick() < 1 and context.energy <= 27 and Helpers:SpellReady(Abilities.CatForm.name) then
+        local haveMana = self.trackers.druidManaTracker:GetDruidMana() > context.reshiftCost
+        if haveMana and self.trackers.energyTickTracker:GetNextEnergyTick() < 1 and context.energy <= 27 and Helpers:SpellReady(Abilities.Reshift.name) then
             return 100;
         end
     end
