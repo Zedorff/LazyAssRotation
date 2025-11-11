@@ -1,4 +1,4 @@
---- @alias SiphonLifeTrackers { siphonLifeTracker: SiphonLifeTracker, channelingTracker: ChannelingTracker, coaTracker: CurseOfAgonyTracker }
+--- @alias SiphonLifeTrackers { siphonLifeTracker: SiphonLifeTracker, castingTracker: CastingTracker, coaTracker: CurseOfAgonyTracker }
 --- @class SiphonLifeModule : Module
 --- @field trackers SiphonLifeTrackers
 --- @diagnostic disable: duplicate-set-field
@@ -11,7 +11,7 @@ function SiphonLifeModule.new(allowAgonyWithOtherCurses)
     --- @type SiphonLifeTrackers
     local trackers = {
         siphonLifeTracker = SiphonLifeTracker.GetInstance(),
-        channelingTracker = ChannelingTracker.GetInstance(),
+        castingTracker = CastingTracker.GetInstance(),
         corruptionTracker = CorruptionTracker.GetInstance(),
         coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses)
     }
@@ -32,7 +32,7 @@ end
 function SiphonLifeModule:getPriority(context)
     if not (self.enabled
         and Helpers:SpellReady(Abilities.SiphonLife.name)
-        and self.trackers.channelingTracker:ShouldCast()
+        and self.trackers.castingTracker:ShouldCast()
         and context.mana > context.siphonLifeCost)
     then
         return -1

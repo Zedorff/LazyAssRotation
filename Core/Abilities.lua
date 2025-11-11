@@ -233,6 +233,29 @@ Abilities.DrainSoul = { name = ABILITY_DRAIN_SOUL, ids = {} }
 --- @type Ability
 Abilities.ShadowBolt = { name = ABILITY_SHADOW_BOLT, ids = {} }
 
+--- Priest Abilities
+
+--- @type Ability
+Abilities.InnerFire = { name = ABILITY_INNER_FIRE, ids = {} }
+
+--- @type Ability
+Abilities.HolyFire = { name = ABILITY_HOLY_FIRE, ids = {14914, 15262, 15263, 15264, 15265, 15266, 15267, 15261 } }
+
+--- @type Ability
+Abilities.Smite = { name = ABILITY_SMITE, ids = {} }
+
+--- @type Ability
+Abilities.VampiricEmbrace = { name = ABILITY_VAMPIRIC_EMBRACE, ids = { 15286 } }
+
+--- @type Ability
+Abilities.ShadowWordPain = { name = ABILITY_SHADOW_WORD_PAIN, ids = { 589, 594, 970, 992, 2767, 10892, 10893, 10894 } }
+
+--- @type Ability
+Abilities.MindBlast = { name = ABILITY_MIND_BLAST, ids = {} }
+
+--- @type Ability
+Abilities.MindFlay = { name = ABILITY_MIND_FLAY, ids = {} }
+
 
 -- Helpers
 

@@ -2,7 +2,7 @@
 ## Title: Lazy Ass Rotation
 ## Notes: To make rotations easier.
 ## Author: Zedorff
-## Version: 0.6.6
+## Version: 0.6.7
 ## DefaultState: enabled
 ## OptionalDeps: none
 ## SavedVariablesPerCharacter: LARModuleSettings, LARFloatingButtonPosition, LARSelectedSpec, LARSpecSide, LARModuleSide, LARShowRotationSpells, LARLockHotSwapButton
@@ -30,8 +30,9 @@ Core\SharedTracker\SelfBuffTracker.lua
 Core\SharedTracker\DebuffTracker.lua
 Core\SharedTracker\DotTracker.lua
 Core\SharedTracker\ClearcastingTracker.lua
-Core\SharedTracker\ChannelingTracker.lua
+Core\SharedTracker\CastingTracker.lua
 Core\SharedTracker\NotBehindTargetTracker.lua
+Core\SharedTracker\DurationedSelfBuffTracker.lua
 Core\ClassRotation.lua
 Core\ClassRotationPerformer.lua
 Core\RageCostCache.lua
@@ -200,9 +201,30 @@ Rotation\Warlock\Module\SiphonLifeModule.lua
 Rotation\Warlock\Module\CorruptionModule.lua
 Rotation\Warlock\Module\DrainSoulModule.lua
 Rotation\Warlock\Module\NightfallModule.lua
+Rotation\Warlock\Module\ShadowBoltModule.lua
 
 Rotation\Warlock\WarlockSpec.lua
 Rotation\Warlock\Warlock.lua
+
+Rotation\Priest\PriestModuleRunContext.lua
+
+Rotation\Priest\Tracker\InnerFireTracker.lua
+Rotation\Priest\Tracker\HolyFireTracker.lua
+Rotation\Priest\Tracker\PurifyingFlamesTracker.lua
+Rotation\Priest\Tracker\VampiricTracker.lua
+Rotation\Priest\Tracker\MindBlastTracker.lua
+Rotation\Priest\Tracker\ShadowWordPainTracker.lua
+
+Rotation\Priest\Module\HolyFireModule.lua
+Rotation\Priest\Module\InnerFireModule.lua
+Rotation\Priest\Module\SmiteModule.lua
+Rotation\Priest\Module\VampiricModule.lua
+Rotation\Priest\Module\MindBlastModule.lua
+Rotation\Priest\Module\ShadowWordPainModule.lua
+Rotation\Priest\Module\MindFlayModule.lua
+
+Rotation\Priest\PriestSpec.lua
+Rotation\Priest\Priest.lua
 
 UI\DebugFrame.lua
 UI\Minimap.lua

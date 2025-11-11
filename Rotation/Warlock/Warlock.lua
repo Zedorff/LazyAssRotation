@@ -14,8 +14,10 @@ function Warlock.new()
     local specs = {
         SpecButtonInfo.new("Interface\\Icons\\Spell_Fire_Immolation", "Fire",
             LARSelectedSpec == nil or LARSelectedSpec.name == "Fire"),
-        SpecButtonInfo.new("Interface\\Icons\\Spell_Shadow_AbominationExplosion", "Afly",
-            LARSelectedSpec and LARSelectedSpec.name == "Afly"),
+        SpecButtonInfo.new("Interface\\Icons\\Spell_Shadow_AbominationExplosion", "Affliction",
+            LARSelectedSpec and LARSelectedSpec.name == "Affliction"),
+        SpecButtonInfo.new("Interface\\Icons\\Spell_Shadow_ShadowBolt", "SM",
+            LARSelectedSpec and LARSelectedSpec.name == "SM"),
     }
 
     if not LARSelectedSpec then
@@ -30,7 +32,7 @@ function Warlock.new()
 end
 
 function Warlock:execute()
-    ClassRotationPerformer:PerformRotation(WarlockModuleRunContext.new(self.cache))
+    ClassRotationPerformer:PerformRotation(WarlockModuleRunContext.new(self.cache, self.spec))
 end
 
 function Warlock:Preheat()
@@ -40,9 +42,14 @@ end
 function Warlock:SelectSpec(spec)
     ClassRotation.SelectSpec(self, spec)
     if spec.name == "Fire" then
+        self.spec = WarlockSpec.FIRE
         self:EnableFireSpec()
-    elseif spec.name == "Afly" then
+    elseif spec.name == "Affliction" then
+        self.spec = WarlockSpec.AFFLICTION
         self:EnableAflySpec()
+    elseif spec.name == "SM" then
+        self.spec = WarlockSpec.SMRUIN
+        self:EnableSMSpec()
     end
     HotSwap_InvalidateModuleButtons()
 end
@@ -72,5 +79,18 @@ function Warlock:EnableAflySpec()
     ModuleRegistry:RegisterModule(DarkHarvestModule.new(hasMalediction))
     ModuleRegistry:RegisterModule(DrainSoulModule.new(hasMalediction))
     ModuleRegistry:RegisterModule(NightfallModule.new())
+    ModuleRegistry:RegisterModule(LifeTapModule.new())
+end
+
+function Warlock:EnableSMSpec()
+    local hasMalediction = Helpers:PointsInTalent("Malediction") > 0
+    ModuleRegistry:RegisterModule(CurseOfRecklessnessModule.new(hasMalediction))
+    ModuleRegistry:RegisterModule(CurseOfTheElementsModule.new(hasMalediction))
+    ModuleRegistry:RegisterModule(CurseOfShadowModule.new(hasMalediction))
+    ModuleRegistry:RegisterModule(CurseOfWeaknessModule.new(hasMalediction))
+    ModuleRegistry:RegisterModule(CurseOfAgonyModule.new(hasMalediction))
+    ModuleRegistry:RegisterModule(CorruptionModule.new(hasMalediction))
+    ModuleRegistry:RegisterModule(SiphonLifeModule.new(hasMalediction))
+    ModuleRegistry:RegisterModule(ShadowBoltModule.new())
     ModuleRegistry:RegisterModule(LifeTapModule.new())
 end

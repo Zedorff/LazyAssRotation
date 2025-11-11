@@ -1,4 +1,5 @@
 --- @class WarlockModuleRunContext : ModuleRunContext
+--- @field spec WarlockSpec
 --- @field mana integer
 --- @field searingCost integer
 --- @field sfCost integer
@@ -19,11 +20,12 @@ WarlockModuleRunContext.__index = WarlockModuleRunContext
 
 --- @param cache ManaCostCache
 --- @return WarlockModuleRunContext
-function WarlockModuleRunContext.new(cache)
+function WarlockModuleRunContext.new(cache, spec)
     --- @class WarlockModuleRunContext
     local self = ModuleRunContext.new()
     setmetatable(self, WarlockModuleRunContext)
 
+    self.spec = spec
     self.mana = UnitMana("player")
     self.searingCost = cache:Get(Abilities.SearingPain.name)
     self.conflagrateCost = cache:Get(Abilities.Conflagrate.name)

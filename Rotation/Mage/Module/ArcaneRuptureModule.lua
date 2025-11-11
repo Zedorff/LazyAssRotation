@@ -1,4 +1,4 @@
---- @alias ArcaneRuptureTrackers { arcaneRuptureTracker: ArcaneRuptureTracker, convergenceTracker: TemporalConvergenceTracker, channelingTracker: ChannelingTracker }
+--- @alias ArcaneRuptureTrackers { arcaneRuptureTracker: ArcaneRuptureTracker, convergenceTracker: TemporalConvergenceTracker, castingTracker: CastingTracker }
 --- @class ArcaneRuptureModule : Module
 --- @field trackers ArcaneRuptureTrackers
 --- @diagnostic disable: duplicate-set-field
@@ -11,7 +11,7 @@ function ArcaneRuptureModule.new()
     local trackers = {
         arcaneRuptureTracker = ArcaneRuptureTracker.new(),
         convergenceTracker = TemporalConvergenceTracker.new(),
-        channelingTracker = ChannelingTracker.GetInstance()
+        castingTracker = CastingTracker.GetInstance()
     }
     --- @class ArcaneRuptureModule
     return setmetatable(Module.new(Abilities.ArcaneRupture.name, trackers, "Interface\\Icons\\Spell_Arcane_Blast"), ArcaneRuptureModule)
@@ -19,7 +19,7 @@ end
 
 function ArcaneRuptureModule:run()
     Logging:Debug("Casting "..Abilities.ArcaneRupture.name)
-    if not self.trackers.channelingTracker:ShouldCast() then
+    if self.trackers.castingTracker:IsChanneling() then
         _ = SpellStopCasting()
     end
 

@@ -1,4 +1,4 @@
---- @alias DarkHarvestTrackers { channelingTracker: ChannelingTracker, siphonLifeTracker: SiphonLifeTracker, coaTracker: CurseOfAgonyTracker, corruptionTracker: CorruptionTracker }
+--- @alias DarkHarvestTrackers { castingTracker: CastingTracker, siphonLifeTracker: SiphonLifeTracker, coaTracker: CurseOfAgonyTracker, corruptionTracker: CorruptionTracker }
 --- @class DarkHarvestModule : Module
 --- @field trackers DarkHarvestTrackers
 --- @diagnostic disable: duplicate-set-field
@@ -10,7 +10,7 @@ DarkHarvestModule.__index = DarkHarvestModule
 function DarkHarvestModule.new(allowAgonyWithOtherCurses)
     --- @type DarkHarvestTrackers
     local trackers = {
-        channelingTracker = ChannelingTracker.GetInstance(),
+        castingTracker = CastingTracker.GetInstance(),
         coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses),
         corruptionTracker = CorruptionTracker.GetInstance(),
         siphonLifeTracker = SiphonLifeTracker.GetInstance(),
@@ -30,7 +30,7 @@ end
 function DarkHarvestModule:getPriority(context)
     if not (self.enabled
         and Helpers:SpellReady(Abilities.SiphonLife.name) --- just GCD check
-        and self.trackers.channelingTracker:ShouldCast()
+        and self.trackers.castingTracker:ShouldCast()
         and context.mana >= context.darkHarvestCost)
     then
         return -1

@@ -1,4 +1,4 @@
---- @alias CorruptionTrackers { corruptionTracker: CorruptionTracker, channelingTracker: ChannelingTracker, coaTracker: CurseOfAgonyTracker }
+--- @alias CorruptionTrackers { corruptionTracker: CorruptionTracker, castingTracker: CastingTracker, coaTracker: CurseOfAgonyTracker }
 --- @class CorruptionModule : Module
 --- @field trackers CorruptionTrackers
 --- @diagnostic disable: duplicate-set-field
@@ -11,7 +11,7 @@ function CorruptionModule.new(allowAgonyWithOtherCurses)
     --- @type CorruptionTrackers
     local trackers = {
         corruptionTracker = CorruptionTracker.GetInstance(),
-        channelingTracker = ChannelingTracker.GetInstance(),
+        castingTracker = CastingTracker.GetInstance(),
         coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses)
     }
     --- @class CorruptionModule
@@ -29,9 +29,22 @@ end
 
 --- @param context WarlockModuleRunContext
 function CorruptionModule:getPriority(context)
+    if self.enabled then
+        if context.spec == WarlockSpec.AFFLICTION then
+            return self:GetAfflictionPriority(context)
+        elseif context.spec == WarlockSpec.SMRUIN then
+            return self:GetSmRuin(context)
+        end
+    end
+    return -1;
+end
+
+--- @param context WarlockModuleRunContext
+--- @return number
+function CorruptionModule:GetAfflictionPriority(context)
     if not (self.enabled
         and Helpers:SpellReady(Abilities.SiphonLife.name) --- GCD check, corruption can't be used for this
-        and self.trackers.channelingTracker:ShouldCast()
+        and self.trackers.castingTracker:ShouldCast()
         and context.mana > context.corruptionCost)
     then
         return -1
@@ -51,4 +64,18 @@ function CorruptionModule:getPriority(context)
         return 80
     end
     return -1
+end
+
+--- @param context WarlockModuleRunContext
+--- @return number
+function CorruptionModule:GetSmRuin(context)
+    if self.enabled
+        and Helpers:SpellReady(Abilities.Corruption.name)
+        and self.trackers.castingTracker:ShouldCast()
+        and context.mana > context.corruptionCost
+        and self.trackers.corruptionTracker:ShouldCast()
+    then
+        return 80;
+    end
+    return -1;
 end

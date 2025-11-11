@@ -189,6 +189,37 @@ function Helpers:ParseIntViaTooltip(spellName, intRegex)
     return 0;
 end
 
+--- @param spellName string
+--- @return number|nil, string|nil
+function Helpers:ParseDebuffIntViaTooltip(spellName)
+    LAR_GameTooltip:SetOwner(UIParent, "ANCHOR_NONE");
+    local spellID = Helpers:SpellIdMaxRank(spellName);
+    if not spellID then
+        Logging:Debug("Can't find " .. spellName .. " in book");
+        return nil, nil;
+    end
+    --- @diagnostic disable-next-line: param-type-mismatch
+    LAR_GameTooltip:SetSpell(spellID, BOOKTYPE_SPELL);
+    local lineCount = LAR_GameTooltip:NumLines();
+        for i = 1, lineCount do
+            local leftText = getglobal("LAR_GameTooltipTextLeft" .. i);
+            if leftText and leftText:GetText() then
+                local line = string.lower(leftText:GetText())
+                -- Try to match 'min' first
+                local _, _, value = string.find(line, DEBUFF_DURATION_MIN_REGEX)
+                if value then
+                    return tonumber(value), "min"
+                end
+                -- Try to match 'sec' if 'min' not found
+                local _, _, value2 = string.find(line, DEBUFF_DURATION_SEC_REGEX)
+                if value2 then
+                    return tonumber(value2), "sec"
+                end
+            end
+        end
+    return nil, nil;
+end
+
 --- @param enchantName string
 --- @return boolean
 function Helpers:HasMainWeaponEnchantTooltip(enchantName)
@@ -225,6 +256,17 @@ end
 --- @return number
 function Helpers:SpellDuration(spellName)
     return Helpers:ParseIntViaTooltip(spellName, DURATION_DESCRIPTION_REGEX)
+end
+
+--- @param spellName string
+--- @return number
+function Helpers:DebuffDuration(spellName)
+    local value, unit = Helpers:ParseDebuffIntViaTooltip(spellName)
+    if not value then return 0 end
+    if unit == "min" then
+        return value * 60
+    end
+    return value
 end
 
 --- @return boolean

@@ -1,4 +1,4 @@
---- @alias NightfallTrackers { nightfallTracker: NightfallTracker, channelingTracker: ChannelingTracker }
+--- @alias NightfallTrackers { nightfallTracker: NightfallTracker, castingTracker: CastingTracker }
 --- @class NightfallModule : Module
 --- @field trackers NightfallTrackers
 --- @diagnostic disable: duplicate-set-field
@@ -10,7 +10,7 @@ function NightfallModule.new()
     --- @type NightfallTrackers
     local trackers = {
         nightfallTracker = NightfallTracker.new(),
-        channelingTracker = ChannelingTracker.GetInstance()
+        castingTracker = CastingTracker.GetInstance()
     }
     --- @class NightfallModule
     return setmetatable(Module.new(PASSIVE_NIGHTFALL, trackers, "Interface\\Icons\\Spell_Shadow_Twilight"), NightfallModule)
@@ -24,7 +24,7 @@ end
 --- @param context WarlockModuleRunContext
 function NightfallModule:getPriority(context)
     if self.enabled and Helpers:SpellReady(Abilities.ShadowBolt.name) then
-        if self.trackers.nightfallTracker:ShouldCast() and self.trackers.channelingTracker:ShouldCast() and context.mana > context.sbCost then
+        if self.trackers.nightfallTracker:ShouldCast() and self.trackers.castingTracker:ShouldCast() and context.mana > context.sbCost then
             return 40
         end
     end

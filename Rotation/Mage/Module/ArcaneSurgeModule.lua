@@ -1,6 +1,6 @@
 --- @alias ArcaneSurgeTrackers { 
 ---   arcaneSurgeTracker: ArcaneSurgeTracker, 
----   channelingTracker: ChannelingTracker, 
+---   castingTracker: CastingTracker, 
 ---   mqgTracker: MindQuickingGemTracker,
 ---   arcanePowerTracker: ArcanePowerTracker,
 ---   temporalConvergenceTracker: TemporalConvergenceTracker,
@@ -16,7 +16,7 @@ function ArcaneSurgeModule.new()
     --- @type ArcaneSurgeTrackers
     local trackers = {
         arcaneSurgeTracker = ArcaneSurgeTracker.new(),
-        channelingTracker = ChannelingTracker.GetInstance(),
+        castingTracker = CastingTracker.GetInstance(),
         mqgTracker = MindQuickingGemTracker.new(),
         arcanePowerTracker = ArcanePowerTracker.new(),
         temporalConvergenceTracker = TemporalConvergenceTracker.new()
@@ -32,7 +32,7 @@ end
 
 --- @param context MageModuleRunContext
 function ArcaneSurgeModule:getPriority(context)
-    if self.enabled and self.trackers.channelingTracker:ShouldCast() then
+    if self.enabled and self.trackers.castingTracker:ShouldCast() then
         local hasMana = context.mana >= context.asCost + context.amCost
 
         if self.trackers.arcaneSurgeTracker:ShouldCast()

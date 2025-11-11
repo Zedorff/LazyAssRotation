@@ -1,4 +1,4 @@
---- @alias DrainSoulTrackers { channelingTracker: ChannelingTracker, coaTracker: CurseOfAgonyTracker }
+--- @alias DrainSoulTrackers { castingTracker: CastingTracker, coaTracker: CurseOfAgonyTracker }
 --- @class DrainSoulModule : Module
 --- @field trackers DrainSoulTrackers
 --- @diagnostic disable: duplicate-set-field
@@ -10,7 +10,7 @@ DrainSoulModule.__index = DrainSoulModule
 function DrainSoulModule.new(allowAgonyWithOtherCurses)
     --- @type DrainSoulTrackers
     local trackers = {
-        channelingTracker = ChannelingTracker.GetInstance(),
+        castingTracker = CastingTracker.GetInstance(),
         coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses)
     }
     --- @class DrainSoulModule
@@ -24,7 +24,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function DrainSoulModule:getPriority(context)
-    if self.enabled and Helpers:SpellReady(Abilities.DrainSoul.name) and self.trackers.channelingTracker:ShouldCast() then
+    if self.enabled and Helpers:SpellReady(Abilities.DrainSoul.name) and self.trackers.castingTracker:ShouldCast() then
         local skipBecauseOfCoe = Helpers:SpellAlmostReady(Abilities.DarkHarvest.name, 3) and self.trackers.coaTracker:GetRemainingDuration() <= 3 and ModuleRegistry:IsModuleEnabled(Abilities.CoE.name)
         if not skipBecauseOfCoe and context.mana >= context.drainSoulCost then
             return 30;

@@ -8,6 +8,7 @@ CLASS_PALADIN_DPS            = "Paladin"
 CLASS_DRUID_DPS              = "Druid"
 CLASS_MAGE_DPS               = "Mage"
 CLASS_WARLOCK_DPS            = "Warlock"
+CLASS_PRIEST_DPS             = "Priest"
 
 -- Chat
 CHAT_AUTOATTACK_DODGE        = "You attack.(.+) dodges."
@@ -104,9 +105,20 @@ ABILITY_DRAIN_SOUL           = "Drain Soul"
 PASSIVE_NIGHTFALL            = "Shadow Trance"
 ABILITY_SHADOW_BOLT          = "Shadow Bolt"
 
+-- Priest
+ABILITY_INNER_FIRE           = "Inner Fire"
+ABILITY_HOLY_FIRE            = "Holy Fire"
+ABILITY_SMITE                = "Smite"
+ABILITY_VAMPIRIC_EMBRACE     = "Vampiric Embrace"
+ABILITY_SHADOW_WORD_PAIN     = "Shadow Word: Pain"
+ABILITY_MIND_BLAST           = "Mind Blast"
+ABILITY_MIND_FLAY            = "Mind Flay"
+
 -- Regex
 RAGE_DESCRIPTION_REGEX       = "(%d+)%s*Rage";
 ENERGY_DESCRIPTION_REGEX     = "(%d+)%s*Energy";
 COOLDOWN_DESCRIPTION_REGEX   = "(%d+%.?%d*) sec";
 MANA_DESCRIPTION_REGEX       = "(%d+)%s*Mana"
 DURATION_DESCRIPTION_REGEX   = "over (%d+%.?%d*) ?sec"
+DEBUFF_DURATION_MIN_REGEX   = "for (%d+%.?%d*) ?min"
+DEBUFF_DURATION_SEC_REGEX   = "for (%d+%.?%d*) ?sec"

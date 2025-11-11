@@ -1,4 +1,4 @@
---- @alias MageClearcastingTrackers { channelingTracker: ChannelingTracker, clearcastingTracker: ClearcastingTracker }
+--- @alias MageClearcastingTrackers { castingTracker: CastingTracker, clearcastingTracker: ClearcastingTracker }
 --- @class MageClearcastingModule : Module
 --- @field trackers MageClearcastingTrackers
 --- @diagnostic disable: duplicate-set-field
@@ -9,7 +9,7 @@ MageClearcastingModule.__index = MageClearcastingModule
 function MageClearcastingModule.new()
     --- @type MageClearcastingTrackers
     local trackers = {
-        channelingTracker = ChannelingTracker.GetInstance(),
+        castingTracker = CastingTracker.GetInstance(),
         clearcastingTracker = ClearcastingTracker.GetInstance()
     }
     --- @class MageClearcastingModule
@@ -23,7 +23,7 @@ end
 
 --- @param context MageModuleRunContext
 function MageClearcastingModule:getPriority(context)
-    if self.enabled and self.trackers.channelingTracker:ShouldCast() then
+    if self.enabled and self.trackers.castingTracker:ShouldCast() then
         if not Helpers:SpellAlmostReady(Abilities.ArcaneRupture.name, 1.5) and self.trackers.clearcastingTracker:ShouldCast() and context.mana <= context.amCost * 2 then
             return 90;
         end
