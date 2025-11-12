@@ -71,10 +71,10 @@ function DotTracker:GetRemainingDuration()
     return self:GetRemainingOnTarget() or 0
 end
 
---- @return number | nil
+--- @return number
 function DotTracker:GetRemainingOnTarget()
     local _, mob = UnitExists("target")
-    if not mob then return nil end
+    if not mob then return 0 end
 
     local dotData = self.data[mob]
     if not dotData then return 0 end
