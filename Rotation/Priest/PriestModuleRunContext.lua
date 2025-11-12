@@ -3,10 +3,12 @@
 --- @field holyFireCost integer
 --- @field smiteCost integer
 --- @field innerFireCost integer
---- @filed vampiricCost integer
+--- @field vampiricCost integer
 --- @field swpCost integer
 --- @field mindBlastCost integer
 --- @field mindFlayCost integer
+--- @field chastiseCost integer
+--- @field enlightenCost integer
 PriestModuleRunContext = setmetatable({}, { __index = ModuleRunContext })
 PriestModuleRunContext.__index = PriestModuleRunContext
 
@@ -25,6 +27,8 @@ function PriestModuleRunContext.new(cache)
     self.swpCost = cache:Get(Abilities.ShadowWordPain.name)
     self.mindBlastCost = cache:Get(Abilities.MindBlast.name)
     self.mindFlayCost = cache:Get(Abilities.MindFlay.name)
+    self.chastiseCost = cache:Get(Abilities.Chastise.name)
+    self.enlightenCost = cache:Get(Abilities.Enlighten.name)
     return self
 end
 
@@ -37,4 +41,6 @@ function PriestModuleRunContext.PreheatCache(cache)
     cache:Get(Abilities.ShadowWordPain.name)
     cache:Get(Abilities.MindBlast.name)
     cache:Get(Abilities.MindFlay.name)
+    cache:Get(Abilities.Chastise.name)
+    cache:Get(Abilities.Enlighten.name)
 end

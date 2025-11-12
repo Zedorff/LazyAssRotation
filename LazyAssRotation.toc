@@ -214,6 +214,8 @@ Rotation\Priest\Tracker\PurifyingFlamesTracker.lua
 Rotation\Priest\Tracker\VampiricTracker.lua
 Rotation\Priest\Tracker\MindBlastTracker.lua
 Rotation\Priest\Tracker\ShadowWordPainTracker.lua
+Rotation\Priest\Tracker\ChastiseHasteTracker.lua
+Rotation\Priest\Tracker\EnlightenTracker.lua
 
 Rotation\Priest\Module\HolyFireModule.lua
 Rotation\Priest\Module\InnerFireModule.lua
@@ -222,6 +224,8 @@ Rotation\Priest\Module\VampiricModule.lua
 Rotation\Priest\Module\MindBlastModule.lua
 Rotation\Priest\Module\ShadowWordPainModule.lua
 Rotation\Priest\Module\MindFlayModule.lua
+Rotation\Priest\Module\ChastiseModule.lua
+Rotation\Priest\Module\EnlightenModule.lua
 
 Rotation\Priest\PriestSpec.lua
 Rotation\Priest\Priest.lua

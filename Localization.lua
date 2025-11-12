@@ -113,6 +113,8 @@ ABILITY_VAMPIRIC_EMBRACE     = "Vampiric Embrace"
 ABILITY_SHADOW_WORD_PAIN     = "Shadow Word: Pain"
 ABILITY_MIND_BLAST           = "Mind Blast"
 ABILITY_MIND_FLAY            = "Mind Flay"
+ABILITY_CHASTISE             = "Chastise"
+ABILITY_ENLIGHTEN            = "Enlighten"
 
 -- Regex
 RAGE_DESCRIPTION_REGEX       = "(%d+)%s*Rage";

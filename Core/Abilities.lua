@@ -256,6 +256,12 @@ Abilities.MindBlast = { name = ABILITY_MIND_BLAST, ids = {} }
 --- @type Ability
 Abilities.MindFlay = { name = ABILITY_MIND_FLAY, ids = {} }
 
+--- @type Ability
+Abilities.Chastise = { name = ABILITY_CHASTISE, ids = {} }
+
+--- @type Ability
+Abilities.Enlighten = { name = ABILITY_ENLIGHTEN, ids = {} }
+
 
 -- Helpers
 

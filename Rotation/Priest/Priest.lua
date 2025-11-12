@@ -49,7 +49,9 @@ function Priest:SelectSpec(spec)
 end
 
 function Priest:EnableSmiteSpec()
+    ModuleRegistry:RegisterModule(EnlightenModule.new())
     ModuleRegistry:RegisterModule(InnerFireModule.new())
+    ModuleRegistry:RegisterModule(ChastiseModule.new())
     ModuleRegistry:RegisterModule(HolyFireModule.new())
     ModuleRegistry:RegisterModule(SmiteModule.new())
 end
