@@ -8,7 +8,7 @@ DebuffTracker = setmetatable({}, { __index = CooldownTracker })
 DebuffTracker.__index = DebuffTracker
 
 --- @param ability Ability
---- @param isUnique boolean|nil
+--- @param isUnique boolean
 --- @param textureName string
 function DebuffTracker.new(ability, isUnique, textureName)
     --- @class DebuffTracker
@@ -16,7 +16,7 @@ function DebuffTracker.new(ability, isUnique, textureName)
     setmetatable(self, DebuffTracker)
     self.ability = ability
     self.data = {}
-    self.isUnique = isUnique or true
+    self.isUnique = isUnique
     self.textureName = textureName
     self.debuffUp = Helpers:HasDebuff("target", self.textureName or "")
     return self
@@ -101,7 +101,7 @@ end
 --- @return number | nil
 function DebuffTracker:GetRemainingOnTarget()
     local _, mob = UnitExists("target")
-    if not mob then return 0 end
+    if not mob then return nil end
 
     local debuffData = self.data[mob]
     if not debuffData then return 0 end
