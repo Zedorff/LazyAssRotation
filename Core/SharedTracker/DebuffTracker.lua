@@ -101,7 +101,7 @@ end
 --- @return number | nil
 function DebuffTracker:GetRemainingOnTarget()
     local _, mob = UnitExists("target")
-    if not mob then return nil end
+    if not mob then return 0 end
 
     local debuffData = self.data[mob]
     if not debuffData then return 0 end
