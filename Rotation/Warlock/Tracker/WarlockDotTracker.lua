@@ -57,8 +57,6 @@ function WarlockDotTracker:onEvent(event, arg1, _, arg3, arg4)
     elseif event == "PLAYER_DEAD" then
         self.pendingChannel = false
         self.dhCasting = false
-    elseif event == "CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE" then
-        self:RecordTick(arg1, now)
     elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_COMBAT_SELF_MISSES" then
         self:HandleResist(arg1)
     elseif event == "PLAYER_REGEN_ENABLED" then
@@ -76,23 +74,9 @@ function WarlockDotTracker:ApplyDot(now, mob)
     local dotData       = self:GetMobData(mob)
     dotData.start       = now
     dotData.duration    = duration
-    dotData.lastTick    = nil
     dotData.dhStartTime = nil
     dotData.dhEndTime   = nil
     Logging:Debug("Apply dot: " .. self.rankedAbility.name .. ", withDuration: " .. duration)
-end
-
---- @param msg string
---- @param now number
-function WarlockDotTracker:RecordTick(msg, now)
-    local mob = string.match(msg, "^(.-) suffers %d+ .- from your " .. self.rankedAbility.name)
-    if not mob then return end
-
-    local dotData = self.data[mob]
-    if not dotData then return end
-
-    dotData.lastTick = now
-    Logging:Debug("Tick recorded: " .. self.rankedAbility.name .. ", after : " .. (dotData.start - now) .. "s")
 end
 
 --- @param mob string | nil
@@ -104,7 +88,7 @@ function WarlockDotTracker:StartDarkHarvest(mob, now)
     if not dotData then return end
 
     if not dotData.dhStartTime then
-        dotData.dhStartTime = dotData.lastTick or now
+        dotData.dhStartTime = now
         dotData.dhEndTime   = nil
     end
     Logging:Debug("Dark Harvest started for: " .. self.rankedAbility.name)

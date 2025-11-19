@@ -369,15 +369,3 @@ function Helpers:PointsInTalent(talentName)
     end
     return 0
 end
-
-function string.match(s, pattern, init)
-    local start_pos, end_pos, capture = string.find(s, pattern, init)
-    if start_pos then
-        if capture then
-            return capture
-        else
-            return s:sub(start_pos, end_pos)
-        end
-    end
-    return nil
-end
