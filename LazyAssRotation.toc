@@ -2,15 +2,9 @@
 ## Title: Lazy Ass Rotation
 ## Notes: To make rotations easier.
 ## Author: Zedorff
-## Version: 0.6.7
+## Version: 0.7.0
 ## DefaultState: enabled
-## OptionalDeps: none
 ## SavedVariablesPerCharacter: LARModuleSettings, LARFloatingButtonPosition, LARSelectedSpec, LARSpecSide, LARModuleSide, LARShowRotationSpells, LARLockHotSwapButton
-
-## Load Ace2 libraries first
-libs\AceLibrary\AceLibrary.lua
-libs\AceOO-2.0\AceOO-2.0.lua
-libs\AceHook\AceHook-2.0.lua
 
 Localization.lua
 
@@ -216,6 +210,7 @@ Rotation\Priest\Tracker\MindBlastTracker.lua
 Rotation\Priest\Tracker\ShadowWordPainTracker.lua
 Rotation\Priest\Tracker\ChastiseHasteTracker.lua
 Rotation\Priest\Tracker\EnlightenTracker.lua
+Rotation\Priest\Tracker\ShadowformTracker.lua
 
 Rotation\Priest\Module\HolyFireModule.lua
 Rotation\Priest\Module\InnerFireModule.lua
@@ -226,6 +221,7 @@ Rotation\Priest\Module\ShadowWordPainModule.lua
 Rotation\Priest\Module\MindFlayModule.lua
 Rotation\Priest\Module\ChastiseModule.lua
 Rotation\Priest\Module\EnlightenModule.lua
+Rotation\Priest\Module\ShadowformModule.lua
 
 Rotation\Priest\PriestSpec.lua
 Rotation\Priest\Priest.lua

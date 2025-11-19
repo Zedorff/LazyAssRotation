@@ -18,6 +18,7 @@ end
 function BloodthirstModule:enable()
     Module.enable(self)
     ModuleRegistry:DisableModule(Abilities.MortalStrike.name)
+    ModuleRegistry:DisableModule(Abilities.ShieldSlam.name)
 end
 
 --- @param context WarriorModuleRunContext
@@ -28,7 +29,7 @@ function BloodthirstModule:getPriority(context)
         elseif context.spec == WarriorSpec.FURY then
             return 90;
         elseif context.spec == WarriorSpec.PROT then
-            return 90;
+            return 85;
         end
     end
     return -1;

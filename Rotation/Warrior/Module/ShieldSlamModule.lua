@@ -14,6 +14,11 @@ function ShieldSlamModule:run()
     CastSpellByName(Abilities.ShieldSlam.name)
 end
 
+function ShieldSlamModule:enable()
+    Module.enable(self)
+    ModuleRegistry:DisableModule(Abilities.Bloodthirst.name)
+end
+
 --- @param context WarriorModuleRunContext
 function ShieldSlamModule:getPriority(context)
     if self.enabled then

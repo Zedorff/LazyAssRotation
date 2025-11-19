@@ -89,11 +89,15 @@ function HeroicStrikeModule:GetProtHeroicPriority(context)
         return -1
     end
 
-    local ssAlmostReady = Helpers:SpellAlmostReady(Abilities.ShieldSlam.name, 1.5)
-    local canAffordSSAndHS = context.rage >= context.shieldSlamCost + context.hsCost
+    local btAlmostReady = Helpers:SpellAlmostReady(Abilities.Bloodthirst.name, 1.5) and ModuleRegistry:IsModuleEnabled(Abilities.Bloodthirst.name)
+    local ssAlmostReady = Helpers:SpellAlmostReady(Abilities.ShieldSlam.name, 1.5) and ModuleRegistry:IsModuleEnabled(Abilities.ShieldSlam.name)
+
+    local mainCost = ModuleRegistry:IsModuleEnabled(Abilities.ShieldSlam.name) and context.shieldSlamCost or context.bsCost
+    
+    local canAffordMainAndHS = context.rage >= mainCost + context.hsCost
     local rageThreshold = context.rage >= 45
 
-    if (not ssAlmostReady and canAffordSSAndHS) or rageThreshold then
+    if (not (ssAlmostReady or btAlmostReady) and canAffordMainAndHS) or rageThreshold then
         return 70
     end
 

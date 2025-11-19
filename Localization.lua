@@ -115,6 +115,7 @@ ABILITY_MIND_BLAST           = "Mind Blast"
 ABILITY_MIND_FLAY            = "Mind Flay"
 ABILITY_CHASTISE             = "Chastise"
 ABILITY_ENLIGHTEN            = "Enlighten"
+ABILITY_SHADOWFORM           = "Shadowform"
 
 -- Regex
 RAGE_DESCRIPTION_REGEX       = "(%d+)%s*Rage";

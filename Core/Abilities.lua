@@ -262,6 +262,9 @@ Abilities.Chastise = { name = ABILITY_CHASTISE, ids = {} }
 --- @type Ability
 Abilities.Enlighten = { name = ABILITY_ENLIGHTEN, ids = {} }
 
+--- @type Ability
+Abilities.Shadowform = { name = ABILITY_SHADOWFORM, ids = {} }
+
 
 -- Helpers
 

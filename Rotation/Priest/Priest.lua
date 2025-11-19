@@ -57,6 +57,7 @@ function Priest:EnableSmiteSpec()
 end
 
 function Priest:EnableShadowSpec()
+    ModuleRegistry:RegisterModule(ShadowformModule.new())
     ModuleRegistry:RegisterModule(InnerFireModule.new())
     ModuleRegistry:RegisterModule(VampiricModule.new())
     ModuleRegistry:RegisterModule(ShadowWordPainModule.new())

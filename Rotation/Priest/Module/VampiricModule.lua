@@ -24,7 +24,7 @@ end
 function VampiricModule:getPriority(context)
     if self.enabled and Helpers:SpellReady(Abilities.VampiricEmbrace.name) and self.trackers.vampiricTracker:ShouldCast() then
         if context.mana >= context.vampiricCost then
-            return 100;
+            return 99;
         end
     else
         return -1;
