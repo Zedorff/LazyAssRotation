@@ -37,11 +37,16 @@ function HolyStrikeModule:getPriority(context)
 end
 
 function HolyStrikeModule:GetRetriPriority()
-    if not self.trackers.socTacker:ShouldCast() and self.trackers.holyStrikeTracker:ShouldCast() then
-        return 75;
-    else
-        return 50;
+    local sor = ModuleRegistry:IsModuleEnabled(Abilities.SealRighteousness.name)
+    local soc = ModuleRegistry:IsModuleEnabled(Abilities.SealCommand.name)
+    local shouldCast = self.trackers.holyStrikeTracker:ShouldCast()
+
+    if sor then
+        return shouldCast and 70 or 60
+    elseif soc then
+        return shouldCast and 75 or 50
     end
+    return -1
 end
 
 function HolyStrikeModule:GetProtPriority()

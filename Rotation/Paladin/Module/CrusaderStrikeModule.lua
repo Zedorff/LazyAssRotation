@@ -22,8 +22,19 @@ end
 
 --- @param context PaladinModuleRunContext
 function CrusaderStrikeModule:getPriority(context)
-    if self.enabled and context.mana > context.crusaderCost and self.trackers.zealTracker:ShouldCast() and Helpers:SpellReady(Abilities.CrusaderStrike.name) then
-        return 70;
+    if not self.enabled or context.mana < context.crusaderCost or not Helpers:SpellReady(Abilities.CrusaderStrike.name) then
+        return -1
     end
-    return -1;
+
+    local sor = ModuleRegistry:IsModuleEnabled(Abilities.SealRighteousness.name)
+    local soc = ModuleRegistry:IsModuleEnabled(Abilities.SealCommand.name)
+    local shouldCast = self.trackers.zealTracker:ShouldCast()
+
+    if sor then
+        return shouldCast and 75 or 50
+    elseif soc then
+        return shouldCast and 70 or 60
+    end
+
+    return -1
 end
