@@ -42,9 +42,9 @@ function HolyStrikeModule:GetRetriPriority()
     local shouldCast = self.trackers.holyStrikeTracker:ShouldCast()
 
     if sor then
-        return shouldCast and 70 or 60
+        return shouldCast and 70 or -1
     elseif soc then
-        return shouldCast and 75 or 50
+        return shouldCast and 75 or -1
     end
     return -1
 end

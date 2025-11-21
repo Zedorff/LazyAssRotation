@@ -33,7 +33,7 @@ function CrusaderStrikeModule:getPriority(context)
     if sor then
         return shouldCast and 75 or 50
     elseif soc then
-        return shouldCast and 70 or 60
+        return shouldCast and 70 or 50
     end
 
     return -1
