@@ -1,5 +1,6 @@
 --- @class PriestModuleRunContext : ModuleRunContext
 --- @field mana integer
+--- @field hpPercent integer
 --- @field holyFireCost integer
 --- @field smiteCost integer
 --- @field innerFireCost integer
@@ -20,6 +21,7 @@ function PriestModuleRunContext.new(cache)
     setmetatable(self, PriestModuleRunContext)
 
     self.mana = UnitMana("player")
+    self.hpPercent = UnitHealth("player") / UnitHealthMax("player") * 100
     self.holyFireCost = cache:Get(Abilities.HolyFire.name)
     self.smiteCost = cache:Get(Abilities.Smite.name)
     self.innerFireCost = cache:Get(Abilities.InnerFire.name)

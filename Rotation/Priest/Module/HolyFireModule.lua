@@ -25,7 +25,7 @@ end
 --- @param context PriestModuleRunContext
 function HolyFireModule:getPriority(context)
     if self.enabled and Helpers:SpellReady(Abilities.HolyFire.name) and self.trackers.castingTracker:ShouldCast() then
-        if self.trackers.holyFireTracker:GetRemainingOnTarget() < (Helpers:CastTime(Abilities.Smite.name) + 0.1) and context.mana > context.holyFireCost then
+        if self.trackers.purifyingFlamesTracker:TimeUntilBuffExpires() < (Helpers:CastTime(Abilities.Smite.name) + 0.1) and context.mana > context.holyFireCost then
             return 80;
         end
     end

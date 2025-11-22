@@ -22,7 +22,7 @@ end
 
 --- @param context PriestModuleRunContext
 function ChastiseModule:getPriority(context)
-    if self.enabled and Helpers:SpellReady(Abilities.Chastise.name) and context.mana > context.chastiseCost then
+    if self.enabled and Helpers:SpellReady(Abilities.Chastise.name) and context.mana > context.chastiseCost and context.hpPercent > 80 then
         return 90;
     end
     return -1;
