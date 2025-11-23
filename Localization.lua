@@ -125,3 +125,7 @@ MANA_DESCRIPTION_REGEX       = "(%d+)%s*Mana"
 DURATION_DESCRIPTION_REGEX   = "over (%d+%.?%d*) ?sec"
 DEBUFF_DURATION_MIN_REGEX   = "for (%d+%.?%d*) ?min"
 DEBUFF_DURATION_SEC_REGEX   = "for (%d+%.?%d*) ?sec"
+
+-- Misc
+SECONDARY_SLOT_ID           = "SecondaryHandSlot"
+SHIELD_SLOT_TYPE            = "Shield"

@@ -1,4 +1,5 @@
 --- @class ActionBarSlotTracker : Tracker
+--- @field slotCache table<string, integer>
 ActionBarSlotTracker = setmetatable({}, { __index = Tracker })
 ActionBarSlotTracker.__index = ActionBarSlotTracker
 

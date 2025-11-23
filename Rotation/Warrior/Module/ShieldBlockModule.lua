@@ -1,4 +1,4 @@
---- @alias ShieldBlockTrackers { shieldBlockTracker: ShieldBlockTracker, shieldSlamTracker: ShieldSlamTracker }
+--- @alias ShieldBlockTrackers { shieldBlockTracker: ShieldBlockTracker, shieldSlamTracker: ShieldSlamTracker, offhandSlotTracker: OffHandSlotTracker }
 --- @class ShieldBlockModule : Module
 --- @field trackers ShieldBlockTrackers
 --- @diagnostic disable: duplicate-set-field
@@ -10,7 +10,8 @@ function ShieldBlockModule.new()
     --- @type ShieldBlockTrackers
     local trackers = {
         shieldBlockTracker = ShieldBlockTracker.new(),
-        shieldSlamTracker = ShieldSlamTracker.new()
+        shieldSlamTracker = ShieldSlamTracker.new(),
+        offhandSlotTracker = OffHandSlotTracker.GetInstance(),
     }
     --- @class ShieldBlockModule
     return setmetatable(Module.new(Abilities.ShieldBlock.name, trackers, "Interface\\Icons\\Ability_Defend"), ShieldBlockModule)
@@ -23,7 +24,7 @@ end
 
 --- @param context WarriorModuleRunContext
 function ShieldBlockModule:getPriority(context)
-    if self.enabled and not Helpers:SpellReady(Abilities.ShieldSlam.name) and Helpers:SpellReady(Abilities.ShieldBlock.name) then
+    if self.enabled and self.trackers.offhandSlotTracker:isShieldEquipped() and not Helpers:SpellReady(Abilities.ShieldSlam.name) and Helpers:SpellReady(Abilities.ShieldBlock.name) then
         if self.trackers.shieldBlockTracker:ShouldCast() and self.trackers.shieldSlamTracker:ShouldCast() then
             return 84;
         end

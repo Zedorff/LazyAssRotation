@@ -45,6 +45,7 @@ Rotation\Warrior\Tracker\RendTracker.lua
 Rotation\Warrior\Tracker\RevengeTracker.lua
 Rotation\Warrior\Tracker\ShieldSlamTracker.lua
 Rotation\Warrior\Tracker\ShieldBlockTracker.lua
+Rotation\Warrior\Tracker\OffHandSlotTracker.lua
 
 Rotation\Warrior\WarriorModuleRunContext.lua
 

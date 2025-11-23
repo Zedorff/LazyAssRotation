@@ -369,3 +369,32 @@ function Helpers:PointsInTalent(talentName)
     end
     return 0
 end
+
+--- @return boolean
+function Helpers:isShieldEquipped()
+    LAR_GameTooltip:SetOwner(UIParent, "ANCHOR_NONE");
+
+    local slotId = GetInventorySlotInfo(SECONDARY_SLOT_ID);
+    local hasItem = LAR_GameTooltip:SetInventoryItem("player", slotId);
+    if not hasItem then
+        return false;
+    end
+
+    local lines = LAR_GameTooltip:NumLines();
+    for i = 1, lines do
+        local label = getglobal("LAR_GameTooltipTextLeft" .. i);
+        if label:GetText() then
+            if label:GetText() == SHIELD_SLOT_TYPE then
+                return true;
+            end
+        end
+
+        label = getglobal("LAR_GameTooltipTextRight" .. i);
+        if label:GetText() then
+            if label:GetText() == SHIELD_SLOT_TYPE then
+                return true;
+            end
+        end
+    end
+    return false;
+end
