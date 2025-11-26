@@ -18,14 +18,14 @@ function DebuffTracker.new(ability, isUnique, textureName)
     self.data = {}
     self.isUnique = isUnique
     self.textureName = textureName
-    self.debuffUp = Helpers:HasDebuff("target", self.textureName or "")
+    self.debuffUp = false
     return self
 end
 
 function DebuffTracker:subscribe()
     self.data = {}
     CooldownTracker.subscribe(self)
-    self.debuffUp = Helpers:HasDebuff("target", self.textureName or "")
+    self.debuffUp = false
 end
 
 --- @param event string
@@ -93,6 +93,10 @@ end
 
 --- @return boolean
 function DebuffTracker:ShouldCast()
+    if self.isUnique then
+        return not self.debuffUp and Helpers:SpellReady(self.ability.name)
+    end
+    
     local remaining = self:GetRemainingOnTarget()
     if not remaining then return true end
     return remaining <= 0 and Helpers:SpellReady(self.ability.name)
