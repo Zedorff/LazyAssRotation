@@ -1,58 +1,72 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.blizzard.com/wow/ui/ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 
-	<!-- Minimap button -->
-	<Button name="LAR_MinimapButton" frameStrata="LOW" parent="Minimap" enableMouse="true"
-		movable="true" toplevel="true" hidden="false">
-		<Size>
-			<AbsDimension x="32" y="32" />
-		</Size>
-		<Anchors>
-			<Anchor point="TOPLEFT" />
-		</Anchors>
-		<Layers>
-			<Layer level="BACKGROUND">
-				<Texture name="LAR_MinimapButtonIcon"
-					file="Interface\Icons\Ability_Warrior_BattleShout">
-					<Size>
-						<AbsDimension x="18" y="18" />
-					</Size>
-					<Anchors>
-						<Anchor point="TOPLEFT">
-							<Offset>
-								<AbsDimension x="7" y="-6" />
-							</Offset>
-						</Anchor>
-					</Anchors>
-				</Texture>
-			</Layer>
-			<Layer level="OVERLAY">
-				<Texture name="LAR_MinimapButtonBorder"
-					file="Interface\Minimap\MiniMap-TrackingBorder.tga">
-					<Size>
-						<AbsDimension x="52" y="52" />
-					</Size>
-					<Anchors>
-						<Anchor point="TOPLEFT" />
-					</Anchors>
-				</Texture>
-			</Layer>
-		</Layers>
-		<HighlightTexture alphaMode="ADD" file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight" />
-		<Scripts>
-			<OnLoad>
-				this:RegisterForClicks("LeftButtonUp","RightButtonUp")
-			</OnLoad>
-			<OnEnter>
-				LAR_MinimapButton_OnEnter(this)
-			</OnEnter>
-			<OnLeave>
-				LAR_MinimapButton_OnLeave(this)
-			</OnLeave>
-			<OnClick>
-				LAR_MinimapButton_OnClick()
-			</OnClick>
-		</Scripts>
-	</Button>
+    <!-- Minimap button -->
+    <Button name="LAR_MinimapButton" frameStrata="LOW" parent="Minimap"
+        enableMouse="true" toplevel="true" hidden="false">
+        <Size>
+            <AbsDimension x="32" y="32" />
+        </Size>
+
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture name="LAR_MinimapButtonIcon"
+                    file="Interface\Icons\Ability_Warrior_BattleShout">
+                    <Size>
+                        <AbsDimension x="18" y="18" />
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="7" y="-6" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+            </Layer>
+
+            <Layer level="OVERLAY">
+                <Texture name="LAR_MinimapButtonBorder"
+                    file="Interface\Minimap\MiniMap-TrackingBorder.tga">
+                    <Size>
+                        <AbsDimension x="52" y="52" />
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT" />
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+
+        <HighlightTexture alphaMode="ADD" file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight" />
+
+        <Scripts>
+            <OnLoad>
+                LAR_MinimapButton_OnLoad()
+                this:RegisterForClicks("LeftButtonUp","RightButtonUp")
+                this:RegisterForDrag("LeftButton")
+            </OnLoad>
+
+            <OnDragStart>
+                LAR_MinimapButton_OnDragStart()
+            </OnDragStart>
+
+            <OnDragStop>
+                LAR_MinimapButton_OnDragStop()
+            </OnDragStop>
+
+            <OnEnter>
+                LAR_MinimapButton_OnEnter()
+            </OnEnter>
+
+            <OnLeave>
+                LAR_MinimapButton_OnLeave()
+            </OnLeave>
+
+            <OnClick>
+                LAR_MinimapButton_OnClick()
+            </OnClick>
+        </Scripts>
+    </Button>
 </Ui>
