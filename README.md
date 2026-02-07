@@ -5,8 +5,7 @@
 ## Highlights
 
 - 🧠 Smart rotation logic (DPS & Tank)
-- ⚔️ Supports multiple classes (Warrior, Druid; Shaman; Paladin; more coming)
-- 🎯 Visual spell suggestions
+- ⚔️ Supports multiple classes (Warrior, Druid, Shaman, Paladin, Priest, Mage)
 - 🧩 Modular design – enable/disable modules via UI
 - ⚙️ Made for TurtleWoW
 
