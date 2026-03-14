@@ -86,6 +86,11 @@ ABILITY_ARCANE_MISSILES      = "Arcane Missiles"
 PASSIVE_TEMPORAL_CONVERGENCE = "Temporal Convergence"
 ABILITY_ARCANE_POWER         = "Arcane Power"
 ITEM_MQG                     = "Mind Quickening"
+ABILITY_ICICLES              = "Icicles"
+ABILITY_ICE_BARRIER          = "Ice Barrier"
+ABILITY_FROSTBOLT            = "Frostbolt"
+PASSIVE_FLASH_FREEZE         = "Flash Freeze"
+ABILITY_MAGE_ARMOR           = "Mage Armor"
 
 -- Warlock
 ABILITY_SEARING_PAIN         = "Searing Pain"

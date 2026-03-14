@@ -1,6 +1,6 @@
 --- @class Mage : ClassRotation
 --- @field cache ManaCostCache
---- @field spec WarriorSpec
+--- @field spec MageSpec
 --- @diagnostic disable: duplicate-set-field
 Mage = setmetatable({}, { __index = ClassRotation })
 Mage.__index = Mage
@@ -12,7 +12,8 @@ function Mage.new()
     setmetatable(self, Mage)
 
     local specs = {
-        SpecButtonInfo.new("Interface\\Icons\\Spell_Arcane_Blast", "Arcane",  LARSelectedSpec == nil or LARSelectedSpec.name == "Arcane"),
+        SpecButtonInfo.new("Interface\\Icons\\Spell_Arcane_Blast", "Arcane", LARSelectedSpec == nil or LARSelectedSpec.name == "Arcane"),
+        SpecButtonInfo.new("Interface\\Icons\\Spell_Frost_FrostBolt02", "Frost", LARSelectedSpec ~= nil and LARSelectedSpec.name == "Frost"),
     }
 
     if not LARSelectedSpec then
@@ -37,14 +38,26 @@ end
 function Mage:SelectSpec(spec)
     ClassRotation.SelectSpec(self, spec)
     if spec.name == "Arcane" then
+        self.spec = MageSpec.ARCANE
         self:EnableArcaneSpec()
+    elseif spec.name == "Frost" then
+        self.spec = MageSpec.FROST
+        self:EnableFrostSpec()
     end
     HotSwap_InvalidateModuleButtons()
 end
 
 function Mage:EnableArcaneSpec()
+    ModuleRegistry:RegisterModule(MageArmorModule.new())
     ModuleRegistry:RegisterModule(ArcaneRuptureModule.new())
     ModuleRegistry:RegisterModule(ArcaneSurgeModule.new())
     ModuleRegistry:RegisterModule(ArcaneMissilesModule.new())
     ModuleRegistry:RegisterModule(MageClearcastingModule.new())
+end
+
+function Mage:EnableFrostSpec()
+    ModuleRegistry:RegisterModule(MageArmorModule.new())
+    ModuleRegistry:RegisterModule(IceBarrierModule.new())
+    ModuleRegistry:RegisterModule(IciclesModule.new())
+    ModuleRegistry:RegisterModule(FrostBoltModule.new())
 end

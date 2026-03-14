@@ -160,12 +160,20 @@ Rotation\Mage\Tracker\ArcaneSurgeTracker.lua
 Rotation\Mage\Tracker\TemporalConvergenceTracker.lua
 Rotation\Mage\Tracker\MindQuickingGemTracker.lua
 Rotation\Mage\Tracker\ArcanePowerTracker.lua
+Rotation\Mage\Tracker\FlashFreezeTracker.lua
+Rotation\Mage\Tracker\IceBarrierTracker.lua
+Rotation\Mage\Tracker\MageArmorTracker.lua
 
 Rotation\Mage\Module\ArcaneMissilesModule.lua
 Rotation\Mage\Module\ArcaneRuptureModule.lua
 Rotation\Mage\Module\ArcaneSurgeModule.lua
 Rotation\Mage\Module\MageClearcastingModule.lua
+Rotation\Mage\Module\IciclesModule.lua
+Rotation\Mage\Module\IceBarrierModule.lua
+Rotation\Mage\Module\FrostBoltModule.lua
+Rotation\Mage\Module\MageArmorModule.lua
 
+Rotation\Mage\MageSpec.lua
 Rotation\Mage\Mage.lua
 
 Rotation\Warlock\WarlockModuleRunContext.lua

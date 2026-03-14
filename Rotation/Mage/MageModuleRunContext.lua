@@ -3,6 +3,10 @@
 --- @field arCost integer
 --- @field asCost integer
 --- @field amCost integer
+--- @field iciclesCost integer
+--- @field iceBarrierCost integer
+--- @field frostBoltCost integer
+--- @field mageArmorCost integer
 MageModuleRunContext = setmetatable({}, { __index = ModuleRunContext })
 MageModuleRunContext.__index = MageModuleRunContext
 
@@ -17,6 +21,10 @@ function MageModuleRunContext.new(cache)
     self.arCost = cache:Get(Abilities.ArcaneRupture.name)
     self.asCost = cache:Get(Abilities.ArcaneSurge.name)
     self.amCost = cache:Get(Abilities.ArcaneMissiles.name)
+    self.iciclesCost = cache:Get(Abilities.Icicles.name)
+    self.iceBarrierCost = cache:Get(Abilities.IceBarrier.name)
+    self.frostBoltCost = cache:Get(Abilities.FrostBolt.name)
+    self.mageArmorCost = cache:Get(Abilities.MageArmor.name)
     return self
 end
 
@@ -36,4 +44,8 @@ function MageModuleRunContext.PreheatCache(cache)
     cache:Get(Abilities.ArcaneRupture.name)
     cache:Get(Abilities.ArcaneSurge.name)
     cache:Get(Abilities.ArcaneMissiles.name)
+    cache:Get(Abilities.Icicles.name)
+    cache:Get(Abilities.IceBarrier.name)
+    cache:Get(Abilities.FrostBolt.name)
+    cache:Get(Abilities.MageArmor.name)
 end

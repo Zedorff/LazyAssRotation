@@ -186,6 +186,18 @@ Abilities.ArcaneMissiles = { name = ABILITY_ARCANE_MISSILES, ids = {} }
 --- @type Ability
 Abilities.ArcanePower = { name = ABILITY_ARCANE_POWER, ids = {} }
 
+--- @type Ability
+Abilities.Icicles = { name = ABILITY_ICICLES, ids = {} }
+
+--- @type Ability
+Abilities.IceBarrier = { name = ABILITY_ICE_BARRIER, ids = {} }
+
+--- @type Ability
+Abilities.FrostBolt = { name = ABILITY_FROSTBOLT, ids = {} }
+
+--- @type Ability
+Abilities.MageArmor = { name = ABILITY_MAGE_ARMOR, ids = {} }
+
 -- Warlock Abilities
 
 --- @type Ability
