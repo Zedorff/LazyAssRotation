@@ -45,12 +45,18 @@ function AutoAttackTracker:ShouldCast()
     return true;
 end
 
+--- @return number Main hand attack speed in seconds.
+function AutoAttackTracker:GetMainHandAttackSpeed()
+    local attackSpeed, _ = UnitAttackSpeed("player")
+    return attackSpeed
+end
+
 --- @return number
 function AutoAttackTracker:GetNextSwingTime()
-    local attackSpeed, _ = UnitAttackSpeed("player")
+    local attackSpeed = self:GetMainHandAttackSpeed()
     local now = GetTime()
     local timeElapsed = now - self.lastMainHandAttack
-    local timeRemaining = attackSpeed - timeElapsed
+    local timeRemaining = (attackSpeed or 0) - timeElapsed
 
     if timeRemaining < 0 then
         return 0
