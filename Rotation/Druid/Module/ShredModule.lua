@@ -10,7 +10,7 @@ function ShredModule.new()
     --- @type ShredTrackers
     local trackers = {
         clearCastingTracker = ClearcastingTracker.GetInstance(),
-        notBehindTargetTracker = NotBehindTargetTracker.new()
+        notBehindTargetTracker = NotBehindTargetTracker.new(),
     }
     --- @class ShredModule
     return setmetatable(Module.new(Abilities.Shred.name, trackers, "Interface\\Icons\\Spell_Shadow_VampiricAura"), ShredModule)
@@ -24,7 +24,11 @@ end
 --- @param context DruidModuleRunContext
 function ShredModule:getPriority(context)
     if self.enabled and Helpers:SpellReady(Abilities.Shred.name) then
-        if self.trackers.notBehindTargetTracker:GetLastAttemptTime() < 0.2 then
+        if Helpers:HasUnitXP() then
+            if not Helpers:IsBehindTarget("player", "target") then
+                return -1;
+            end
+        elseif self.trackers.notBehindTargetTracker:GetLastAttemptTime() < 0.2 then
             return -1;
         end
 

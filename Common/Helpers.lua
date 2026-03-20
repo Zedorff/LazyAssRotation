@@ -1,5 +1,25 @@
 Helpers = {}
 
+--- Returns true if UnitXP_SP3 DLL is active. UnitXP provides distance, line of sight,
+--- behind detection, and targeting helpers.
+--- @return boolean
+function Helpers:HasUnitXP()
+    local success = pcall(UnitXP, "nop", "nop")
+    return success
+end
+
+--- Uses UnitXP `behind`. If UnitXP is not available, returns false (use NotBehindTargetTracker fallback).
+--- @param fromUnit string
+--- @param toUnit string
+--- @return boolean
+function Helpers:IsBehindTarget(fromUnit, toUnit)
+    if not self:HasUnitXP() then
+        return false
+    end
+    local success, behind = pcall(UnitXP, "behind", fromUnit, toUnit)
+    return success and behind
+end
+
 --- @param spellname string
 --- @return number | nil
 function Helpers:SpellId(spellname)
