@@ -32,6 +32,26 @@ function Helpers:IsInSight(fromUnit, toUnit)
     return success and inSight
 end
 
+--- True if `toUnit` is within white-swing range of `fromUnit` (UnitXP `distanceBetween` + `"meleeAutoAttack"`).
+--- Threshold is stricter than Whirlwind's ~8yd AoE so WW is not suggested at "almost in range" spacing.
+--- Without UnitXP there is no reliable 5yd API on 1.12; returns true so behavior stays unchanged.
+--- @param fromUnit string
+--- @param toUnit string
+--- @return boolean
+function Helpers:IsInMeleeRange(fromUnit, toUnit)
+    if not UnitExists(toUnit) then
+        return false
+    end
+    if not self:HasUnitXP() then
+        return true
+    end
+    local success, dist = pcall(UnitXP, "distanceBetween", fromUnit, toUnit, "meleeAutoAttack")
+    if not success or type(dist) ~= "number" then
+        return true
+    end
+    return dist <= 4.0
+end
+
 --- When UnitXP is active and there is a target, true if ranged spells should be skipped (no LOS).
 --- Without UnitXP, returns false so rotation behaves as before.
 --- @return boolean

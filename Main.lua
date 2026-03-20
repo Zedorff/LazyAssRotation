@@ -1,6 +1,18 @@
 --- @type ClassRotation | nil
 local DpsRotation = nil
 
+-- Set immediately so GUID helpers (GetUnitGUID) match NamPower availability.
+hasNampower = false
+if GetNampowerVersion then
+    local major, minor, patch = GetNampowerVersion()
+    minor = minor or 0
+    patch = patch or 0
+    -- Minimum required version: 3.0.0 (GetUnitGUID support)
+    if major > 3 or (major == 3 and minor > 0) or (major == 3 and minor == 0 and patch >= 0) then
+        hasNampower = true
+    end
+end
+
 function Init()
     HotSwapButton:Show()
     Settings_OnLoad()
@@ -83,13 +95,18 @@ function InitSubscribers()
     Core.eventBus:subscribe({
         onEvent = function(_, event, arg1)
             if (event == "PLAYER_ENTERING_WORLD") then
-                if SUPERWOW_VERSION then
+                if SUPERWOW_VERSION and hasNampower then
                     OnPlayerLoaded()
                 end
             end
             if (event == "VARIABLES_LOADED") then
                 if not SUPERWOW_VERSION then
                     Logging:Log("[LAR] SuperWoW not found, shutting down.")
+                    LAR_MinimapButton:Hide()
+                    return
+                end
+                if not hasNampower then
+                    Logging:Log("[LAR] NamPower not found or below 3.0.0, shutting down.")
                     LAR_MinimapButton:Hide()
                     return
                 end

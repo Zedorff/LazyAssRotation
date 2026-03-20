@@ -26,7 +26,7 @@ end
 --- @param event string
 --- @param arg1 string
 function SequenceTracker:onEvent(event, arg1, arg2, arg3, arg4)
-    if event == "UNIT_CASTEVENT" and arg1 == ({ UnitExists("player") })[2] and arg3 == "CAST" then
+    if event == "UNIT_CASTEVENT" and arg1 == GetUnitGUID("player") and arg3 == "CAST" then
         self.lastCastSpellId = tonumber(arg4)
     end
 end

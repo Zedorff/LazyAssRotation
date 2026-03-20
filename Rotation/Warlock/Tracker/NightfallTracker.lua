@@ -14,7 +14,7 @@ end
 --- @param event string
 --- @param arg1 string
 function NightfallTracker:onEvent(event, arg1)
-    if event == "UNIT_CASTEVENT" and arg1 == ({ UnitExists("player") })[2] and arg3 == "CAST" and arg4 == 25307 then
+    if event == "UNIT_CASTEVENT" and arg1 == GetUnitGUID("player") and arg3 == "CAST" and arg4 == 25307 then
         self.buffUp = false
     end
     SelfBuffTracker.onEvent(self, event, arg1)

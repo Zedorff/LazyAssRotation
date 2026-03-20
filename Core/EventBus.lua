@@ -48,7 +48,7 @@ function EventBus:new(frame)
     frame:SetScript("OnEvent", function()
         --- @diagnostic disable-next-line: undefined-global
         -- if event == "UNIT_CASTEVENT" then
-        --     local _, guid = UnitExists("player")
+        --     local guid = GetUnitGUID("player")
         --     if arg1 ~= guid then
         --         return
         --     end

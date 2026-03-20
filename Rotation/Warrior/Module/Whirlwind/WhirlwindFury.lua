@@ -13,6 +13,9 @@ end
 --- @return integer
 function WhirlwindFuryModule:getSpecPriority(context)
     if Helpers:SpellReady(Abilities.Whirlwind.name) and not Helpers:SpellAlmostReady(Abilities.Bloodthirst.name, 0.5) and context.rage >= context.wwCost then
+        if not Helpers:IsInMeleeRange("player", "target") then
+            return -1
+        end
         return 70
     end
     return -1
