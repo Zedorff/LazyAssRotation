@@ -16,6 +16,7 @@ end
 
 --- @param context WarriorModuleRunContext
 function PummelModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and context.stance ~= 2 then
         if Helpers:SpellReady(Abilities.Pummel.name) and context.rage >= 90 then
             return 20

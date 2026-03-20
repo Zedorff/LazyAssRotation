@@ -22,6 +22,7 @@ end
 
 --- @param context MageModuleRunContext
 function ArcaneMissilesModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and self.trackers.castingTracker:ShouldCast() then
         if not Helpers:SpellAlmostReady(Abilities.ArcaneRupture.name, 1.5) and context.mana >= context.amCost then
             return 70;

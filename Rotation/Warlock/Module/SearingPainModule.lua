@@ -16,6 +16,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function SearingPainModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and Helpers:SpellReady(Abilities.SearingPain.name) and context.mana > context.searingCost then
         return 50;
     end

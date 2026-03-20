@@ -20,6 +20,31 @@ function Helpers:IsBehindTarget(fromUnit, toUnit)
     return success and behind
 end
 
+--- Uses UnitXP `inSight`. If UnitXP is not available, returns true (no LOS gating).
+--- @param fromUnit string
+--- @param toUnit string
+--- @return boolean
+function Helpers:IsInSight(fromUnit, toUnit)
+    if not self:HasUnitXP() then
+        return true
+    end
+    local success, inSight = pcall(UnitXP, "inSight", fromUnit, toUnit)
+    return success and inSight
+end
+
+--- When UnitXP is active and there is a target, true if ranged spells should be skipped (no LOS).
+--- Without UnitXP, returns false so rotation behaves as before.
+--- @return boolean
+function Helpers:ShouldSuppressRangedSpellForLOS()
+    if not self:HasUnitXP() then
+        return false
+    end
+    if not UnitExists("target") then
+        return false
+    end
+    return not self:IsInSight("player", "target")
+end
+
 --- @param spellname string
 --- @return number | nil
 function Helpers:SpellId(spellname)

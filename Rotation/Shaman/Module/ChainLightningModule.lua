@@ -22,6 +22,7 @@ end
 
 --- @param context ShamanModuleRunContext
 function ChainLightningModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and Helpers:SpellReady(Abilities.ChainLightning.name) then
         local cost = self.trackers.clearcastingTracker:ShouldCast() and math.floor(context.clCost * 0.33) or context.clCost
         if context.mana > cost then

@@ -23,6 +23,7 @@ end
 
 --- @param context PriestModuleRunContext
 function ShadowWordPainModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and Helpers:SpellReady(Abilities.ShadowWordPain.name) and self.trackers.shadowWordPainTracker:ShouldCast() and self.trackers.castingTracker:ShouldCast() then
         if context.mana >= context.swpCost then
             return 90;

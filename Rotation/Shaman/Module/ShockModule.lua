@@ -48,6 +48,7 @@ end
 
 --- @param context ShamanModuleRunContext
 function ShockModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and Helpers:SpellReady(self.spellName) then
         local cost = 1000; --- just to be sure if wrong spellName is passed rotation would not break
         if self.spellName == ShockType.EARTH then

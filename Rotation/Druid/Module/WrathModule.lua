@@ -24,6 +24,7 @@ end
 
 --- @param context DruidModuleRunContext
 function WrathModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if not self.enabled or not Helpers:SpellReady(Abilities.Wrath.name) then
         return -1
     end

@@ -25,6 +25,7 @@ end
 
 --- @param context DruidModuleRunContext
 function InsectSwarmModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if not self.enabled or not Helpers:SpellReady(Abilities.InsectSwarm.name) then
         return -1;
     end

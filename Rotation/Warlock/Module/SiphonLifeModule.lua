@@ -30,6 +30,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function SiphonLifeModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if not (self.enabled
         and Helpers:SpellReady(Abilities.SiphonLife.name)
         and self.trackers.castingTracker:ShouldCast()

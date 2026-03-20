@@ -22,6 +22,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function ImmolateModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and Helpers:SpellReady(Abilities.Immolate.name) then
         if self.trackers.immolateTracker:ShouldCast() and context.mana > context.immolateCost then
             return 80;

@@ -28,6 +28,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function DarkHarvestModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if not (self.enabled
         and Helpers:SpellReady(Abilities.SiphonLife.name) --- just GCD check
         and self.trackers.castingTracker:ShouldCast()

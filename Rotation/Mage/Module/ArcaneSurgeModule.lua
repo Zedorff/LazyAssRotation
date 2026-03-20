@@ -32,6 +32,7 @@ end
 
 --- @param context MageModuleRunContext
 function ArcaneSurgeModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and self.trackers.castingTracker:ShouldCast() then
         local hasMana = context.mana >= context.asCost + context.amCost
 

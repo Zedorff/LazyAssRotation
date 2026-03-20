@@ -29,6 +29,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function CorruptionModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled then
         if context.spec == WarlockSpec.AFFLICTION then
             return self:GetAfflictionPriority(context)

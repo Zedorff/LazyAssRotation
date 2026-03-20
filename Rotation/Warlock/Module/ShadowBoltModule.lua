@@ -22,6 +22,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function ShadowBoltModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and Helpers:SpellReady(Abilities.ShadowBolt.name) and context.mana > context.sbCost then
         if self.trackers.nighfallTracker:ShouldCast() then
             return 100;

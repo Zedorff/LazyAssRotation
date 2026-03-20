@@ -28,6 +28,7 @@ end
 
 --- @param context MageModuleRunContext
 function ArcaneRuptureModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     local hasMana = context.mana >= context.arCost
     if self.enabled and hasMana then
         if (Helpers:SpellReady(Abilities.ArcaneRupture.name) and self.trackers.arcaneRuptureTracker:ShouldCast()) or (self.trackers.convergenceTracker:ShouldCast() and self.trackers.arcaneRuptureTracker:TimeUntilRuptureExpires() < 2) then

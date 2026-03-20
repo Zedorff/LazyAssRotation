@@ -48,6 +48,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function CurseOfWeaknessModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and Helpers:SpellReady(Abilities.CoW.name) and self.trackers.cowTracker:ShouldCast() and context.mana > context.cowCost then
         return 95;
     end

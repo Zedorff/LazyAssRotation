@@ -16,6 +16,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function SoulFireModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and Helpers:SpellReady(Abilities.SoulFire.name) and context.mana > context.sfCost then
         return 90;
     end

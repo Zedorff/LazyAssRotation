@@ -16,6 +16,7 @@ end
 
 --- @param context PaladinModuleRunContext
 function RepentanceModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and context.mana > context.repentanceCost and Helpers:SpellReady(Abilities.Repentance.name) then
         return 100;
     end

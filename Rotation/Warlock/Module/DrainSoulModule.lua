@@ -24,6 +24,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function DrainSoulModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and Helpers:SpellReady(Abilities.DrainSoul.name) and self.trackers.castingTracker:ShouldCast() then
         local skipBecauseOfCoe = Helpers:SpellAlmostReady(Abilities.DarkHarvest.name, 3) and self.trackers.coaTracker:GetRemainingDuration() <= 3 and ModuleRegistry:IsModuleEnabled(Abilities.CoE.name)
         if not skipBecauseOfCoe and context.mana >= context.drainSoulCost then

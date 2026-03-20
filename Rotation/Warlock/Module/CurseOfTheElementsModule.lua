@@ -48,6 +48,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function CurseOfTheElementsModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and Helpers:SpellReady(Abilities.CoE.name) and self.trackers.coeTracker:ShouldCast() and context.mana > context.coeCost then
         return 95;
     end

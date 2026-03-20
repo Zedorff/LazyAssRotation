@@ -23,6 +23,7 @@ end
 
 --- @param context MageModuleRunContext
 function IciclesModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if not self.enabled or not self.trackers.castingTracker:ShouldCast() then
         return -1
     end

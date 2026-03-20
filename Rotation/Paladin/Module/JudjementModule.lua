@@ -22,6 +22,7 @@ end
 
 --- @param context PaladinModuleRunContext
 function JudjementModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and context.remainingManaPercents > 15 and Helpers:SpellReady(Abilities.Judgement.name) and self.trackers.judgTracker:ShouldCast() then
         return 90;
     end

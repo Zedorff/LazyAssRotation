@@ -22,6 +22,7 @@ end
 
 --- @param context ShamanModuleRunContext
 function LightningStrikeModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and Helpers:SpellReady(Abilities.LightningStrike.name) then
         local cost = self.trackers.clearcastingTracker:ShouldCast() and math.floor(context.lsCost * 0.33) or context.lsCost
         if context.remainingManaPercents < 10 then

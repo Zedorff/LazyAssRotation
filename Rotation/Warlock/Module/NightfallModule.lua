@@ -23,6 +23,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function NightfallModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and Helpers:SpellReady(Abilities.ShadowBolt.name) then
         if self.trackers.nightfallTracker:ShouldCast() and self.trackers.castingTracker:ShouldCast() and context.mana > context.sbCost then
             return 40

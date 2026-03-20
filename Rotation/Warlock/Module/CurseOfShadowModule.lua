@@ -48,6 +48,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function CurseOfShadowModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and Helpers:SpellReady(Abilities.CoS.name) and self.trackers.cosTracker:ShouldCast() and context.mana > context.cosCost then
         return 95;
     end

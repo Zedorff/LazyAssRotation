@@ -24,6 +24,7 @@ end
 
 --- @param context DruidModuleRunContext
 function StarfireModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if not self.enabled or not Helpers:SpellReady(Abilities.Starfire.name) then
         return -1
     end

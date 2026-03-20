@@ -21,6 +21,7 @@ end
 
 --- @param context PriestModuleRunContext
 function SmiteModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and Helpers:SpellReady(Abilities.Smite.name) and self.trackers.castingTracker:ShouldCast() and context.mana > context.smiteCost then
         return 50;
     end

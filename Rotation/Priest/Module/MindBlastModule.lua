@@ -21,6 +21,7 @@ end
 
 --- @param context PriestModuleRunContext
 function MindBlastModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and Helpers:SpellReady(Abilities.MindBlast.name) and self.trackers.castingTracker:ShouldCast() then
         if context.mana >= context.mindBlastCost then
             return 80;

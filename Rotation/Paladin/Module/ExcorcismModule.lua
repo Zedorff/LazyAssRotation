@@ -16,6 +16,7 @@ end
 
 --- @param context PaladinModuleRunContext
 function ExcorcismModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     local targetCreatureType = UnitCreatureType("target")
     if self.enabled and context.mana > context.exorcismCost and Helpers:SpellReady(Abilities.Exorcism.name) and (targetCreatureType == "Undead" or targetCreatureType == "Demon") then
         return 20;

@@ -22,6 +22,7 @@ end
 
 --- @param context PriestModuleRunContext
 function ChastiseModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and Helpers:SpellReady(Abilities.Chastise.name) and context.mana > context.chastiseCost and context.hpPercent > 80 then
         return 90;
     end

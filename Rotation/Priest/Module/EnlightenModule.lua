@@ -21,6 +21,7 @@ end
 
 --- @param context PriestModuleRunContext
 function EnlightenModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and Helpers:SpellReady(Abilities.Enlighten.name) and self.trackers.enlightenTracker:ShouldCast() and context.mana > context.enlightenCost then
         return 100;
     end

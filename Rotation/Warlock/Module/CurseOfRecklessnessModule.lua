@@ -49,6 +49,7 @@ end
 
 --- @param context WarlockModuleRunContext
 function CurseOfRecklessnessModule:getPriority(context)
+    if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
     if self.enabled and Helpers:SpellReady(Abilities.CoR.name) and self.trackers.corTracker:ShouldCast() and context.mana > context.corCost then
         return 95;
     end
