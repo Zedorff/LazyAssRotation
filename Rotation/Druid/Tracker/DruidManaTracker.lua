@@ -9,15 +9,13 @@ function DruidManaTracker.new()
     local self = CooldownTracker.new()
     setmetatable(self, DruidManaTracker)
 
-    if UnitPowerType("player") == 0 then
+    local druidMana = GetUnitField("player", "power1")
+    if druidMana ~= nil then
+        self.currentMana = druidMana
+    else
         self.currentMana = UnitMana("player")
     end
 
-    local druidMana = GetUnitField(GetUnitGUID("player"), "power1")
-    if druidMana then
-        self.currentMana = druidMana
-    end
-    
     return self
 end
 
@@ -25,12 +23,15 @@ end
 --- @param arg1 string
 function DruidManaTracker:onEvent(event, arg1)
     if event == "UNIT_MANA" and arg1 == "player" then
-        local druidMana = GetUnitField(GetUnitGUID("player"), "power1")
-        if druidMana then
+        local druidMana = GetUnitField("player", "power1")
+        if druidMana ~= nil then
             self.currentMana = druidMana
         end
     elseif event == "UPDATE_SHAPESHIFT_FORM" then
-        if UnitPowerType("player") == 0 then
+        local druidMana = GetUnitField("player", "power1")
+        if druidMana ~= nil then
+            self.currentMana = druidMana
+        else
             self.currentMana = UnitMana("player")
         end
     end

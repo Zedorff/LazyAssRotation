@@ -21,6 +21,10 @@
 DruidModuleRunContext = setmetatable({}, { __index = ModuleRunContext })
 DruidModuleRunContext.__index = DruidModuleRunContext
 
+local function numberOrDefault(value, default)
+    return value ~= nil and value or default
+end
+
 --- @param energyCache EnergyCostCache
 --- @param manaCache ManaCostCache
 --- @param rageCache RageCostCache
@@ -31,22 +35,14 @@ function DruidModuleRunContext.new(energyCache, manaCache, rageCache, spec)
     local self = ModuleRunContext.new()
     setmetatable(self, DruidModuleRunContext)
 
-    local guid = GetUnitGUID("player")
     local powerType = UnitPowerType("player")
-    local mana = 0
-    local energy = 0
-    local rage = 0
-    if powerType == 3 then
-        energy = GetUnitField(guid, "power4")
-    elseif powerType == 1 then
-        rage = GetUnitField(guid, "power2")
-    elseif powerType == 0 then
-        mana = GetUnitField(guid, "power1")
-    end
+    local rawMana = GetUnitField("player", "power1")
+    local rawRageTenths = GetUnitField("player", "power2")
+    local rawEnergy = GetUnitField("player", "power4")
 
-    self.energy = energy
-    self.mana = mana
-    self.rage = rage
+    self.mana = numberOrDefault(rawMana, powerType == 0 and UnitMana("player") or 0)
+    self.energy = powerType == 3 and numberOrDefault(rawEnergy, 0) or 0
+    self.rage = powerType == 1 and Helpers:RageFromUnitField(rawRageTenths) or 0
     self.cp = GetComboPoints("player", "target")
     self.shredCost = energyCache:Get(Abilities.Shred.name)
     self.clawCost = energyCache:Get(Abilities.Claw.name)

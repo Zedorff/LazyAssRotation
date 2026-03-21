@@ -17,7 +17,7 @@ function MageModuleRunContext.new(cache)
     local self = ModuleRunContext.new()
     setmetatable(self, MageModuleRunContext)
 
-    self.mana = GetUnitField(GetUnitGUID("player"), "power1")
+    self.mana = GetUnitField("player", "power1")
     self.arCost = cache:Get(Abilities.ArcaneRupture.name)
     self.asCost = cache:Get(Abilities.ArcaneSurge.name)
     self.amCost = cache:Get(Abilities.ArcaneMissiles.name)

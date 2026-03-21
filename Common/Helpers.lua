@@ -65,6 +65,17 @@ function Helpers:ShouldSuppressRangedSpellForLOS()
     return not self:IsInSight("player", "target")
 end
 
+--- NamPower `GetUnitField("player", "power2")` returns rage in tenths for warrior and druid bear
+--- (e.g. 686 = 68.6; UI shows whole rage).
+--- @param raw number|nil
+--- @return integer
+function Helpers:RageFromUnitField(raw)
+    if type(raw) ~= "number" then
+        return 0
+    end
+    return math.floor(raw / 10)
+end
+
 --- @param spellname string
 --- @return number | nil
 function Helpers:SpellId(spellname)

@@ -20,7 +20,7 @@ function PriestModuleRunContext.new(cache)
     local self = ModuleRunContext.new()
     setmetatable(self, PriestModuleRunContext)
 
-    self.mana = GetUnitField(GetUnitGUID("player"), "power1")
+    self.mana = GetUnitField("player", "power1")
     self.hpPercent = UnitHealth("player") / UnitHealthMax("player") * 100
     self.holyFireCost = cache:Get(Abilities.HolyFire.name)
     self.smiteCost = cache:Get(Abilities.Smite.name)

@@ -26,7 +26,7 @@ function WarlockModuleRunContext.new(cache, spec)
     setmetatable(self, WarlockModuleRunContext)
 
     self.spec = spec
-    self.mana = GetUnitField(GetUnitGUID("player"), "power1")
+    self.mana = GetUnitField("player", "power1")
     self.searingCost = cache:Get(Abilities.SearingPain.name)
     self.conflagrateCost = cache:Get(Abilities.Conflagrate.name)
     self.immolateCost = cache:Get(Abilities.Immolate.name)
