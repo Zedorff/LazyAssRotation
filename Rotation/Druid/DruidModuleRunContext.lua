@@ -31,17 +31,17 @@ function DruidModuleRunContext.new(energyCache, manaCache, rageCache, spec)
     local self = ModuleRunContext.new()
     setmetatable(self, DruidModuleRunContext)
 
+    local guid = GetUnitGUID("player")
     local powerType = UnitPowerType("player")
-    local unitMana = UnitMana("player")
     local mana = 0
     local energy = 0
     local rage = 0
     if powerType == 3 then
-        energy = unitMana
+        energy = GetUnitField(guid, "power4")
     elseif powerType == 1 then
-        rage = unitMana
+        rage = GetUnitField(guid, "power2")
     elseif powerType == 0 then
-        mana = unitMana
+        mana = GetUnitField(guid, "power1")
     end
 
     self.energy = energy

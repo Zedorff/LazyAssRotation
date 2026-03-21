@@ -13,7 +13,7 @@ function DruidManaTracker.new()
         self.currentMana = UnitMana("player")
     end
 
-    local _, druidMana = UnitMana("player")
+    local druidMana = GetUnitField(GetUnitGUID("player"), "power1")
     if druidMana then
         self.currentMana = druidMana
     end
@@ -25,7 +25,7 @@ end
 --- @param arg1 string
 function DruidManaTracker:onEvent(event, arg1)
     if event == "UNIT_MANA" and arg1 == "player" then
-        local _, druidMana = UnitMana("player")
+        local druidMana = GetUnitField(GetUnitGUID("player"), "power1")
         if druidMana then
             self.currentMana = druidMana
         end

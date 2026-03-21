@@ -22,8 +22,9 @@ function PaladinModuleRunContext.new(cache, spec)
     --- @class PaladinModuleRunContext
     local self = ModuleRunContext.new()
     setmetatable(self, PaladinModuleRunContext)
-    local mana = UnitMana("player")
-    local maxMana = UnitManaMax("player")
+    local guid = GetUnitGUID("player")
+    local mana = GetUnitField(guid, "power1")
+    local maxMana = GetUnitField(guid, "maxPower1")
 
     self.mana = mana
     self.remainingManaPercents = (mana / maxMana) * 100
