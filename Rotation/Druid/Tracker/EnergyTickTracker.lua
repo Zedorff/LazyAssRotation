@@ -1,8 +1,14 @@
 --- @class EnergyTickTracker : CooldownTracker
 --- @field lastEnergy number
---- @field lastTickTime number
+--- @field lastTickTime number|nil
 EnergyTickTracker = setmetatable({}, { __index = CooldownTracker })
 EnergyTickTracker.__index = EnergyTickTracker
+
+local TICK_SEC = 2
+
+local function isEnergyTickDelta(delta)
+    return delta == 20
+end
 
 --- @return EnergyTickTracker
 function EnergyTickTracker.new()
@@ -10,26 +16,26 @@ function EnergyTickTracker.new()
     local self = CooldownTracker.new()
     setmetatable(self, EnergyTickTracker)
 
-    self.lastEnergy = UnitMana("player")
-    self.lastTickTime = GetTime()
-    
+    self.lastEnergy = GetUnitField("player", "power4")
+    self.lastTickTime = nil
+
     return self
 end
 
 --- @param event string
 --- @param arg1 string
 function EnergyTickTracker:onEvent(event, arg1)
-    if event == "UNIT_ENERGY" then
+    if event == "UNIT_ENERGY" and arg1 == "player" then
         local now = GetTime()
-        local current = UnitMana("player")
+        local current = GetUnitField("player", "power4")
         local delta = current - self.lastEnergy
 
-        if delta == 20 and (now - self.lastTickTime) > 1.5 then
+        if isEnergyTickDelta(delta) and (self.lastTickTime == nil or (now - self.lastTickTime) > 1.5) then
             self.lastTickTime = now
         end
 
         self.lastEnergy = current
-    end 
+    end
 end
 
 --- @return boolean
@@ -39,9 +45,13 @@ end
 
 --- @return number
 function EnergyTickTracker:GetNextEnergyTick()
-    local function clampToZero(n)
-        return n < 0 and 0 or n
+    if self.lastTickTime == nil then
+        return 999
     end
 
-    return clampToZero((self.lastTickTime + 2) - GetTime())
+    local wait = (self.lastTickTime + TICK_SEC) - GetTime()
+    while wait < 0 do
+        wait = wait + TICK_SEC
+    end
+    return wait
 end
