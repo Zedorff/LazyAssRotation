@@ -5,13 +5,12 @@
 DarkHarvestModule = setmetatable({}, { __index = Module })
 DarkHarvestModule.__index = DarkHarvestModule
 
---- @param allowAgonyWithOtherCurses boolean
 --- @return DarkHarvestModule
-function DarkHarvestModule.new(allowAgonyWithOtherCurses)
+function DarkHarvestModule.new()
     --- @type DarkHarvestTrackers
     local trackers = {
         castingTracker = CastingTracker.GetInstance(),
-        coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses),
+        coaTracker = CurseOfAgonyTracker.GetInstance(),
         corruptionTracker = CorruptionTracker.GetInstance(),
         siphonLifeTracker = SiphonLifeTracker.GetInstance(),
     }

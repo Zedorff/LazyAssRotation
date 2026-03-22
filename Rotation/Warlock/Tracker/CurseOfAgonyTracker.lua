@@ -5,22 +5,26 @@ CurseOfAgonyTracker.__index = CurseOfAgonyTracker
 --- @type CurseOfAgonyTracker | nil
 local sharedInstance = nil
 
---- @param allowAgonyWithOtherCurses boolean
---- @return CurseOfAgonyTracker
-function CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses)
-    if sharedInstance then
-        return sharedInstance
-    end
-
-    local rankedAbility = Abilities.CoA
-
-    if allowAgonyWithOtherCurses then
+--- With Malediction, another curse (e.g. CoR) can apply alongside CoA; those casts must still refresh this tracker.
+--- @return Ability
+local function buildRankedAbility()
+    if Helpers:PointsInTalent("Malediction") > 0 then
         local ids = Collection.shallowCopy(Abilities.CoA.ids)
-        Collection.combine(ids, Abilities.CoR.ids)
-        Collection.combine(ids, Abilities.CoE.ids)
-        Collection.combine(ids, Abilities.CoW.ids)
-        Collection.combine(ids, Abilities.CoS.ids)
-        rankedAbility = { name = Abilities.CoA.name, ids = ids }
+        ids = Collection.combine(ids, Abilities.CoR.ids)
+        ids = Collection.combine(ids, Abilities.CoE.ids)
+        ids = Collection.combine(ids, Abilities.CoW.ids)
+        ids = Collection.combine(ids, Abilities.CoS.ids)
+        return { name = Abilities.CoA.name, ids = ids }
+    end
+    return Abilities.CoA
+end
+
+--- @return CurseOfAgonyTracker
+function CurseOfAgonyTracker.GetInstance()
+    local rankedAbility = buildRankedAbility()
+    if sharedInstance then
+        sharedInstance.rankedAbility = rankedAbility
+        return sharedInstance
     end
 
     --- @class CurseOfAgonyTracker

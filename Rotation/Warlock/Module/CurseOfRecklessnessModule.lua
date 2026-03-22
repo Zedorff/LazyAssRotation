@@ -1,14 +1,12 @@
 --- @alias CurseOfRecklessnessTrackers { corTracker: CurseOfRecklessnessTracker }
 --- @class CurseOfRecklessnessModule : Module
 --- @field trackers CurseOfRecklessnessTrackers
---- @field allowAgonyWithOtherCurses boolean
 --- @diagnostic disable: duplicate-set-field
 CurseOfRecklessnessModule = setmetatable({}, { __index = Module })
 CurseOfRecklessnessModule.__index = CurseOfRecklessnessModule
 
---- @param allowAgonyWithOtherCurses boolean
 --- @return CurseOfRecklessnessModule
-function CurseOfRecklessnessModule.new(allowAgonyWithOtherCurses)
+function CurseOfRecklessnessModule.new()
     --- @type CurseOfRecklessnessTrackers
     local trackers = {
         corTracker = CurseOfRecklessnessTracker.new()
@@ -17,16 +15,10 @@ function CurseOfRecklessnessModule.new(allowAgonyWithOtherCurses)
     local self = Module.new(Abilities.CoR.name, trackers, "Interface\\Icons\\Spell_Shadow_UnholyStrength")
     setmetatable(self, CurseOfRecklessnessModule)
 
-    self.allowAgonyWithOtherCurses = allowAgonyWithOtherCurses
-
     if self.enabled then
         ModuleRegistry:DisableModule(Abilities.CoW.name)
         ModuleRegistry:DisableModule(Abilities.CoE.name)
         ModuleRegistry:DisableModule(Abilities.CoS.name)
-
-        if not self.allowAgonyWithOtherCurses then
-            ModuleRegistry:DisableModule(Abilities.CoA.name)
-        end
     end
 
     return self
@@ -37,9 +29,6 @@ function CurseOfRecklessnessModule:enable()
     ModuleRegistry:DisableModule(Abilities.CoW.name)
     ModuleRegistry:DisableModule(Abilities.CoE.name)
     ModuleRegistry:DisableModule(Abilities.CoS.name)
-    if not self.allowAgonyWithOtherCurses then
-        ModuleRegistry:DisableModule(Abilities.CoA.name)
-    end
 end
 
 function CurseOfRecklessnessModule:run()

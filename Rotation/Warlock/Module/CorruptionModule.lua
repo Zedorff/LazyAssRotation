@@ -5,14 +5,13 @@
 CorruptionModule = setmetatable({}, { __index = Module })
 CorruptionModule.__index = CorruptionModule
 
---- @param allowAgonyWithOtherCurses boolean
 --- @return CorruptionModule
-function CorruptionModule.new(allowAgonyWithOtherCurses)
+function CorruptionModule.new()
     --- @type CorruptionTrackers
     local trackers = {
         corruptionTracker = CorruptionTracker.GetInstance(),
         castingTracker = CastingTracker.GetInstance(),
-        coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses)
+        coaTracker = CurseOfAgonyTracker.GetInstance()
     }
     --- @class CorruptionModule
     local self = Module.new(Abilities.Corruption.name, trackers, "Interface\\Icons\\Spell_Shadow_AbominationExplosion")

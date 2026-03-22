@@ -1,14 +1,12 @@
 --- @alias CurseOfTheElementsTrackers { coeTracker: CurseOfTheElementsTracker }
 --- @class CurseOfTheElementsModule : Module
 --- @field trackers CurseOfTheElementsTrackers
---- @field allowAgonyWithOtherCurses boolean
 --- @diagnostic disable: duplicate-set-field
 CurseOfTheElementsModule = setmetatable({}, { __index = Module })
 CurseOfTheElementsModule.__index = CurseOfTheElementsModule
 
---- @param allowAgonyWithOtherCurses boolean
 --- @return CurseOfTheElementsModule
-function CurseOfTheElementsModule.new(allowAgonyWithOtherCurses)
+function CurseOfTheElementsModule.new()
     --- @type CurseOfTheElementsTrackers
     local trackers = {
         coeTracker = CurseOfTheElementsTracker.new()
@@ -17,15 +15,10 @@ function CurseOfTheElementsModule.new(allowAgonyWithOtherCurses)
     local self = Module.new(Abilities.CoE.name, trackers, "Interface\\Icons\\Spell_Shadow_ChillTouch")
     setmetatable(self, CurseOfTheElementsModule)
 
-    self.allowAgonyWithOtherCurses = allowAgonyWithOtherCurses
-
     if self.enabled then
         ModuleRegistry:DisableModule(Abilities.CoW.name)
-        ModuleRegistry:DisableModule(Abilities.CoE.name)
+        ModuleRegistry:DisableModule(Abilities.CoR.name)
         ModuleRegistry:DisableModule(Abilities.CoS.name)
-        if not self.allowAgonyWithOtherCurses then
-            ModuleRegistry:DisableModule(Abilities.CoA.name)
-        end
     end
 
     return self
@@ -36,9 +29,6 @@ function CurseOfTheElementsModule:enable()
     ModuleRegistry:DisableModule(Abilities.CoW.name)
     ModuleRegistry:DisableModule(Abilities.CoR.name)
     ModuleRegistry:DisableModule(Abilities.CoS.name)
-    if not self.allowAgonyWithOtherCurses then
-        ModuleRegistry:DisableModule(Abilities.CoA.name)
-    end
 end
 
 function CurseOfTheElementsModule:run()

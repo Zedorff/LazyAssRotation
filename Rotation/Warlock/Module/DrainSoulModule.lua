@@ -5,13 +5,12 @@
 DrainSoulModule = setmetatable({}, { __index = Module })
 DrainSoulModule.__index = DrainSoulModule
 
---- @param allowAgonyWithOtherCurses boolean
 --- @return DrainSoulModule
-function DrainSoulModule.new(allowAgonyWithOtherCurses)
+function DrainSoulModule.new()
     --- @type DrainSoulTrackers
     local trackers = {
         castingTracker = CastingTracker.GetInstance(),
-        coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses)
+        coaTracker = CurseOfAgonyTracker.GetInstance()
     }
     --- @class DrainSoulModule
     return setmetatable(Module.new(Abilities.DrainSoul.name, trackers, "Interface\\Icons\\Spell_Shadow_Haunting"), DrainSoulModule)

@@ -5,15 +5,14 @@
 SiphonLifeModule = setmetatable({}, { __index = Module })
 SiphonLifeModule.__index = SiphonLifeModule
 
---- @param allowAgonyWithOtherCurses boolean
 --- @return SiphonLifeModule
-function SiphonLifeModule.new(allowAgonyWithOtherCurses)
+function SiphonLifeModule.new()
     --- @type SiphonLifeTrackers
     local trackers = {
         siphonLifeTracker = SiphonLifeTracker.GetInstance(),
         castingTracker = CastingTracker.GetInstance(),
         corruptionTracker = CorruptionTracker.GetInstance(),
-        coaTracker = CurseOfAgonyTracker.GetInstance(allowAgonyWithOtherCurses)
+        coaTracker = CurseOfAgonyTracker.GetInstance()
     }
     --- @class SiphonLifeModule
     local self = Module.new(Abilities.SiphonLife.name, trackers, "Interface\\Icons\\Spell_Shadow_Requiem")
