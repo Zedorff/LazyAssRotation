@@ -47,10 +47,10 @@ function DebuffTracker:OnUnitCastEvent(now, casterGuid, targetGuid, eventType, s
     if eventType ~= "CAST" then return end
     if not IsMatchingRank(self.ability, tonumber(spellId)) then return end
 
-    local playerGuid = GetUnitGUID("player")
+    local playerGuid = Helpers:GetUnitGUID("player")
     if (not self.isSharedDebuff) and (casterGuid ~= playerGuid) then return end
 
-    local mobGuid = targetGuid or GetUnitGUID("target")
+    local mobGuid = targetGuid or Helpers:GetUnitGUID("target")
     if not mobGuid then return end
 
     self:ApplyDebuff(now, mobGuid)
@@ -100,12 +100,12 @@ function DebuffTracker:HandleResist(msg)
         return
     end
 
-    local targetGuid = GetUnitGUID("target")
+    local targetGuid = Helpers:GetUnitGUID("target")
     self:ClearDebuff(targetGuid)
 end
 
 function DebuffTracker:GetRemainingOnTarget()
-    local mobGuid = GetUnitGUID("target")
+    local mobGuid = Helpers:GetUnitGUID("target")
     if not mobGuid then return nil end
 
     local state = self.data[mobGuid]

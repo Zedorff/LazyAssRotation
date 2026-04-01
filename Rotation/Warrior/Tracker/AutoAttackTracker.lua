@@ -28,7 +28,7 @@ end
 --- @param event string
 --- @param arg1 string
 function AutoAttackTracker:onEvent(event, arg1, arg2, arg3)
-    if event == "UNIT_CASTEVENT" and arg1 == GetUnitGUID("player") then
+    if event == "UNIT_CASTEVENT" and arg1 == Helpers:GetUnitGUID("player") then
         if arg3 == "MAINHAND" then
             self.lastMainHandAttack = GetTime()
         elseif arg3 == "OFFHAND" then

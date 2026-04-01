@@ -26,9 +26,9 @@ end
 --- @param arg1 string
 function DotTracker:onEvent(event, arg1, arg2, arg3, arg4)
     local now = GetTime()
-    local target = GetUnitGUID("target")
+    local target = Helpers:GetUnitGUID("target")
 
-    if event == "UNIT_CASTEVENT" and arg1 == GetUnitGUID("player") and arg3 == "CAST" and IsMatchingRank(self.rankedAbility, tonumber(arg4)) then
+    if event == "UNIT_CASTEVENT" and arg1 == Helpers:GetUnitGUID("player") and arg3 == "CAST" and IsMatchingRank(self.rankedAbility, tonumber(arg4)) then
         self:ApplyDot(now, target)
     elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_COMBAT_SELF_MISSES" then
         self:HandleResist(arg1)
@@ -53,7 +53,7 @@ end
 --- @param msg string
 function DotTracker:HandleResist(msg)
     if msg and string.find(msg, self.rankedAbility.name) and (string.find(msg, "resisted") or string.find(msg, "immune") or string.find(msg, "dodged") or string.find(msg, "parried") or string.find(msg, "missed")) or string.find(msg, "blocked") then
-        local target = GetUnitGUID("target")
+        local target = Helpers:GetUnitGUID("target")
         self.data[target] = nil
         Logging:Debug(self.rankedAbility.name.." was miss/dodge/parry/miss/resist/blocked")
     end
@@ -73,7 +73,7 @@ end
 
 --- @return number
 function DotTracker:GetRemainingOnTarget()
-    local mob = GetUnitGUID("target")
+    local mob = Helpers:GetUnitGUID("target")
     if not mob then return 0 end
 
     local dotData = self.data[mob]

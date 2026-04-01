@@ -20,8 +20,8 @@ function ShamanModuleRunContext.new(cache, spec)
     local self = ModuleRunContext.new()
     setmetatable(self, ShamanModuleRunContext)
 
-    local mana = GetUnitField("player", "power1")
-    local maxMana = GetUnitField("player", "maxPower1")
+    local mana = Helpers:GetUnitField("player", "power1")
+    local maxMana = Helpers:GetUnitField("player", "maxPower1")
 
     self.mana = mana
     self.remainingManaPercents = (mana / maxMana) * 100

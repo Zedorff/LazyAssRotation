@@ -1,5 +1,63 @@
 Helpers = {}
 
+--- @param unit string
+--- @return string|nil
+function Helpers:GetUnitGUID(unit)
+    if type(GetUnitGUID) == "function" then
+        local ok, guid = pcall(GetUnitGUID, unit)
+        if ok and guid and guid ~= "" then
+            return guid
+        end
+    end
+    local exists, guid = UnitExists(unit)
+    if exists and guid and guid ~= "" then
+        return guid
+    end
+    return nil
+end
+
+--- @param unit string
+--- @param field string
+--- @return number|nil
+function Helpers:_GetUnitFieldFallback(unit, field)
+    local pt = UnitPowerType(unit)
+    if field == "power1" then
+        if pt == 0 then
+            return UnitMana(unit)
+        end
+        return nil
+    elseif field == "maxPower1" then
+        if pt == 0 then
+            return UnitManaMax(unit)
+        end
+        return nil
+    elseif field == "power2" then
+        if pt == 1 then
+            return UnitMana(unit) * 10
+        end
+        return nil
+    elseif field == "power4" then
+        if pt == 3 then
+            return UnitMana(unit)
+        end
+        return nil
+    end
+    return nil
+end
+
+--- @param unit string
+--- @param field string
+--- @return number|nil
+function Helpers:GetUnitField(unit, field)
+    if type(GetUnitField) == "function" then
+        local ok, v = pcall(GetUnitField, unit, field)
+        if ok and v ~= nil then
+            return v
+        end
+    end
+    return self:_GetUnitFieldFallback(unit, field)
+end
+
 --- Returns true if UnitXP_SP3 DLL is active. UnitXP provides distance, line of sight,
 --- behind detection, and targeting helpers.
 --- @return boolean
@@ -65,8 +123,8 @@ function Helpers:ShouldSuppressRangedSpellForLOS()
     return not self:IsInSight("player", "target")
 end
 
---- NamPower `GetUnitField("player", "power2")` returns rage in tenths for warrior and druid bear
---- (e.g. 686 = 68.6; UI shows whole rage).
+--- NamPower `GetUnitField("player", "power2")` returns rage in tenths; without NamPower, `GetUnitField`
+--- fallback uses `UnitMana * 10` so this still yields whole rage after `floor(raw / 10)`.
 --- @param raw number|nil
 --- @return integer
 function Helpers:RageFromUnitField(raw)

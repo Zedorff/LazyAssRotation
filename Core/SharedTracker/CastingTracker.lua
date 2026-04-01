@@ -35,7 +35,7 @@ end
 function CastingTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5)
     if event == "PLAYER_DEAD" then
         self.castingUntil = 0
-    elseif event == "UNIT_CASTEVENT" and arg1 == GetUnitGUID("player") then
+    elseif event == "UNIT_CASTEVENT" and arg1 == Helpers:GetUnitGUID("player") then
         if arg3 == "START" then
             self.castingUntil = GetTime() + arg5
         elseif arg3 == "CAST" or arg3 == "FAIL" then

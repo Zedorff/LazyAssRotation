@@ -36,9 +36,9 @@ function DruidModuleRunContext.new(energyCache, manaCache, rageCache, spec)
     setmetatable(self, DruidModuleRunContext)
 
     local powerType = UnitPowerType("player")
-    local rawMana = GetUnitField("player", "power1")
-    local rawRageTenths = GetUnitField("player", "power2")
-    local rawEnergy = GetUnitField("player", "power4")
+    local rawMana = Helpers:GetUnitField("player", "power1")
+    local rawRageTenths = Helpers:GetUnitField("player", "power2")
+    local rawEnergy = Helpers:GetUnitField("player", "power4")
 
     self.mana = numberOrDefault(rawMana, powerType == 0 and UnitMana("player") or 0)
     self.energy = powerType == 3 and numberOrDefault(rawEnergy, 0) or 0

@@ -34,9 +34,9 @@ end
 --- @param arg1 string
 function WarlockDotTracker:onEvent(event, arg1, _, arg3, arg4)
     local now = GetTime()
-    local target = GetUnitGUID("target")
+    local target = Helpers:GetUnitGUID("target")
 
-    if event == "UNIT_CASTEVENT" and arg1 == GetUnitGUID("player") then
+    if event == "UNIT_CASTEVENT" and arg1 == Helpers:GetUnitGUID("player") then
         if arg3 == "CAST" and IsMatchingRank(self.rankedAbility, tonumber(arg4)) then
             self:ApplyDot(now, target)
         elseif arg3 == "CHANNEL" and IsMatchingRank(Abilities.DarkHarvest, tonumber(arg4)) then
@@ -111,7 +111,7 @@ end
 --- @param msg string
 function WarlockDotTracker:HandleResist(msg)
     if msg and string.find(msg, self.rankedAbility.name) and (string.find(msg, "resisted") or string.find(msg, "immune") or string.find(msg, "dodged") or string.find(msg, "parried") or string.find(msg, "missed")) or string.find(msg, "blocked") then
-        local target = GetUnitGUID("target")
+        local target = Helpers:GetUnitGUID("target")
         self.data[target] = nil
         Logging:Debug(self.rankedAbility.name .. " was miss/dodge/parry/miss/resist/blocked")
     end
@@ -131,7 +131,7 @@ end
 
 --- @return number | nil
 function WarlockDotTracker:GetRemainingOnTarget()
-    local mob = GetUnitGUID("target")
+    local mob = Helpers:GetUnitGUID("target")
     if not mob then return nil end
 
     local dotData = self.data[mob]

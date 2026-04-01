@@ -18,7 +18,7 @@ function ImmolateTracker:onEvent(event, arg1, arg2, arg3, arg4)
         if string.find(arg1, Abilities.Conflagrate.name) then
             local hit, crit, _, _, _ = Helpers:ParseCombatEvent(Abilities.Conflagrate.name, arg1)
             if hit or crit then
-                local target = GetUnitGUID("target")
+                local target = Helpers:GetUnitGUID("target")
                 local mobData = self:GetMobData(target)
                 mobData.duration = mobData.duration - 3
             end

@@ -23,7 +23,7 @@ function WarriorModuleRunContext.new(cache, spec)
     local self = ModuleRunContext.new()
     setmetatable(self, WarriorModuleRunContext)
 
-    self.rage = Helpers:RageFromUnitField(GetUnitField("player", "power2"))
+    self.rage = Helpers:RageFromUnitField(Helpers:GetUnitField("player", "power2"))
     self.msCost = cache:Get(Abilities.MortalStrike.name)
     self.bsCost = cache:Get(Abilities.Bloodthirst.name)
     self.wwCost = cache:Get(Abilities.Whirlwind.name)

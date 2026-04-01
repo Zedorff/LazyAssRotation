@@ -16,7 +16,7 @@ function EnergyTickTracker.new()
     local self = CooldownTracker.new()
     setmetatable(self, EnergyTickTracker)
 
-    self.lastEnergy = GetUnitField("player", "power4")
+    self.lastEnergy = Helpers:GetUnitField("player", "power4") or 0
     self.lastTickTime = nil
 
     return self
@@ -27,7 +27,7 @@ end
 function EnergyTickTracker:onEvent(event, arg1)
     if event == "UNIT_ENERGY" and arg1 == "player" then
         local now = GetTime()
-        local current = GetUnitField("player", "power4")
+        local current = Helpers:GetUnitField("player", "power4") or 0
         local delta = current - self.lastEnergy
 
         if isEnergyTickDelta(delta) and (self.lastTickTime == nil or (now - self.lastTickTime) > 1.5) then
