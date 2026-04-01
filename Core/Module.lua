@@ -3,6 +3,8 @@
 --- @field enabled boolean
 --- @field trackers table<string, table>
 --- @field iconPath string
+--- @field group any | nil
+--- @field groupLabel string | nil
 Module = {}
 Module.__index = Module
 
@@ -10,7 +12,8 @@ Module.__index = Module
 --- @param trackers table<string, table>?
 --- @param iconPath string
 --- @param enabledByDefault boolean | nil
-function Module.new(name, trackers, iconPath, enabledByDefault)
+--- @param groupLabel string | nil
+function Module.new(name, trackers, iconPath, enabledByDefault, groupLabel)
     if LARModuleSettings.modulesEnabled[name] == nil then
         LARModuleSettings.modulesEnabled[name] = enabledByDefault or true
     end
@@ -18,7 +21,9 @@ function Module.new(name, trackers, iconPath, enabledByDefault)
         name = name,
         enabled = LARModuleSettings.modulesEnabled[name],
         trackers = trackers or {},
-        iconPath = iconPath
+        iconPath = iconPath,
+        group = nil,
+        groupLabel = groupLabel
     }
 
     if self.enabled then

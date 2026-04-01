@@ -47,9 +47,6 @@ Abilities.SunderArmor = { name = ABILITY_SUNDER_ARMOR, ids = {} }
 Abilities.ShieldBlock = { name = ABILITY_SHIELD_BLOCK, ids = {} }
 
 --- @type Ability
-Abilities.Pummel = { name = ABILITY_PUMMEL, ids = {} }
-
---- @type Ability
 Abilities.Cleave = { name = ABILITY_CLEAVE, ids = {} }
 
 --- @type Ability

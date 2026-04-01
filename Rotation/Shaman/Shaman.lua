@@ -41,25 +41,35 @@ function Shaman:SelectSpec(spec)
     elseif spec.name == "Elem" then
         self.spec = ShamanSpec.ELEM
         self:EnableElemSpec()
+    else
+        Logging:Log("[LAR] Shaman SelectSpec: unknown spec.name=" .. tostring(spec and spec.name) .. " (expected Enhance or Elem); no modules registered")
     end
     HotSwap_InvalidateModuleButtons()
 end
 
 function Shaman:EnableEnhanceSpec()
-    ModuleRegistry:RegisterModule(WaterShieldModule.new())
-    ModuleRegistry:RegisterModule(LightningShieldModule.new())
-    ModuleRegistry:RegisterModule(StormStrikeModule.new())
-    ModuleRegistry:RegisterModule(LightningStrikeModule.new())
-    ModuleRegistry:RegisterModule(ShockModule.new(ShockType.EARTH, "Interface\\Icons\\Spell_Nature_EarthShock", true))
-    ModuleRegistry:RegisterModule(ShockModule.new(ShockType.FROST, "Interface\\Icons\\Spell_Frost_FrostShock", false))
-    ModuleRegistry:RegisterModule(ShockModule.new(ShockType.FLAME, "Interface\\Icons\\Spell_Fire_FlameShock", false))
-    ModuleRegistry:RegisterModule(WindfuryModule.new())
-    ModuleRegistry:RegisterModule(RockbiterModule.new())
+    ModuleRegistry:RegisterGroup(1, "Shocks", function()
+        ModuleRegistry:RegisterModule(ShockModule.new(ShockType.EARTH, "Interface\\Icons\\Spell_Nature_EarthShock", true))
+        ModuleRegistry:RegisterModule(ShockModule.new(ShockType.FROST, "Interface\\Icons\\Spell_Frost_FrostShock", false))
+        ModuleRegistry:RegisterModule(ShockModule.new(ShockType.FLAME, "Interface\\Icons\\Spell_Fire_FlameShock", false))
+    end)
+    ModuleRegistry:RegisterGroup(2, function()
+        ModuleRegistry:RegisterModule(WaterShieldModule.new())
+        ModuleRegistry:RegisterModule(LightningShieldModule.new())
+        ModuleRegistry:RegisterModule(StormStrikeModule.new())
+        ModuleRegistry:RegisterModule(LightningStrikeModule.new())
+    end)
+    ModuleRegistry:RegisterGroup(3, "Weapon", function()
+        ModuleRegistry:RegisterModule(WindfuryModule.new())
+        ModuleRegistry:RegisterModule(RockbiterModule.new())
+    end)
 end
 
 function Shaman:EnableElemSpec()
-    ModuleRegistry:RegisterModule(WaterShieldModule.new())
-    ModuleRegistry:RegisterModule(LightningBoltModule.new())
-    ModuleRegistry:RegisterModule(ChainLightningModule.new())
-    ModuleRegistry:RegisterModule(ShamanClearcastingModule.new())
+    ModuleRegistry:RegisterGroup(1, function()
+        ModuleRegistry:RegisterModule(WaterShieldModule.new())
+        ModuleRegistry:RegisterModule(LightningBoltModule.new())
+        ModuleRegistry:RegisterModule(ChainLightningModule.new())
+        ModuleRegistry:RegisterModule(ShamanClearcastingModule.new())
+    end)
 end
