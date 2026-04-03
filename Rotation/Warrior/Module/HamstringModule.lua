@@ -6,7 +6,18 @@ HamstringModule.__index = HamstringModule
 --- @class HamstringModule
 function HamstringModule.new()
     --- @class HamstringModule
-    return setmetatable(Module.new(Abilities.Hamstring.name, nil, "Interface\\Icons\\Ability_ShockWave"), HamstringModule)
+    local self = setmetatable(Module.new(Abilities.Hamstring.name, nil, "Interface\\Icons\\Ability_ShockWave"), HamstringModule)
+
+    if self.enabled then
+        ModuleRegistry:DisableModule(Abilities.SunderArmor.name)
+    end
+
+    return self
+end
+
+function HamstringModule:enable()
+    Module.enable(self)
+    ModuleRegistry:DisableModule(Abilities.SunderArmor.name)
 end
 
 function HamstringModule:run()
@@ -17,7 +28,7 @@ end
 --- @param context WarriorModuleRunContext
 function HamstringModule:getPriority(context)
     if self.enabled and context.stance ~= 2 then
-        if Helpers:SpellReady(Abilities.Hamstring.name) and context.rage >= 90 then
+        if Helpers:SpellReady(Abilities.Hamstring.name) and context.rage >= 75 then
             return 10
         else
             return -1;

@@ -78,6 +78,7 @@ Rotation\Warrior\Module\SunderArmor\SunderArmorArms.lua
 Rotation\Warrior\Module\SunderArmor\SunderArmorFury.lua
 Rotation\Warrior\Module\SunderArmor\SunderArmorProt.lua
 Rotation\Warrior\Module\ShieldBlockModule.lua
+Rotation\Warrior\Module\PummelModule.lua
 Rotation\Warrior\Module\ConcussionBlowModule.lua
 
 Rotation\Warrior\WarriorSpec.lua

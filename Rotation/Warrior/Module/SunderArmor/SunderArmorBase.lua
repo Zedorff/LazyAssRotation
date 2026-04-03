@@ -6,7 +6,18 @@ SunderArmorBase.__index = SunderArmorBase
 --- @return SunderArmorBase
 function SunderArmorBase.new()
     --- @class SunderArmorBase
-    return setmetatable(Module.new(Abilities.SunderArmor.name, nil, "Interface\\Icons\\Ability_Warrior_Sunder"), SunderArmorBase)
+    local self = setmetatable(Module.new(Abilities.SunderArmor.name, nil, "Interface\\Icons\\Ability_Warrior_Sunder"), SunderArmorBase)
+
+    if self.enabled then
+        ModuleRegistry:DisableModule(Abilities.Hamstring.name)
+    end
+
+    return self
+end
+
+function SunderArmorBase:enable()
+    Module.enable(self)
+    ModuleRegistry:DisableModule(Abilities.Hamstring.name)
 end
 
 function SunderArmorBase:run()

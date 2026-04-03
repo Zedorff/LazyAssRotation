@@ -13,7 +13,7 @@ end
 --- @return integer
 function SunderArmorArmsModule:getSpecPriority(context)
     if context.stance ~= 2 then
-        if Helpers:SpellReady(Abilities.SunderArmor.name) and context.rage >= 90 then
+        if Helpers:SpellReady(Abilities.SunderArmor.name) and context.rage >= 75 then
             return 10
         else
             return -1

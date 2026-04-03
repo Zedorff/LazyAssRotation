@@ -30,7 +30,7 @@ function SlamModule:getPriority(context)
     local slamReady = Helpers:SpellReady(Abilities.Slam.name)
     local slamCastTime = Helpers:CastTime(Abilities.Slam.name)
     local nextSwing = self.trackers.autoAttackTracker:GetNextSwingTime() + 1.0
-    if nextSwing < slamCastTime then
+    if nextSwing < slamCastTime and context.rage < 50 then
         return -1
     end
 

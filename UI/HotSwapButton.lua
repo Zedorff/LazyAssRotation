@@ -146,6 +146,9 @@ local groupBackdropPad = 4
 --- Inset around spec/module button clusters when fitting `HotSwapSpecContainer` / `HotSwapModuleContainer`.
 local clusterContainerPad = 2
 
+--- Space between the draggable main button edge and the first spec/module icon in the strip.
+local mainButtonClusterGap = 2
+
 --- Cluster backdrop frames must stay below spec/module icon buttons (fixed levels; do not use parent+1 — that can pass button level when HotSwapButton’s level is high).
 local clusterBackdropFrameLevel = 1
 local clusterIconButtonFrameLevel = 20
@@ -231,7 +234,7 @@ end
 local function AnchorModuleButtonSetWithGroups(buttons, side, mainFrame, groups)
     local btnWidth = buttons[1]:GetWidth()
     local btnHeight = buttons[1]:GetHeight()
-    local pos = 0
+    local pos = mainButtonClusterGap
 
     for i, btn in ipairs(buttons) do
         btn:ClearAllPoints()
@@ -263,7 +266,7 @@ end
 local function AnchorButtonSetWithGroups(buttons, side, parent, groups)
     local btnWidth = buttons[1]:GetWidth()
     local btnHeight = buttons[1]:GetHeight()
-    local pos = 0
+    local pos = mainButtonClusterGap
 
     for i, btn in ipairs(buttons) do
         btn:ClearAllPoints()
