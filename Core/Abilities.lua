@@ -93,9 +93,6 @@ Abilities.ChainLightning = { name = ABILITY_CHAIN_LIGHTNING, ids = {} }
 -- Paladin Abilities
 
 --- @type Ability
-Abilities.Consecration = { name = ABILITY_CONSECRATION, ids = {} }
-
---- @type Ability
 Abilities.CrusaderStrike = { name = ABILITY_CRUSADER_STRIKE, ids = {} }
 
 --- @type Ability

@@ -120,7 +120,6 @@ Rotation\Paladin\Tracker\HolyStrikeTracker.lua
 Rotation\Paladin\Tracker\RighteousFuryTracker.lua
 Rotation\Paladin\Tracker\HolyShieldTracker.lua
 
-Rotation\Paladin\Module\ConsecrationModule.lua
 Rotation\Paladin\Module\CrusaderStrikeModule.lua
 Rotation\Paladin\Module\ExcorcismModule.lua
 Rotation\Paladin\Module\HolyStrikeModule.lua

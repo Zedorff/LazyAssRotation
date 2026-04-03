@@ -1,6 +1,5 @@
 --- @class PaladinModuleRunContext : ModuleRunContext
 --- @field mana integer
---- @field consecCost integer
 --- @field crusaderCost integer
 --- @field exorcismCost integer
 --- @field holyStrikeCost integer
@@ -27,7 +26,6 @@ function PaladinModuleRunContext.new(cache, spec)
 
     self.mana = mana
     self.remainingManaPercents = (mana / maxMana) * 100
-    self.consecCost = cache:Get(Abilities.Consecration.name)
     self.crusaderCost = cache:Get(Abilities.CrusaderStrike.name)
     self.exorcismCost = cache:Get(Abilities.Exorcism.name)
     self.holyStrikeCost = cache:Get(Abilities.HolyStrike.name)
@@ -44,7 +42,6 @@ end
 
 --- @param cache ManaCostCache
 function PaladinModuleRunContext.PreheatCache(cache)
-    cache:Get(Abilities.Consecration.name)
     cache:Get(Abilities.CrusaderStrike.name)
     cache:Get(Abilities.Exorcism.name)
     cache:Get(Abilities.HolyStrike.name)

@@ -50,7 +50,6 @@ ABILITY_LIGHTNING_BOLT       = "Lightning Bolt"
 ABILITY_CHAIN_LIGHTNING      = "Chain Lightning"
 
 -- Paladin
-ABILITY_CONSECRATION         = "Consecration"
 ABILITY_CRUSADER_STRIKE      = "Crusader Strike"
 ABILITY_EXORCISM             = "Exorcism"
 ABILITY_HOLY_STRIKE          = "Holy Strike"
