@@ -1,4 +1,4 @@
---- @class MageSpec
+--- @enum MageSpec
 MageSpec = {
     ARCANE = 1,
     FIRE = 2,
