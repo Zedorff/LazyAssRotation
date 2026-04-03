@@ -149,6 +149,9 @@ local clusterContainerPad = 2
 --- Space between the draggable main button edge and the first spec/module icon in the strip.
 local mainButtonClusterGap = 2
 
+--- Gap between adjacent icons along a spec or module strip (within a group run).
+local clusterItemGap = 1
+
 --- Cluster backdrop frames must stay below spec/module icon buttons (fixed levels; do not use parent+1 — that can pass button level when HotSwapButton’s level is high).
 local clusterBackdropFrameLevel = 1
 local clusterIconButtonFrameLevel = 20
@@ -226,35 +229,108 @@ local function FitClusterContainerBounds(container, buttons, side)
     end
 end
 
+--- @type FontString | nil
+local groupLabelMeasureFontString = nil
+
+--- Matches width used in `CreateGroupLabelFrame` (`padX = 10` there).
+--- @param text string
+--- @return number
+local function GetGroupLabelChipWidth(text)
+    if not groupLabelMeasureFontString then
+        groupLabelMeasureFontString = UIParent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+        groupLabelMeasureFontString:Hide()
+    end
+    groupLabelMeasureFontString:SetText(text)
+    return groupLabelMeasureFontString:GetStringWidth() + 10
+end
+
+--- @param moduleGroupLabels (string | nil)[]
+--- @param i integer
+--- @param j integer
+--- @return string | nil
+local function resolveGroupLabelText(moduleGroupLabels, i, j)
+    for k = i, j do
+        local t = moduleGroupLabels[k]
+        if t and t ~= "" then
+            return t
+        end
+    end
+    return nil
+end
+
 --- Same layout as AnchorButtonSetWithGroups but anchors geometry to `mainFrame` (buttons parented to module container separately).
+--- Group runs use `groups`; labeled runs center the icon cluster in max(button span along strip, label chip width)
+--- on LEFT/RIGHT. TOP/BOTTOM: no horizontal shift (labels are placed above/below the group, centered).
 --- @param buttons Button[]
 --- @param side "TOP" | "BOTTOM" | "LEFT" | "RIGHT"
 --- @param mainFrame Frame
 --- @param groups any[] | nil
-local function AnchorModuleButtonSetWithGroups(buttons, side, mainFrame, groups)
+--- @param moduleGroupLabels (string | nil)[] | nil
+local function AnchorModuleButtonSetWithGroups(buttons, side, mainFrame, groups, moduleGroupLabels)
     local btnWidth = buttons[1]:GetWidth()
     local btnHeight = buttons[1]:GetHeight()
+    local n = arrayLength(buttons)
     local pos = mainButtonClusterGap
 
-    for i, btn in ipairs(buttons) do
-        btn:ClearAllPoints()
+    local i = 1
+    while i <= n do
         if i > 1 and groups and groups[i] ~= groups[i - 1] then
             pos = pos + moduleGroupGap
         end
-        if side == "TOP" then
-            btn:SetPoint("BOTTOM", mainFrame, "TOP", 0, pos)
-        elseif side == "BOTTOM" then
-            btn:SetPoint("TOP", mainFrame, "BOTTOM", 0, -pos)
-        elseif side == "LEFT" then
-            btn:SetPoint("RIGHT", mainFrame, "LEFT", -pos, 0)
-        elseif side == "RIGHT" then
-            btn:SetPoint("LEFT", mainFrame, "RIGHT", pos, 0)
-        end
-        if side == "TOP" or side == "BOTTOM" then
-            pos = pos + btnHeight
+
+        local j = i
+        if groups then
+            local g = groups[i]
+            while j < n and groups[j + 1] == g do
+                j = j + 1
+            end
         else
-            pos = pos + btnWidth
+            j = n
         end
+
+        local labelText = moduleGroupLabels and resolveGroupLabelText(moduleGroupLabels, i, j) or nil
+
+        if side == "LEFT" or side == "RIGHT" then
+            local runCount = j - i + 1
+            local runSpan = runCount * btnWidth + (runCount - 1) * clusterItemGap
+            local slotAlong = runSpan
+            if labelText then
+                slotAlong = math.max(runSpan, GetGroupLabelChipWidth(labelText))
+            end
+            local lead = (slotAlong - runSpan) / 2
+            pos = pos + lead
+
+            for k = i, j do
+                local b = buttons[k]
+                b:ClearAllPoints()
+                if side == "RIGHT" then
+                    b:SetPoint("LEFT", mainFrame, "RIGHT", pos, 0)
+                else
+                    b:SetPoint("RIGHT", mainFrame, "LEFT", -pos, 0)
+                end
+                pos = pos + btnWidth
+                if k < j then
+                    pos = pos + clusterItemGap
+                end
+            end
+            pos = pos + lead
+        else
+            for k = i, j do
+                local b = buttons[k]
+                b:ClearAllPoints()
+                if side == "TOP" then
+                    b:SetPoint("BOTTOM", mainFrame, "TOP", 0, pos)
+                else
+                    b:SetPoint("TOP", mainFrame, "BOTTOM", 0, -pos)
+                end
+                pos = pos + btnHeight
+                if k < j then
+                    pos = pos + clusterItemGap
+                end
+            end
+        end
+
+        i = j + 1
     end
 end
 
@@ -267,6 +343,7 @@ local function AnchorButtonSetWithGroups(buttons, side, parent, groups)
     local btnWidth = buttons[1]:GetWidth()
     local btnHeight = buttons[1]:GetHeight()
     local pos = mainButtonClusterGap
+    local n = arrayLength(buttons)
 
     for i, btn in ipairs(buttons) do
         btn:ClearAllPoints()
@@ -286,6 +363,9 @@ local function AnchorButtonSetWithGroups(buttons, side, parent, groups)
             pos = pos + btnHeight
         else
             pos = pos + btnWidth
+        end
+        if i < n then
+            pos = pos + clusterItemGap
         end
     end
 end
@@ -342,20 +422,6 @@ local function RemoveChildrenByPrefix(parent, prefix)
     end
 end
 
---- @param moduleGroupLabels (string | nil)[]
---- @param i integer
---- @param j integer
---- @return string | nil
-local function resolveGroupLabelText(moduleGroupLabels, i, j)
-    for k = i, j do
-        local t = moduleGroupLabels[k]
-        if t and t ~= "" then
-            return t
-        end
-    end
-    return nil
-end
-
 --- For group backdrops, which two buttons define TOPLEFT vs BOTTOMRIGHT corners.
 --- Order along the strip from the main button: for LEFT/TOP the first index is the inner
 --- (main-side) button and growth is toward lower X / higher Y; pairing first→TL and last→BR
@@ -372,8 +438,8 @@ local function GroupBackdropCornerButtons(buttons, side, firstIdx, lastIdx)
 end
 
 --- Label chip placement depends on module bar side (same tooltip style as group backdrops).
---- TOP/BOTTOM: compact chip outside the group to the right (LEFT of chip anchored to RIGHT of backdrop).
---- LEFT/RIGHT: above group, horizontally centered.
+--- TOP/BOTTOM: chip to the right of the icon column (LEFT of chip on RIGHT edge of backdrop), text right-justified.
+--- LEFT/RIGHT: above the horizontal strip, centered on the backdrop.
 --- Minimum height keeps the 9-slice border from tearing on very short strips.
 --- @param parentBackdrop Frame
 --- @param text string
@@ -422,7 +488,6 @@ local function CreateGroupLabelFrame(parentBackdrop, text, side)
     if side == "LEFT" or side == "RIGHT" then
         f:SetPoint("CENTER", parentBackdrop, "TOP", 0, edgeOut)
     else
-        -- TOP / BOTTOM: chip to the right of the group (LEFT of chip → RIGHT of backdrop); vertical midlines align.
         f:SetPoint("LEFT", parentBackdrop, "RIGHT", 0, 0)
     end
     f:Show()
@@ -455,6 +520,7 @@ local function RefreshModuleGroupBackdrops(moduleParent, buttons, moduleGroups, 
         backdrop:SetFrameLevel(1)
         ApplyRoundedBackdrop(backdrop, 0.65)
         local tlBtn, brBtn = GroupBackdropCornerButtons(buttons, side, i, j)
+
         backdrop:SetPoint("TOPLEFT", tlBtn, "TOPLEFT", -groupBackdropPad, groupBackdropPad)
         backdrop:SetPoint("BOTTOMRIGHT", brBtn, "BOTTOMRIGHT", groupBackdropPad, -groupBackdropPad)
         backdrop:EnableMouse(false)
@@ -558,7 +624,7 @@ function HotSwap_InvalidateModuleButtons()
 
     local side = LARModuleSide or "RIGHT"
     if arrayLength(moduleButtons) > 0 then
-        AnchorModuleButtonSetWithGroups(moduleButtons, side, mainFrame, moduleGroups)
+        AnchorModuleButtonSetWithGroups(moduleButtons, side, mainFrame, moduleGroups, moduleGroupLabels)
         for _, btn in ipairs(moduleButtons) do
             btn:SetFrameLevel(clusterIconButtonFrameLevel)
             if btn.border then
@@ -738,7 +804,7 @@ function HotSwap_RearrangeButtons()
             ButtonSets["ModuleGroupLabels"] = moduleGroupLabels
         end
         local side = LARModuleSide or "RIGHT"
-        AnchorModuleButtonSetWithGroups(moduleButtons, side, HotSwapButton, groups)
+        AnchorModuleButtonSetWithGroups(moduleButtons, side, HotSwapButton, groups, moduleGroupLabels)
         for _, btn in ipairs(moduleButtons) do
             btn:SetFrameLevel(clusterIconButtonFrameLevel)
             if btn.border then
