@@ -1,6 +1,7 @@
 --- @class DotTracker : CooldownTracker
 --- @field rankedAbility Ability
 --- @field data table<string, table>
+--- @field buffApi BuffApi
 DotTracker = setmetatable({}, { __index = CooldownTracker })
 DotTracker.__index = DotTracker
 
@@ -11,8 +12,10 @@ function DotTracker.new(rankedAbility)
     local self = CooldownTracker.new()
     setmetatable(self, DotTracker)
 
+    local buffApi = BuffApiFactory.GetInstance()
     self.rankedAbility = rankedAbility
     self.data    = {}
+    self.buffApi = buffApi
 
     return self
 end
@@ -23,18 +26,8 @@ function DotTracker:subscribe()
 end
 
 --- @param event string
---- @param arg1 string
-function DotTracker:onEvent(event, arg1, arg2, arg3, arg4)
-    local now = GetTime()
-    local target = Helpers:GetUnitGUID("target")
-
-    if event == "UNIT_CASTEVENT" and arg1 == Helpers:GetUnitGUID("player") and arg3 == "CAST" and IsMatchingRank(self.rankedAbility, tonumber(arg4)) then
-        self:ApplyDot(now, target)
-    elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_COMBAT_SELF_MISSES" then
-        self:HandleResist(arg1)
-    elseif event == "PLAYER_REGEN_ENABLED" then
-        self.data = {}
-    end
+function DotTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    self.buffApi:OnDotTrackerEvent(self, GetTime(), event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 end
 
 --- @param now number

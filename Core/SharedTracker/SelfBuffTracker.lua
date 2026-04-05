@@ -2,6 +2,7 @@
 --- @field abilityName string
 --- @field buffTexture string
 --- @field buffUp boolean
+--- @field buffApi BuffApi
 SelfBuffTracker = setmetatable({}, { __index = CooldownTracker })
 SelfBuffTracker.__index = SelfBuffTracker
 
@@ -13,8 +14,10 @@ function SelfBuffTracker.new(abilityName, buffTexture)
     local self = CooldownTracker.new()
     setmetatable(self, SelfBuffTracker)
 
+    local buffApi = BuffApiFactory.GetInstance()
     self.abilityName = abilityName
     self.buffTexture = buffTexture
+    self.buffApi = buffApi
     self.buffUp = Helpers:HasBuff("player", buffTexture)
 
     return self
@@ -27,16 +30,12 @@ end
 
 --- @param event string
 --- @param arg1 string
-function SelfBuffTracker:onEvent(event, arg1)
+function SelfBuffTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     if event == "PLAYER_DEAD" then
         self.buffUp = false
-    elseif event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" and string.find(arg1, self.abilityName) then
-        Logging:Debug(self.abilityName .. " is up")
-        self.buffUp = true
-    elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" and string.find(arg1, self.abilityName) then
-        Logging:Debug(self.abilityName .. " is down")
-        self.buffUp = false
+        return
     end
+    self.buffApi:OnSelfBuffEvent(self, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 end
 
 --- @return boolean

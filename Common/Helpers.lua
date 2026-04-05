@@ -212,6 +212,68 @@ function Helpers:SpellNotReadyFor(spellname)
     return 0
 end
 
+--- @return boolean
+function Helpers:HasNampowerAuraCastEvents()
+    return GetCVar and GetCVar("NP_EnableAuraCastEvents") ~= nil
+end
+
+--- When Nampower registered `NP_EnableAuraCastEvents`, force `"1"` if it is not enabled (e.g. `"0"`).
+--- @return boolean
+function Helpers:EnsureNampowerAuraCastEventsEnabled()
+    if not self:HasNampowerAuraCastEvents() then
+        return false
+    end
+    if GetCVar("NP_EnableAuraCastEvents") ~= "1" then
+        SetCVar("NP_EnableAuraCastEvents", "1")
+    end
+    return true
+end
+
+--- @param spellId number
+--- @return string|nil
+function Helpers:SpellIconBySpellId(spellId)
+    if not spellId or spellId == 0 then
+        return nil
+    end
+    if type(GetSpellRecField) == "function" then
+        local ok, icon = pcall(GetSpellRecField, spellId, "icon")
+        if ok and type(icon) == "string" then
+            return icon
+        end
+    end
+    if type(GetSpellInfo) == "function" then
+        local ok, _, _, icon = pcall(GetSpellInfo, spellId)
+        if ok and type(icon) == "string" then
+            return icon
+        end
+    end
+    return nil
+end
+
+--- @param spellId number
+--- @param texture string|nil
+--- @param abilityName string|nil
+--- @return boolean
+function Helpers:MatchesSelfBuffSpell(spellId, texture, abilityName)
+    spellId = tonumber(spellId)
+    if not spellId then
+        return false
+    end
+    if abilityName and type(GetSpellRecField) == "function" then
+        local ok, name = pcall(GetSpellRecField, spellId, "name")
+        if ok and name and string.find(name, abilityName) then
+            return true
+        end
+    end
+    if texture then
+        local icon = self:SpellIconBySpellId(spellId)
+        if icon and string.find(icon, texture) then
+            return true
+        end
+    end
+    return false
+end
+
 --- @deprecated Use `HasBuff` instead
 --- @param unit string
 --- @param buffName string

@@ -13,11 +13,13 @@ end
 
 --- @param event string
 --- @param arg1 string
-function NightfallTracker:onEvent(event, arg1)
-    if event == "UNIT_CASTEVENT" and arg1 == Helpers:GetUnitGUID("player") and arg3 == "CAST" and arg4 == 25307 then
-        self.buffUp = false
+function NightfallTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    if event == "UNIT_CASTEVENT" then
+        if arg1 == Helpers:GetUnitGUID("player") and arg3 == "CAST" and arg4 == 25307 then
+            self.buffUp = false
+        end
     end
-    SelfBuffTracker.onEvent(self, event, arg1)
+    SelfBuffTracker.onEvent(self, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 end
 
 --- @return boolean

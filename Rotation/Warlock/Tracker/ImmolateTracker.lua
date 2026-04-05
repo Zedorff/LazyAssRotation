@@ -12,8 +12,8 @@ end
 
 --- @param event string
 --- @param arg1 string
-function ImmolateTracker:onEvent(event, arg1, arg2, arg3, arg4)
-    DotTracker.onEvent(self, event, arg1, arg2, arg3, arg4)
+function ImmolateTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    DotTracker.onEvent(self, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     if event == "CHAT_MSG_SPELL_SELF_DAMAGE" then
         if string.find(arg1, Abilities.Conflagrate.name) then
             local hit, crit, _, _, _ = Helpers:ParseCombatEvent(Abilities.Conflagrate.name, arg1)

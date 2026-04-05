@@ -3,6 +3,7 @@
 --- @field pendingChannel boolean
 --- @field dhCasting boolean
 --- @field data table<string, table>
+--- @field buffApi BuffApi
 WarlockDotTracker = setmetatable({}, { __index = CooldownTracker })
 WarlockDotTracker.__index = WarlockDotTracker
 
@@ -15,10 +16,12 @@ function WarlockDotTracker.new(rankedAbility)
     local self = CooldownTracker.new()
     setmetatable(self, WarlockDotTracker)
 
+    local buffApi = BuffApiFactory.GetInstance()
     self.rankedAbility  = rankedAbility
     self.data           = {}
     self.pendingChannel = false
     self.dhCasting      = false
+    self.buffApi = buffApi
 
     return self
 end
@@ -30,38 +33,10 @@ function WarlockDotTracker:subscribe()
     self.dhCasting      = false
 end
 
---- @param event string
---- @param arg1 string
-function WarlockDotTracker:onEvent(event, arg1, _, arg3, arg4)
+function WarlockDotTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     local now = GetTime()
     local target = Helpers:GetUnitGUID("target")
-
-    if event == "UNIT_CASTEVENT" and arg1 == Helpers:GetUnitGUID("player") then
-        if arg3 == "CAST" and IsMatchingRank(self.rankedAbility, tonumber(arg4)) then
-            self:ApplyDot(now, target)
-        elseif arg3 == "CHANNEL" and IsMatchingRank(Abilities.DarkHarvest, tonumber(arg4)) then
-            self.pendingChannel = true
-        end
-    elseif event == "SPELLCAST_CHANNEL_START" and self.pendingChannel then
-        self.dhCasting = true
-        self.pendingChannel = false
-        self:StartDarkHarvest(target, now)
-        Logging:Debug("Dark Harvest channel started (" .. (arg1 or 0) / 1000 .. "s)")
-    elseif event == "SPELLCAST_CHANNEL_STOP" or event == "SPELLCAST_INTERRUPTED" then
-        if self.dhCasting then
-            self.dhCasting = false
-            self.pendingChannel = false
-            self:EndDarkHarvest(target, now)
-            Logging:Debug("Dark Harvest channel stopped / interrupted")
-        end
-    elseif event == "PLAYER_DEAD" then
-        self.pendingChannel = false
-        self.dhCasting = false
-    elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_COMBAT_SELF_MISSES" then
-        self:HandleResist(arg1)
-    elseif event == "PLAYER_REGEN_ENABLED" then
-        self.data = {}
-    end
+    self.buffApi:OnWarlockDotTrackerEvent(self, now, target, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 end
 
 --- @param now number

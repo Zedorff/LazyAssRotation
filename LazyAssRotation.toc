@@ -8,6 +8,13 @@
 
 Localization.lua
 
+Common\Helpers.lua
+Common\Logging.lua
+Common\Collection.lua
+Core\BuffApi\BuffApi.lua
+Core\BuffApi\VanillaBuffApi.lua
+Core\BuffApi\NampowerBuffApi.lua
+Core\BuffApi\BuffApiFactory.lua
 Core\Core.lua
 Core\EventBus.lua
 Core\ModuleRunContext.lua
@@ -33,10 +40,6 @@ Core\RageCostCache.lua
 
 UI\SpecButtonInfo.lua
 UI\ModuleButtonInfo.lua
-
-Common\Logging.lua
-Common\Helpers.lua
-Common\Collection.lua
 
 Rotation\Warrior\Tracker\BattleShoutTracker.lua
 Rotation\Warrior\Tracker\AutoAttackTracker.lua

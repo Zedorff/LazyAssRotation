@@ -8,6 +8,7 @@
 ---@field data table<string, MobDebuffState>
 ---@field isSharedDebuff boolean
 ---@field textureName string|nil
+---@field buffApi BuffApi
 DebuffTracker = setmetatable({}, { __index = CooldownTracker })
 DebuffTracker.__index = DebuffTracker
 
@@ -16,10 +17,12 @@ function DebuffTracker.new(ability, isSharedDebuff, textureName)
     local self = CooldownTracker.new()
     setmetatable(self, DebuffTracker)
 
+    local buffApi = BuffApiFactory.GetInstance()
     self.ability     = ability
     self.data        = {}
     self.isSharedDebuff    = isSharedDebuff or false
     self.textureName = textureName
+    self.buffApi = buffApi
 
     return self
 end
@@ -29,18 +32,8 @@ function DebuffTracker:subscribe()
     CooldownTracker.subscribe(self)
 end
 
-function DebuffTracker:onEvent(event, arg1, arg2, arg3, arg4)
-    local now = GetTime()
-
-    if event == "UNIT_CASTEVENT" then
-        self:OnUnitCastEvent(now, arg1, arg2, arg3, arg4)
-    elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE"
-        or event == "CHAT_MSG_COMBAT_SELF_MISSES" then
-        self:HandleResist(arg1)
-
-    elseif event == "PLAYER_REGEN_ENABLED" then
-        self.data = {}
-    end
+function DebuffTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    self.buffApi:OnDebuffTrackerEvent(self, GetTime(), event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 end
 
 function DebuffTracker:OnUnitCastEvent(now, casterGuid, targetGuid, eventType, spellId)

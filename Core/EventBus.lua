@@ -1,5 +1,5 @@
 --- @class EventSubscriber
---- @field onEvent fun(self: table, event: string, ...)
+--- @field onEvent fun(self: table, event: string, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 
 --- @class EventBus
 --- @field subscribers table
@@ -8,7 +8,7 @@ EventBus.__index = EventBus
 
 function EventBus:new(frame)
     local obj = {
-        subscribers = {}
+        subscribers = {},
     }
 
     local instance = setmetatable(obj, EventBus)
@@ -45,19 +45,16 @@ function EventBus:new(frame)
     frame:RegisterEvent("UI_ERROR_MESSAGE");
     frame:RegisterEvent("UNIT_CASTEVENT");
     frame:RegisterEvent("ACTIONBAR_SLOT_CHANGED");
+    frame:RegisterEvent("AURA_CAST_ON_SELF");
+    frame:RegisterEvent("AURA_CAST_ON_OTHER");
+    frame:RegisterEvent("BUFF_REMOVED_SELF");
+    frame:RegisterEvent("DEBUFF_REMOVED_OTHER");
     frame:SetScript("OnEvent", function()
         --- @diagnostic disable-next-line: undefined-global
-        -- if event == "UNIT_CASTEVENT" then
-        --     local guid = GetUnitGUID("player")
-        --     if arg1 ~= guid then
-        --         return
-        --     end
-        --     if arg3 ~= "CAST" then
-        --         return
-        --     end
-        --     Logging:Log("casterGuid: "..tostring(arg1)..", targetGuid: "..tostring(arg2)..", event: "..tostring(arg3)..", spellID: "..tostring(arg4)..", castDuration: "..tostring(arg5))
-        -- end
-        instance:notify(event, arg1, arg2, arg3, arg4, arg5)
+        if event == "PLAYER_ENTERING_WORLD" then
+            Helpers:EnsureNampowerAuraCastEventsEnabled()
+        end
+        instance:notify(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     end)
 
     return instance
@@ -73,8 +70,8 @@ function EventBus:unsubscribe(handler)
     self.subscribers[handler] = nil
 end
 
-function EventBus:notify(event, arg1, arg2, arg3, arg4, arg5)
+function EventBus:notify(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     for subscriber, _ in pairs(self.subscribers) do
-        subscriber:onEvent(event, arg1, arg2, arg3, arg4, arg5)
+        subscriber:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     end
 end
