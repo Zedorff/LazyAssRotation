@@ -49,6 +49,7 @@ function EventBus:new(frame)
     frame:RegisterEvent("AURA_CAST_ON_OTHER");
     frame:RegisterEvent("BUFF_REMOVED_SELF");
     frame:RegisterEvent("DEBUFF_REMOVED_OTHER");
+    frame:RegisterEvent("SPELL_MISS_SELF");
     frame:SetScript("OnEvent", function()
         --- @diagnostic disable-next-line: undefined-global
         if event == "PLAYER_ENTERING_WORLD" then

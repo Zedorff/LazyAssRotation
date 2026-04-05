@@ -51,6 +51,21 @@ function DotTracker:HandleResist(msg)
     Logging:Debug(self.rankedAbility.name .. " apply failed (resist/dodge/parry/miss/immune/block)")
 end
 
+function DotTracker:HandleSpellMiss(casterGuid, targetGuid, spellId, missInfo)
+    local playerGuid = Helpers:GetUnitGUID("player")
+    if not playerGuid or casterGuid ~= playerGuid or not targetGuid then
+        return
+    end
+    if not Helpers:IsSpellApplicationMissInfo(missInfo) then
+        return
+    end
+    if not IsMatchingRank(self.rankedAbility, tonumber(spellId)) then
+        return
+    end
+    self.data[targetGuid] = nil
+    Logging:Debug(self.rankedAbility.name .. " apply failed (spell miss event)")
+end
+
 --- @return boolean
 function DotTracker:ShouldCast()
     local remaining = self:GetRemainingOnTarget()

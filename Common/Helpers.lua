@@ -548,6 +548,29 @@ function Helpers:ParseCombatEvent(spellName, line)
     return false, false, false, false, false, false
 end
 
+local SPELL_MISS = {
+    NONE = 0,
+    MISS = 1,
+    RESIST = 2,
+    DODGE = 3,
+    PARRY = 4,
+    BLOCK = 5,
+    EVADE = 6,
+    IMMUNE = 7,
+    IMMUNE2 = 8,
+    DEFLECT = 9,
+    ABSORB = 10,
+    REFLECT = 11,
+}
+
+function Helpers:IsSpellApplicationMissInfo(missInfo)
+    local m = tonumber(missInfo)
+    if not m then
+        return false
+    end
+    return m ~= SPELL_MISS.NONE
+end
+
 --- @param spellName string
 --- @param msg string
 --- @return boolean

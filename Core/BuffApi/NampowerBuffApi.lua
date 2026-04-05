@@ -93,8 +93,8 @@ function NampowerBuffApi:OnDebuffTrackerEvent(tracker, now, event, arg1, arg2, a
         tracker:ClearDebuff(mobGuid)
     elseif event == "UNIT_CASTEVENT" then
         return
-    elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_COMBAT_SELF_MISSES" then
-        tracker:HandleResist(arg1)
+    elseif event == "SPELL_MISS_SELF" then
+        tracker:HandleSpellMiss(arg1, arg2, arg3, arg4)
     elseif event == "PLAYER_REGEN_ENABLED" then
         tracker.data = {}
     end
@@ -125,8 +125,8 @@ function NampowerBuffApi:OnDotTrackerEvent(tracker, now, event, arg1, arg2, arg3
         Logging:Debug(tracker.rankedAbility.name .. " faded on " .. tostring(mobGuid))
     elseif event == "UNIT_CASTEVENT" then
         return
-    elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_COMBAT_SELF_MISSES" then
-        tracker:HandleResist(arg1)
+    elseif event == "SPELL_MISS_SELF" then
+        tracker:HandleSpellMiss(arg1, arg2, arg3, arg4)
     elseif event == "PLAYER_REGEN_ENABLED" then
         tracker.data = {}
     end
@@ -180,8 +180,8 @@ function NampowerBuffApi:OnWarlockDotTrackerEvent(tracker, now, target, event, a
     elseif event == "PLAYER_DEAD" then
         tracker.pendingChannel = false
         tracker.dhCasting = false
-    elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_COMBAT_SELF_MISSES" then
-        tracker:HandleResist(arg1)
+    elseif event == "SPELL_MISS_SELF" then
+        tracker:HandleSpellMiss(arg1, arg2, arg3, arg4)
     elseif event == "PLAYER_REGEN_ENABLED" then
         tracker.data = {}
     end

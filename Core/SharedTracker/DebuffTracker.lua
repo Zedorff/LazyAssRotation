@@ -89,6 +89,20 @@ function DebuffTracker:HandleResist(msg)
     self:ClearDebuff(targetGuid)
 end
 
+function DebuffTracker:HandleSpellMiss(casterGuid, targetGuid, spellId, missInfo)
+    local playerGuid = Helpers:GetUnitGUID("player")
+    if not playerGuid or casterGuid ~= playerGuid then
+        return
+    end
+    if not Helpers:IsSpellApplicationMissInfo(missInfo) then
+        return
+    end
+    if not IsMatchingRank(self.ability, tonumber(spellId)) then
+        return
+    end
+    self:ClearDebuff(targetGuid)
+end
+
 function DebuffTracker:GetRemainingOnTarget()
     local mobGuid = Helpers:GetUnitGUID("target")
     if not mobGuid then return nil end
