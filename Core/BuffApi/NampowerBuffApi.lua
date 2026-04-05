@@ -140,8 +140,8 @@ function NampowerBuffApi:OnWarlockDotTrackerEvent(tracker, now, target, event, a
     if event == "AURA_CAST_ON_OTHER" then
         local spellId = tonumber(arg1)
         local playerGuid = Helpers:GetUnitGUID("player")
-        if playerGuid and arg2 == playerGuid and spellId and IsMatchingRank(tracker.rankedAbility, spellId) then
-            tracker:ApplyDot(now, arg3 or target,
+        if playerGuid and arg2 == playerGuid and arg3 and spellId and IsMatchingRank(tracker.rankedAbility, spellId) then
+            tracker:ApplyDot(now, arg3,
                 Helpers:DurationFromAuraCastMs(arg8) or Helpers:SpellDuration(tracker.rankedAbility.name))
         end
         return

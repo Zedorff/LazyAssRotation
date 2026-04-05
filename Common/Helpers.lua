@@ -496,33 +496,71 @@ end
 
 --- @param spellName string
 --- @param line string
---- @return boolean hit, boolean crit, boolean parry, boolean miss, boolean dodge
+--- @return boolean hit, boolean crit, boolean parry, boolean miss, boolean dodge, boolean resistImmune
 function Helpers:ParseCombatEvent(spellName, line)
+    if spellName == ".+" then
+        if string.find(line, "^Your .+ was dodged by .+") then
+            return false, false, false, false, true, false
+        end
+        return false, false, false, false, false, false
+    end
+
     local escapedSpell = string.gsub(spellName, "([%(%)%.%%%+%-%*%?%[%^%$])", "%%%1")
 
-    -- Match hit or crit
-    if string.find(line, "^Your " .. escapedSpell .. " hits .+ for %d+") then
-        return true, false, false, false, false
-    elseif string.find(line, "^Your " .. escapedSpell .. " crits .+ for %d+") then
-        return true, true, false, false, false
+    if string.find(line, "^Your " .. escapedSpell .. " .-hits .+ for %d+") then
+        return true, false, false, false, false, false
+    elseif string.find(line, "^Your " .. escapedSpell .. " .-crits .+ for %d+") then
+        return true, true, false, false, false, false
     end
 
-    -- Match parry
-    if string.find(line, "^Your " .. escapedSpell .. " was parried by .+") then
-        return false, false, true, false, false
+    if string.find(line, "^Your " .. escapedSpell .. " .-was parried by .+") then
+        return false, false, true, false, false, false
     end
 
-    -- Match dodge
-    if string.find(line, "^Your " .. escapedSpell .. " was dodged by .+") then
-        return false, false, false, false, true
+    if string.find(line, "^Your " .. escapedSpell .. " .-was dodged by .+") then
+        return false, false, false, false, true, false
     end
 
-    -- Match miss
-    if string.find(line, "^Your " .. escapedSpell .. " missed .+") then
-        return false, false, false, true, false
+    if string.find(line, "^Your " .. escapedSpell .. " .-missed .+") then
+        return false, false, false, true, false, false
     end
 
-    return false, false, false, false, false
+    if string.find(line, "^Your " .. escapedSpell .. " .-was resisted by .+") then
+        return false, false, false, false, false, true
+    end
+
+    if string.find(line, "^Your " .. escapedSpell .. " .-was resisted") and not string.find(line, "was resisted by") then
+        return false, false, false, false, false, true
+    end
+
+    if string.find(line, "^Your " .. escapedSpell .. " .-fully resisted") then
+        return false, false, false, false, false, true
+    end
+
+    if string.find(line, "^Your " .. escapedSpell .. " .-was blocked") then
+        return false, false, false, false, false, true
+    end
+
+    if string.find(line, "^Your " .. escapedSpell) and string.find(line, "immune") then
+        return false, false, false, false, false, true
+    end
+
+    return false, false, false, false, false, false
+end
+
+--- @param spellName string
+--- @param msg string
+--- @return boolean
+function Helpers:IsSpellApplicationFailureMessage(spellName, msg)
+    if not msg or not spellName then
+        return false
+    end
+    if not string.find(msg, spellName, 1, true) then
+        return false
+    end
+
+    local _, _, _, _, _, resistImmune = Helpers:ParseCombatEvent(spellName, msg)
+    return resistImmune
 end
 
 --- @param unit string

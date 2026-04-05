@@ -81,14 +81,7 @@ function DebuffTracker:ClearDebuff(mobGuid)
 end
 
 function DebuffTracker:HandleResist(msg)
-    if not msg or not string.find(msg, self.ability.name) then return end
-
-    if not (string.find(msg, "resisted")
-        or string.find(msg, "immune")
-        or string.find(msg, "dodged")
-        or string.find(msg, "parried")
-        or string.find(msg, "missed")
-        or string.find(msg, "blocked")) then
+    if not Helpers:IsSpellApplicationFailureMessage(self.ability.name, msg) then
         return
     end
 

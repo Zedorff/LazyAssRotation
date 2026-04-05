@@ -41,11 +41,14 @@ end
 
 --- @param msg string
 function DotTracker:HandleResist(msg)
-    if msg and string.find(msg, self.rankedAbility.name) and (string.find(msg, "resisted") or string.find(msg, "immune") or string.find(msg, "dodged") or string.find(msg, "parried") or string.find(msg, "missed")) or string.find(msg, "blocked") then
-        local target = Helpers:GetUnitGUID("target")
-        self.data[target] = nil
-        Logging:Debug(self.rankedAbility.name.." was miss/dodge/parry/miss/resist/blocked")
+    if not Helpers:IsSpellApplicationFailureMessage(self.rankedAbility.name, msg) then
+        return
     end
+    local target = Helpers:GetUnitGUID("target")
+    if target then
+        self.data[target] = nil
+    end
+    Logging:Debug(self.rankedAbility.name .. " apply failed (resist/dodge/parry/miss/immune/block)")
 end
 
 --- @return boolean
