@@ -30,17 +30,13 @@ function DotTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg
     self.buffApi:OnDotTrackerEvent(self, GetTime(), event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 end
 
---- @param now number
---- @param mob string | nil
-function DotTracker:ApplyDot(now, mob)
+function DotTracker:ApplyDot(now, mob, durationSec)
     if not mob then return end
-
-    local duration   = Helpers:SpellDuration(self.rankedAbility.name)
 
     local dotData    = self:GetMobData(mob)
     dotData.start    = now
-    dotData.duration = duration
-    Logging:Debug(self.rankedAbility.name.." Applied, duration: "..duration)
+    dotData.duration = durationSec
+    Logging:Debug(self.rankedAbility.name.." Applied, duration: "..tostring(durationSec))
 end
 
 --- @param msg string

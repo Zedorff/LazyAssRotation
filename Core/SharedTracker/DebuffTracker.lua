@@ -36,7 +36,7 @@ function DebuffTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, 
     self.buffApi:OnDebuffTrackerEvent(self, GetTime(), event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 end
 
-function DebuffTracker:OnUnitCastEvent(now, casterGuid, targetGuid, eventType, spellId)
+function DebuffTracker:OnUnitCastEvent(now, casterGuid, targetGuid, eventType, spellId, durationSec)
     if eventType ~= "CAST" then return end
     if not IsMatchingRank(self.ability, tonumber(spellId)) then return end
 
@@ -46,7 +46,7 @@ function DebuffTracker:OnUnitCastEvent(now, casterGuid, targetGuid, eventType, s
     local mobGuid = targetGuid or Helpers:GetUnitGUID("target")
     if not mobGuid then return end
 
-    self:ApplyDebuff(now, mobGuid)
+    self:ApplyDebuff(now, mobGuid, durationSec)
 end
 
 function DebuffTracker:GetMobState(mobGuid)
@@ -59,15 +59,14 @@ function DebuffTracker:GetMobState(mobGuid)
     return state
 end
 
-function DebuffTracker:ApplyDebuff(now, mobGuid)
-    local duration = Helpers:DebuffDuration(self.ability.name)
+function DebuffTracker:ApplyDebuff(now, mobGuid, durationSec)
     local state = self:GetMobState(mobGuid)
 
     state.start = now
-    state.duration = duration
+    state.duration = durationSec
 
     Logging:Debug(self.ability.name ..
-        " applied on " .. mobGuid .. " duration=" .. tostring(duration))
+        " applied on " .. mobGuid .. " duration=" .. tostring(durationSec))
 end
 
 function DebuffTracker:ClearDebuff(mobGuid)

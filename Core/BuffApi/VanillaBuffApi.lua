@@ -40,7 +40,7 @@ end
 --- @param event string
 function VanillaBuffApi:OnDebuffTrackerEvent(tracker, now, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     if event == "UNIT_CASTEVENT" then
-        tracker:OnUnitCastEvent(now, arg1, arg2, arg3, arg4)
+        tracker:OnUnitCastEvent(now, arg1, arg2, arg3, arg4, Helpers:DebuffDuration(tracker.ability.name))
     elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_COMBAT_SELF_MISSES" then
         tracker:HandleResist(arg1)
     elseif event == "PLAYER_REGEN_ENABLED" then
@@ -54,7 +54,7 @@ end
 function VanillaBuffApi:OnDotTrackerEvent(tracker, now, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     local target = Helpers:GetUnitGUID("target")
     if event == "UNIT_CASTEVENT" and arg1 == Helpers:GetUnitGUID("player") and arg3 == "CAST" and IsMatchingRank(tracker.rankedAbility, tonumber(arg4)) then
-        tracker:ApplyDot(now, target)
+        tracker:ApplyDot(now, target, Helpers:SpellDuration(tracker.rankedAbility.name))
     elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_COMBAT_SELF_MISSES" then
         tracker:HandleResist(arg1)
     elseif event == "PLAYER_REGEN_ENABLED" then
@@ -69,7 +69,7 @@ end
 function VanillaBuffApi:OnWarlockDotTrackerEvent(tracker, now, target, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     if event == "UNIT_CASTEVENT" and arg1 == Helpers:GetUnitGUID("player") then
         if arg3 == "CAST" and IsMatchingRank(tracker.rankedAbility, tonumber(arg4)) then
-            tracker:ApplyDot(now, target)
+            tracker:ApplyDot(now, target, Helpers:SpellDuration(tracker.rankedAbility.name))
         elseif arg3 == "CHANNEL" and IsMatchingRank(Abilities.DarkHarvest, tonumber(arg4)) then
             tracker.pendingChannel = true
         end

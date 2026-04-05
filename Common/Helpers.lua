@@ -217,7 +217,6 @@ function Helpers:HasNampowerAuraCastEvents()
     return GetCVar and GetCVar("NP_EnableAuraCastEvents") ~= nil
 end
 
---- When Nampower registered `NP_EnableAuraCastEvents`, force `"1"` if it is not enabled (e.g. `"0"`).
 --- @return boolean
 function Helpers:EnsureNampowerAuraCastEventsEnabled()
     if not self:HasNampowerAuraCastEvents() then
@@ -446,6 +445,13 @@ end
 --- @return number
 function Helpers:RageCost(spellName)
     return Helpers:ParseIntViaTooltip(spellName, RAGE_DESCRIPTION_REGEX)
+end
+
+function Helpers:DurationFromAuraCastMs(durationMs)
+    if type(durationMs) == "number" and durationMs > 0 then
+        return durationMs / 1000
+    end
+    return nil
 end
 
 --- @param spellName string

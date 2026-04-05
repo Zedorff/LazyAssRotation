@@ -43,10 +43,7 @@ function NampowerBuffApi:OnDurationedSelfBuffEvent(tracker, event, arg1, arg2, a
         if spellId and playerGuid and arg3 == playerGuid and Helpers:MatchesSelfBuffSpell(spellId, tracker.buffTexture, tracker.abilityName) then
             Logging:Debug(tracker.abilityName .. " is up")
             tracker.buffUp = true
-            local durSec = tracker.duration
-            if type(arg8) == "number" and arg8 > 0 then
-                durSec = arg8 / 1000
-            end
+            local durSec = Helpers:DurationFromAuraCastMs(arg8) or tracker.duration
             tracker.upUntil = GetTime() + durSec
         end
     elseif event == "BUFF_REMOVED_SELF" then
@@ -82,7 +79,8 @@ function NampowerBuffApi:OnDebuffTrackerEvent(tracker, now, event, arg1, arg2, a
         if not IsMatchingRank(tracker.ability, spellId) then
             return
         end
-        tracker:ApplyDebuff(now, arg3)
+        tracker:ApplyDebuff(now, arg3,
+            Helpers:DurationFromAuraCastMs(arg8) or Helpers:DebuffDuration(tracker.ability.name))
     elseif event == "DEBUFF_REMOVED_OTHER" then
         if arg7 == 2 then
             return
@@ -111,7 +109,8 @@ function NampowerBuffApi:OnDotTrackerEvent(tracker, now, event, arg1, arg2, arg3
         local playerGuid = Helpers:GetUnitGUID("player")
         local target = Helpers:GetUnitGUID("target")
         if playerGuid and arg2 == playerGuid and spellId and IsMatchingRank(tracker.rankedAbility, spellId) then
-            tracker:ApplyDot(now, arg3 or target)
+            tracker:ApplyDot(now, arg3 or target,
+                Helpers:DurationFromAuraCastMs(arg8) or Helpers:SpellDuration(tracker.rankedAbility.name))
         end
     elseif event == "DEBUFF_REMOVED_OTHER" then
         if arg7 == 2 then
@@ -142,7 +141,8 @@ function NampowerBuffApi:OnWarlockDotTrackerEvent(tracker, now, target, event, a
         local spellId = tonumber(arg1)
         local playerGuid = Helpers:GetUnitGUID("player")
         if playerGuid and arg2 == playerGuid and spellId and IsMatchingRank(tracker.rankedAbility, spellId) then
-            tracker:ApplyDot(now, arg3 or target)
+            tracker:ApplyDot(now, arg3 or target,
+                Helpers:DurationFromAuraCastMs(arg8) or Helpers:SpellDuration(tracker.rankedAbility.name))
         end
         return
     end

@@ -39,19 +39,15 @@ function WarlockDotTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, ar
     self.buffApi:OnWarlockDotTrackerEvent(self, now, target, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 end
 
---- @param now number
---- @param mob string | nil
-function WarlockDotTracker:ApplyDot(now, mob)
+function WarlockDotTracker:ApplyDot(now, mob, durationSec)
     if not mob then return end
-
-    local duration      = Helpers:SpellDuration(self.rankedAbility.name)
 
     local dotData       = self:GetMobData(mob)
     dotData.start       = now
-    dotData.duration    = duration
+    dotData.duration    = durationSec
     dotData.dhStartTime = nil
     dotData.dhEndTime   = nil
-    Logging:Debug("Apply dot: " .. self.rankedAbility.name .. ", withDuration: " .. duration)
+    Logging:Debug("Apply dot: " .. self.rankedAbility.name .. ", withDuration: " .. tostring(durationSec))
 end
 
 --- @param mob string | nil
