@@ -11,9 +11,22 @@ Localization.lua
 Common\Helpers.lua
 Common\Logging.lua
 Common\Collection.lua
-Core\BuffApi\BuffApi.lua
-Core\BuffApi\VanillaBuffApi.lua
-Core\BuffApi\NampowerBuffApi.lua
+Core\BuffApi\BuffPipelineMessages.lua
+Core\BuffApi\BuffTrackerLifecycle.lua
+Core\BuffApi\Nampower\NampowerBuffCommon.lua
+Core\BuffApi\Nampower\NampowerBuffSelfBuff.lua
+Core\BuffApi\Nampower\NampowerBuffDebuff.lua
+Core\BuffApi\Nampower\NampowerBuffDot.lua
+Core\BuffApi\Nampower\NampowerBuffWarlockDot.lua
+Core\BuffApi\Nampower\NampowerBuffEclipse.lua
+Core\BuffApi\Nampower\NampowerBuffEventAdapter.lua
+Core\BuffApi\Vanilla\VanillaBuffSelfBuff.lua
+Core\BuffApi\Vanilla\VanillaBuffDebuff.lua
+Core\BuffApi\Vanilla\VanillaBuffDot.lua
+Core\BuffApi\Vanilla\VanillaBuffWarlockDot.lua
+Core\BuffApi\Vanilla\VanillaBuffEclipse.lua
+Core\BuffApi\Vanilla\VanillaBuffEventAdapter.lua
+Core\BuffApi\BuffEventPipeline.lua
 Core\BuffApi\BuffApiFactory.lua
 Core\Core.lua
 Core\EventBus.lua
@@ -29,6 +42,7 @@ Core\EnergyCostCache.lua
 Core\SharedTracker\ActionBarSlotTracker.lua
 Core\SharedTracker\SelfBuffTracker.lua
 Core\SharedTracker\DebuffTracker.lua
+Core\SharedTracker\MobDotStateTracker.lua
 Core\SharedTracker\DotTracker.lua
 Core\SharedTracker\ClearcastingTracker.lua
 Core\SharedTracker\CastingTracker.lua
@@ -256,7 +270,6 @@ UI\Minimap.lua
 UI\DraggableButton.lua
 UI\Settings.lua
 UI\HotSwapButton.lua
-UI\Minimap.lua
 
 UI\Settings.xml
 UI\HotSwapButton.xml

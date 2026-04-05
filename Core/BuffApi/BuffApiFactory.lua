@@ -2,16 +2,16 @@ BuffApiFactory = {}
 
 local instance
 
---- @return BuffApi|NampowerBuffApi|VanillaBuffApi
+--- @return BuffEventPipeline
 function BuffApiFactory.GetInstance()
     if instance then
         return instance
     end
     if Helpers:HasNampowerAuraCastEvents() then
         Helpers:EnsureNampowerAuraCastEventsEnabled()
-        instance = NampowerBuffApi.new()
+        instance = BuffEventPipeline.new(NampowerBuffEventAdapter.new())
     else
-        instance = VanillaBuffApi.new()
+        instance = BuffEventPipeline.new(VanillaBuffEventAdapter.new())
     end
     return instance
 end

@@ -8,7 +8,7 @@
 ---@field data table<string, MobDebuffState>
 ---@field isSharedDebuff boolean
 ---@field textureName string|nil
----@field buffApi BuffApi
+---@field buffPipeline BuffEventPipeline
 DebuffTracker = setmetatable({}, { __index = CooldownTracker })
 DebuffTracker.__index = DebuffTracker
 
@@ -17,12 +17,12 @@ function DebuffTracker.new(ability, isSharedDebuff, textureName)
     local self = CooldownTracker.new()
     setmetatable(self, DebuffTracker)
 
-    local buffApi = BuffApiFactory.GetInstance()
+    local buffPipeline = BuffApiFactory.GetInstance()
     self.ability     = ability
     self.data        = {}
     self.isSharedDebuff    = isSharedDebuff or false
     self.textureName = textureName
-    self.buffApi = buffApi
+    self.buffPipeline = buffPipeline
 
     return self
 end
@@ -33,20 +33,23 @@ function DebuffTracker:subscribe()
 end
 
 function DebuffTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
-    self.buffApi:OnDebuffTrackerEvent(self, GetTime(), event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
-end
-
-function DebuffTracker:OnUnitCastEvent(now, casterGuid, targetGuid, eventType, spellId, durationSec)
-    if eventType ~= "CAST" then return end
-    if not IsMatchingRank(self.ability, tonumber(spellId)) then return end
-
-    local playerGuid = Helpers:GetUnitGUID("player")
-    if (not self.isSharedDebuff) and (casterGuid ~= playerGuid) then return end
-
-    local mobGuid = targetGuid or Helpers:GetUnitGUID("target")
-    if not mobGuid then return end
-
-    self:ApplyDebuff(now, mobGuid, durationSec)
+    local now = GetTime()
+    self.buffPipeline:ApplyDebuffEvent(self, now, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, function(msg)
+        if not msg then
+            return
+        end
+        if msg.kind == BuffPipelineKind.DEBUFF_APPLY then
+            self:ApplyDebuff(now, msg.mobGuid, msg.durationSec)
+        elseif msg.kind == BuffPipelineKind.DEBUFF_REMOVE then
+            self:ClearDebuff(msg.mobGuid)
+        elseif msg.kind == BuffPipelineKind.DEBUFF_RESIST_LINE then
+            self:HandleResist(msg.line)
+        elseif msg.kind == BuffPipelineKind.DEBUFF_SPELL_MISS then
+            self:HandleSpellMiss(msg.casterGuid, msg.targetGuid, msg.spellId, msg.missInfo)
+        elseif msg.kind == BuffPipelineKind.DEBUFF_CLEAR_DATA then
+            self.data = {}
+        end
+    end)
 end
 
 function DebuffTracker:GetMobState(mobGuid)

@@ -1,10 +1,10 @@
---- @class WarlockDotTracker : CooldownTracker
+--- @class WarlockDotTracker : MobDotStateTracker
 --- @field rankedAbility Ability
 --- @field pendingChannel boolean
 --- @field dhCasting boolean
 --- @field data table<string, table>
---- @field buffApi BuffApi
-WarlockDotTracker = setmetatable({}, { __index = CooldownTracker })
+--- @field buffPipeline BuffEventPipeline
+WarlockDotTracker = setmetatable({}, { __index = MobDotStateTracker })
 WarlockDotTracker.__index = WarlockDotTracker
 
 local HASTE_FACTOR = 0.30
@@ -16,12 +16,12 @@ function WarlockDotTracker.new(rankedAbility)
     local self = CooldownTracker.new()
     setmetatable(self, WarlockDotTracker)
 
-    local buffApi = BuffApiFactory.GetInstance()
+    local buffPipeline = BuffApiFactory.GetInstance()
     self.rankedAbility  = rankedAbility
     self.data           = {}
     self.pendingChannel = false
     self.dhCasting      = false
-    self.buffApi = buffApi
+    self.buffPipeline = buffPipeline
 
     return self
 end
@@ -36,17 +36,45 @@ end
 function WarlockDotTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     local now = GetTime()
     local target = Helpers:GetUnitGUID("target")
-    self.buffApi:OnWarlockDotTrackerEvent(self, now, target, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    self.buffPipeline:ApplyWarlockDotEvent(self, now, target, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, function(msg)
+        if not msg then
+            return
+        end
+        if msg.kind == BuffPipelineKind.DH_PENDING_CHANNEL then
+            self.pendingChannel = true
+        elseif msg.kind == BuffPipelineKind.DH_CHANNEL_START then
+            self.dhCasting = true
+            self.pendingChannel = false
+            self:StartDarkHarvest(target, now)
+            Logging:Debug("Dark Harvest channel started (" .. tostring((msg.channelDurationMs or 0) / 1000) .. "s)")
+        elseif msg.kind == BuffPipelineKind.DH_CHANNEL_STOP then
+            if self.dhCasting then
+                self.dhCasting = false
+                self.pendingChannel = false
+                self:EndDarkHarvest(target, now)
+                Logging:Debug("Dark Harvest channel stopped / interrupted")
+            end
+        elseif msg.kind == BuffPipelineKind.DEBUFF_CLEAR_DATA then
+            self.pendingChannel = false
+            self.dhCasting = false
+            self.data = {}
+        else
+            self:TryConsumeMobDotPipelineMessage(msg, now)
+        end
+    end)
 end
 
-function WarlockDotTracker:ApplyDot(now, mob, durationSec)
-    if not mob then return end
-
-    local dotData       = self:GetMobData(mob)
-    dotData.start       = now
-    dotData.duration    = durationSec
+--- @param dotData table
+--- @param now number
+--- @param durationSec number
+function WarlockDotTracker:ResetDotStateOnApply(dotData, now, durationSec)
+    MobDotStateTracker.ResetDotStateOnApply(self, dotData, now, durationSec)
     dotData.dhStartTime = nil
     dotData.dhEndTime   = nil
+end
+
+--- @param durationSec number
+function WarlockDotTracker:LogDotApplied(durationSec)
     Logging:Debug("Apply dot: " .. self.rankedAbility.name .. ", withDuration: " .. tostring(durationSec))
 end
 
@@ -79,45 +107,6 @@ function WarlockDotTracker:EndDarkHarvest(mob, now)
     Logging:Debug("Dark Harvest stopped for: " .. self.rankedAbility.name)
 end
 
---- @param msg string
-function WarlockDotTracker:HandleResist(msg)
-    if not Helpers:IsSpellApplicationFailureMessage(self.rankedAbility.name, msg) then
-        return
-    end
-    local target = Helpers:GetUnitGUID("target")
-    if target then
-        self.data[target] = nil
-    end
-    Logging:Debug(self.rankedAbility.name .. " apply failed (resist/dodge/parry/miss/immune/block)")
-end
-
-function WarlockDotTracker:HandleSpellMiss(casterGuid, targetGuid, spellId, missInfo)
-    local playerGuid = Helpers:GetUnitGUID("player")
-    if not playerGuid or casterGuid ~= playerGuid or not targetGuid then
-        return
-    end
-    if not Helpers:IsSpellApplicationMissInfo(missInfo) then
-        return
-    end
-    if not IsMatchingRank(self.rankedAbility, tonumber(spellId)) then
-        return
-    end
-    self.data[targetGuid] = nil
-    Logging:Debug(self.rankedAbility.name .. " apply failed (spell miss event)")
-end
-
---- @return boolean
-function WarlockDotTracker:ShouldCast()
-    local remaining = self:GetRemainingOnTarget()
-    if not remaining then return true end
-    return remaining <= 0 and Helpers:SpellReady(self.rankedAbility.name)
-end
-
---- @return number
-function WarlockDotTracker:GetRemainingDuration()
-    return self:GetRemainingOnTarget() or 0
-end
-
 --- @return number | nil
 function WarlockDotTracker:GetRemainingOnTarget()
     local mob = Helpers:GetUnitGUID("target")
@@ -137,15 +126,4 @@ function WarlockDotTracker:GetRemainingOnTarget()
     end
 
     return dotData.duration - (now - dotData.start) - dhReduction
-end
-
---- @param mob string
---- @return table
-function WarlockDotTracker:GetMobData(mob)
-    local dotData = self.data[mob]
-    if not dotData then
-        dotData = {}
-        self.data[mob] = dotData
-    end
-    return dotData
 end

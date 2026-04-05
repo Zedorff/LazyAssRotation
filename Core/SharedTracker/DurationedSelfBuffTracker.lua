@@ -2,7 +2,7 @@
 --- @field buffUp boolean
 --- @field upUntil number
 --- @field duration number
---- @field buffApi BuffApi
+--- @field buffPipeline BuffEventPipeline
 --- @diagnostic disable: duplicate-set-field
 DurationedSelfBuffTracker = setmetatable({}, { __index = CooldownTracker })
 DurationedSelfBuffTracker.__index = DurationedSelfBuffTracker
@@ -16,10 +16,10 @@ function DurationedSelfBuffTracker.new(abilityName, buffTexture, duration)
     local self = CooldownTracker.new()
     setmetatable(self, DurationedSelfBuffTracker)
 
-    local buffApi = BuffApiFactory.GetInstance()
+    local buffPipeline = BuffApiFactory.GetInstance()
     self.abilityName = abilityName
     self.buffTexture = buffTexture
-    self.buffApi = buffApi
+    self.buffPipeline = buffPipeline
     self.buffUp = Helpers:HasBuff("player", buffTexture)
     self.duration = duration
 
@@ -34,12 +34,20 @@ end
 --- @param event string
 --- @param arg1 string
 function DurationedSelfBuffTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
-    if event == "PLAYER_DEAD" then
-        self.buffUp = false
-        self.upUntil = nil
-        return
-    end
-    self.buffApi:OnDurationedSelfBuffEvent(self, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    self.buffPipeline:ApplyDurationedSelfBuffEvent(self, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, function(msg)
+        if not msg then
+            return
+        end
+        if msg.kind == BuffPipelineKind.BUFF_UP then
+            Logging:Debug(self.abilityName .. " is up")
+            self.buffUp = true
+            self.upUntil = GetTime() + (msg.durationSec or self.duration)
+        else
+            Logging:Debug(self.abilityName .. (msg.via_chat and " is down (chat)" or " is down"))
+            self.buffUp = false
+            self.upUntil = nil
+        end
+    end)
 end
 
 --- @return boolean
