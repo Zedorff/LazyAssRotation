@@ -43,7 +43,7 @@ function DurationedSelfBuffTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, 
             self.buffUp = true
             self.upUntil = GetTime() + (msg.durationSec or self.duration)
         else
-            Logging:Debug(self.abilityName .. (msg.via_chat and " is down (chat)" or " is down"))
+            Logging:Debug(self.abilityName .. " is down")
             self.buffUp = false
             self.upUntil = nil
         end

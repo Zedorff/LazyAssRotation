@@ -1,5 +1,11 @@
 NampowerBuffEclipse = {}
 
+--- @param tracker EclipseTracker
+--- @param event string
+--- @param arg1 number|nil `AURA_CAST_ON_SELF`: spell id
+--- @param arg3 string|nil `AURA_CAST_ON_SELF`: target unit guid; `BUFF_REMOVED_SELF`: spell id
+--- @param arg7 unknown|nil `BUFF_REMOVED_SELF`: removal reason (`2` = refresh)
+--- @param arg8 unknown|nil `AURA_CAST_ON_SELF`: duration (ms)
 ---@return BuffPipelineEclipseArcaneMessage|BuffPipelineEclipseNatureMessage|BuffPipelineEclipseClearMessage|nil
 function NampowerBuffEclipse.Message(tracker, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     if event == "AURA_CAST_ON_SELF" then
@@ -30,20 +36,6 @@ function NampowerBuffEclipse.Message(tracker, event, arg1, arg2, arg3, arg4, arg
             local m = { t = "eclipse", kind = BuffPipelineKind.ECLIPSE_CLEAR }
             return m
         end
-    elseif event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" then
-        if arg1 and string.find(arg1, "Arcane Eclipse") then
-            ---@type BuffPipelineEclipseArcaneMessage
-            local m = { t = "eclipse", kind = BuffPipelineKind.ECLIPSE_ARCANE, durationSec = 15 }
-            return m
-        elseif arg1 and string.find(arg1, "Nature Eclipse") then
-            ---@type BuffPipelineEclipseNatureMessage
-            local m = { t = "eclipse", kind = BuffPipelineKind.ECLIPSE_NATURE, durationSec = 15 }
-            return m
-        end
-    elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" and arg1 and string.find(arg1, "Eclipse") then
-        ---@type BuffPipelineEclipseClearMessage
-        local m = { t = "eclipse", kind = BuffPipelineKind.ECLIPSE_CLEAR, via_chat = true }
-        return m
     end
     return nil
 end

@@ -447,6 +447,9 @@ function Helpers:RageCost(spellName)
     return Helpers:ParseIntViaTooltip(spellName, RAGE_DESCRIPTION_REGEX)
 end
 
+--- Converts Nampower `AURA_CAST_ON_SELF` / `AURA_CAST_ON_OTHER` duration field (`arg8`), milliseconds to seconds.
+--- @param durationMs number|nil aura duration from Nampower aura-cast payload
+--- @return number|nil
 function Helpers:DurationFromAuraCastMs(durationMs)
     if type(durationMs) == "number" and durationMs > 0 then
         return durationMs / 1000
@@ -563,6 +566,9 @@ local SPELL_MISS = {
     REFLECT = 11,
 }
 
+--- `0` means hit; any other numeric value means the spell did not apply (miss/resist/etc.). Nampower `SPELL_MISS_SELF` `arg4` uses this enum.
+--- @param missInfo number|string|nil
+--- @return boolean
 function Helpers:IsSpellApplicationMissInfo(missInfo)
     local m = tonumber(missInfo)
     if not m then
@@ -582,8 +588,8 @@ function Helpers:IsSpellApplicationFailureMessage(spellName, msg)
         return false
     end
 
-    local _, _, _, _, _, resistImmune = Helpers:ParseCombatEvent(spellName, msg)
-    return resistImmune
+    local _, _, parry, miss, dodge, resistImmune = Helpers:ParseCombatEvent(spellName, msg)
+    return parry or miss or dodge or resistImmune
 end
 
 --- @param unit string

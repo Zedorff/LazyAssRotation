@@ -39,7 +39,7 @@ function SelfBuffTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7
             Logging:Debug(self.abilityName .. " is up")
             self.buffUp = true
         else
-            Logging:Debug(self.abilityName .. (msg.via_chat and " is down (chat)" or " is down"))
+            Logging:Debug(self.abilityName .. " is down")
             self.buffUp = false
         end
     end)

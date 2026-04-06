@@ -1,6 +1,15 @@
 NampowerBuffDebuff = {}
 
----@return BuffPipelineDebuffApplyMessage|BuffPipelineDebuffRemoveMessage|BuffPipelineDebuffResistLineMessage|BuffPipelineDebuffSpellMissMessage|BuffPipelineDebuffClearDataMessage|nil
+--- @param tracker DebuffTracker
+--- @param now number
+--- @param event string
+--- @param arg1 string|nil `AURA_CAST_ON_OTHER`: spell id; `DEBUFF_REMOVED_OTHER`: mob guid; `SPELL_MISS_SELF` (Nampower): caster guid
+--- @param arg2 string|nil `AURA_CAST_ON_OTHER`: caster guid; `SPELL_MISS_SELF`: target guid
+--- @param arg3 string|nil `AURA_CAST_ON_OTHER`: target guid; `DEBUFF_REMOVED_OTHER`: spell id; `SPELL_MISS_SELF`: spell id
+--- @param arg4 unknown|nil `SPELL_MISS_SELF`: miss type
+--- @param arg7 unknown|nil `DEBUFF_REMOVED_OTHER`: removal reason (`2` = refresh)
+--- @param arg8 unknown|nil `AURA_CAST_ON_OTHER`: duration (ms)
+---@return BuffPipelineDebuffApplyMessage|BuffPipelineDebuffRemoveMessage|BuffPipelineDebuffSpellMissMessage|BuffPipelineDebuffClearDataMessage|nil
 function NampowerBuffDebuff.Message(tracker, now, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     if event == "AURA_CAST_ON_OTHER" then
         local spellId = tonumber(arg1)
@@ -39,28 +48,6 @@ function NampowerBuffDebuff.Message(tracker, now, event, arg1, arg2, arg3, arg4,
     elseif event == "SPELL_MISS_SELF" then
         ---@type BuffPipelineDebuffSpellMissMessage
         local m = { t = "debuff", kind = BuffPipelineKind.DEBUFF_SPELL_MISS, casterGuid = arg1, targetGuid = arg2, spellId = arg3, missInfo = arg4 }
-        return m
-    elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_COMBAT_SELF_MISSES" then
-        ---@type BuffPipelineDebuffResistLineMessage
-        local m = { t = "debuff", kind = BuffPipelineKind.DEBUFF_RESIST_LINE, line = arg1 }
-        return m
-    elseif event == "CHAT_MSG_SPELL_AURA_GONE_OTHER" and arg1 then
-        if not string.find(arg1, "fades from", 1, true) then
-            return nil
-        end
-        if not string.find(arg1, tracker.ability.name, 1, true) then
-            return nil
-        end
-        local targetName = UnitName("target")
-        if not targetName or not string.find(arg1, targetName, 1, true) then
-            return nil
-        end
-        local mobGuid = Helpers:GetUnitGUID("target")
-        if not mobGuid then
-            return nil
-        end
-        ---@type BuffPipelineDebuffRemoveMessage
-        local m = { t = "debuff", kind = BuffPipelineKind.DEBUFF_REMOVE, mobGuid = mobGuid }
         return m
     elseif BuffTrackerLifecycle.ClearsMobScopedStateOnRegen(event) then
         ---@type BuffPipelineDebuffClearDataMessage

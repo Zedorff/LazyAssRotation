@@ -62,7 +62,7 @@ function EclipseTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7,
             return
         end
         if msg.kind == BuffPipelineKind.ECLIPSE_CLEAR then
-            Logging:Debug(msg.via_chat and "Eclipse is down (chat)" or "Eclipse is down")
+            Logging:Debug("Eclipse is down")
             self.eclipseUpUntill = 0
             self.eclipsetype = nil
             return

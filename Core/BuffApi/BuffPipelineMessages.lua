@@ -26,7 +26,6 @@ BuffPipelineKind = {
 ---@class BuffPipelineSelfBuffDownMessage
 ---@field t "self_buff"
 ---@field kind BuffPipelineKindEnum
----@field via_chat boolean|nil
 
 ---@alias BuffPipelineSelfBuffMessage BuffPipelineSelfBuffUpMessage|BuffPipelineSelfBuffDownMessage
 
@@ -39,7 +38,6 @@ BuffPipelineKind = {
 ---@class BuffPipelineDurationedSelfBuffDownMessage
 ---@field t "durationed_self_buff"
 ---@field kind BuffPipelineKindEnum
----@field via_chat boolean|nil
 
 ---@alias BuffPipelineDurationedSelfBuffMessage BuffPipelineDurationedSelfBuffUpMessage|BuffPipelineDurationedSelfBuffDownMessage
 
@@ -163,7 +161,6 @@ BuffPipelineKind = {
 ---@class BuffPipelineEclipseClearMessage
 ---@field t "eclipse"
 ---@field kind BuffPipelineKindEnum
----@field via_chat boolean|nil
 
 ---@alias BuffPipelineEclipseMessage BuffPipelineEclipseArcaneMessage|BuffPipelineEclipseNatureMessage|BuffPipelineEclipseClearMessage
 

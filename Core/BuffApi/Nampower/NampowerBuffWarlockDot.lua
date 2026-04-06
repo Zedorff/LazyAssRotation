@@ -1,6 +1,16 @@
 NampowerBuffWarlockDot = {}
 
----@return BuffPipelineWarlockDotApplyMessage|BuffPipelineWarlockDotRemoveMessage|BuffPipelineWarlockDotDhPendingMessage|BuffPipelineWarlockDotDhChannelStartMessage|BuffPipelineWarlockDotDhChannelStopMessage|BuffPipelineWarlockDotResistLineMessage|BuffPipelineWarlockDotSpellMissMessage|BuffPipelineWarlockDotClearDataMessage|nil
+--- @param tracker WarlockDotTracker
+--- @param now number
+--- @param target string|nil current target guid at event time
+--- @param event string
+--- @param arg1 unknown|nil `AURA_CAST_ON_OTHER`: spell id; `DEBUFF_REMOVED_OTHER`: mob guid; `UNIT_CASTEVENT`: caster guid; `SPELLCAST_CHANNEL_START`: channel duration (ms); `SPELL_MISS_SELF` (Nampower): caster guid
+--- @param arg2 unknown|nil `AURA_CAST_ON_OTHER`: caster guid; `SPELL_MISS_SELF`: target guid
+--- @param arg3 unknown|nil `AURA_CAST_ON_OTHER`: target guid; `DEBUFF_REMOVED_OTHER`: spell id; `UNIT_CASTEVENT`: subevent (`CAST`|`CHANNEL`); `SPELL_MISS_SELF`: spell id
+--- @param arg4 unknown|nil `UNIT_CASTEVENT`: spell id; `SPELL_MISS_SELF`: miss type
+--- @param arg7 unknown|nil `DEBUFF_REMOVED_OTHER`: removal reason (`2` = refresh)
+--- @param arg8 unknown|nil `AURA_CAST_ON_OTHER`: duration (ms)
+---@return BuffPipelineWarlockDotApplyMessage|BuffPipelineWarlockDotRemoveMessage|BuffPipelineWarlockDotDhPendingMessage|BuffPipelineWarlockDotDhChannelStartMessage|BuffPipelineWarlockDotDhChannelStopMessage|BuffPipelineWarlockDotSpellMissMessage|BuffPipelineWarlockDotClearDataMessage|nil
 function NampowerBuffWarlockDot.Message(tracker, now, target, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     if event == "AURA_CAST_ON_OTHER" then
         local spellId = tonumber(arg1)
@@ -51,28 +61,6 @@ function NampowerBuffWarlockDot.Message(tracker, now, target, event, arg1, arg2,
     elseif event == "SPELL_MISS_SELF" then
         ---@type BuffPipelineWarlockDotSpellMissMessage
         local m = { t = "warlock_dot", kind = BuffPipelineKind.DEBUFF_SPELL_MISS, casterGuid = arg1, targetGuid = arg2, spellId = arg3, missInfo = arg4 }
-        return m
-    elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_COMBAT_SELF_MISSES" then
-        ---@type BuffPipelineWarlockDotResistLineMessage
-        local m = { t = "warlock_dot", kind = BuffPipelineKind.DEBUFF_RESIST_LINE, line = arg1 }
-        return m
-    elseif event == "CHAT_MSG_SPELL_AURA_GONE_OTHER" and arg1 then
-        if not string.find(arg1, "fades from", 1, true) then
-            return nil
-        end
-        if not string.find(arg1, tracker.rankedAbility.name, 1, true) then
-            return nil
-        end
-        local targetName = UnitName("target")
-        if not targetName or not string.find(arg1, targetName, 1, true) then
-            return nil
-        end
-        local mobGuid = Helpers:GetUnitGUID("target")
-        if not mobGuid then
-            return nil
-        end
-        ---@type BuffPipelineWarlockDotRemoveMessage
-        local m = { t = "warlock_dot", kind = BuffPipelineKind.DEBUFF_REMOVE, mobGuid = mobGuid }
         return m
     elseif BuffTrackerLifecycle.ClearsMobScopedStateOnRegen(event) then
         ---@type BuffPipelineWarlockDotClearDataMessage
