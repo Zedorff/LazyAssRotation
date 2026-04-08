@@ -15,7 +15,7 @@ function NampowerBuffWarlockDot.Message(tracker, now, target, event, arg1, arg2,
     if event == "AURA_CAST_ON_OTHER" then
         local spellId = tonumber(arg1)
         local playerGuid = Helpers:GetUnitGUID("player")
-        if playerGuid and arg2 == playerGuid and arg3 and spellId and IsMatchingRank(tracker.rankedAbility, spellId) then
+        if arg2 == playerGuid and arg3 and spellId and IsMatchingRank(tracker.rankedAbility, spellId) then
             ---@type BuffPipelineWarlockDotApplyMessage
             local m = {
                 t = "warlock_dot",

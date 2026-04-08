@@ -14,13 +14,12 @@ function NampowerBuffDot.Message(tracker, now, event, arg1, arg2, arg3, arg4, ar
     if event == "AURA_CAST_ON_OTHER" then
         local spellId = tonumber(arg1)
         local playerGuid = Helpers:GetUnitGUID("player")
-        local target = Helpers:GetUnitGUID("target")
-        if playerGuid and arg2 == playerGuid and spellId and IsMatchingRank(tracker.rankedAbility, spellId) then
+        if arg2 == playerGuid and arg3 and spellId and IsMatchingRank(tracker.rankedAbility, spellId) then
             ---@type BuffPipelineDotApplyMessage
             local m = {
                 t = "dot",
                 kind = BuffPipelineKind.DEBUFF_APPLY,
-                mobGuid = arg3 or target,
+                mobGuid = arg3,
                 durationSec = NampowerBuffCommon.DurationSecFromAuraCast(arg8, Helpers:SpellDuration(tracker.rankedAbility.name)),
             }
             return m
