@@ -1,10 +1,21 @@
 --- @class VanillaBuffEventAdapter
+--- @field selfBuff VanillaBuffSelfBuff
+--- @field debuff VanillaBuffDebuff
+--- @field dot VanillaBuffDot
+--- @field warlockDot VanillaBuffWarlockDot
+--- @field eclipse VanillaBuffEclipse
 VanillaBuffEventAdapter = {}
 VanillaBuffEventAdapter.__index = VanillaBuffEventAdapter
 
 --- @return VanillaBuffEventAdapter
 function VanillaBuffEventAdapter.new()
-    return setmetatable({}, VanillaBuffEventAdapter)
+    return setmetatable({
+        selfBuff = VanillaBuffSelfBuff.new(),
+        debuff = VanillaBuffDebuff.new(),
+        dot = VanillaBuffDot.new(),
+        warlockDot = VanillaBuffWarlockDot.new(),
+        eclipse = VanillaBuffEclipse.new(),
+    }, VanillaBuffEventAdapter)
 end
 
 --- @param tracker SelfBuffTracker
@@ -12,7 +23,7 @@ end
 --- @param arg1 string|nil `CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS`: chat line; `CHAT_MSG_SPELL_AURA_GONE_SELF`: chat line
 --- @return BuffPipelineSelfBuffMessage|nil
 function VanillaBuffEventAdapter:SelfBuffMessage(tracker, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
-    return VanillaBuffSelfBuff.SelfBuffMessage(tracker, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    return self.selfBuff:SelfBuffMessage(tracker, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 end
 
 --- @param tracker DurationedSelfBuffTracker
@@ -20,7 +31,7 @@ end
 --- @param arg1 string|nil `CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS`: chat line; `CHAT_MSG_SPELL_AURA_GONE_SELF`: chat line
 --- @return BuffPipelineDurationedSelfBuffMessage|nil
 function VanillaBuffEventAdapter:DurationedSelfBuffMessage(tracker, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
-    return VanillaBuffSelfBuff.DurationedSelfBuffMessage(tracker, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    return self.selfBuff:DurationedSelfBuffMessage(tracker, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 end
 
 --- @param tracker DebuffTracker
@@ -32,7 +43,7 @@ end
 --- @param arg4 unknown|nil `UNIT_CASTEVENT`: spell id
 --- @return BuffPipelineDebuffMessage|nil
 function VanillaBuffEventAdapter:DebuffMessage(tracker, now, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
-    return VanillaBuffDebuff.Message(tracker, now, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    return self.debuff:Message(tracker, now, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 end
 
 --- @param tracker DotTracker
@@ -44,7 +55,7 @@ end
 --- @param arg4 unknown|nil `UNIT_CASTEVENT`: spell id
 --- @return BuffPipelineDotMessage|nil
 function VanillaBuffEventAdapter:DotMessage(tracker, now, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
-    return VanillaBuffDot.Message(tracker, now, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    return self.dot:Message(tracker, now, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 end
 
 --- @param tracker WarlockDotTracker
@@ -57,7 +68,7 @@ end
 --- @param arg4 unknown|nil `UNIT_CASTEVENT`: spell id
 --- @return BuffPipelineWarlockDotMessage|nil
 function VanillaBuffEventAdapter:WarlockDotMessage(tracker, now, target, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
-    return VanillaBuffWarlockDot.Message(tracker, now, target, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    return self.warlockDot:Message(tracker, now, target, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 end
 
 --- @param tracker EclipseTracker
@@ -65,5 +76,5 @@ end
 --- @param arg1 string|nil `CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS`: chat line; `CHAT_MSG_SPELL_AURA_GONE_SELF`: chat line
 --- @return BuffPipelineEclipseMessage|nil
 function VanillaBuffEventAdapter:EclipseMessage(tracker, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
-    return VanillaBuffEclipse.Message(tracker, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    return self.eclipse:Message(tracker, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 end

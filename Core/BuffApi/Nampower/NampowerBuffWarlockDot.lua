@@ -1,4 +1,12 @@
+--- @class NampowerBuffWarlockDot : BuffWarlockDotHandler
+--- @field pipeline NampowerBuffPipeline
 NampowerBuffWarlockDot = {}
+NampowerBuffWarlockDot.__index = NampowerBuffWarlockDot
+
+--- @return NampowerBuffWarlockDot
+function NampowerBuffWarlockDot.new()
+    return setmetatable({ pipeline = NampowerBuffPipeline.new() }, NampowerBuffWarlockDot)
+end
 
 --- @param tracker WarlockDotTracker
 --- @param now number
@@ -10,62 +18,30 @@ NampowerBuffWarlockDot = {}
 --- @param arg4 unknown|nil `UNIT_CASTEVENT`: spell id; `SPELL_MISS_SELF`: miss type
 --- @param arg7 unknown|nil `DEBUFF_REMOVED_OTHER`: removal reason (`2` = refresh)
 --- @param arg8 unknown|nil `AURA_CAST_ON_OTHER`: duration (ms)
----@return BuffPipelineWarlockDotApplyMessage|BuffPipelineWarlockDotRemoveMessage|BuffPipelineWarlockDotDhPendingMessage|BuffPipelineWarlockDotDhChannelStartMessage|BuffPipelineWarlockDotDhChannelStopMessage|BuffPipelineWarlockDotSpellMissMessage|BuffPipelineWarlockDotClearDataMessage|nil
-function NampowerBuffWarlockDot.Message(tracker, now, target, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+---@return BuffPipelineWarlockDotMessage|nil
+function NampowerBuffWarlockDot:Message(tracker, now, target, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     if event == "AURA_CAST_ON_OTHER" then
-        local spellId = tonumber(arg1)
-        local playerGuid = Helpers:GetUnitGUID("player")
-        if arg2 == playerGuid and arg3 and spellId and IsMatchingRank(tracker.rankedAbility, spellId) then
-            ---@type BuffPipelineWarlockDotApplyMessage
-            local m = {
-                t = "warlock_dot",
-                kind = BuffPipelineKind.DEBUFF_APPLY,
-                mobGuid = arg3,
-                durationSec = NampowerBuffCommon.DurationSecFromAuraCast(arg8, Helpers:SpellDuration(tracker.rankedAbility.name)),
-            }
-            return m
-        end
-        return nil
+        return self.pipeline:TryWarlockDotApply(tracker, arg1, arg2, arg3, arg4, arg7, arg8)
     end
 
     if event == "DEBUFF_REMOVED_OTHER" then
-        if NampowerBuffCommon.SkipRemovalForRefresh(arg7) then
-            return nil
-        end
-        local spellId = tonumber(arg3)
-        local mobGuid = arg1
-        if not mobGuid or not spellId or not IsMatchingRank(tracker.rankedAbility, spellId) then
-            return nil
-        end
-        ---@type BuffPipelineWarlockDotRemoveMessage
-        local m = { t = "warlock_dot", kind = BuffPipelineKind.DEBUFF_REMOVE, mobGuid = mobGuid }
-        return m
+        return self.pipeline:TryWarlockDotRemove(arg1, tonumber(arg3), arg7, tracker)
     end
 
     if event == "UNIT_CASTEVENT" and arg1 == Helpers:GetUnitGUID("player") then
         if arg3 == "CHANNEL" and IsMatchingRank(Abilities.DarkHarvest, tonumber(arg4)) then
-            ---@type BuffPipelineWarlockDotDhPendingMessage
-            local m = { t = "warlock_dot", kind = BuffPipelineKind.DH_PENDING_CHANNEL }
-            return m
+            return PipelineWarlockDotDhPending.new()
         end
     elseif event == "SPELLCAST_CHANNEL_START" and tracker.pendingChannel then
-        ---@type BuffPipelineWarlockDotDhChannelStartMessage
-        local m = { t = "warlock_dot", kind = BuffPipelineKind.DH_CHANNEL_START, channelDurationMs = arg1 }
-        return m
+        return PipelineWarlockDotDhChannelStart.new(arg1)
     elseif event == "SPELLCAST_CHANNEL_STOP" or event == "SPELLCAST_INTERRUPTED" then
         if tracker.dhCasting then
-            ---@type BuffPipelineWarlockDotDhChannelStopMessage
-            local m = { t = "warlock_dot", kind = BuffPipelineKind.DH_CHANNEL_STOP }
-            return m
+            return PipelineWarlockDotDhChannelStop.new()
         end
     elseif event == "SPELL_MISS_SELF" then
-        ---@type BuffPipelineWarlockDotSpellMissMessage
-        local m = { t = "warlock_dot", kind = BuffPipelineKind.DEBUFF_SPELL_MISS, casterGuid = arg1, targetGuid = arg2, spellId = arg3, missInfo = arg4 }
-        return m
+        return PipelineWarlockDotSpellMiss.new(arg1, arg2, arg3, arg4)
     elseif BuffTrackerLifecycle.ClearsMobScopedStateOnRegen(event) then
-        ---@type BuffPipelineWarlockDotClearDataMessage
-        local m = { t = "warlock_dot", kind = BuffPipelineKind.DEBUFF_CLEAR_DATA }
-        return m
+        return PipelineWarlockDotClearData.new()
     end
     return nil
 end

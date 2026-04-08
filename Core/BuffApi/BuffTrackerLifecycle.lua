@@ -9,25 +9,25 @@ function BuffTrackerLifecycle.ClearsMobScopedStateOnRegen(event)
 end
 
 function BuffTrackerLifecycle.SelfBuffSyntheticDeathMessage()
-    return { t = "self_buff", kind = BuffPipelineKind.BUFF_DOWN }
+    return PipelineSelfBuffDown.new()
 end
 
 function BuffTrackerLifecycle.DurationedSelfBuffSyntheticDeathMessage()
-    return { t = "durationed_self_buff", kind = BuffPipelineKind.BUFF_DOWN }
+    return PipelineDurationedSelfBuffDown.new()
 end
 
 function BuffTrackerLifecycle.EclipseSyntheticDeathMessage()
-    return { t = "eclipse", kind = BuffPipelineKind.ECLIPSE_CLEAR }
+    return PipelineEclipseClear.new()
 end
 
 function BuffTrackerLifecycle.DebuffSyntheticDeathMessage()
-    return { t = "debuff", kind = BuffPipelineKind.DEBUFF_CLEAR_DATA }
+    return PipelineDebuffClearData.new()
 end
 
 function BuffTrackerLifecycle.DotSyntheticDeathMessage()
-    return { t = "dot", kind = BuffPipelineKind.DEBUFF_CLEAR_DATA }
+    return PipelineDotClearData.new()
 end
 
 function BuffTrackerLifecycle.WarlockDotSyntheticDeathMessage()
-    return { t = "warlock_dot", kind = BuffPipelineKind.DEBUFF_CLEAR_DATA }
+    return PipelineWarlockDotClearData.new()
 end
