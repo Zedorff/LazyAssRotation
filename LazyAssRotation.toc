@@ -2,12 +2,61 @@
 ## Title: Lazy Ass Rotation
 ## Notes: To make rotations easier.
 ## Author: Zedorff
-## Version: 0.9.0
+## Version: 0.9.1
 ## DefaultState: enabled
 ## SavedVariablesPerCharacter: LARModuleSettings, LARFloatingButtonPosition, LARSelectedSpec, LARSpecSide, LARModuleSide, LARShowRotationSpells, LARLockHotSwapButton, LARMinimapAngle
 
 Localization.lua
 
+Common\Helpers.lua
+Common\Logging.lua
+Common\Collection.lua
+Core\BuffApi\BuffPipelineMessages.lua
+Core\BuffApi\BuffHandlerInterfaces.lua
+Core\BuffApi\Messages\PipelineDebuffApply.lua
+Core\BuffApi\Messages\PipelineDebuffClearData.lua
+Core\BuffApi\Messages\PipelineDebuffRemove.lua
+Core\BuffApi\Messages\PipelineDebuffResistLine.lua
+Core\BuffApi\Messages\PipelineDebuffSpellMiss.lua
+Core\BuffApi\Messages\PipelineDotApply.lua
+Core\BuffApi\Messages\PipelineDotClearData.lua
+Core\BuffApi\Messages\PipelineDotRemove.lua
+Core\BuffApi\Messages\PipelineDotResistLine.lua
+Core\BuffApi\Messages\PipelineDotSpellMiss.lua
+Core\BuffApi\Messages\PipelineDurationedSelfBuffDown.lua
+Core\BuffApi\Messages\PipelineDurationedSelfBuffUp.lua
+Core\BuffApi\Messages\PipelineEclipseArcane.lua
+Core\BuffApi\Messages\PipelineEclipseClear.lua
+Core\BuffApi\Messages\PipelineEclipseNature.lua
+Core\BuffApi\Messages\PipelineSelfBuffDown.lua
+Core\BuffApi\Messages\PipelineSelfBuffUp.lua
+Core\BuffApi\Messages\PipelineWarlockDotApply.lua
+Core\BuffApi\Messages\PipelineWarlockDotClearData.lua
+Core\BuffApi\Messages\PipelineWarlockDotDhChannelStart.lua
+Core\BuffApi\Messages\PipelineWarlockDotDhChannelStop.lua
+Core\BuffApi\Messages\PipelineWarlockDotDhPending.lua
+Core\BuffApi\Messages\PipelineWarlockDotRemove.lua
+Core\BuffApi\Messages\PipelineWarlockDotResistLine.lua
+Core\BuffApi\Messages\PipelineWarlockDotSpellMiss.lua
+Core\BuffApi\BuffTrackerLifecycle.lua
+Core\BuffApi\Nampower\NampowerBuffCommon.lua
+Core\BuffApi\BuffPipeline.lua
+Core\BuffApi\Vanilla\VanillaBuffPipeline.lua
+Core\BuffApi\Nampower\NampowerBuffPipeline.lua
+Core\BuffApi\Nampower\NampowerBuffSelfBuff.lua
+Core\BuffApi\Nampower\NampowerBuffDebuff.lua
+Core\BuffApi\Nampower\NampowerBuffDot.lua
+Core\BuffApi\Nampower\NampowerBuffWarlockDot.lua
+Core\BuffApi\Nampower\NampowerBuffEclipse.lua
+Core\BuffApi\Nampower\NampowerBuffEventAdapter.lua
+Core\BuffApi\Vanilla\VanillaBuffSelfBuff.lua
+Core\BuffApi\Vanilla\VanillaBuffDebuff.lua
+Core\BuffApi\Vanilla\VanillaBuffDot.lua
+Core\BuffApi\Vanilla\VanillaBuffWarlockDot.lua
+Core\BuffApi\Vanilla\VanillaBuffEclipse.lua
+Core\BuffApi\Vanilla\VanillaBuffEventAdapter.lua
+Core\BuffApi\BuffEventPipeline.lua
+Core\BuffApi\BuffApiFactory.lua
 Core\Core.lua
 Core\EventBus.lua
 Core\ModuleRunContext.lua
@@ -22,6 +71,7 @@ Core\EnergyCostCache.lua
 Core\SharedTracker\ActionBarSlotTracker.lua
 Core\SharedTracker\SelfBuffTracker.lua
 Core\SharedTracker\DebuffTracker.lua
+Core\SharedTracker\MobDotStateTracker.lua
 Core\SharedTracker\DotTracker.lua
 Core\SharedTracker\ClearcastingTracker.lua
 Core\SharedTracker\CastingTracker.lua
@@ -33,10 +83,6 @@ Core\RageCostCache.lua
 
 UI\SpecButtonInfo.lua
 UI\ModuleButtonInfo.lua
-
-Common\Logging.lua
-Common\Helpers.lua
-Common\Collection.lua
 
 Rotation\Warrior\Tracker\BattleShoutTracker.lua
 Rotation\Warrior\Tracker\AutoAttackTracker.lua
@@ -253,7 +299,6 @@ UI\Minimap.lua
 UI\DraggableButton.lua
 UI\Settings.lua
 UI\HotSwapButton.lua
-UI\Minimap.lua
 
 UI\Settings.xml
 UI\HotSwapButton.xml

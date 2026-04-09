@@ -1,7 +1,8 @@
---- @class DotTracker : CooldownTracker
+--- @class DotTracker : MobDotStateTracker
 --- @field rankedAbility Ability
 --- @field data table<string, table>
-DotTracker = setmetatable({}, { __index = CooldownTracker })
+--- @field buffPipeline BuffEventPipeline
+DotTracker = setmetatable({}, { __index = MobDotStateTracker })
 DotTracker.__index = DotTracker
 
 --- @param rankedAbility Ability
@@ -11,8 +12,10 @@ function DotTracker.new(rankedAbility)
     local self = CooldownTracker.new()
     setmetatable(self, DotTracker)
 
+    local buffPipeline = BuffApiFactory.GetInstance()
     self.rankedAbility = rankedAbility
     self.data    = {}
+    self.buffPipeline = buffPipeline
 
     return self
 end
@@ -23,73 +26,9 @@ function DotTracker:subscribe()
 end
 
 --- @param event string
---- @param arg1 string
-function DotTracker:onEvent(event, arg1, arg2, arg3, arg4)
+function DotTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     local now = GetTime()
-    local target = Helpers:GetUnitGUID("target")
-
-    if event == "UNIT_CASTEVENT" and arg1 == Helpers:GetUnitGUID("player") and arg3 == "CAST" and IsMatchingRank(self.rankedAbility, tonumber(arg4)) then
-        self:ApplyDot(now, target)
-    elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_COMBAT_SELF_MISSES" then
-        self:HandleResist(arg1)
-    elseif event == "PLAYER_REGEN_ENABLED" then
-        self.data = {}
-    end
-end
-
---- @param now number
---- @param mob string | nil
-function DotTracker:ApplyDot(now, mob)
-    if not mob then return end
-
-    local duration   = Helpers:SpellDuration(self.rankedAbility.name)
-
-    local dotData    = self:GetMobData(mob)
-    dotData.start    = now
-    dotData.duration = duration
-    Logging:Debug(self.rankedAbility.name.." Applied, duration: "..duration)
-end
-
---- @param msg string
-function DotTracker:HandleResist(msg)
-    if msg and string.find(msg, self.rankedAbility.name) and (string.find(msg, "resisted") or string.find(msg, "immune") or string.find(msg, "dodged") or string.find(msg, "parried") or string.find(msg, "missed")) or string.find(msg, "blocked") then
-        local target = Helpers:GetUnitGUID("target")
-        self.data[target] = nil
-        Logging:Debug(self.rankedAbility.name.." was miss/dodge/parry/miss/resist/blocked")
-    end
-end
-
---- @return boolean
-function DotTracker:ShouldCast()
-    local remaining = self:GetRemainingOnTarget()
-    if not remaining then return true end
-    return remaining <= 0 and Helpers:SpellReady(self.rankedAbility.name)
-end
-
---- @return number
-function DotTracker:GetRemainingDuration()
-    return self:GetRemainingOnTarget() or 0
-end
-
---- @return number
-function DotTracker:GetRemainingOnTarget()
-    local mob = Helpers:GetUnitGUID("target")
-    if not mob then return 0 end
-
-    local dotData = self.data[mob]
-    if not dotData then return 0 end
-
-    local now = GetTime()
-    return dotData.duration - (now - dotData.start)
-end
-
---- @param mob string
---- @return table
-function DotTracker:GetMobData(mob)
-    local dotData = self.data[mob]
-    if not dotData then
-        dotData = {}
-        self.data[mob] = dotData
-    end
-    return dotData
+    self.buffPipeline:ApplyDotEvent(self, now, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, function(msg)
+        self:TryConsumeMobDotPipelineMessage(msg, now)
+    end)
 end

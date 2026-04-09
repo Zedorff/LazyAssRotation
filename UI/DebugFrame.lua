@@ -3,27 +3,26 @@ local debugMessages = {}
 local maxMessages = 200
 local filterText = ""
 
--- Helper to get table size
-local function tableLength(t)
-    local count = 0
-    for _ in pairs(t) do count = count + 1 end
-    return count
+local function arrayLen(t)
+    local n = 0
+    while t[n + 1] ~= nil do
+        n = n + 1
+    end
+    return n
 end
 
--- Add a message to debug history
 function DebugFrame_AddMessage(msg)
-    table.insert(debugMessages, msg) -- append at end (top to bottom)
+    table.insert(debugMessages, msg)
 
-    if tableLength(debugMessages) > maxMessages then
+    while arrayLen(debugMessages) > maxMessages do
         table.remove(debugMessages, 1)
     end
 
     if Core.debugFrame then
-        Core.debugFrame:UpdateContent()
+        Core.debugFrame:UpdateContent(true)
     end
 end
 
--- Create or show the debug frame
 function DebugFrame_Create()
     if Core.debugFrame then
         Core.debugFrame:Show()
@@ -48,29 +47,31 @@ function DebugFrame_Create()
     frame:SetScript("OnDragStart", function() frame:StartMoving() end)
     frame:SetScript("OnDragStop", function() frame:StopMovingOrSizing() end)
 
-    -- Filter input box
+    local close = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
+    close:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -5, -5)
+    close:SetScript("OnClick", function()
+        frame:Hide()
+    end)
+
     local editBox = CreateFrame("EditBox", nil, frame, "InputBoxTemplate")
-    editBox:SetPoint("TOPLEFT", frame, "TOPLEFT", 20, -10)
-    editBox:SetWidth(300)
+    editBox:SetPoint("TOPLEFT", frame, "TOPLEFT", 12, -10)
+    editBox:SetPoint("TOPRIGHT", close, "TOPLEFT", -4, 0)
     editBox:SetHeight(20)
     editBox:SetAutoFocus(false)
     editBox:SetScript("OnTextChanged", function()
         filterText = editBox:GetText()
-        frame:UpdateContent()
+        frame:UpdateContent(false)
     end)
     frame.filterBox = editBox
 
-    -- Scroll frame
     local scrollFrame = CreateFrame("ScrollFrame", "DebugScrollFrame", frame, "UIPanelScrollFrameTemplate")
-    scrollFrame:SetPoint("TOPLEFT", editBox, "BOTTOMLEFT", 0, -10)
-    scrollFrame:SetPoint("BOTTOMRIGHT", -30, 10)
+    scrollFrame:SetPoint("TOPLEFT", editBox, "BOTTOMLEFT", 0, -8)
+    scrollFrame:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -28, 12)
 
-    -- Content holder
     local content = CreateFrame("Frame", nil, scrollFrame)
     content:SetWidth(340)
     scrollFrame:SetScrollChild(content)
 
-    -- FontString that will hold all log lines
     local fontString = content:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
     fontString:SetPoint("TOPLEFT", 0, 0)
     fontString:SetWidth(340)
@@ -81,14 +82,14 @@ function DebugFrame_Create()
     frame.scrollFrame = scrollFrame
     frame.content = content
 
-    -- UpdateContent function
-    function frame:UpdateContent()
-    -- Get font size dynamically
+    function frame:UpdateContent(scrollToBottom)
         local _, fontSize = self.fontString:GetFont()
         local lineHeight = fontSize
 
+        local prevScroll = self.scrollFrame:GetVerticalScroll()
+
         local lines = {}
-        for i = 1, tableLength(debugMessages) do
+        for i = 1, arrayLen(debugMessages) do
             local msg = debugMessages[i]
             if filterText == "" or string.find(string.lower(msg), string.lower(filterText), 1, true) then
                 table.insert(lines, msg)
@@ -96,7 +97,7 @@ function DebugFrame_Create()
         end
 
         self.fontString:SetText(table.concat(lines, "\n"))
-        local estimatedHeight = tableLength(lines) * lineHeight + lineHeight
+        local estimatedHeight = arrayLen(lines) * lineHeight + lineHeight
 
         local scrollHeight = self.scrollFrame:GetHeight()
         if estimatedHeight < scrollHeight then
@@ -110,12 +111,12 @@ function DebugFrame_Create()
 
         local maxScroll = self.scrollFrame:GetVerticalScrollRange()
         if maxScroll < 0 then maxScroll = 0 end
-        self.scrollFrame:SetVerticalScroll(maxScroll)
+        if scrollToBottom then
+            self.scrollFrame:SetVerticalScroll(maxScroll)
+        else
+            self.scrollFrame:SetVerticalScroll(math.min(prevScroll, maxScroll))
+        end
     end
-
-    -- Close button
-    local close = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
-    close:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -5, -5)
 
     Core.debugFrame = frame
 end

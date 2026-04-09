@@ -2,6 +2,7 @@
 --- @field buffUp boolean
 --- @field upUntil number
 --- @field duration number
+--- @field buffPipeline BuffEventPipeline
 --- @diagnostic disable: duplicate-set-field
 DurationedSelfBuffTracker = setmetatable({}, { __index = CooldownTracker })
 DurationedSelfBuffTracker.__index = DurationedSelfBuffTracker
@@ -15,8 +16,10 @@ function DurationedSelfBuffTracker.new(abilityName, buffTexture, duration)
     local self = CooldownTracker.new()
     setmetatable(self, DurationedSelfBuffTracker)
 
+    local buffPipeline = BuffApiFactory.GetInstance()
     self.abilityName = abilityName
     self.buffTexture = buffTexture
+    self.buffPipeline = buffPipeline
     self.buffUp = Helpers:HasBuff("player", buffTexture)
     self.duration = duration
 
@@ -30,19 +33,21 @@ end
 
 --- @param event string
 --- @param arg1 string
-function DurationedSelfBuffTracker:onEvent(event, arg1)
-    if event == "PLAYER_DEAD" then
-        self.buffUp = false
-        self.upUntil = nil
-    elseif event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" and string.find(arg1, self.abilityName) then
-        Logging:Debug(self.abilityName .. " is up")
-        self.buffUp = true
-        self.upUntil = GetTime() + self.duration
-    elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" and string.find(arg1, self.abilityName) then
-        Logging:Debug(self.abilityName .. " is down")
-        self.buffUp = false
-        self.upUntil = nil
-    end
+function DurationedSelfBuffTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    self.buffPipeline:ApplyDurationedSelfBuffEvent(self, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, function(msg)
+        if not msg then
+            return
+        end
+        if msg.kind == BuffPipelineKind.BUFF_UP then
+            Logging:Debug(self.abilityName .. " is up")
+            self.buffUp = true
+            self.upUntil = GetTime() + (msg.durationSec or self.duration)
+        else
+            Logging:Debug(self.abilityName .. " is down")
+            self.buffUp = false
+            self.upUntil = nil
+        end
+    end)
 end
 
 --- @return boolean

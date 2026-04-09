@@ -1,9 +1,10 @@
---- @class WarlockDotTracker : CooldownTracker
+--- @class WarlockDotTracker : MobDotStateTracker
 --- @field rankedAbility Ability
 --- @field pendingChannel boolean
 --- @field dhCasting boolean
 --- @field data table<string, table>
-WarlockDotTracker = setmetatable({}, { __index = CooldownTracker })
+--- @field buffPipeline BuffEventPipeline
+WarlockDotTracker = setmetatable({}, { __index = MobDotStateTracker })
 WarlockDotTracker.__index = WarlockDotTracker
 
 local HASTE_FACTOR = 0.30
@@ -15,10 +16,12 @@ function WarlockDotTracker.new(rankedAbility)
     local self = CooldownTracker.new()
     setmetatable(self, WarlockDotTracker)
 
+    local buffPipeline = BuffApiFactory.GetInstance()
     self.rankedAbility  = rankedAbility
     self.data           = {}
     self.pendingChannel = false
     self.dhCasting      = false
+    self.buffPipeline = buffPipeline
 
     return self
 end
@@ -30,53 +33,49 @@ function WarlockDotTracker:subscribe()
     self.dhCasting      = false
 end
 
---- @param event string
---- @param arg1 string
-function WarlockDotTracker:onEvent(event, arg1, _, arg3, arg4)
+function WarlockDotTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     local now = GetTime()
     local target = Helpers:GetUnitGUID("target")
-
-    if event == "UNIT_CASTEVENT" and arg1 == Helpers:GetUnitGUID("player") then
-        if arg3 == "CAST" and IsMatchingRank(self.rankedAbility, tonumber(arg4)) then
-            self:ApplyDot(now, target)
-        elseif arg3 == "CHANNEL" and IsMatchingRank(Abilities.DarkHarvest, tonumber(arg4)) then
+    self.buffPipeline:ApplyWarlockDotEvent(self, now, target, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, function(msg)
+        if not msg then
+            return
+        end
+        if msg.kind == BuffPipelineKind.DH_PENDING_CHANNEL then
             self.pendingChannel = true
-        end
-    elseif event == "SPELLCAST_CHANNEL_START" and self.pendingChannel then
-        self.dhCasting = true
-        self.pendingChannel = false
-        self:StartDarkHarvest(target, now)
-        Logging:Debug("Dark Harvest channel started (" .. (arg1 or 0) / 1000 .. "s)")
-    elseif event == "SPELLCAST_CHANNEL_STOP" or event == "SPELLCAST_INTERRUPTED" then
-        if self.dhCasting then
-            self.dhCasting = false
+        elseif msg.kind == BuffPipelineKind.DH_CHANNEL_START then
+            self.dhCasting = true
             self.pendingChannel = false
-            self:EndDarkHarvest(target, now)
-            Logging:Debug("Dark Harvest channel stopped / interrupted")
+            self:StartDarkHarvest(target, now)
+            Logging:Debug("Dark Harvest channel started (" .. tostring((msg.channelDurationMs or 0) / 1000) .. "s)")
+        elseif msg.kind == BuffPipelineKind.DH_CHANNEL_STOP then
+            if self.dhCasting then
+                self.dhCasting = false
+                self.pendingChannel = false
+                self:EndDarkHarvest(target, now)
+                Logging:Debug("Dark Harvest channel stopped / interrupted")
+            end
+        elseif msg.kind == BuffPipelineKind.DEBUFF_CLEAR_DATA then
+            self.pendingChannel = false
+            self.dhCasting = false
+            self.data = {}
+        else
+            self:TryConsumeMobDotPipelineMessage(msg, now)
         end
-    elseif event == "PLAYER_DEAD" then
-        self.pendingChannel = false
-        self.dhCasting = false
-    elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE" or event == "CHAT_MSG_COMBAT_SELF_MISSES" then
-        self:HandleResist(arg1)
-    elseif event == "PLAYER_REGEN_ENABLED" then
-        self.data = {}
-    end
+    end)
 end
 
+--- @param dotData table
 --- @param now number
---- @param mob string | nil
-function WarlockDotTracker:ApplyDot(now, mob)
-    if not mob then return end
-
-    local duration      = Helpers:SpellDuration(self.rankedAbility.name)
-
-    local dotData       = self:GetMobData(mob)
-    dotData.start       = now
-    dotData.duration    = duration
+--- @param durationSec number
+function WarlockDotTracker:ResetDotStateOnApply(dotData, now, durationSec)
+    MobDotStateTracker.ResetDotStateOnApply(self, dotData, now, durationSec)
     dotData.dhStartTime = nil
     dotData.dhEndTime   = nil
-    Logging:Debug("Apply dot: " .. self.rankedAbility.name .. ", withDuration: " .. duration)
+end
+
+--- @param durationSec number
+function WarlockDotTracker:LogDotApplied(durationSec)
+    Logging:Debug("Apply dot: " .. self.rankedAbility.name .. ", withDuration: " .. tostring(durationSec))
 end
 
 --- @param mob string | nil
@@ -108,27 +107,6 @@ function WarlockDotTracker:EndDarkHarvest(mob, now)
     Logging:Debug("Dark Harvest stopped for: " .. self.rankedAbility.name)
 end
 
---- @param msg string
-function WarlockDotTracker:HandleResist(msg)
-    if msg and string.find(msg, self.rankedAbility.name) and (string.find(msg, "resisted") or string.find(msg, "immune") or string.find(msg, "dodged") or string.find(msg, "parried") or string.find(msg, "missed")) or string.find(msg, "blocked") then
-        local target = Helpers:GetUnitGUID("target")
-        self.data[target] = nil
-        Logging:Debug(self.rankedAbility.name .. " was miss/dodge/parry/miss/resist/blocked")
-    end
-end
-
---- @return boolean
-function WarlockDotTracker:ShouldCast()
-    local remaining = self:GetRemainingOnTarget()
-    if not remaining then return true end
-    return remaining <= 0 and Helpers:SpellReady(self.rankedAbility.name)
-end
-
---- @return number
-function WarlockDotTracker:GetRemainingDuration()
-    return self:GetRemainingOnTarget() or 0
-end
-
 --- @return number | nil
 function WarlockDotTracker:GetRemainingOnTarget()
     local mob = Helpers:GetUnitGUID("target")
@@ -148,15 +126,4 @@ function WarlockDotTracker:GetRemainingOnTarget()
     end
 
     return dotData.duration - (now - dotData.start) - dhReduction
-end
-
---- @param mob string
---- @return table
-function WarlockDotTracker:GetMobData(mob)
-    local dotData = self.data[mob]
-    if not dotData then
-        dotData = {}
-        self.data[mob] = dotData
-    end
-    return dotData
 end

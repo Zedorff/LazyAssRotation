@@ -8,6 +8,7 @@
 ---@field data table<string, MobDebuffState>
 ---@field isSharedDebuff boolean
 ---@field textureName string|nil
+---@field buffPipeline BuffEventPipeline
 DebuffTracker = setmetatable({}, { __index = CooldownTracker })
 DebuffTracker.__index = DebuffTracker
 
@@ -16,10 +17,12 @@ function DebuffTracker.new(ability, isSharedDebuff, textureName)
     local self = CooldownTracker.new()
     setmetatable(self, DebuffTracker)
 
+    local buffPipeline = BuffApiFactory.GetInstance()
     self.ability     = ability
     self.data        = {}
     self.isSharedDebuff    = isSharedDebuff or false
     self.textureName = textureName
+    self.buffPipeline = buffPipeline
 
     return self
 end
@@ -29,31 +32,24 @@ function DebuffTracker:subscribe()
     CooldownTracker.subscribe(self)
 end
 
-function DebuffTracker:onEvent(event, arg1, arg2, arg3, arg4)
+function DebuffTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     local now = GetTime()
-
-    if event == "UNIT_CASTEVENT" then
-        self:OnUnitCastEvent(now, arg1, arg2, arg3, arg4)
-    elseif event == "CHAT_MSG_SPELL_SELF_DAMAGE"
-        or event == "CHAT_MSG_COMBAT_SELF_MISSES" then
-        self:HandleResist(arg1)
-
-    elseif event == "PLAYER_REGEN_ENABLED" then
-        self.data = {}
-    end
-end
-
-function DebuffTracker:OnUnitCastEvent(now, casterGuid, targetGuid, eventType, spellId)
-    if eventType ~= "CAST" then return end
-    if not IsMatchingRank(self.ability, tonumber(spellId)) then return end
-
-    local playerGuid = Helpers:GetUnitGUID("player")
-    if (not self.isSharedDebuff) and (casterGuid ~= playerGuid) then return end
-
-    local mobGuid = targetGuid or Helpers:GetUnitGUID("target")
-    if not mobGuid then return end
-
-    self:ApplyDebuff(now, mobGuid)
+    self.buffPipeline:ApplyDebuffEvent(self, now, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, function(msg)
+        if not msg then
+            return
+        end
+        if msg.kind == BuffPipelineKind.DEBUFF_APPLY then
+            self:ApplyDebuff(now, msg.mobGuid, msg.durationSec)
+        elseif msg.kind == BuffPipelineKind.DEBUFF_REMOVE then
+            self:ClearDebuff(msg.mobGuid)
+        elseif msg.kind == BuffPipelineKind.DEBUFF_RESIST_LINE then
+            self:HandleResist(msg.line)
+        elseif msg.kind == BuffPipelineKind.DEBUFF_SPELL_MISS then
+            self:HandleSpellMiss(msg.casterGuid, msg.targetGuid, msg.spellId, msg.missInfo)
+        elseif msg.kind == BuffPipelineKind.DEBUFF_CLEAR_DATA then
+            self.data = {}
+        end
+    end)
 end
 
 function DebuffTracker:GetMobState(mobGuid)
@@ -66,15 +62,14 @@ function DebuffTracker:GetMobState(mobGuid)
     return state
 end
 
-function DebuffTracker:ApplyDebuff(now, mobGuid)
-    local duration = Helpers:DebuffDuration(self.ability.name)
+function DebuffTracker:ApplyDebuff(now, mobGuid, durationSec)
     local state = self:GetMobState(mobGuid)
 
     state.start = now
-    state.duration = duration
+    state.duration = durationSec
 
     Logging:Debug(self.ability.name ..
-        " applied on " .. mobGuid .. " duration=" .. tostring(duration))
+        " applied on " .. mobGuid .. " duration=" .. tostring(durationSec))
 end
 
 function DebuffTracker:ClearDebuff(mobGuid)
@@ -89,18 +84,25 @@ function DebuffTracker:ClearDebuff(mobGuid)
 end
 
 function DebuffTracker:HandleResist(msg)
-    if not msg or not string.find(msg, self.ability.name) then return end
-
-    if not (string.find(msg, "resisted")
-        or string.find(msg, "immune")
-        or string.find(msg, "dodged")
-        or string.find(msg, "parried")
-        or string.find(msg, "missed")
-        or string.find(msg, "blocked")) then
+    if not Helpers:IsSpellApplicationFailureMessage(self.ability.name, msg) then
         return
     end
 
     local targetGuid = Helpers:GetUnitGUID("target")
+    self:ClearDebuff(targetGuid)
+end
+
+function DebuffTracker:HandleSpellMiss(casterGuid, targetGuid, spellId, missInfo)
+    local playerGuid = Helpers:GetUnitGUID("player")
+    if not playerGuid or casterGuid ~= playerGuid then
+        return
+    end
+    if not Helpers:IsSpellApplicationMissInfo(missInfo) then
+        return
+    end
+    if not IsMatchingRank(self.ability, tonumber(spellId)) then
+        return
+    end
     self:ClearDebuff(targetGuid)
 end
 

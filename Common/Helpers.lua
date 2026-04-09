@@ -212,6 +212,67 @@ function Helpers:SpellNotReadyFor(spellname)
     return 0
 end
 
+--- @return boolean
+function Helpers:HasNampowerAuraCastEvents()
+    return GetCVar and GetCVar("NP_EnableAuraCastEvents") ~= nil
+end
+
+--- @return boolean
+function Helpers:EnsureNampowerAuraCastEventsEnabled()
+    if not self:HasNampowerAuraCastEvents() then
+        return false
+    end
+    if GetCVar("NP_EnableAuraCastEvents") ~= "1" then
+        SetCVar("NP_EnableAuraCastEvents", "1")
+    end
+    return true
+end
+
+--- @param spellId number
+--- @return string|nil
+function Helpers:SpellIconBySpellId(spellId)
+    if not spellId or spellId == 0 then
+        return nil
+    end
+    if type(GetSpellRecField) == "function" then
+        local ok, icon = pcall(GetSpellRecField, spellId, "icon")
+        if ok and type(icon) == "string" then
+            return icon
+        end
+    end
+    if type(GetSpellInfo) == "function" then
+        local ok, _, _, icon = pcall(GetSpellInfo, spellId)
+        if ok and type(icon) == "string" then
+            return icon
+        end
+    end
+    return nil
+end
+
+--- @param spellId number
+--- @param texture string|nil
+--- @param abilityName string|nil
+--- @return boolean
+function Helpers:MatchesSelfBuffSpell(spellId, texture, abilityName)
+    spellId = tonumber(spellId)
+    if not spellId then
+        return false
+    end
+    if abilityName and type(GetSpellRecField) == "function" then
+        local ok, name = pcall(GetSpellRecField, spellId, "name")
+        if ok and name and string.find(name, abilityName) then
+            return true
+        end
+    end
+    if texture then
+        local icon = self:SpellIconBySpellId(spellId)
+        if icon and string.find(icon, texture) then
+            return true
+        end
+    end
+    return false
+end
+
 --- @deprecated Use `HasBuff` instead
 --- @param unit string
 --- @param buffName string
@@ -386,6 +447,16 @@ function Helpers:RageCost(spellName)
     return Helpers:ParseIntViaTooltip(spellName, RAGE_DESCRIPTION_REGEX)
 end
 
+--- Converts Nampower `AURA_CAST_ON_SELF` / `AURA_CAST_ON_OTHER` duration field (`arg8`), milliseconds to seconds.
+--- @param durationMs number|nil aura duration from Nampower aura-cast payload
+--- @return number|nil
+function Helpers:DurationFromAuraCastMs(durationMs)
+    if type(durationMs) == "number" and durationMs > 0 then
+        return durationMs / 1000
+    end
+    return nil
+end
+
 --- @param spellName string
 --- @return number
 function Helpers:SpellDuration(spellName)
@@ -428,33 +499,97 @@ end
 
 --- @param spellName string
 --- @param line string
---- @return boolean hit, boolean crit, boolean parry, boolean miss, boolean dodge
+--- @return boolean hit, boolean crit, boolean parry, boolean miss, boolean dodge, boolean resistImmune
 function Helpers:ParseCombatEvent(spellName, line)
+    if spellName == ".+" then
+        if string.find(line, "^Your .+ was dodged by .+") then
+            return false, false, false, false, true, false
+        end
+        return false, false, false, false, false, false
+    end
+
     local escapedSpell = string.gsub(spellName, "([%(%)%.%%%+%-%*%?%[%^%$])", "%%%1")
 
-    -- Match hit or crit
-    if string.find(line, "^Your " .. escapedSpell .. " hits .+ for %d+") then
-        return true, false, false, false, false
-    elseif string.find(line, "^Your " .. escapedSpell .. " crits .+ for %d+") then
-        return true, true, false, false, false
+    if string.find(line, "^Your " .. escapedSpell .. " .-hits .+ for %d+") then
+        return true, false, false, false, false, false
+    elseif string.find(line, "^Your " .. escapedSpell .. " .-crits .+ for %d+") then
+        return true, true, false, false, false, false
     end
 
-    -- Match parry
-    if string.find(line, "^Your " .. escapedSpell .. " was parried by .+") then
-        return false, false, true, false, false
+    if string.find(line, "^Your " .. escapedSpell .. " .-was parried by .+") then
+        return false, false, true, false, false, false
     end
 
-    -- Match dodge
-    if string.find(line, "^Your " .. escapedSpell .. " was dodged by .+") then
-        return false, false, false, false, true
+    if string.find(line, "^Your " .. escapedSpell .. " .-was dodged by .+") then
+        return false, false, false, false, true, false
     end
 
-    -- Match miss
-    if string.find(line, "^Your " .. escapedSpell .. " missed .+") then
-        return false, false, false, true, false
+    if string.find(line, "^Your " .. escapedSpell .. " .-missed .+") then
+        return false, false, false, true, false, false
     end
 
-    return false, false, false, false, false
+    if string.find(line, "^Your " .. escapedSpell .. " .-was resisted by .+") then
+        return false, false, false, false, false, true
+    end
+
+    if string.find(line, "^Your " .. escapedSpell .. " .-was resisted") and not string.find(line, "was resisted by") then
+        return false, false, false, false, false, true
+    end
+
+    if string.find(line, "^Your " .. escapedSpell .. " .-fully resisted") then
+        return false, false, false, false, false, true
+    end
+
+    if string.find(line, "^Your " .. escapedSpell .. " .-was blocked") then
+        return false, false, false, false, false, true
+    end
+
+    if string.find(line, "^Your " .. escapedSpell) and string.find(line, "immune") then
+        return false, false, false, false, false, true
+    end
+
+    return false, false, false, false, false, false
+end
+
+local SPELL_MISS = {
+    NONE = 0,
+    MISS = 1,
+    RESIST = 2,
+    DODGE = 3,
+    PARRY = 4,
+    BLOCK = 5,
+    EVADE = 6,
+    IMMUNE = 7,
+    IMMUNE2 = 8,
+    DEFLECT = 9,
+    ABSORB = 10,
+    REFLECT = 11,
+}
+
+--- `0` means hit; any other numeric value means the spell did not apply (miss/resist/etc.). Nampower `SPELL_MISS_SELF` `arg4` uses this enum.
+--- @param missInfo number|string|nil
+--- @return boolean
+function Helpers:IsSpellApplicationMissInfo(missInfo)
+    local m = tonumber(missInfo)
+    if not m then
+        return false
+    end
+    return m ~= SPELL_MISS.NONE
+end
+
+--- @param spellName string
+--- @param msg string
+--- @return boolean
+function Helpers:IsSpellApplicationFailureMessage(spellName, msg)
+    if not msg or not spellName then
+        return false
+    end
+    if not string.find(msg, spellName, 1, true) then
+        return false
+    end
+
+    local _, _, parry, miss, dodge, resistImmune = Helpers:ParseCombatEvent(spellName, msg)
+    return parry or miss or dodge or resistImmune
 end
 
 --- @param unit string

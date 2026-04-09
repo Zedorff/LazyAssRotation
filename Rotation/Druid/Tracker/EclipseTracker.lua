@@ -7,6 +7,9 @@ EclipseType = {
 --- @class EclipseTracker : CooldownTracker
 --- @field eclipsetype EclipseType | nil
 --- @field eclipseUpUntill number
+--- @field arcaneBuffTexture string
+--- @field natureBuffTexture string
+--- @field buffPipeline BuffEventPipeline
 EclipseTracker = setmetatable({}, { __index = CooldownTracker })
 EclipseTracker.__index = EclipseTracker
 
@@ -24,8 +27,11 @@ function EclipseTracker.GetInstance()
     setmetatable(self, EclipseTracker)
 
     self.eclipseUpUntill = 0
+    self.arcaneBuffTexture = "Spell_Nature_WispSplode"
+    self.natureBuffTexture = "Spell_Nature_AbolishMagic"
+    self.buffPipeline = BuffApiFactory.GetInstance()
 
-    EclipseTracker:CheckActiveEclipseType()
+    self:CheckActiveEclipseType()
 
     sharedInstance = self
 
@@ -35,13 +41,13 @@ end
 function EclipseTracker:subscribe()
     CooldownTracker.subscribe(self)
     self.eclipseUpUntill = 0
-    EclipseTracker:CheckActiveEclipseType()
+    self:CheckActiveEclipseType()
 end
 
 function EclipseTracker:CheckActiveEclipseType()
-    if Helpers:HasBuff("player", "Spell_Nature_WispSplode") then
+    if Helpers:HasBuff("player", self.arcaneBuffTexture) then
         self.eclipsetype = EclipseType.ARCANE
-    elseif Helpers:HasBuff("player", "Spell_Nature_AbolishMagic") then
+    elseif Helpers:HasBuff("player", self.natureBuffTexture) then
         self.eclipsetype = EclipseType.NATURE
     else
         self.eclipsetype = nil
@@ -50,25 +56,27 @@ end
 
 --- @param event string
 --- @param arg1 string
-function EclipseTracker:onEvent(event, arg1)
-    if event == "PLAYER_DEAD" then
-        self.eclipseUpUntill = 0
-        self.eclipsetype = nil
-    elseif event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" then
-        if string.find(arg1, "Arcane Eclipse") then
-            self.eclipseUpUntill = GetTime() + 15
+function EclipseTracker:onEvent(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    self.buffPipeline:ApplyEclipseEvent(self, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, function(msg)
+        if not msg then
+            return
+        end
+        if msg.kind == BuffPipelineKind.ECLIPSE_CLEAR then
+            Logging:Debug("Eclipse is down")
+            self.eclipseUpUntill = 0
+            self.eclipsetype = nil
+            return
+        end
+        local dur = msg.durationSec or 15
+        self.eclipseUpUntill = GetTime() + dur
+        if msg.kind == BuffPipelineKind.ECLIPSE_ARCANE then
             self.eclipsetype = EclipseType.ARCANE
             Logging:Debug("Arcane Eclipse is up")
-        elseif string.find(arg1, "Nature Eclipse") then
-            self.eclipseUpUntill = GetTime() + 15
+        elseif msg.kind == BuffPipelineKind.ECLIPSE_NATURE then
             self.eclipsetype = EclipseType.NATURE
             Logging:Debug("Nature Eclipse is up")
         end
-    elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" and string.find(arg1, "Eclipse") then
-        Logging:Debug("Eclipse is down")
-        self.eclipseUpUntill = 0
-        self.eclipsetype = nil
-    end
+    end)
 end
 
 --- @return boolean
@@ -83,5 +91,12 @@ end
 
 --- @return number
 function EclipseTracker:GetEclipseRemainingTime()
-    return self.eclipseUpUntill - GetTime()
+    if not self.eclipsetype then
+        return 0
+    end
+    local rem = self.eclipseUpUntill - GetTime()
+    if rem < 0 then
+        return 0
+    end
+    return rem
 end
