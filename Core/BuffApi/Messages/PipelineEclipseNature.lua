@@ -1,5 +1,4 @@
----@class PipelineEclipseNature : BuffPipelineMessage
----@field t "eclipse"
+﻿---@class PipelineEclipseNature : BuffPipelineMessage
 ---@field durationSec number
 PipelineEclipseNature = {}
 PipelineEclipseNature.__index = PipelineEclipseNature
@@ -7,8 +6,11 @@ PipelineEclipseNature.__index = PipelineEclipseNature
 ---@param durationSec number
 ---@return PipelineEclipseNature
 function PipelineEclipseNature.new(durationSec)
-    local self = BuffPipelineMessage.new(BuffPipelineKind.ECLIPSE_NATURE)
-    self.t = "eclipse"
-    self.durationSec = durationSec
+    ---@type PipelineEclipseNature
+    local self = {
+        kind = BuffPipelineKind.ECLIPSE_NATURE,
+        t = "eclipse",
+        durationSec = durationSec,
+    }
     return setmetatable(self, PipelineEclipseNature)
 end

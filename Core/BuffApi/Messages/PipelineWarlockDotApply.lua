@@ -1,5 +1,4 @@
----@class PipelineWarlockDotApply : BuffPipelineMessage
----@field t "warlock_dot"
+﻿---@class PipelineWarlockDotApply : BuffPipelineMessage
 ---@field mobGuid string|nil
 ---@field durationSec number
 PipelineWarlockDotApply = {}
@@ -9,9 +8,12 @@ PipelineWarlockDotApply.__index = PipelineWarlockDotApply
 ---@param durationSec number
 ---@return PipelineWarlockDotApply
 function PipelineWarlockDotApply.new(mobGuid, durationSec)
-    local self = BuffPipelineMessage.new(BuffPipelineKind.DEBUFF_APPLY)
-    self.t = "warlock_dot"
-    self.mobGuid = mobGuid
-    self.durationSec = durationSec
+    ---@type PipelineWarlockDotApply
+    local self = {
+        kind = BuffPipelineKind.DEBUFF_APPLY,
+        t = "warlock_dot",
+        mobGuid = mobGuid,
+        durationSec = durationSec,
+    }
     return setmetatable(self, PipelineWarlockDotApply)
 end

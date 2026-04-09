@@ -1,5 +1,4 @@
----@class PipelineDotApply : BuffPipelineMessage
----@field t "dot"
+﻿---@class PipelineDotApply : BuffPipelineMessage
 ---@field mobGuid string|nil
 ---@field durationSec number
 PipelineDotApply = {}
@@ -9,9 +8,12 @@ PipelineDotApply.__index = PipelineDotApply
 ---@param durationSec number
 ---@return PipelineDotApply
 function PipelineDotApply.new(mobGuid, durationSec)
-    local self = BuffPipelineMessage.new(BuffPipelineKind.DEBUFF_APPLY)
-    self.t = "dot"
-    self.mobGuid = mobGuid
-    self.durationSec = durationSec
+    ---@type PipelineDotApply
+    local self = {
+        kind = BuffPipelineKind.DEBUFF_APPLY,
+        t = "dot",
+        mobGuid = mobGuid,
+        durationSec = durationSec,
+    }
     return setmetatable(self, PipelineDotApply)
 end

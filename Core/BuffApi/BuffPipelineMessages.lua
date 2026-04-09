@@ -1,6 +1,6 @@
 --- Semantic messages from VanillaBuffEventAdapter / NampowerBuffEventAdapter.
 --- Each table is tagged with `t` (channel); `kind` is the sole variant switch within that channel.
---- Concrete shapes live in `Core/BuffApi/Messages/*.lua` (`BuffPipelineMessage.new` + `*.new`).
+--- Concrete shapes live in `Core/BuffApi/Messages/*.lua` (per-type `*.new`).
 
 ---@enum BuffPipelineKindEnum
 BuffPipelineKind = {
@@ -18,6 +18,10 @@ BuffPipelineKind = {
     ECLIPSE_NATURE = 12,
     ECLIPSE_CLEAR = 13,
 }
+
+---@class BuffPipelineMessage
+---@field kind BuffPipelineKindEnum
+---@field t "debuff"|"dot"|"self_buff"|"durationed_self_buff"|"warlock_dot"|"eclipse"
 
 ---@alias BuffPipelineSelfBuffMessage PipelineSelfBuffUp|PipelineSelfBuffDown
 ---@alias BuffPipelineDurationedSelfBuffMessage PipelineDurationedSelfBuffUp|PipelineDurationedSelfBuffDown

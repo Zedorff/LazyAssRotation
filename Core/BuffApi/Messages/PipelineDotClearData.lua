@@ -1,11 +1,13 @@
----@class PipelineDotClearData : BuffPipelineMessage
----@field t "dot"
+﻿---@class PipelineDotClearData : BuffPipelineMessage
 PipelineDotClearData = {}
 PipelineDotClearData.__index = PipelineDotClearData
 
 ---@return PipelineDotClearData
 function PipelineDotClearData.new()
-    local self = BuffPipelineMessage.new(BuffPipelineKind.DEBUFF_CLEAR_DATA)
-    self.t = "dot"
+    ---@type PipelineDotClearData
+    local self = {
+        kind = BuffPipelineKind.DEBUFF_CLEAR_DATA,
+        t = "dot",
+    }
     return setmetatable(self, PipelineDotClearData)
 end

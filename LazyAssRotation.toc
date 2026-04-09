@@ -13,7 +13,6 @@ Common\Logging.lua
 Common\Collection.lua
 Core\BuffApi\BuffPipelineMessages.lua
 Core\BuffApi\BuffHandlerInterfaces.lua
-Core\BuffApi\Messages\BuffPipelineMessage.lua
 Core\BuffApi\Messages\PipelineDebuffApply.lua
 Core\BuffApi\Messages\PipelineDebuffClearData.lua
 Core\BuffApi\Messages\PipelineDebuffRemove.lua

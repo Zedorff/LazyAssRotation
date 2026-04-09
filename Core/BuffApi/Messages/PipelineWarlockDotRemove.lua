@@ -1,5 +1,4 @@
----@class PipelineWarlockDotRemove : BuffPipelineMessage
----@field t "warlock_dot"
+﻿---@class PipelineWarlockDotRemove : BuffPipelineMessage
 ---@field mobGuid string
 PipelineWarlockDotRemove = {}
 PipelineWarlockDotRemove.__index = PipelineWarlockDotRemove
@@ -7,8 +6,11 @@ PipelineWarlockDotRemove.__index = PipelineWarlockDotRemove
 ---@param mobGuid string
 ---@return PipelineWarlockDotRemove
 function PipelineWarlockDotRemove.new(mobGuid)
-    local self = BuffPipelineMessage.new(BuffPipelineKind.DEBUFF_REMOVE)
-    self.t = "warlock_dot"
-    self.mobGuid = mobGuid
+    ---@type PipelineWarlockDotRemove
+    local self = {
+        kind = BuffPipelineKind.DEBUFF_REMOVE,
+        t = "warlock_dot",
+        mobGuid = mobGuid,
+    }
     return setmetatable(self, PipelineWarlockDotRemove)
 end

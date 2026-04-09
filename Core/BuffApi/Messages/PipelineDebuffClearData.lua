@@ -1,11 +1,13 @@
----@class PipelineDebuffClearData : BuffPipelineMessage
----@field t "debuff"
+﻿---@class PipelineDebuffClearData : BuffPipelineMessage
 PipelineDebuffClearData = {}
 PipelineDebuffClearData.__index = PipelineDebuffClearData
 
 ---@return PipelineDebuffClearData
 function PipelineDebuffClearData.new()
-    local self = BuffPipelineMessage.new(BuffPipelineKind.DEBUFF_CLEAR_DATA)
-    self.t = "debuff"
+    ---@type PipelineDebuffClearData
+    local self = {
+        kind = BuffPipelineKind.DEBUFF_CLEAR_DATA,
+        t = "debuff",
+    }
     return setmetatable(self, PipelineDebuffClearData)
 end

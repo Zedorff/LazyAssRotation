@@ -1,11 +1,13 @@
----@class PipelineDurationedSelfBuffDown : BuffPipelineMessage
----@field t "durationed_self_buff"
+﻿---@class PipelineDurationedSelfBuffDown : BuffPipelineMessage
 PipelineDurationedSelfBuffDown = {}
 PipelineDurationedSelfBuffDown.__index = PipelineDurationedSelfBuffDown
 
 ---@return PipelineDurationedSelfBuffDown
 function PipelineDurationedSelfBuffDown.new()
-    local self = BuffPipelineMessage.new(BuffPipelineKind.BUFF_DOWN)
-    self.t = "durationed_self_buff"
+    ---@type PipelineDurationedSelfBuffDown
+    local self = {
+        kind = BuffPipelineKind.BUFF_DOWN,
+        t = "durationed_self_buff",
+    }
     return setmetatable(self, PipelineDurationedSelfBuffDown)
 end

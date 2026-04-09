@@ -1,5 +1,4 @@
----@class PipelineWarlockDotResistLine : BuffPipelineMessage
----@field t "warlock_dot"
+﻿---@class PipelineWarlockDotResistLine : BuffPipelineMessage
 ---@field line string|nil
 PipelineWarlockDotResistLine = {}
 PipelineWarlockDotResistLine.__index = PipelineWarlockDotResistLine
@@ -7,8 +6,11 @@ PipelineWarlockDotResistLine.__index = PipelineWarlockDotResistLine
 ---@param line string|nil
 ---@return PipelineWarlockDotResistLine
 function PipelineWarlockDotResistLine.new(line)
-    local self = BuffPipelineMessage.new(BuffPipelineKind.DEBUFF_RESIST_LINE)
-    self.t = "warlock_dot"
-    self.line = line
+    ---@type PipelineWarlockDotResistLine
+    local self = {
+        kind = BuffPipelineKind.DEBUFF_RESIST_LINE,
+        t = "warlock_dot",
+        line = line,
+    }
     return setmetatable(self, PipelineWarlockDotResistLine)
 end

@@ -1,11 +1,13 @@
----@class PipelineWarlockDotDhChannelStop : BuffPipelineMessage
----@field t "warlock_dot"
+﻿---@class PipelineWarlockDotDhChannelStop : BuffPipelineMessage
 PipelineWarlockDotDhChannelStop = {}
 PipelineWarlockDotDhChannelStop.__index = PipelineWarlockDotDhChannelStop
 
 ---@return PipelineWarlockDotDhChannelStop
 function PipelineWarlockDotDhChannelStop.new()
-    local self = BuffPipelineMessage.new(BuffPipelineKind.DH_CHANNEL_STOP)
-    self.t = "warlock_dot"
+    ---@type PipelineWarlockDotDhChannelStop
+    local self = {
+        kind = BuffPipelineKind.DH_CHANNEL_STOP,
+        t = "warlock_dot",
+    }
     return setmetatable(self, PipelineWarlockDotDhChannelStop)
 end
