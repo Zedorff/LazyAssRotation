@@ -2,7 +2,7 @@
 ## Title: Lazy Ass Rotation
 ## Notes: To make rotations easier.
 ## Author: Zedorff
-## Version: 0.9.0
+## Version: 0.9.1
 ## DefaultState: enabled
 ## SavedVariablesPerCharacter: LARModuleSettings, LARFloatingButtonPosition, LARSelectedSpec, LARSpecSide, LARModuleSide, LARShowRotationSpells, LARLockHotSwapButton, LARMinimapAngle
 
