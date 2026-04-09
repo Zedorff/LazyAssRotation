@@ -23,7 +23,7 @@ end
 --- @param context WarlockModuleRunContext
 function ConflagrateModule:getPriority(context)
     if Helpers:ShouldSuppressRangedSpellForLOS() then return -1 end
-    if self.enabled and Helpers:SpellAlmostReady(Abilities.Conflagrate.name, 0.3) and not self.trackers.immolateTracker:ShouldCast() and context.mana > context.conflagrateCost then
+    if self.enabled and Helpers:SpellAlmostReady(Abilities.Conflagrate.name, 0.3) and self.trackers.immolateTracker:GetRemainingOnTarget() > 0 and context.mana > context.conflagrateCost then
         return 85;
     end
     return -1;
