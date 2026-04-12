@@ -24,7 +24,7 @@ end
 --- @param context DruidModuleRunContext
 function ShredModule:getPriority(context)
     if self.enabled and Helpers:SpellReady(Abilities.Shred.name) then
-        if Helpers:HasUnitXP() then
+        if LARUnitXP3 then
             if not Helpers:IsBehindTarget("player", "target") then
                 return -1;
             end

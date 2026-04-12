@@ -52,9 +52,6 @@ function EventBus:new(frame)
     frame:RegisterEvent("SPELL_MISS_SELF");
     frame:SetScript("OnEvent", function()
         --- @diagnostic disable-next-line: undefined-global
-        if event == "PLAYER_ENTERING_WORLD" then
-            Helpers:EnsureNampowerAuraCastEventsEnabled()
-        end
         instance:notify(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
     end)
 

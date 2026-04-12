@@ -82,18 +82,15 @@ end
 function InitSubscribers()
     Core.eventBus:subscribe({
         onEvent = function(_, event, arg1)
-            if (event == "PLAYER_ENTERING_WORLD") then
-                if SUPERWOW_VERSION then
-                    OnPlayerLoaded()
-                end
-            end
             if (event == "VARIABLES_LOADED") then
+                ThirdPartyApiLoader.Load()
                 if not SUPERWOW_VERSION then
                     Logging:Log("[LAR] SuperWoW not found, shutting down.")
                     LAR_MinimapButton:Hide()
                     return
                 end
                 Init()
+                OnPlayerLoaded()
             elseif event == "SPEC_CHANGED" and DpsRotation then
                 DpsRotation:SelectSpec(arg1)
             end

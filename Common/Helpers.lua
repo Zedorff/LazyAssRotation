@@ -1,5 +1,8 @@
 Helpers = {}
 
+LARUnitXP3 = false
+LARNampower = false
+
 --- @param unit string
 --- @return string|nil
 function Helpers:GetUnitGUID(unit)
@@ -58,20 +61,12 @@ function Helpers:GetUnitField(unit, field)
     return self:_GetUnitFieldFallback(unit, field)
 end
 
---- Returns true if UnitXP_SP3 DLL is active. UnitXP provides distance, line of sight,
---- behind detection, and targeting helpers.
---- @return boolean
-function Helpers:HasUnitXP()
-    local success = pcall(UnitXP, "nop", "nop")
-    return success
-end
-
 --- Uses UnitXP `behind`. If UnitXP is not available, returns false (use NotBehindTargetTracker fallback).
 --- @param fromUnit string
 --- @param toUnit string
 --- @return boolean
 function Helpers:IsBehindTarget(fromUnit, toUnit)
-    if not self:HasUnitXP() then
+    if not LARUnitXP3 then
         return false
     end
     local success, behind = pcall(UnitXP, "behind", fromUnit, toUnit)
@@ -83,7 +78,7 @@ end
 --- @param toUnit string
 --- @return boolean
 function Helpers:IsInSight(fromUnit, toUnit)
-    if not self:HasUnitXP() then
+    if not LARUnitXP3 then
         return true
     end
     local success, inSight = pcall(UnitXP, "inSight", fromUnit, toUnit)
@@ -100,7 +95,7 @@ function Helpers:IsInMeleeRange(fromUnit, toUnit)
     if not UnitExists(toUnit) then
         return false
     end
-    if not self:HasUnitXP() then
+    if not LARUnitXP3 then
         return true
     end
     local success, dist = pcall(UnitXP, "distanceBetween", fromUnit, toUnit, "meleeAutoAttack")
@@ -114,7 +109,7 @@ end
 --- Without UnitXP, returns false so rotation behaves as before.
 --- @return boolean
 function Helpers:ShouldSuppressRangedSpellForLOS()
-    if not self:HasUnitXP() then
+    if not LARUnitXP3 then
         return false
     end
     if not UnitExists("target") then
@@ -210,22 +205,6 @@ function Helpers:SpellNotReadyFor(spellname)
         return (start + duration) - GetTime()
     end
     return 0
-end
-
---- @return boolean
-function Helpers:HasNampowerAuraCastEvents()
-    return GetCVar and GetCVar("NP_EnableAuraCastEvents") ~= nil
-end
-
---- @return boolean
-function Helpers:EnsureNampowerAuraCastEventsEnabled()
-    if not self:HasNampowerAuraCastEvents() then
-        return false
-    end
-    if GetCVar("NP_EnableAuraCastEvents") ~= "1" then
-        SetCVar("NP_EnableAuraCastEvents", "1")
-    end
-    return true
 end
 
 --- @param spellId number

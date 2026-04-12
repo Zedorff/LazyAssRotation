@@ -56,6 +56,7 @@ Core\BuffApi\Vanilla\VanillaBuffWarlockDot.lua
 Core\BuffApi\Vanilla\VanillaBuffEclipse.lua
 Core\BuffApi\Vanilla\VanillaBuffEventAdapter.lua
 Core\BuffApi\BuffEventPipeline.lua
+Core\ThirdPartyApiLoader.lua
 Core\BuffApi\BuffApiFactory.lua
 Core\Core.lua
 Core\EventBus.lua
